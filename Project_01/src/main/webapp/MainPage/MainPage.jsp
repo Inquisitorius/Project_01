@@ -8,6 +8,9 @@
 <link rel="stylesheet" href="/resources/css/bootstrap.css">
 </head>
 <body>
+<% response.sendRedirect("/MainPage/Sample.jsp"); %>
+
+
 <div class="container">
   <div class="row">
     <div class="col">
