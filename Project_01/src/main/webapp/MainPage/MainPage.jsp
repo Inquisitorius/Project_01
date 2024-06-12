@@ -4,10 +4,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
 <link rel="stylesheet" href="/resources/css/bootstrap.css">
 <script src="/resources/js/jquery-3.7.1.js"></script>
+<script src="https://kit.fontawesome.com/a0b08e370a.js" crossorigin="anonymous"></script>
 <style type="text/css">
+
 
 .testArea_00 
 {
@@ -26,11 +29,7 @@
 </style>
 </head>
 <body>
-	<header class="container-fluid testArea_00">
-		<div class="row">
-			<div class="col-md-12">Header</div>
-		</div>
-	</header>
+	<jsp:include page="/Common/Header.jsp"/>
 	<main class="container testArea_01" style="width: 70%;">
 		<div class="row">
 			<div class="col-md-6">asdadad</div>
