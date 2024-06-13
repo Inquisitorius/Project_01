@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/resources/css/bootstrap.css">
+<link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.css">
 <script src="/resources/js/jquery-3.7.1.js"></script>
 <script src="https://kit.fontawesome.com/a0b08e370a.js" crossorigin="anonymous"></script>
 <style type="text/css">
@@ -65,7 +65,8 @@
 	
 	</script>
 
-	<script src="/resources/js/bootstrap.min.js"></script>
-	<script src="/resources/js/bootstrap.bundle.js"></script>
+	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/resources/bootstrap/js/bootstrap.bundle.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 </body>
 </html>
