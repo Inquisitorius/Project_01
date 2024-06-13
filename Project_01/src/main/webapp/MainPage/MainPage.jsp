@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insert title here</title>
 <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.css">
-<script src="/resources/js/jquery-3.7.1.js"></script>
+<script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>
 <script src="https://kit.fontawesome.com/a0b08e370a.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
 <style type="text/css">
 
 
