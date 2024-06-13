@@ -18,16 +18,16 @@
 		</div>
 	</div>	
 	<div class="row" style="display: flex; justify-content: center; align-content: center; min-height: 63px; min-width: 1050px;">
-		<div class="col-sm-12" style = "max-width: 1050px; padding : 0px;">
+		<div class="col-sm-12 d-flex flex-nowrap" style = "max-width: 1050px; padding : 0px;">
 			<div class = "row">
-				<div class = "col-sm-4">
+				<div style = "width: auto;">
 					<img src="/resources/img/kurly_logo.svg"/>
 					<button style="background: none; border: none; padding-left: 15px; font-size: 15px; color: gray;">마켓컬리</button>
 					<button style="background: none; border: none; padding-left: 15px; font-size: 15px; color: gray;">뷰티컬리</button>
 				</div>	
-				<div class = "col-sm-4">
+				<div style = "width: auto; padding-left: 50px;">
 					<form class="d-flex" role="search">
-                    	<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    	<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style = "width: 300px;">
                     	<button class="btn btn-outline-success" type="submit">Search</button>
                 	</form>
 				</div>			

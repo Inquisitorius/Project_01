@@ -21,6 +21,20 @@
 
 .testArea_01
 {
+	background-color: blue;
+	border: 1px solid gray;
+	color: white;
+}
+
+.testArea_02
+{
+	background-color: red;
+	border: 1px solid gray;
+	color: white;
+}
+
+.testArea_03
+{
 	background-color: black;
 	border: 1px solid gray;
 	color: white;
@@ -30,19 +44,43 @@
 </head>
 <body>
 	<jsp:include page="/Common/Header.jsp"/>
-	<main class="container testArea_01" style="width: 70%;">
+	<main class="container" >
 		<div class="row">
-			<div class="col-md-6">asdadad</div>
-			<div class="col-md-6">asdadad</div>
+			<div class="col-md-12 testArea_00">중간제목</div>			
 		</div>
-		<div class="row">
-			<div class="col-md-6">asdadad</div>
-			<div class="col-md-6">asdadad</div>
+		<div class="row" style = "padding-top: 10px;">
+			<div class="col-md-12 testArea_01">사진영역</div>			
 		</div>
-		<div class="row">
-			<div class="col-md-6"><input  class = "inputtest" type = "text" value = "1232134"/></div>
-			<div class="col-md-6"><button type = "button" class = "btntest" >move Test</button></div>
-			
+		<div class="row testArea_03">
+			<div class="col-md-6">
+				<input  class = "inputtest" type = "text" value = "1232134"/>
+			</div>
+			<div class="col-md-6">
+				<div class = "row">
+					<div class = "col-md-12">123213213</div>
+				</div>
+				<div class = "row">
+					<div class = "col-md-12">123213213</div>
+				</div>
+				<div class = "row">
+					<div class = "col-md-6">반</div>
+					<div class = "col-md-6">반</div>
+				</div>
+				<div class = "row">
+					<div class = "col-md-12">123213213</div>
+				</div>
+				<div class = "row">
+					<div class = "col-md-12">123213213</div>
+				</div>
+			</div>			
+		</div>
+		<div class = "row">
+			<div class ="col-md-12" style="display: flex; min-height: 1000px;">
+				<button type="button" style = "height: 50px;">123213</button>	
+				<button type="button" style = "height: 50px;">123213</button>	
+				<button type="button" style = "height: 50px;">123213</button>	
+				<button type="button" style = "height: 50px;">123213</button>	
+			</div>			
 		</div>
 	</main>
 	<footer class="container-fluid">
