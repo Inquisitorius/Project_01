@@ -8,10 +8,16 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.css">
 <script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>
+<jsp:include page="/Common/LinkFile.jsp"/>
 <script src="https://kit.fontawesome.com/a0b08e370a.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
 <style type="text/css">
 
+.shadow_eff
+{
+  box-shadow: 0px 5px 5px rgb(200, 200, 200);
+  margin-bottom: 10px;
+}
 
 .testArea_00 
 {
@@ -40,6 +46,21 @@
 	border: 1px solid gray;
 	color: white;
 }
+
+.dropdown-menu-end
+{
+	left: 100%;
+    top: 0;
+}
+
+.fontTest
+{
+	font-family: "Noto Sans KR", sans-serif;
+	font-optical-sizing: auto;
+	font-style: normal;
+	color: #333333;
+}
+
 
 </style>
 </head>
@@ -76,7 +97,7 @@
 			</div>			
 		</div>
 		<div class = "row">
-			<div class ="col-md-12" style="display: flex; min-height: 1000px;">
+			<div class ="col-md-12" style="display: flex; min-height: 100px;">
 				<button type="button" style = "height: 50px;">123213</button>	
 				<button type="button" style = "height: 50px;">123213</button>	
 				<button type="button" style = "height: 50px;">123213</button>	
@@ -84,11 +105,7 @@
 			</div>			
 		</div>
 	</main>
-	<footer class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">footer</div>
-		</div>
-	</footer>
+	<jsp:include page="/Common/Footer.jsp"/>
 	<script>
 	$(document).ready(function()
 	{
@@ -104,8 +121,7 @@
 	
 	</script>
 
-	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
+	<!--  <script src="/resources/bootstrap/js/bootstrap.min.js"></script>-->
 	<script src="/resources/bootstrap/js/bootstrap.bundle.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 </body>
 </html>

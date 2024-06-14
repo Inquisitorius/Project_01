@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<header class="container-fluid">
+<header class="container-fluid shadow_eff">
 	<div class="row" style="display: flex; justify-content: center; min-height: 35px; background-color: #47702e;">
 		<div class="col-sm-12" style="padding-top: 10px; max-width: 1050px;">
 			<div class = "row">
@@ -17,6 +17,7 @@
 			</div>
 		</div>
 	</div>	
+	<div></div>
 	<div class="row" style="display: flex; justify-content: center; align-content: center; min-height: 63px; min-width: 1050px;">
 		<div class="col-sm-12 d-flex flex-nowrap" style = "max-width: 1050px; padding : 0px;">
 			<div class = "row">
@@ -39,7 +40,7 @@
 					display: flex; align-items: center; justify-content: space-evenly;">
 						<div style = "width: 36px; height: auto;"><img style = "width: 36px; height: auto;" src="/resources/img/logout.svg"/></div>
 						<div style = "width: 36px; height: auto;"><img style = "width: 36px; height: auto;" src="/resources/img/login.svg"/></div>
-						<div style = "width: 36px; height: auto;"><img style = "width: 36px; height: auto;" src="/resources/img/user_add.svg"/></div>
+						<div style = "width: 36px; height: auto;"><img style = "width: 36px; height: auto;" src="/resources/img/user_add2.svg"/></div>
 						<div></div>
 					</div>					
 				</div>					
@@ -48,12 +49,44 @@
 	</div>
 	<div class = "row" style="display: flex; justify-content: center; align-content: center; min-height: 56px; min-width: 1050px;">
 		<div class = "col-sm-12" style = "width: 1050px;">
-			<div class = "row">
-				<div class = "col-sm-4">asdadsad</div>
+			<div class = "row">				
+				<div class = "col-sm-4" style = "padding: 0px;">
+					<div class="btn-group">
+						<div class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+						style = "font-size: 16px;">	 
+			            	<img style = "width: 15px; height: auto; margin-right: 10px;" src="/resources/img/menu.svg"/> 카테고리
+			         	</div>
+			          	<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+			            	<li><a class="dropdown-item" href="#">Action</a></li>
+			            	<li><a class="dropdown-item" href="#">Another action</a></li>
+			            	<li><hr class="dropdown-divider"></li>
+			            	<li class="dropend">
+			              		<a class="dropdown-item dropdown-toggle" href="#" id="submenuDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+			                		More options
+			              		</a>
+			              		<ul class="dropdown-menu" aria-labelledby="submenuDropdown">
+			                		<li><a class="dropdown-item" href="#">Submenu Action 1</a></li>
+			                		<li><a class="dropdown-item" href="#">Submenu Action 2</a></li>
+			              		</ul>
+			            	</li>
+			            	<li>
+			            		<a class="dropdown-item" href="#">Something else here</a>
+			            	</li>
+			            	<li><hr class="dropdown-divider"></li>
+			          	</ul>	
+			          					  
+					</div>	
+				</div>
 			</div>
 		</div>
 	</div>
 </header>
 <script>
-	$(".headerTest").text("12313213123");
+	$(document).ready(function()
+	{
+		$("#categoryText").mouseover(function()
+		{
+			console.log("mouseOver Hit");			
+		});
+	});
 </script>
