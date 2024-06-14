@@ -14,18 +14,20 @@
 						<span class = "fontTest" style = "margin-left : 10px; line-height: 55px;">월~토요일 오전 7시 - 오후 6시</span>
 					</div>
 				</div>	
-				<div class = "row">		
-					<div class = "col-md-5" style = "padding-right: 0px; padding-top: 3px;">
+				<div class = "row flex-nowrap">		
+					<button type="button" class="btn btn-outline-secondary" style = "width: 138px; margin-left : 15px;">문의하기</button>
+					<label class = "fontTest" style = "font-size: 14px; vertical-align: top; margin-left : 10px;">월~토요일 머시깽이<br/>일/공휴일 머시깽이</label>
+					<!--  <div class = "col-md-5" style = "padding-right: 0px; padding-top: 3px;">
 						<button type="button" class="btn btn-outline-secondary" style = "width: 138px;">문의하기</button>
 					</div>
 					<div class = "col-md-7" style = "padding-left: 0px;">
 						<div class = "row"><label class = "fontTest" style = "font-size: 14px; vertical-align: top;">월~토요일 머시깽이</label></div>
 						<div class = "row"><label class = "fontTest" style = "font-size: 14px; vertical-align: top;">일/공휴일 머시깽이</label></div>
-					</div>
+					</div>-->
 				</div>		
 			</div>
 			<div class = "col-md-5" style = "display: flex; align-items: flex-end;">
-			<label class = "fontTest" style = "color: #333333; font-size: 12px;">
+			<label class = "fontTest" style = "color: #333333; font-size: 12px; white-space: nowrap;">
 				법인명 (상호) : 주식회사 컬리  사업자등록번호 : 261-81-23567사업자정보 확인<br/>
 				통신판매업 : 제 2018-서울강남-01646 호<br/>
 				주소 : 서울특별시 강남구 테헤란로 133, 18층(역삼동)  대표이사 : 김슬아<br/>
@@ -35,28 +37,28 @@
 		</div>
 	</div>
 	<div class = "container" style = "border-top: 1px solid rgb(230,230,230);">
-		<div class = "row" style = "margin-top: 20px; display: felx;">
+		<div class = "row flex-nowrap" style = "margin-top: 20px; display: felx;">
 			<div class = "col">
-				<button type = "button" style = "display: flex; align-items: center; background-color: transparent; border: 0;">
-					<img src="https://res.kurly.com/pc/ico/2208/logo_isms.svg" alt="isms 로고" style = "padding-right: 5px;">
+				<button type = "button" style = "display: inline-flex; white-space: nowrap; align-items: center; background-color: transparent; border: 0;">
+					<img src="https://res.kurly.com/pc/ico/2208/logo_isms.svg" alt="isms 로고" style = "padding-right: 10px;">
 					<p class = "fontTest" style = "text-align: left; font-size: 9px; margin: 0px;">[인증범위] 컬리 쇼핑몰 서비스 개발·운영<br>(심사받지 않은 물리적 인프라 제외)<br>[유효기간] 2022.01.19 ~ 2025.01.18</p>
 				</button>
 			</div>
 			<div class = "col">
-				<button type = "button" style = "display: flex; align-items: center; background-color: transparent; border: 0;">
-					<img src="https://res.kurly.com/pc/ico/2208/logo_privacy.svg" alt="isms 로고" style = "padding-right: 5px;">
+				<button type = "button" style = "display: inline-flex; white-space: nowrap; align-items: center; background-color: transparent; border: 0;">
+					<img src="https://res.kurly.com/pc/ico/2208/logo_privacy.svg" alt="isms 로고" style = "padding-right: 10px;">
 					<p class = "fontTest" style = "text-align: left; font-size: 9px; margin: 0px;">[인증범위] 컬리 쇼핑몰 서비스 개발·운영<br>(심사받지 않은 물리적 인프라 제외)<br>[유효기간] 2022.01.19 ~ 2025.01.18</p>
 				</button>
 			</div>
 			<div class = "col">
-				<button type = "button" style = "display: flex; align-items: center; background-color: transparent; border: 0;">
-					<img src="https://res.kurly.com/pc/ico/2208/logo_tosspayments.svg" alt="isms 로고" style = "padding-right: 5px;">
+				<button type = "button" style = "display: inline-flex; white-space: nowrap; align-items: center; background-color: transparent; border: 0;">
+					<img src="https://res.kurly.com/pc/ico/2208/logo_tosspayments.svg" alt="isms 로고" style = "padding-right: 10px;">
 					<p class = "fontTest" style = "text-align: left; font-size: 9px; margin: 0px;">[인증범위] 컬리 쇼핑몰 서비스 개발·운영<br>(심사받지 않은 물리적 인프라 제외)<br>[유효기간] 2022.01.19 ~ 2025.01.18</p>
 				</button>
 			</div>
 			<div class = "col">
-				<button type = "button" style = "display: flex; align-items: center; background-color: transparent; border: 0;">
-					<img src="https://res.kurly.com/pc/ico/2208/logo_wooriBank.svg" alt="isms 로고" style = "padding-right: 5px;">
+				<button type = "button" style = "display: inline-flex; white-space: nowrap; align-items: center; background-color: transparent; border: 0;">
+					<img src="https://res.kurly.com/pc/ico/2208/logo_wooriBank.svg" alt="isms 로고" style = "padding-right: 10px;">
 					<p class = "fontTest" style = "text-align: left; font-size: 9px; margin: 0px;">[인증범위] 컬리 쇼핑몰 서비스 개발·운영<br>(심사받지 않은 물리적 인프라 제외)<br>[유효기간] 2022.01.19 ~ 2025.01.18</p>
 				</button>
 			</div>
@@ -65,7 +67,7 @@
 	<div class = "container-fluid">
 		<div class = "row">
 			<div class = "col-md-12" style = "background: rgb(247, 247, 247); margin-top: 20px;">
-				<label class = "fontTest" style = "font-size: 10px; text-align: center; width: 100%; margin-top: 10px; margin-bottom: 10px;">
+				<label class = "fontTest" style = "font-size: 10px; white-space: nowrap; text-align: center; width: 100%; margin-top: 10px; margin-bottom: 10px;">
 					컬리에서 판매되는 상품 중에는 컬리에 입점한 개별 판매자가 판매하는 마켓플레이스(오픈마켓) 상품이 포함되어 있습니다.<br/>
 					마켓플레이스(오픈마켓) 상품의 경우 컬리는 통신판매중개자로서 통신판매의 당사자가 아닙니다. 컬리는 해당 상품의 주문, 품질, 교환/환불 등 의무와 책임을 부담하지 않습니다.<br/>
 					<br/>© KURLY CORP. ALL RIGHTS RESERVED
