@@ -23,13 +23,13 @@
 			<div class = "row">
 				<div style = "width: auto;">
 					<img src="/resources/img/kurly_logo.svg"/>
-					<button style="background: none; border: none; padding-left: 15px; font-size: 15px; color: gray;">마켓컬리</button>
-					<button style="background: none; border: none; padding-left: 15px; font-size: 15px; color: gray;">뷰티컬리</button>
+					<button class = "fontCommon_Option" style="background: none; border: none; padding-left: 15px; font-size: 15px; color: gray;">마켓컬리</button>
+					<button class = "fontCommon_Option" style="background: none; border: none; padding-left: 15px; font-size: 15px; color: gray;">뷰티컬리</button>
 				</div>	
 				<div style = "width: auto; padding-left: 50px;">
 					<form class="d-flex" role="search">
-                    	<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style = "width: 300px;">
-                    	<button class="btn btn-outline-success" type="submit">Search</button>
+                    	<input class="form-control me-2 fontCommon_Option" type="search" placeholder="Search" aria-label="Search" style = "width: 300px;">
+                    	<button class="btn btn-outline-success fontCommon_Option" type="submit" style = "color: rgb(71, 112, 46);">Search</button>
                 	</form>
 				</div>
 				<div style = "position: relative;">
@@ -53,8 +53,9 @@
 				<div class = "col-sm-4" style = "padding: 0px;">
 					<div class="btn-group">
 						<div class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
-						style = "font-size: 16px;">	 
-			            	<img style = "width: 15px; height: auto; margin-right: 10px;" src="/resources/img/menu.svg"/> 카테고리
+						style = "font-size: 16px; display: inline-flex; align-items: center;">	 
+			            	<img style = "width: 15px; height: auto; margin-right: 10px; padding-top: 2px;" src="/resources/img/menu.svg"/> 
+			            	<label class = "fontCommon_Option" style = "color: gray;">카테고리</label>
 			         	</div>
 			          	<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 			            	<li><a class="dropdown-item" href="#">Action</a></li>

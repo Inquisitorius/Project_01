@@ -11,6 +11,7 @@
 <jsp:include page="/Common/LinkFile.jsp"/>
 <script src="https://kit.fontawesome.com/a0b08e370a.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+<link rel="stylesheet" href="/resources/css/Common.css">
 <style type="text/css">
 
 .shadow_eff
@@ -52,15 +53,6 @@
 	left: 100%;
     top: 0;
 }
-
-.fontTest
-{
-	font-family: "Noto Sans KR", sans-serif;
-	font-optical-sizing: auto;
-	font-style: normal;
-	color: #333333;
-}
-
 
 </style>
 </head>
