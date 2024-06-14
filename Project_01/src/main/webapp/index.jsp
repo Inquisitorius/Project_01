@@ -8,6 +8,6 @@
 </head>
 <body>
 index.jsp
-<% response.sendRedirect("/MainPage/MainPage.jsp"); %>
+<% response.sendRedirect("/MainPage/Sample.jsp"); %>
 </body>
 </html>

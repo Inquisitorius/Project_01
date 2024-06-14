@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<link rel="stylesheet" href="/resources/css/Common.css">
 <header class="container-fluid shadow_eff">
 	<div class="row" style="display: flex; justify-content: center; min-height: 35px; background-color: #47702e;">
 		<div class="col-sm-12" style="padding-top: 10px; max-width: 1050px;">

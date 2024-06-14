@@ -5,20 +5,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Insert title here</title>
+<title>MainPage</title>
 <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" href="/resources/css/Common.css">
 <script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>
 <jsp:include page="/Common/LinkFile.jsp"/>
-<script src="https://kit.fontawesome.com/a0b08e370a.js" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
-<link rel="stylesheet" href="/resources/css/Common.css">
 <style type="text/css">
-
-.shadow_eff
-{
-  box-shadow: 0px 5px 5px rgb(200, 200, 200);
-  margin-bottom: 10px;
-}
 
 .testArea_00 
 {
@@ -46,12 +38,6 @@
 	background-color: black;
 	border: 1px solid gray;
 	color: white;
-}
-
-.dropdown-menu-end
-{
-	left: 100%;
-    top: 0;
 }
 
 </style>
