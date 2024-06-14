@@ -61,7 +61,7 @@ font-weight: bold;
 			<div class="d-flex align-items-center" style="display: flex; min-height: 50px;justify-content: space-around;">
 			<button type="button" class="btn btn-success">회원가입</button>
 		</div>
-			
+		<div>1123</div>
 	</main>
 </script>
 
