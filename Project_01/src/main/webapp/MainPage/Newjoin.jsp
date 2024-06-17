@@ -137,7 +137,52 @@ justify-content: center;
 			<div class="col-md-2"></div>
 	</form>
 	
+	<form class="row row-cols-lg g-3 align-items-center middle" style="margin-bottom : 15px;">
+		<div class="col-md-2 middle">성별</div> 	
+		</div>
+		<div class="col-md-4 middle">
+			 <input type="checkbox" id="check1"style="padding-right:10;">
+			 <label for="check1">남자</label>
+			 <input type="checkbox" id="check2">
+			 <label for="check2">여자</label>	
+			 </div>
+        <div class="col-md-2"></div>
+	</form>
+	
+	<form class="row row-cols-lg g-3 align-items-center middle" style="margin-bottom : 15px;">
+		<div class="col-md-2 middle">생년월일</div> 	
+		</div>
+		<div class="col-md-4">
+		<label class="visually-hidden" for="inputname">연월일</label>
+    	<div class="input-group middle">
+    	<input type="text" class="form-control" id="inputname" placeholder="20xx/00/00">
+    	</div>
+		</div>
+		<div class="col-md-2"></div>
+	</form>
+	
+	<form class="row row-cols-lg g-3 align-items-center middle" style="margin-bottom : 15px;">
+		<div class="col-md-2 middle">이용약관동의</div> 	
+		</div>
+		<div class="col-md-4">
+		<input type="checkbox" id="check1"style="padding-right:10;">
+			 <label for="check1">전체 동의합니다.</label>
+		</div>
+		<div class="col-md-2"></div>
+	</form>
+	
+	<form class="row row-cols-lg g-3 align-items-center middle" style="margin-bottom : 15px;">
+		<div class="col-md-2 middle"></div> 	
+		</div>
+		<div class="col-md-4" style="min-height: 38px;justify-content:space-around;">
+			<button type="button" class="btn btn-success"style="width:70%;">가입하기</button>
+			</div>
+		<div class="col-md-2"></div>
+	</form>
+	
+	
 </main>
+<jsp:include page="/Common/Footer.jsp"/>
 
 	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 	<script src="/resources/bootstrap/js/bootstrap.bundle.js"></script>
