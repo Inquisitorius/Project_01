@@ -21,7 +21,10 @@
 <!-- jQuery 사용을 위한 js 로드 -->
 <script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>
 <style type="text/css">
-
+.testArea
+{
+	background-color: blue;
+}
 </style>
 </head>
 <body>
@@ -30,7 +33,36 @@
 
 
 <main>
-asdsad
+	<div class = "container" style = "max-width: 1050px; padding-left: 0px;">
+		<div class = "row">
+			<div class = "col-md-5">
+				<img src = "https://3p-image.kurly.com/cdn-cgi/image/fit=crop,width=720,height=936,quality=85/files/9a4c0af9-4082-46c5-b534-1049d592ac51/85267c7b-37f1-45d3-bf86-f2534203e63e.png" 
+				style = "width: 430px; height: auto;  border-radius: 2%;  overflow: hidden;"/>
+			</div>
+			<div class = "col-md-7">
+				<div class = "row">
+					<div class = "col-md-12" style = "font-size: 24px; font-weight: 700; color: #333">
+						[쉘퍼] 4L 대용량 건조분쇄 음식물처리기 (쉘퍼 음식물처리기)
+					</div>
+				</div>
+				<div class = "row">
+					<div class = "col-md-12">
+						123123123
+					</div>
+				</div>
+				<div class = "row">
+					<div class = "col-md-12">
+						123123123
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class = "row">
+			<div class = "col-md-12">
+				213123123
+			</div>
+		</div>
+	</div>
 </main>
 
 <!-- Footer Include -->
@@ -38,6 +70,6 @@ asdsad
 <script>
 </script>
 <!-- bootstrap js load -->
-<script src="/resources/js/bootstrap.bundle.js"></script>
+<script src="/resources/bootstrap/js/bootstrap.bundle.js"></script>
 </body>
 </html>

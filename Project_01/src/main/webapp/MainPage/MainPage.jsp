@@ -7,9 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MainPage</title>
 <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.css">
+<jsp:include page="/Common/LinkFile.jsp"/>
 <link rel="stylesheet" href="/resources/css/Common.css">
 <script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>
-<jsp:include page="/Common/LinkFile.jsp"/>
+
 <style type="text/css">
 
 .testArea_00 

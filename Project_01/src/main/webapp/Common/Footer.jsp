@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <footer class = "flex-nowrap" style = "padding-top: 30px; width: 100%">
 	<div class = "container-fluid" style="border-top: 1px solid rgb(230,230,230); margin-bottom: 30px; "></div>
-	<div class = "container" style = "margin-bottom: 20px;">
+	<div class = "container" style = "margin-bottom: 20px; max-width: 1050px; padding-left: 0px;">
 		<div class = "row flex-nowrap" style = "display: flex; justify-content: space-between;">
 			<div class = "col-md-5" style = "min-width: 400px;">
 				<div class = "row">
@@ -36,7 +36,7 @@
 			</div>
 		</div>
 	</div>
-	<div class = "container" style = "border-top: 1px solid rgb(230,230,230);">
+	<div class = "container" style = "border-top: 1px solid rgb(230,230,230); max-width: 1050px; padding-left: 0px;">
 		<div class = "row flex-nowrap" style = "margin-top: 20px; display: felx;">
 			<div class = "col">
 				<button type = "button" style = "display: inline-flex; white-space: nowrap; align-items: center; background-color: transparent; border: 0;">
@@ -64,7 +64,7 @@
 			</div>
 		</div>
 	</div>
-	<div class = "container-fluid">
+	<div class = "container-fluid" style = "max-width: 1050px; padding-left: 0px;">
 		<div class = "row">
 			<div class = "col-md-12" style = "background: rgb(247, 247, 247); margin-top: 20px;">
 				<label class = "fontCommon_Option" style = "font-size: 10px; white-space: nowrap; text-align: center; width: 100%; margin-top: 10px; margin-bottom: 10px;">
