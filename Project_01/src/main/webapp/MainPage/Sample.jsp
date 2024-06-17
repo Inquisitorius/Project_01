@@ -33,15 +33,15 @@
 
 
 <main>
-	<div class = "container" style = "max-width: 1050px; padding-left: 0px;">
-		<div class = "row">
-			<div class = "col-md-5">
+	<div class = "container" style = "max-width: 1050px; min-width: 1050px; padding-left: 0px;">
+		<div class = "row d-flex flex-nowrap " style = "display: inline-flex; justify-content: space-between;">
+			<div class = "col-md-5 flex-nowrap">
 				<img src = "https://3p-image.kurly.com/cdn-cgi/image/fit=crop,width=720,height=936,quality=85/files/9a4c0af9-4082-46c5-b534-1049d592ac51/85267c7b-37f1-45d3-bf86-f2534203e63e.png" 
 				style = "width: 430px; height: auto;  border-radius: 2%;  overflow: hidden;"/>
 			</div>
-			<div class = "col-md-7">
+			<div class = "col flex-nowrap" style = "padding-left: 50px;">
 				<div class = "row">
-					<div class = "col-md-12" style = "font-size: 24px; font-weight: 700; color: #333">
+					<div class = "col-md-12" style = "font-size: 24px; font-weight: 700; color: #333;">
 						[쉘퍼] 4L 대용량 건조분쇄 음식물처리기 (쉘퍼 음식물처리기)
 					</div>
 				</div>

@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="/resources/css/Common.css">
 <header class="container-fluid shadow_eff">
-	<div class="row" style="display: flex; justify-content: center; min-height: 35px; background-color: #47702e;">
-		<div class="col-sm-12" style="padding-top: 10px; max-width: 1050px;">
+	<div class="row" style="display: flex; justify-content: center; min-height: 35px; background-color: #163020;">
+		<div class="col-12" style="padding-top: 10px; max-width: 1050px;">
 			<div class = "row">
 				<!--  <div class = "aaa" style ="padding-right: 5%; width: 100%; display: flex; justify-content: flex-end; min-width: 200px;">					
 					<div style = "font-size: 12px; padding-right: 10px; color: 217, 217, 217;">회원가입</div>
@@ -22,9 +22,11 @@
 		<div class="col-sm-12 d-flex flex-nowrap" style = "max-width: 1050px; padding : 0px;">
 			<div class = "row">
 				<div style = "width: auto;">
-					<img src="/resources/img/kurly_logo.svg"/>
-					<button class = "fontCommon_Option" style="background: none; border: none; padding-left: 15px; font-size: 15px; color: gray;">마켓컬리</button>
-					<button class = "fontCommon_Option" style="background: none; border: none; padding-left: 15px; font-size: 15px; color: gray;">뷰티컬리</button>
+					<!--  <img src="/resources/img/kurly_logo.svg"/> -->
+					
+					<img src="/resources/img/Green.svg"/ style = "width: 82px; height: 42px; padding-bottom: 5px;">
+					<button class = "fontCommon_Option" style="background: none; border: none; padding-left: 15px; font-size: 15px; color: gray;">마켓그린</button>
+					<button class = "fontCommon_Option" style="background: none; border: none; padding-left: 15px; font-size: 15px; color: gray;">뷰티그린</button>
 				</div>	
 				<div style = "width: auto; padding-left: 50px;">
 					<form class="d-flex" role="search">
