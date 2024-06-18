@@ -13,23 +13,17 @@
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
 <style type="text/css">
-.testArea_00 {
-	background-color: #47702e;
-	border: 1px solid gray;
-	color: white;
-}
 
-.join-title {
-	margin-top: 50px;
-	font-size: 50px;
-	font-weight: 500;
+.join_Title {
+	margin-top: 100px;
+	font-size: 30px;
+	font-weight: 600;
 	text-align: center;
 	color: rgb(51, 51, 51);
 	user-select: none;
 }
 
 .ban_Select {
-	-ms-user-select: none;
 	user-select: none;
 }
 
@@ -59,6 +53,15 @@
 	min-height: 58px;
 }
 
+.agree_Style {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	padding-bottom: 5px;
+	min-height: 48px;
+}
+
 .button_Style {
 	display: flex;
 	max-hegiht: 40px;
@@ -68,7 +71,6 @@
 
 .field_Name {
 	font-weight: 700;
-	-ms-user-select: none;
 	user-select: none;
 }
 
@@ -85,7 +87,7 @@
 .mini_Font{	
 	margin-top: 5px;
 	font-size: 10px;
-	color: rgb(102, 102, 102);
+	color: rgb(150, 150, 150);
 	font-weight: 500;
 }
 
@@ -102,35 +104,79 @@
 	font-size: 15px;
 }
 
+.terms_Style{
+	padding-left:35px;
+	font-size:14px;
+	color: green;
+	text-decoration: none;
+}
+
+a:visited {
+  color: green;
+}
+
+a:hover {
+  color: green;
+}
 [type="radio"] {
-        appearance: none;
-        width: 13px;
-        height: 13px;
-        border: 1px solid green;
-        border-radius: 50%;
+	appearance: none;
+	width: 13px;
+	height: 13px;
+	border: 1px solid green;
+	border-radius: 50%;
       }
 
 [type="radio"]:checked {
- 		appearance: none;
-        width: 13px;
-        height: 13px;
-        box-shadow: 0 0 0 1px white;
-        border: 4px solid green;
+	appearance: none;
+	width: 13px;
+	height: 13px;
+	box-shadow: 0 0 0 1px white;
+	border: 4px solid green;
       }
       
+[type="checkbox"]{
+	display:none;
+  }
+
+[type="checkbox"] + label{
+	cursor:pointer;
+ }
+
+[type="checkbox"] + label > span{
+	vertical-align: middle;
+	padding-left: 5px;
+ }
+
+/* label:before에 체크하기 전 상태 CSS */
+[type="checkbox"] + label:before{
+	content:"";
+	display:inline-block;
+	width:30px;
+	height:30px;
+	vertical-align:middle;
+	border-radius: 100%;
+	background-repeat: no-repeat;
+	background-image: url('../resources/img/unCheckedIcon.png');
+	background-size: 30px;
+  }
+  
+/* label:before에 체크 된 상태 CSS */  
+[type="checkbox"]:checked + label:before{
+	width:30px;
+	height:30px;
+	background-repeat: no-repeat;
+	background-image: url('../resources/img/checkIcon.png');
+	background-size: 30px;
+  }
+  
 </style>
 </head>
 <body>
 	<jsp:include page="/Common/Header.jsp" />
-
-	<main class="container"style="min-width:1050px;">
-		<div class="row">
-			<div class="col-md-12 testArea_00">중간제목</div>
-		</div>
-
+	<main class="container">
 		<div class="row">
 		<div class="col-md-12">
-				<div class="join-title">회원가입</div>
+				<div class="join_Title">회원가입</div>
 			</div>
 	</div>
 		<div class="row" style="justify-content: center;">	
@@ -423,22 +469,106 @@
 		
 			<div class="row" style="justify-content: center;">
 			<div class="col-md-6">
-				<div class="line_Style">
+				<div class="agree_Style">
 					<div class="col-md-3">
 						<div class="field_Name">
 							이용약관 동의<span class="red_Color">*</span>
 						</div>
 					</div>
-					<div class="col-md-8">
-						<input type="checkbox"><span class="ban_Select" style="font-weight:500; font-size:25px;"> 전체 동의합니다.<br></span>
-						<div class="mini_Font">
-						<span class="ban_Select">선택 항목에 동의하지 않은 경우도 회원가입 및 일반적인 서비스를 이용할 수 있습니다.</span>
-					</div>
+					<div class="col-md-8" style="user-select:none; display:flex; align-items: center">
+						<input type="checkbox" id="check_btn"/><label for="check_btn"></label>
+						<span class="ban_Select" style="font-weight:600; font-size:20px;"> 전체 동의합니다.<br></span>
 					</div>
 				</div>
 			</div>
-		</div>
+			</div>
+				
+				
+				<div class="row" style="justify-content: center;">
+				<div class="col-md-6">
+				<div class="agree_Style">
+					<div class="col-md-3">
+						<div class="field_Name">
+						</div>
+					</div>
+					<div class="col-md-8" style="user-select:none; display:flex; align-items: center">
+							<div class="mini_Font">
+						<span class="ban_Select">선택 항목에 동의하지 않은 경우도 회원가입 및 일반적인 서비스를 이용할 수 있습니다.</span>
+							</div>
+			</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row" style="justify-content: center;">
+			<div class="col-md-6">
+				<div class="agree_Style">
+					<div class="col-md-3">
+						<div class="field_Name">
+						</div>
+					</div>
+					<div class="col-md-8" style="justify-content: space-between;">
+						<input type="checkbox" id="check_btn2"/><label for="check_btn2"></label>
+						<span class="ban_Select" style="font-weight:500; font-size:15px;">이용약관 동의
+						<span class="mini_Font" style="font-size:15px;">(필수)</span ><br></span>
+						<a class="terms_Style">약관보기 ></a>
+					</div>
+				</div>
+			</div>
+			</div>
+			
+			<div class="row" style="justify-content: center;">
+			<div class="col-md-6">
+				<div class="agree_Style">
+					<div class="col-md-3">
+						<div class="field_Name">
+						</div>
+					</div>
+					<div class="col-md-8" style="justify-content: space-between;">
+						<input type="checkbox" id="check_btn3"/><label for="check_btn3"></label>
+						<span class="ban_Select" style="font-weight:500; font-size:15px;">개인정보 수집 이용 동의
+						<span class="mini_Font" style="font-size:15px;">(필수)</span ><br></span>
+						<a class="terms_Style">약관보기 ></a>
+					</div>
+				</div>
+			</div>
+			</div>
+			
+			<div class="row" style="justify-content: center;">
+			<div class="col-md-6">
+				<div class="agree_Style">
+					<div class="col-md-3">
+						<div class="field_Name">
+						</div>
+					</div>
+					<div class="col-md-8" style="justify-content: space-between;">
+						<input type="checkbox" id="check_btn4"/><label for="check_btn4"></label>
+						<span class="ban_Select" style="font-weight:500; font-size:15px;">본인은 만 14세 이상입니다.
+						<span class="mini_Font" style="font-size:15px;">(필수)</span ><br></span>
+						<a class="terms_Style">약관보기 ></a>
+					</div>
+				</div>
+			</div>
+			</div>
+			
+			<div class="row" style="justify-content: center;">
+				<div class="col-md-6" style="display:flex; justify-content: center; padding: 40px 0px;">
+					<button type="submit" class="btn btn-success" style="width: 240px; height: 56px;" name="join">가입하기</button>
+				</div>
+			</div>
+			
+			
+	<!-- <script>
+		$(document).ready(function()
 		
+
+			$('.mycheckBox').click(function()
+			{
+				$('#agreeDiv').find('img:eq(0)').toggle();
+			});
+		{});
+	</script>
+ -->
 	</main>
 	<jsp:include page="/Common/Footer.jsp" />
 	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
