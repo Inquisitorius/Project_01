@@ -1,0 +1,240 @@
+@charset "UTF-8";
+
+.listbody {
+	width: 1050px;
+	margin: 0px auto;
+}
+
+.listheader {
+	font-weight: 500;
+	font-size: 28px;
+	color: rgb(51, 51, 51);
+	line-height: 35px;
+	letter-spacing: -1px;
+	font-family: "Noto Sans KR", "malgun gothic", AppleGothic, dotum,
+		sans-serif;
+}
+
+.itemnav {
+	border: 1px solid rgb(226, 226, 226);
+	display: grid;
+	grid-template-columns: repeat(4, 180px);
+	font-family: "Noto Sans KR", "malgun gothic", AppleGothic, dotum,
+		sans-serif;
+	gap: 16px 83px;
+	font-size: 14px;
+	overflow: hidden;
+	margin-top: 28px;
+	padding: 30px 40px;
+	line-height: 20px;
+	font-size: 14px;
+}
+
+.item {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.link {
+	letter-spacing: -1px;
+	cursor: pointer;
+	text-decoration: none;
+	color: rgb(51, 51, 51);
+}
+
+.link:active {
+	color: rgb(95, 0, 128);
+	font-weight: bold;
+}
+
+.link:hover {
+	color: rgb(95, 0, 128);
+	font-weight: bold;
+}
+
+.listcontainer {
+	display: flex;
+	flex-direction: column;
+	margin: 0px auto;
+	width: 1050px;
+}
+
+.maincontent {
+	position: relative;
+	display: flex;
+	width: 1050px;
+	margin-top: 50px;
+	margin-bottom: 75px;
+}
+
+.sticky-sidebar {
+	position: sticky;
+	width: 200px;
+	flex-shrink: 0;
+	height: 100%;
+	top: 80px;
+	margin-right: 47px;
+	border-bottom: 1px solid #eee;
+	overflow: hidden auto;
+	scrollbar-width: none;
+	margin-left: 15px;
+}
+
+.sidebar-title {
+	position: sticky;
+	top: 0px;
+	display: flex;
+	z-index: 20;
+	background-color: rgb(255, 255, 255);
+	-webkit-box-pack: justify;
+	justify-content: space-between;
+	-webkit-box-align: center;
+	align-items: center;
+	padding-bottom: 20px;
+	border-bottom: 1px solid rgb(238, 238, 238);
+	line-height: 20px;
+}
+
+.titlespan {
+	font-weight: 500;
+	font-size: 15px;
+	color: rgb(51, 51, 51);
+	font-family: "Noto Sans KR", "malgun gothic", AppleGothic, dotum,
+		sans-serif;
+}
+
+.filter-group {
+	margin-bottom: 1em;
+}
+
+.toggle-btn {
+	cursor: pointer;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.title {
+	display: flex;
+	font-weight: 500;
+	font-size: 15px;
+	line-height: 20px;
+	color: rgb(51, 51, 51);
+	font-family: "Noto Sans KR", "malgun gothic", AppleGothic, dotum,
+		sans-serif;
+}
+
+.filter-content {
+	display: block;
+	display: inline-block;
+	margin-top: 9px;
+	font-family: "Noto Sans KR", "malgun gothic", AppleGothic, dotum,
+		sans-serif;
+	font-size: 14px;
+}
+
+input[type="checkbox"], input[type="radio"] {
+	display: none;
+}
+
+input[type="checkbox"]+label, input[type="radio"]+label {
+	position: relative;
+	padding-left: 30px;
+	cursor: pointer;
+	line-height: 20px;
+	display: inline-block;
+	color: #333;
+}
+
+input[type="checkbox"]+label:before, input[type="radio"]+label:before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 20px;
+	height: 20px;
+	border: 1px solid #ccc;
+	border-radius: 50%;
+	background: #fff;
+}
+
+input[type="checkbox"]:checked+label:before, input[type="radio"]:checked+label:before {
+	background: #5f0080;
+	border-color: #5f0080;
+}
+
+input[type="checkbox"]:checked+label:after, input[type="radio"]:checked+label:after {
+	content: '';
+	position: absolute;
+	left: 7px;
+	top: 7px;
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: #fff;
+}
+
+.products {
+	width: 100%;
+}
+
+.productsortcontainer {
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	-webkit-box-pack: justify;
+	justify-content: space-between;
+	padding-bottom: 20px;
+	line-height: 20px;
+}
+
+.productscnt {
+	font-size: 14px;
+	font-family: "Noto Sans KR", "malgun gothic", AppleGothic, dotum, sans-serif;
+	font-weight: 500;
+	color: rgb(51, 51, 51);
+	margin-bottom: 13px;
+}
+
+.productsort {
+	position: relative;
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+}
+
+.sort-li {
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	-webkit-box-pack: end;
+	justify-content: flex-end;
+	margin-left: 8px;
+	font-size: 14px;
+	color: rgb(153, 153, 153);
+}
+
+.sort-li::before {
+	content: "";
+	display: flex;
+	width: 1px;
+	height: 10px;
+	margin-right: 8px;
+	background-color: rgb(226, 226, 226);
+	flex-direction: column-reverse;
+	flex-wrap: nowrap;
+}
+
+.sort-li:first-child::before {
+	display: none;
+}
+
+.sort-a {
+	letter-spacing: -0.3px;
+	cursor: pointer;
+	background-color: transparent;
+	text-decoration: none;
+	color: inherit;
+}
+
