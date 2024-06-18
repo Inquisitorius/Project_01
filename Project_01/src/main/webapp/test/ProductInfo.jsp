@@ -5,6 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <script>
+
+	function 
 	function count(type)  {
 		  // 결과를 표시할 element
 		  const resultElement = document.getElementById('result');
@@ -15,7 +17,7 @@
 		  // 더하기/빼기
 		  if(type === 'plus') {
 		    number = parseInt(number) + 1;
-		  }else if(type === 'minus')  {
+		  }else if(type === 'minus' && number!=1)  {
 		    number = parseInt(number) - 1;
 		  }
 		  // 결과 출력
@@ -60,6 +62,15 @@ font-optical-sizing: auto;
 font-style: normal;
 color: #333333;
 margin-bottom:10px
+}
+.fontCommon_nomal2
+{
+font-family: "Noto Sans KR", serif;
+font-optical-sizing: auto;
+font-style: normal;
+color: #333333;
+width: 50px;
+text-align: center;
 }
 .fontgray
 {
