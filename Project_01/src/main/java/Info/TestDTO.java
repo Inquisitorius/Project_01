@@ -1,6 +1,6 @@
-package Main;
+package Info;
 
-public class testdao {
+public class TestDTO{
 	
 private int num;
 private String kind;
@@ -78,12 +78,6 @@ public String getScript() {
 }
 public void setScript(String script) {
 	this.script = script;
-}
-@Override
-public String toString() {
-	return "testdao [num=" + num + ", kind=" + kind + ", name=" + name + ", price=" + price + ", delivertype="
-			+ delivertype + ", packagingtype=" + packagingtype + ", notice=" + notice + ", origin=" + origin + ", unit="
-			+ unit + ", weight=" + weight + ", script=" + script + "]";
 }
 
 }
