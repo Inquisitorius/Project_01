@@ -10,6 +10,7 @@
 <jsp:include page="/Common/LinkFile.jsp"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 <link rel="stylesheet" href="/resources/css/Common.css">
+<link rel="stylesheet" href="/resources/css/MainPage.css">
 <script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>
 
 <style type="text/css">
@@ -48,66 +49,6 @@ body {
 	color: white;
 }
 
-.swiper 
-{
-	width: 100%;
-    height: 100%;
-}
-    
-.swiper-slide 
-{
-      text-align: center;
-      font-size: 18px;
-      background: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-}
-
-.swiper-slide img 
-{
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-}
-
-.swiper .swiper-pagination-bullet {
-  background-color: #304D30;
-  margin: 0 10px;
-}
-
-.swiper-button-next, .swiper-button-prev
-{
-	color: #304D30; /* 화살표 색상 */
-}
-
-.swiper-button-next.swiper-button-disabled, 
-.swiper-button-prev.swiper-button-disabled 
-{
-    opacity: .00;    
-}
-
-.card_list_prev,
-.card_list_next
-{
-	color: #ffffff;
-	border-radius: 50%;
-	border: 1px solid black;
-}
-
-/*부트스트랩 색상 설정*/
-.btn-navy {
-	color: #a0a0a0;
-	background-color: #ffffff;
-	border-color: #e0e0e0;
-}
-.btn-navy:hover {
-	color: #fff;
-	background-color: #47702e;
-	border-color: #163020;
-}
-
 </style>
 </head>
 <body>
@@ -133,7 +74,7 @@ body {
 			    <div class="swiper-pagination"></div>
 			</div>
 	</div>
-		<div class = "container" style = "max-width: 1050px; min-width: 1050px; padding-left: 0px; padding-top: 40px;">
+		<div class = "container" style = "max-width: 1050px; min-width: 1050px; padding-left: 0px; padding-right: 0px; padding-top: 40px;">
 			<div class= "row d-flex flex-nowrap" style = "justify-content: space-between;">
 				<div class = "col" href = "/MainPage/MainPage.jsp" style="display: inline-flex; justify-content: center;">
 					<a href = "/MainPage/MainPage.jsp" style ="text-decoration-line: none;">
@@ -147,8 +88,8 @@ body {
 					<span class = "mainpage_SubText" >그린 추천 특가템 최대 30%</span>					
 				</div>
 			</div>
-			<div class= "row d-flex flex-nowrap" style = "justify-content: space-between; margin-top: 24px;">
-				<div class="swiper mySwiper_card">
+			<div class= "row d-flex flex-nowrap" style = "justify-content: space-between; margin-top: 24px; margin-bottom: 40px;">
+				<div class="swiper mySwiper_card" style = "max-width: 1050px;">
 		    		<div class="swiper-wrapper">
 		      			<div class="swiper-slide">
 		      				<jsp:include page="/MainPage/MainPageCardItem.jsp"/>
@@ -177,6 +118,66 @@ body {
 		  		</div>
 			</div>
 		</div>		
+		<div class = "container" style = "max-width: 1050px; min-width: 1050px; padding-left: 0px; padding-right: 0px; padding-top: 40px; margin-bottom: 40px;">
+			<div class= "row d-flex flex-nowrap" style = "justify-content: space-between;">
+				<div class = "col">
+					<a href = "#">
+						<img src = "https://product-image.kurly.com/cdn-cgi/image/width=1050,height=140,quality=85/banner/random-band/pc/img/7cbd0f6e-31bb-4d96-95ea-03931a1bc751.jpg">
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class = "container" style = "max-width: 1050px; min-width: 1050px; padding-left: 0px; padding-right: 0px; padding-top: 40px; margin-bottom: 100px;">
+			<div class = "row">
+				<div class ="col-12" style = "display: flex; justify-content: space-between;">
+					<div style = "width: 249px;">
+						<div class = "row">
+							<h2 class="notoSans mainpage_cardFont_mainText">✨최저가 도전</h2>
+						</div>
+						<div class = "row">
+							<h3 class="notoSans mainpage_cardFont_subText">놓칠 수 없는 기회!</h3>
+						</div>
+						<div class = "row">
+							<div class="1">시간 라인</div>
+						</div>
+						<div class = "row">
+							<div class="notoSans mainpage_cardFont_subText2" style = "padding-top: 40px;">망설이면 늦어용</div>
+						</div>
+					</div>
+					<div style = "width: 694px;">
+						<div class = "row" style = "padding-left : 0px; padding-right: 0px; display: inline-flex;">
+							<div class = "col-12">
+								<img src="https://3p-image.kurly.com/cdn-cgi/image/fit=crop,width=800,height=400,quality=85/files/b5efbc44-d31c-43c9-895d-ad087a2b77e3/fbf76cb1-47b3-4628-af7b-1a36b5b3c51b.jpg" 
+							data-nimg="fill" class="css-1zjvv7" style="min-width: 100%; max-width: 100%; hegith: auto; border-radius: 3%;  overflow: hidden; padding-left : 0px;">							
+							</div>
+							
+						</div>
+						<div class = "row" style = "margin-top: 5px;">
+							<div class = "col-12" style = "display: inline-flex;">
+								<button class="btn btn-navy rounded-1 fontCommon_Option" type = "button" style = "width: 100%; height: 36px;">구매</button>
+							</div>
+						</div>	
+						<div class = "row" style = "margin-top: 5px;">
+							<div class = "col-12" style = "display: inline-flex;">
+								<label class = "notoSans mainpage_cardFont2_subText">판매자배송, 모던심플한 10만원대 가성비 음식물처리기</label>
+							</div>
+						</div>
+						<div class = "row" style = "margin-top: 5px;">
+							<div class = "col-12" style = "display: inline-flex;">
+								<label class = "notoSans mainpage_cardFont2_mainText">[루펜] 음식물처리기 SLW-01 4종(택1)</label>
+							</div>
+						</div>	
+						<div class = "row" style = "margin-top: 5px;">
+							<div class = "col-12" style = "display: inline-flex;">
+								<label class = "notoSans mainpage_cardFont2_SalePriceText">33%</label>
+								<label class = "notoSans mainpage_cardFont2_Price">30000원</label>
+								<label class = "notoSans mainpage_cardFont2_OriPrice">30000원</label>
+							</div>
+						</div>		
+					</div>				
+				</div>
+			</div>
+		</div>
 	</main>
 	<jsp:include page="/Common/Footer.jsp"/>
 	<script>

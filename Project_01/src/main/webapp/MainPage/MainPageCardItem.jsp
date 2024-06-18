@@ -11,8 +11,8 @@
 						</div>
 					</div>
 					<div class = "row" style = "margin-top: 5px;">
-						<div class = "col-12" style = "padding-left : 0px; padding-right: 0px;">
-							<div class = "mainpage_Itemtitle" style = "width: 249px; text-align:left;">[해운대암소갈비집] 한우 소불고기 전골</div>
+						<div class = "col-12" style = "padding-left : 0px;">
+							<div class = "mainpage_Itemtitle" style = "width: 249px; text-align:left; padding-right: 7px;">[해운대암소갈비집] 한우 소불고기 전골</div>
 						</div>
 					</div>	
 					<div class = "row" style = "margin-top: 5px;">

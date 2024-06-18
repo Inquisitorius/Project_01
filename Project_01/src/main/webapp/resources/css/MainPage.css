@@ -1,0 +1,255 @@
+@charset "UTF-8";
+/* swiper */
+.swiper 
+{
+	width: 100%;
+    height: 100%;
+}
+    
+.swiper-slide 
+{
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+}
+
+.swiper-slide img 
+{
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+}
+
+.swiper .swiper-pagination-bullet {
+  background-color: #304D30;
+  margin: 0 10px;
+}
+
+.swiper-button-next, .swiper-button-prev
+{
+	color: #304D30; /* 화살표 색상 */
+}
+
+.swiper-button-next.swiper-button-disabled, 
+.swiper-button-prev.swiper-button-disabled 
+{
+    opacity: .00;    
+}
+
+.card_list_prev
+{
+	background : url("/resources/img/left-arrow.png") no-repeat;
+}
+.card_list_next
+{
+	background : url("/resources/img/right-arrow.png") no-repeat;
+}
+
+.card_list_prev,
+.card_list_next
+{
+	background-size: 100% auto;
+	background-position: center;
+	
+	top: var(--swiper-navigation-top-offset, 40%);
+}
+
+.card_list_prev::after,
+.card_list_next::after
+{
+	display: none;
+}
+
+/* swiper end */
+
+/*부트스트랩 색상 설정*/
+.btn-navy {
+	color: #a0a0a0;
+	background-color: #ffffff;
+	border-color: #e0e0e0;
+}
+.btn-navy:hover {
+	color: #fff;
+	background-color: #47702e;
+	border-color: #163020;
+}
+
+.notoSans
+{
+	font-family: "Noto Sans KR", sans-serif;
+	font-optical-sizing: auto;
+	font-style: normal;
+}
+
+
+.mainpage_SubTitle
+{
+	font-family: "Noto Sans KR", sans-serif;
+	font-optical-sizing: auto;
+	font-style: normal;
+	
+	color: rgb(51, 51, 51);
+    font-size: 28px;
+    line-height: 1.15;
+    letter-spacing: -0.26px;
+    font-weight: 500;	
+}
+.mainpage_SubText
+{
+	font-family: "Noto Sans KR", sans-serif;
+	font-optical-sizing: auto;
+	font-style: normal;
+	
+	font-size: 16px;
+    font-weight: normal;
+    line-height: 1.45;
+    letter-spacing: -0.2px;
+    text-align: center;
+    color: rgb(153, 153, 153);
+    margin-top: 2px;
+}
+
+.mainpage_Itemtitle
+{
+	font-family: "Noto Sans KR", sans-serif;
+	font-optical-sizing: auto;
+	font-style: normal;
+	
+	font-size: 16px;
+    line-height: 23px;
+    font-weight: 400;
+    margin-bottom: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    letter-spacing: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    
+    color: rgb(51, 51, 51);
+}
+
+.mainpage_OripriceText
+{
+	font-family: "Noto Sans KR", sans-serif;
+	font-optical-sizing: auto;
+	font-style: normal;
+	
+	color: rgb(181, 181, 181);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    text-decoration: line-through;
+}
+
+.mainpage_SalepercentText
+{
+	font-family: "Noto Sans KR", sans-serif;
+	font-optical-sizing: auto;
+	font-style: normal;
+	
+	color: rgb(250, 98, 47);
+	
+	font-size: 16px;
+    font-weight: 700;
+    line-height: 1.5;
+    white-space: nowrap;
+}
+
+.mainpage_SalePriceText
+{
+	font-family: "Noto Sans KR", sans-serif;
+	font-optical-sizing: auto;
+	font-style: normal;
+	
+	font-size: 16px;
+    font-weight: 700;
+    line-height: 1.5;
+    white-space: nowrap;	
+}
+
+.mainpage_cardFont_mainText
+{
+	padding-top: 1px;
+    font-size: 28px;
+    color: rgb(51, 51, 51);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.26px;
+}
+
+.mainpage_cardFont_subText
+{	
+	padding-top: 0px;
+    font-size: 16px;
+    color: rgb(153, 153, 153);
+    font-weight: normal;
+    line-height: 1.3;
+    letter-spacing: normal;
+}
+
+.mainpage_cardFont_subText2
+{
+	padding-top: 26px;
+    font-size: 14px;
+    color: rgb(204, 204, 204);
+    font-weight: normal;
+    line-height: 1.43;
+    letter-spacing: -0.4px;
+}
+
+.mainpage_cardFont2_subText
+{
+	margin-bottom: 8px;
+    font-size: 14px;
+    color: rgb(153, 153, 153);
+    line-height: 1.38;
+    word-break: break-word;
+}
+
+.mainpage_cardFont2_mainText
+{
+	margin-bottom: 6px;
+    font-size: 16px;
+    line-height: 1.45;
+    color: rgb(51, 51, 51);
+}
+
+.mainpage_cardFont2_SalePriceText
+{
+	font-size: 20px;
+	line-height: 30px;
+	margin-right: 7px;
+	font-weight: 700;
+	white-space: nowrap;
+	color: rgb(250, 98, 47);
+}
+
+.mainpage_cardFont2_Price
+{
+	margin-right: 7px;
+	font-size: 20px;
+	line-height: 30px;
+	white-space: nowrap;
+	color : rgb(51, 51, 51);
+	font-weight: 700;
+}
+
+.mainpage_cardFont2_OriPrice
+{
+	line-height: 30px;
+	
+	color: rgb(181, 181, 181);
+    font-size: 14px;
+    font-weight: 400;   
+    text-decoration: line-through;
+}
+
+
+
