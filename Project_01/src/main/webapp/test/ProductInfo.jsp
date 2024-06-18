@@ -5,24 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <script>
-function add() {
-		hm = document.form1.amounts;// name이 amounts인 요소
-		sell_price = document.form1.sell_price;// name이 sell_price인 요소
-		hm.value++;// hm 값을 1 증가
-		var sum_ = parseInt(hm.value) * sell_price.value;// hm을 정수로 변환 * sell_price 금액 계산
-		document.getElementById("my_sum")
-		document.write('test');
-	}
-function del() {
-		hm = document.form1.amounts;
-		sell_price = document.form1.sell_price;
-		if (hm.value > 1) {// hm(amounts에서 가져온 값)가 1보다 크면
-			hm.value--;// hm 값 1 감소
-			var sum_ = parseInt(hm.value) * sell_price.value;
-			document.getElementById("my_sum")	
-			document.write('test2');
-		}
-	}
 	function count(type)  {
 		  // 결과를 표시할 element
 		  const resultElement = document.getElementById('result');
@@ -244,16 +226,13 @@ background-color:gray;
 					상품선택
 				</div>
 				<div class = "col-md-9 fontgray">
-					<input type="button" class="button_style2" value=" - " onclick="del();">
-			<input type="hidden" class="button_style2" name="sell_price" style="width:30px;" value="${dto.p_price}" >
-			<input type="text" class="button_style2" name="amounts" value="1" size="3">
-			<input type="button" class="button_style2"value=" + " onclick="add();">
-			<input type="hidden" name="sum" size="11" readonly>
-			<div>
-  			<fmt:formatNumber value="${dto.p_price}" pattern="#,###" /></span></div>
-			<input type="hidden" name="m_id" id="m_id" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}">
-				</div>
-				
+					<div class = "col-md-9 fontgray">
+			<input type='button' class="button_style2"onclick='count("minus")'value='-'style="min-width: 25px;height: auto;border-radius: 2px;">
+			<!-- <input type="text" class="button_style2" name="amounts" value="1"min="0"> -->
+			<label class="fontCommon_nomal2" id='result' min="0">1</label>
+			<input type='button' class="button_style2" onclick='count("plus")'value='+'style="min-width: 25px;height: auto;border-radius: 3px;">
+			</div>
+			</div>
 			</div>
 			<div class= "row">
 				<div class = "col-md-12 fontgray right" style="display:inline-flex;align-items: center;">

@@ -14,13 +14,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class testDB {
+public class TestDBPool	 {
 	public Connection con;
 	public Statement stmt;
 	public PreparedStatement psmt;
 	public ResultSet rs;
 	
-	public testDB() {
+	public TestDBPool() {
 		try {
 			Context initCtx = new InitialContext();
 			Context ctx = (Context)initCtx.lookup("java:comp/env");
