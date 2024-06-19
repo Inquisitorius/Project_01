@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="/resources/css/Common.css">
 <link rel="stylesheet" href="/resources/css/MainPage.css">
 <script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>
+<script src="/resources/bootstrap/js/jQueryRotate.js"></script>
 
 <style type="text/css">
 body {
@@ -137,8 +138,19 @@ body {
 						<div class = "row">
 							<h3 class="notoSans mainpage_cardFont_subText">놓칠 수 없는 기회!</h3>
 						</div>
-						<div class = "row">
-							<div class="1">시간 라인</div>
+						<div class = "row" style="padding-left: 30px; padding-top: 10px;">
+							<div id="col-3 circle" style = " width : 28px; height : 28px; border-radius: 50%; background-color: rgb(189, 118, 255); padding: 0px;">
+								<img id = "" src = "/resources/img/clock_00.png" style = "width: 25px; height: auto; position : relative; left : 1px;">
+								<img id = "circle_clock" src = "/resources/img/clock_00.png" style = "width: 25px; height: auto; position: relative; left : 1px; top: -27px;">
+							</div>
+							<div class = "col">
+								<label class = "mainpage_timeCountText " id = "time_h" >11</label>
+								<label class = "mainpage_timeCountText time_dot" >:</label>
+								<label class = "mainpage_timeCountText " id = "time_m" >22</label>
+								<label class = "mainpage_timeCountText time_dot" >:</label>
+								<label class = "mainpage_timeCountText " id = "time_s" >33</label>
+								
+							</div>
 						</div>
 						<div class = "row">
 							<div class="notoSans mainpage_cardFont_subText2" style = "padding-top: 40px;">망설이면 늦어용</div>
@@ -180,25 +192,79 @@ body {
 		</div>
 	</main>
 	<jsp:include page="/Common/Footer.jsp"/>
-	<script>
-	$(document).ready(function()
-	{
-		//alert("jQuery is Ready");
-	});
-	
-	$('.btntest').click(function()
-	{
-		alert("Clicked");
-		$('.inputtest').val("asdsadsa");
-		location.href = "/MainController/test.do2";
-	});
-	
-	</script>
 
 	<!--  <script src="/resources/bootstrap/js/bootstrap.min.js"></script>-->
 	<script src="/resources/bootstrap/js/bootstrap.bundle.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 	<script>
+	
+		var dateTest = "2024.06.20 00:00:00";
+		function timeUpdate()
+		{
+			//var arrayDate = dateTest.split(".");
+			
+			var now = new Date().getTime() / 1000;
+			var target = new Date(dateTest).getTime() /1000; //ms 단위
+		
+			var hrs = Math.floor((target - now) / 3600); 		
+			var min = Math.floor(((target - now) % 3600) / 60);
+			var sec = Math.floor((((target - now) % 3600) % 60));
+			
+			if(hrs < 10)
+				hrs = "0" + hrs;
+			
+			if(min < 10)
+				min = "0" + min;
+			
+			if(sec < 10)
+				sec = "0" + sec;
+			
+			$('#time_h').text(hrs);
+			$('#time_m').text(min);
+			$('#time_s').text(sec);
+		}
+	
+		$(document).ready(function()
+		{	
+			timeUpdate();
+			setInterval(function(){
+				
+				var tr = $("#circle_clock").css('transform');
+				//console.log(tr);
+				var values = tr.split('(')[1].split(')')[0].split(',');
+				var a = values[0];
+				var b = values[1];
+				var c = values[2];
+				var d = values[3];
+
+				var scale = Math.sqrt(a*a + b*b);
+				var sin = b/scale;
+				var angle_0 = Math.round(Math.atan2(b, a) * (180/Math.PI));
+				
+				//$("#circle_clock").rotate(angle + 30);
+				$("#circle_clock").rotate({
+				    angle: angle_0 - 360, //예정지
+				    animateTo: 89, //출발지
+				    duration: 990,
+				    callback: function(){
+				    	timeUpdate();
+				    }
+				});
+				
+			},1000);
+		});
+		
+		<!-- 
+		$("#circle_clock").rotate({
+		    angle: 0,
+		    animateTo: 180,
+		    duration: 1000,
+		    callback: function(){
+		       
+		    }
+		});		
+		-->
+	
 		<!-- Initialize Swiper -->
 	    var swiper = new Swiper(".mySwiper", {
 	      slidesPerView: 1,

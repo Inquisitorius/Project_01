@@ -251,5 +251,17 @@
     text-decoration: line-through;
 }
 
+.mainpage_timeCountText
+{
+	font-family: "Noto Sans KR", sans-serif;
+	font-optical-sizing: auto;
+	font-style: normal;
+	
+	font-size: 24px;
+    font-weight: 700;
+    line-height: 1.0;
+    white-space: nowrap;
+}
+
 
 
