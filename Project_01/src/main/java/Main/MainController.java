@@ -1,7 +1,12 @@
 package Main;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.List;
 
+import com.google.gson.Gson;
+
+import Category.CategoryDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -34,10 +39,30 @@ public class MainController extends HttpServlet
 	}
 	
 	public void testDoFunction(HttpServletRequest req, HttpServletResponse resp)
-	{
-		//resp.set
-		
-		//dto = dao.select View();		
+	{	
+		try 
+		{
+			resp.setContentType("application/json");
+			resp.setCharacterEncoding("UTF-8");
+			
+			BufferedReader reader = req.getReader();
+			Gson gson_in = new Gson();
+			TestDTO data = gson_in.fromJson(reader, TestDTO.class);			
+			
+			MainDAO dao = new MainDAO();
+			
+			List<CategoryDTO> list = dao.selectList();
+			
+		    Gson gson = new Gson();
+		    String jsonResponse = gson.toJson(list);
+		    System.out.print("jsonResponse : " + jsonResponse);
+		    resp.getWriter().write(jsonResponse);
+		    
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
 	}
 	
 	public void testDoFunction2(HttpServletRequest req, HttpServletResponse resp)

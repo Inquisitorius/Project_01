@@ -89,7 +89,7 @@ body {
 				<div class = "col" style="display: inline-flex; justify-content: center; text-decoration-line: none;">
 					<span class = "mainpage_SubText" >그린 추천 특가템 최대 30%</span>					
 				</div>
-			</div>
+			</div>			
 			<div class= "row d-flex flex-nowrap" style = "justify-content: space-between; margin-top: 24px; margin-bottom: 40px;">
 				<div class="swiper mySwiper_card" style = "max-width: 1050px;">
 		    		<div class="swiper-wrapper">
@@ -226,8 +226,12 @@ body {
 		}
 	
 		$(document).ready(function()
-		{	
-			testAjax();
+		{				
+			
+			$('#test').click(function()
+			{
+				testAjax();
+			});
 			
 			<!-- tiem function -->
 			timeUpdate();
@@ -260,24 +264,35 @@ body {
 		
 		function testAjax()
 		{
+			var data = {
+					test_00: "this is ajax ||||;;sada",
+					test_01: "very good"
+                };
+			
+			$('#test').text("text changer!!!!!!!!!!!");
+			
 			var url = "http://localhost:8080/MainController/test.do";
 		    $.ajax({
-		        type:"GET",
+		        type:"post",
 		        url:url,
-		        dataType:"html",
-		        data:{
-		            name : $('#ajaxConName').val(),
-		            age : $('#ajaxConAge').val()
-		        },
-		        success : function(test){
-		            console.log(test);		        
-		        },
+		        contentType: 'application/json',
+		        data: JSON.stringify(data),		       
+                success: function(response) 
+                {
+                	$(response).each(function(){
+        				console.log(this.idx + " : " + this.Category_Name + " ");
+        				});
+                },
 		        error : function(request,status,error){
 		            alert('code:'+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); //에러 상태에 대한 세부사항 출력
 		            alert(e);
 		        }
 		    });
 		}
+		
+		//ajax 방식을 통해서 통신
+		//여기서 받는 방식이 json type 이다.
+		
 	
 		<!-- Initialize Swiper -->
 	    var swiper = new Swiper(".mySwiper", {
