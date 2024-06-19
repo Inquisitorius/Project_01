@@ -1,3 +1,5 @@
+<%@page import="ProductsListController.ListDTO"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -128,7 +130,7 @@
 				</div>
 				<div class="products">
 					<div class="productsortcontainer">
-						<div class="productscnt">총 400건</div>
+						<div class="productscnt">총 <%=request.getAttribute("cnt") %>건</div>
 						<ul class="productsort">
 							<li class="sort-li"><a href="#" class="sort-a">추천순</a></li>
 							<li class="sort-li"><a href="#" class="sort-a">신상품순</a></li>
@@ -139,219 +141,46 @@
 						</ul>
 					</div>
 					<div class="container list" style="text-decoration-line:none">
+					<% List<ListDTO> list = (List<ListDTO>) request.getAttribute("list");
+						if(list != null){
+							for(ListDTO dto : list){
+						
+					%>
 					<div class="row">
 					<a href="#" style="text-decoration-line: none;">
 						<img src="https://product-image.kurly.com/hdims/resize/%5E%3E360x%3E468/cropcenter/360x468/quality/85/src/product/image/b15f2d12-eca6-4491-b37e-83d156377cde.jpg?v=0531" style="padding: 0px; width: 249px; height: 320px; border-radius: 2%;  overflow: hidden;">
 						<button class="btn btn-navy rounded-1 fontCommon_Option" type="button" style="width: 249px; height: 36px; margin-top: 5px;">구매</button>
-						<div class="delivery" style="text-align: left; margin-top: 5px;">샛별배송</div>
-						<div class="list_Itemtitle" style="width: 249px; text-align:left;">[해운대암소갈비집] 한우 소불고기 전골</div>
+						<div class="delivery" style="text-align: left; margin-top: 5px;"><%= dto.getDelivery() %></div>
+						<div class="list_Itemtitle" style="width: 249px; text-align:left;"><%= dto.getTitle() %></div>
 						<div class="row" style="margin-top: 5px;">
-						<div class="explation" style="text-align: left;">맛있는 불고기</div>
+						<div class="explation" style="text-align: left;"><%= dto.getContent() %></div>
 						<div class="col-12">
-							<span class="OripriceText" style="width: 249px; ">19999원</span>
+							<span class="OripriceText" style="width: 249px; "><%=dto.getOprice() %>원</span>
 						</div>
 					</div>
 					<div class="row" style="margin-top: 5px;">
 						<div class="col-2" style="display: inline-flex;">
-							<span class="SalePercentText" style="text-align: left">99%</span>
+							<span class="SalePercentText" style="text-align: left"><%=dto.getSaleper()%>%</span>
 						</div>
 						<div class="col" style="display: inline-flex;">
-							<span class="SalePriceText" style="text-align: left">99999원</span>
+							<span class="SalePriceText" style="text-align: left"><%=dto.getNprice() %>원</span>
 						</div>
 					</div>	
 					</a>
 					</div>		
+					<% }
+							}%>
 					
-					<div class="row">
-					<a href="#" style="text-decoration-line: none;">
-						<img src="https://product-image.kurly.com/hdims/resize/%5E%3E360x%3E468/cropcenter/360x468/quality/85/src/product/image/b15f2d12-eca6-4491-b37e-83d156377cde.jpg?v=0531" style="padding: 0px; width: 249px; height: 320px; border-radius: 2%;  overflow: hidden;">
-						<button class="btn btn-navy rounded-1 fontCommon_Option" type="button" style="width: 249px; height: 36px; margin-top: 5px;">구매</button>
-						<div class="delivery" style="text-align: left; margin-top: 5px;">샛별배송</div>
-						<div class="list_Itemtitle" style="width: 249px; text-align:left;">[해운대암소갈비집] 한우 소불고기 전골</div>
-						<div class="row" style="margin-top: 5px;">
-						<div class="explation" style="text-align: left;">맛있는 불고기</div>
-						<div class="col-12">
-							<span class="OripriceText" style="width: 249px; ">19999원</span>
-						</div>
-					</div>
-					<div class="row" style="margin-top: 5px;">
-						<div class="col-2" style="display: inline-flex;">
-							<span class="SalePercentText" style="text-align: left">99%</span>
-						</div>
-						<div class="col" style="display: inline-flex;">
-							<span class="SalePriceText" style="text-align: left">99999원</span>
-						</div>
-					</div>	
-					</a>
-					</div>		
-					
-					<div class="row">
-					<a href="#" style="text-decoration-line: none;">
-						<img src="https://product-image.kurly.com/hdims/resize/%5E%3E360x%3E468/cropcenter/360x468/quality/85/src/product/image/b15f2d12-eca6-4491-b37e-83d156377cde.jpg?v=0531" style="padding: 0px; width: 249px; height: 320px; border-radius: 2%;  overflow: hidden;">
-						<button class="btn btn-navy rounded-1 fontCommon_Option" type="button" style="width: 249px; height: 36px; margin-top: 5px;">구매</button>
-						<div class="delivery" style="text-align: left; margin-top: 5px;">샛별배송</div>
-						<div class="list_Itemtitle" style="width: 249px; text-align:left;">[해운대암소갈비집] 한우 소불고기 전골</div>
-						<div class="row" style="margin-top: 5px;">
-						<div class="explation" style="text-align: left;">맛있는 불고기</div>
-						<div class="col-12">
-							<span class="OripriceText" style="width: 249px; ">19999원</span>
-						</div>
-					</div>
-					<div class="row" style="margin-top: 5px;">
-						<div class="col-2" style="display: inline-flex;">
-							<span class="SalePercentText" style="text-align: left">99%</span>
-						</div>
-						<div class="col" style="display: inline-flex;">
-							<span class="SalePriceText" style="text-align: left">99999원</span>
-						</div>
-					</div>	
-					</a>
-					</div>		
-					
-					<div class="row">
-					<a href="#" style="text-decoration-line: none;">
-						<img src="https://product-image.kurly.com/hdims/resize/%5E%3E360x%3E468/cropcenter/360x468/quality/85/src/product/image/b15f2d12-eca6-4491-b37e-83d156377cde.jpg?v=0531" style="padding: 0px; width: 249px; height: 320px; border-radius: 2%;  overflow: hidden;">
-						<button class="btn btn-navy rounded-1 fontCommon_Option" type="button" style="width: 249px; height: 36px; margin-top: 5px;">구매</button>
-						<div class="delivery" style="text-align: left; margin-top: 5px;">샛별배송</div>
-						<div class="list_Itemtitle" style="width: 249px; text-align:left;">[해운대암소갈비집] 한우 소불고기 전골</div>
-						<div class="row" style="margin-top: 5px;">
-						<div class="explation" style="text-align: left;">맛있는 불고기</div>
-						<div class="col-12">
-							<span class="OripriceText" style="width: 249px; ">19999원</span>
-						</div>
-					</div>
-					<div class="row" style="margin-top: 5px;">
-						<div class="col-2" style="display: inline-flex;">
-							<span class="SalePercentText" style="text-align: left">99%</span>
-						</div>
-						<div class="col" style="display: inline-flex;">
-							<span class="SalePriceText" style="text-align: left">99999원</span>
-						</div>
-					</div>	
-					</a>
-					</div>		
-					
-					<div class="row">
-					<a href="#" style="text-decoration-line: none;">
-						<img src="https://product-image.kurly.com/hdims/resize/%5E%3E360x%3E468/cropcenter/360x468/quality/85/src/product/image/b15f2d12-eca6-4491-b37e-83d156377cde.jpg?v=0531" style="padding: 0px; width: 249px; height: 320px; border-radius: 2%;  overflow: hidden;">
-						<button class="btn btn-navy rounded-1 fontCommon_Option" type="button" style="width: 249px; height: 36px; margin-top: 5px;">구매</button>
-						<div class="delivery" style="text-align: left; margin-top: 5px;">샛별배송</div>
-						<div class="list_Itemtitle" style="width: 249px; text-align:left;">[해운대암소갈비집] 한우 소불고기 전골</div>
-						<div class="row" style="margin-top: 5px;">
-						<div class="explation" style="text-align: left;">맛있는 불고기</div>
-						<div class="col-12">
-							<span class="OripriceText" style="width: 249px; ">19999원</span>
-						</div>
-					</div>
-					<div class="row" style="margin-top: 5px;">
-						<div class="col-2" style="display: inline-flex;">
-							<span class="SalePercentText" style="text-align: left">99%</span>
-						</div>
-						<div class="col" style="display: inline-flex;">
-							<span class="SalePriceText" style="text-align: left">99999원</span>
-						</div>
-					</div>	
-					</a>
-					</div>		
-					
-					<div class="row">
-					<a href="#" style="text-decoration-line: none;">
-						<img src="https://product-image.kurly.com/hdims/resize/%5E%3E360x%3E468/cropcenter/360x468/quality/85/src/product/image/b15f2d12-eca6-4491-b37e-83d156377cde.jpg?v=0531" style="padding: 0px; width: 249px; height: 320px; border-radius: 2%;  overflow: hidden;">
-						<button class="btn btn-navy rounded-1 fontCommon_Option" type="button" style="width: 249px; height: 36px; margin-top: 5px;">구매</button>
-						<div class="delivery" style="text-align: left; margin-top: 5px;">샛별배송</div>
-						<div class="list_Itemtitle" style="width: 249px; text-align:left;">[해운대암소갈비집] 한우 소불고기 전골</div>
-						<div class="row" style="margin-top: 5px;">
-						<div class="explation" style="text-align: left;">맛있는 불고기</div>
-						<div class="col-12">
-							<span class="OripriceText" style="width: 249px; ">19999원</span>
-						</div>
-					</div>
-					<div class="row" style="margin-top: 5px;">
-						<div class="col-2" style="display: inline-flex;">
-							<span class="SalePercentText" style="text-align: left">99%</span>
-						</div>
-						<div class="col" style="display: inline-flex;">
-							<span class="SalePriceText" style="text-align: left">99999원</span>
-						</div>
-					</div>	
-					</a>
-					</div>		
-					
-					<div class="row">
-					<a href="#" style="text-decoration-line: none;">
-						<img src="https://product-image.kurly.com/hdims/resize/%5E%3E360x%3E468/cropcenter/360x468/quality/85/src/product/image/b15f2d12-eca6-4491-b37e-83d156377cde.jpg?v=0531" style="padding: 0px; width: 249px; height: 320px; border-radius: 2%;  overflow: hidden;">
-						<button class="btn btn-navy rounded-1 fontCommon_Option" type="button" style="width: 249px; height: 36px; margin-top: 5px;">구매</button>
-						<div class="delivery" style="text-align: left; margin-top: 5px;">샛별배송</div>
-						<div class="list_Itemtitle" style="width: 249px; text-align:left;">[해운대암소갈비집] 한우 소불고기 전골</div>
-						<div class="row" style="margin-top: 5px;">
-						<div class="explation" style="text-align: left;">맛있는 불고기</div>
-						<div class="col-12">
-							<span class="OripriceText" style="width: 249px; ">19999원</span>
-						</div>
-					</div>
-					<div class="row" style="margin-top: 5px;">
-						<div class="col-2" style="display: inline-flex;">
-							<span class="SalePercentText" style="text-align: left">99%</span>
-						</div>
-						<div class="col" style="display: inline-flex;">
-							<span class="SalePriceText" style="text-align: left">99999원</span>
-						</div>
-					</div>	
-					</a>
-					</div>		
-					
-					<div class="row">
-					<a href="#" style="text-decoration-line: none;">
-						<img src="https://product-image.kurly.com/hdims/resize/%5E%3E360x%3E468/cropcenter/360x468/quality/85/src/product/image/b15f2d12-eca6-4491-b37e-83d156377cde.jpg?v=0531" style="padding: 0px; width: 249px; height: 320px; border-radius: 2%;  overflow: hidden;">
-						<button class="btn btn-navy rounded-1 fontCommon_Option" type="button" style="width: 249px; height: 36px; margin-top: 5px;">구매</button>
-						<div class="delivery" style="text-align: left; margin-top: 5px;">샛별배송</div>
-						<div class="list_Itemtitle" style="width: 249px; text-align:left;">[해운대암소갈비집] 한우 소불고기 전골</div>
-						<div class="row" style="margin-top: 5px;">
-						<div class="explation" style="text-align: left;">맛있는 불고기</div>
-						<div class="col-12">
-							<span class="OripriceText" style="width: 249px; ">19999원</span>
-						</div>
-					</div>
-					<div class="row" style="margin-top: 5px;">
-						<div class="col-2" style="display: inline-flex;">
-							<span class="SalePercentText" style="text-align: left">99%</span>
-						</div>
-						<div class="col" style="display: inline-flex;">
-							<span class="SalePriceText" style="text-align: left">99999원</span>
-						</div>
-					</div>	
-					</a>
-					</div>		
-					
-					<div class="row">
-					<a href="#" style="text-decoration-line: none;">
-						<img src="https://product-image.kurly.com/hdims/resize/%5E%3E360x%3E468/cropcenter/360x468/quality/85/src/product/image/b15f2d12-eca6-4491-b37e-83d156377cde.jpg?v=0531" style="padding: 0px; width: 249px; height: 320px; border-radius: 2%;  overflow: hidden;">
-						<button class="btn btn-navy rounded-1 fontCommon_Option" type="button" style="width: 249px; height: 36px; margin-top: 5px;">구매</button>
-						<div class="delivery" style="text-align: left; margin-top: 5px;">샛별배송</div>
-						<div class="list_Itemtitle" style="width: 249px; text-align:left;">[해운대암소갈비집] 한우 소불고기 전골</div>
-						<div class="row" style="margin-top: 5px;">
-						<div class="explation" style="text-align: left;">맛있는 불고기</div>
-						<div class="col-12">
-							<span class="OripriceText" style="width: 249px; ">19999원</span>
-						</div>
-					</div>
-					<div class="row" style="margin-top: 5px;">
-						<div class="col-2" style="display: inline-flex;">
-							<span class="SalePercentText" style="text-align: left">99%</span>
-						</div>
-						<div class="col" style="display: inline-flex;">
-							<span class="SalePriceText" style="text-align: left">99999원</span>
-						</div>
-					</div>	
-					</a>
-					</div>		
 				</div>
 				
 				
 					
 				</div>
+
+
 			</div>
 		</div>
+		
 	</div>
 	<jsp:include page="/Common/Footer.jsp" />
 	<script>
