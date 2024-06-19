@@ -35,7 +35,7 @@ public class MainController extends HttpServlet
 	
 	public void testDoFunction(HttpServletRequest req, HttpServletResponse resp)
 	{
-		req.setAttribute("test", "testString");
+		//resp.set
 		
 		//dto = dao.select View();		
 	}
