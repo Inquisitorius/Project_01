@@ -63,7 +63,8 @@ body {
 			      	<img src="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/60026f84-40b2-4eb7-84d5-b90b464feb41.jpg">
 			      </div>
 			      <div class="swiper-slide">
-			      	<img src="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/0d1e09d2-5301-4e91-abcd-5549384d625d.jpg">
+			      	<!--  <img src="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/0d1e09d2-5301-4e91-abcd-5549384d625d.jpg">-->
+			      	<img src = "/resources/img/melonHeadLine.jpg"/>
 			      </div>
 			      <div class="swiper-slide">
 			      	<img src="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/09193c01-e241-4666-9d41-ec55deeff5e7.jpg">
@@ -141,7 +142,7 @@ body {
 						<div class = "row" style="padding-left: 30px; padding-top: 10px;">
 							<div id="col-3 circle" style = " width : 28px; height : 28px; border-radius: 50%; background-color: rgb(189, 118, 255); padding: 0px;">
 								<img id = "" src = "/resources/img/clock_00.png" style = "width: 25px; height: auto; position : relative; left : 1px;">
-								<img id = "circle_clock" src = "/resources/img/clock_00.png" style = "width: 25px; height: auto; position: relative; left : 1px; top: -27px;">
+								<img id = "circle_clock" src = "/resources/img/clock_00.png" style = "width: 25px; height: auto; position: relative; left : 1px; top: -27px; transform: rotate(45deg);">
 							</div>
 							<div class = "col">
 								<label class = "mainpage_timeCountText " id = "time_h" >11</label>
@@ -226,12 +227,15 @@ body {
 	
 		$(document).ready(function()
 		{	
+			testAjax();
+			
+			<!-- tiem function -->
 			timeUpdate();
 			setInterval(function(){
 				
-				var tr = $("#circle_clock").css('transform');
-				//console.log(tr);
+				var tr = $('#circle_clock').css('transform');				
 				var values = tr.split('(')[1].split(')')[0].split(',');
+			
 				var a = values[0];
 				var b = values[1];
 				var c = values[2];
@@ -254,16 +258,26 @@ body {
 			},1000);
 		});
 		
-		<!-- 
-		$("#circle_clock").rotate({
-		    angle: 0,
-		    animateTo: 180,
-		    duration: 1000,
-		    callback: function(){
-		       
-		    }
-		});		
-		-->
+		function testAjax()
+		{
+			var url = "http://localhost:8080/MainController/test.do";
+		    $.ajax({
+		        type:"GET",
+		        url:url,
+		        dataType:"html",
+		        data:{
+		            name : $('#ajaxConName').val(),
+		            age : $('#ajaxConAge').val()
+		        },
+		        success : function(test){
+		            console.log(test);		        
+		        },
+		        error : function(request,status,error){
+		            alert('code:'+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); //에러 상태에 대한 세부사항 출력
+		            alert(e);
+		        }
+		    });
+		}
 	
 		<!-- Initialize Swiper -->
 	    var swiper = new Swiper(".mySwiper", {
