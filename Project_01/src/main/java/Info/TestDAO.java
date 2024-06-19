@@ -15,21 +15,21 @@ public class TestDAO extends JDBConnect {
 		
 		try {
 			psmt = con.prepareStatement(query);
-			psmt.setString(1, num);
+			psmt.setString(1, "1");
 			rs = psmt.executeQuery();
 			
 			if(rs.next()) {
-				dto.setNum(rs.getInt(1));
-				dto.setKind(rs.getString(2));
-				dto.setName(rs.getString(3));
-				dto.setPrice(rs.getInt(4));
-				dto.setDelivertype(rs.getString(5));
-				dto.setPackagingtype(rs.getString(6));
-				dto.setNotice(rs.getString(7));
-				dto.setOrigin(rs.getString(8));
-				dto.setUnit(rs.getString(9));
-				dto.setWeight(rs.getInt(10));
-				dto.setScript(rs.getString(11));
+				dto.setNum(rs.getInt("num"));
+				dto.setKind(rs.getString("kind"));
+				dto.setName(rs.getString("name"));
+				dto.setPrice(rs.getInt("price"));
+				dto.setDelivertype(rs.getString("delivertype"));
+				dto.setPackagingtype(rs.getString("packagingtype"));
+				dto.setNotice(rs.getString("notice"));
+				dto.setOrigin(rs.getString("origin"));
+				dto.setUnit(rs.getString("unit"));
+				dto.setWeight(rs.getInt("weight"));
+				dto.setScript(rs.getString("script"));
 				System.out.println("----test----");
 			}
 		}

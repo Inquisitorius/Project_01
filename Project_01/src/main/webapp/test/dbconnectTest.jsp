@@ -5,9 +5,9 @@
 <%@ page import="Main.JDBConnect"%>
 <%@ page import="Main.TestDBPool"%>
 <% 
-String num = request.getParameter("num");
+String num = request.getParameter("1");
 TestDAO dao = new TestDAO(application);
-TestDTO dto = dao.View(num);
+TestDTO dto = dao.View("1");
 dao.close();
 %>
 <!DOCTYPE html>

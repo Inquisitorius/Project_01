@@ -1,12 +1,20 @@
+<%@page import="Info.TestDAO"%>
+<%@page import="Info.TestDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="Main.JDBConnect"%>
+<%@ page import="Main.TestDBPool"%>
+<% 
+String num = request.getParameter("1");
+TestDAO dao = new TestDAO(application);
+TestDTO dto = dao.View("1");
+dao.close();
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <script>
-
-	function 
 	function count(type)  {
 		  // 결과를 표시할 element
 		  const resultElement = document.getElementById('result');
@@ -17,6 +25,7 @@
 		  // 더하기/빼기
 		  if(type === 'plus') {
 		    number = parseInt(number) + 1;
+		    
 		  }else if(type === 'minus' && number!=1)  {
 		    number = parseInt(number) - 1;
 		  }
@@ -25,14 +34,13 @@
 		}
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Insert title here</title>
+<title>Productpage</title>
 
 <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.css">
 <link rel="stylesheet" href="/resources/css/Common.css">
 <script src="/resources/js/jquery-3.7.1.js"></script>
 <script src="https://kit.fontawesome.com/a0b08e370a.js" crossorigin="anonymous"></script>
 <style type="text/css">
-
 .texttop_01
 {
 background-color :white ;
@@ -106,23 +114,41 @@ height: 50px;
 }
 .button_style
 {
-/* background-color: skyblue;
-  color: white;
-  border: none; */
-width: 250px;
+background-color: #fff;
+width: 330px;
 height: auto;
+top: 0px;
+z-index: 10;
+position: sticky;
 }
 .button_style2
 {
 background-color: white;
 color: black;
-
 }
 .line_stlye
 {
 width:50%;
 border:none;
 background-color:gray;
+}
+body {
+overflow-x: hidden;
+overflow-y: scroll; 
+}
+h3{
+text-align:center;
+font-family: "Noto Sans KR";
+font-optical-sizing: auto;
+font-style: normal;
+color: gray;
+}
+p{
+font-family: "Noto Sans KR";
+font-optical-sizing: auto;
+font-style: normal;
+
+color: black;
 }
 </style>
 </head>
@@ -143,17 +169,17 @@ background-color:gray;
 			</div>
 		 	<div class = "row">
 					<div class = "col-md-12 fontCommon_Option" style = "font-size: 24px; font-weight: 700; color: #333;">
-						[쉘퍼] 머스크멜론 1.6kg
+						[쉘퍼] 머스크멜론 1.6kg // <%= dto.getName() %>
 					</div>
 			</div>
 			<div class= "row">
 				<div class = "col-md-12 fontgray">
-					촉촉하게 머금은 달콤함
+					촉촉하게 머금은 달콤함 // <%= dto.getScript()%>
 				</div>
 			</div>	
 			<div class= "row">
 				<div class = "col-md-12 fontCommon_nomal">
-					9900 원
+					9900 원//<%= dto.getPrice() %>
 				</div>
 			</div>	
 			<div class= "row">
@@ -247,32 +273,63 @@ background-color:gray;
 			</div>
 			<div class= "row">
 				<div class = "col-md-12 fontgray right" style="display:inline-flex;align-items: center;">
-				총 상품 금액:<label style="font-weight:bold;font-size:25px">9900</label>원</div>
+				총 상품 금액:<label style="font-weight:bold;font-size:25px">9900//<%= dto.getPrice()%></label>원</div>
 				
 			</div>
 			<div class="row">
-				<div class= "col -4">
+				<div class= "col -4"style= "padding-bottom: 50px;">
 				<button type="button" class="btn btn-success buy_button">장바구니 담기</button>
 			</div>
 			</div>
 		 </div>
 		 </div>
 		 </div>
-		 <div class="container" style = "max-width: 1050px; min-width:1050px; padding-left: 0px; padding-top: 100px;" >
+		 <div class="container" style = "max-width: 1050px; min-width:1050px; padding-left: 0px;position: sticky;top: 0px;z-index: 0;height:40px;">
 		 <div class="row">
-		 		<div class= "col-3">
+		 		<div class= "col-4">
 				<button type="button" class="btn btn-outline-success button_style">상품설명</button>
 				</div>
-				<div class= "col-3">
-				<button type="button" class="btn btn-outline-success button_style">상세정보</button>
-				</div>
-				<div class= "col-3">
+				<div class= "col-4">
 				<button type="button" class="btn btn-outline-success button_style">후기</button>
 				</div>
-				<div class= "col-3">
+				<div class= "col-4">
 				<button type="button" class="btn btn-outline-success button_style">문의</button>
 				</div>
+				
 			</div>
+		 </div>
+		 <!-- 버튼이후 -->
+		 <div class="container" style = "max-width: 1050px; min-width:1050px; padding-left: 0px;padding-top: 20px;">
+		 <!-- 상품설명 -->
+		 <div class="row">
+		 <div class="col-12">	
+		 	<img src = "../resources/img/melon.jpg" style = "width: 1040px; height: 600; border-radius: 2%;
+		 	overflow: hidden;"/>
+		 </div>
+		 <div class="row">
+		 <h3>촉촉하게 머금은 달콤함</h3>
+		 <h3>머스크 멜론</h3>
+		 <hr>
+		 <p>멜론은 촉촉한 식감과 입안에 감도는 단맛으로 그만의 매력을 톡톡히 발산하는 과일이죠. 
+		 그중에서도 달콤한 맛과 향을 품은 머스캣멜론을 마켓그린에서 합리적인 가격으로 만나보세요. 
+		 국내 농가에서 정성스레 재배해 묵직하게 잘 익은 머스크 멜론이랍니다. 
+		 맛도 맛이지만 비타민c칼륨도 풍부하게 함유하고있어 꾸준히 즐겨찾는분들도 계시죠. 
+		 과일 디저트는 물론이고 근사한 안주로 즐겨도 좋을 거예요. </p>
+		 </div>
+		 </div>
+		 <!-- 후기  -->
+		 <div class="row">
+		 <div class="col-12" style="width:500px; height:300;">
+		 <h2>후기</h2>
+		
+		 </div>
+		 <!-- 문의 -->
+		 <div class="row">
+		 <div class="col-12"style="width:500px; height:300;">	
+		 <h2>문의</h2>
+		 </div>
+		 </div>
+		 </div>
 		 </div>
 </main>
 <jsp:include page="/Common/Footer.jsp"/>
