@@ -337,4 +337,11 @@ input[type="checkbox"]:checked+label:after, input[type="radio"]:checked+label:af
 	white-space: nowrap;
 	padding-left: 6px;
 }
-
+.pagebtn{
+	display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    margin-top: 36px;
+}
