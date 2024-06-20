@@ -50,6 +50,14 @@
 	
 }
 
+a:visited {
+  color: black;
+}
+
+a:hover {
+  color: black;
+}
+
 </style>
 </head>
 <body>
