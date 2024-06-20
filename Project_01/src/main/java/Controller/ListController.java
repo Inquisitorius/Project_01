@@ -27,10 +27,13 @@ public class ListController extends HttpServlet {
 	  BoardDAO dao = new BoardDAO();
 	  
 	  Map<String, Object> map = new HashMap<String, Object>();
+	  int totalCount = dao.selectCount(map);
 	  
-	  //ServletContext application = getServletContext(); 
-	  int pageSize =Integer.parseInt(req.getParameter("POSTS_PER_PAGE")); 
-	  int blockPage = Integer.parseInt(req.getParameter("POSTS_PER_PAGE"));
+	  ServletContext application = getServletContext(); 
+	  int pageSize = Integer.parseInt(application.getInitParameter("POSTS_PER_PAGE"));
+	  int blockPage = Integer.parseInt(application.getInitParameter("POSTS_PER_PAGE"));
+	  int pageSize1 =Integer.parseInt(req.getParameter("POSTS_PER_PAGE")); 
+	  int blockPage1 = Integer.parseInt(req.getParameter("POSTS_PER_PAGE"));
 	  int pageNum = 1; 
 	  String pageTemp = req.getParameter("pageNum");
 	  

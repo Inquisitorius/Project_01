@@ -12,14 +12,31 @@ public class BoardDAO extends TestDBPool {
 	public BoardDAO() {
 		super();
 	}
-	
+	public int selectCount(Map<String, Object> map) {
+		int totalCount = 0;
+
+		String query = "SELECT COUNT(*) FROM pboard";
+		if (map.get("searchWord") != null) {
+			query += " WHERE " + map.get("searchField") + " " + " LIKE '%" + map.get("searchWord") + "%'";
+		}
+		try {
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(query);
+			rs.next();
+			totalCount = rs.getInt(1);
+		} catch (Exception e) {
+			System.out.println("게시물 수를 구하는 중 예외 발생");
+			e.printStackTrace();
+		}
+
+		return totalCount;
+	}
 	public List<BoardDTO> selectListPage(Map<String, Object> map) {
 		  List<BoardDTO> board = new Vector<BoardDTO>();
 		  
-		  		String query = " " 
-		  					 + " SELECT * FROM ( " 
-		  					 + "	SELECT Tb.*, ROWNUM rNum FROM ( " 		
-		  					 + "		SELECT * FROM board ";	  
+			String query = /*
+							 * " " + " SELECT * FROM ( " + "	SELECT Tb.*, ROWNUM rNum FROM ( " +
+							 */ "		SELECT * FROM pboard ";	  
 			  	try {
 			  		psmt = con.prepareStatement(query);
 			  		psmt.setString(1, map.get("start").toString());
