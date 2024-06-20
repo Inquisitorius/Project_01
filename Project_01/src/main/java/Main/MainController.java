@@ -32,9 +32,9 @@ public class MainController extends HttpServlet
 		{
 			testDoFunction(req,resp);	
 		}
-		else if(command.equals("/test.do2"))
+		else if(command.equals("/getSaleProductList"))
 		{
-			testDoFunction2(req,resp);
+			GetSaleProductList(req,resp);
 		}		
 	}
 	
@@ -47,7 +47,7 @@ public class MainController extends HttpServlet
 			
 			BufferedReader reader = req.getReader();
 			Gson gson_in = new Gson();
-			TestDTO data = gson_in.fromJson(reader, TestDTO.class);			
+			//TestDTO data = gson_in.fromJson(reader, TestDTO.class);			
 			
 			MainDAO dao = new MainDAO();
 			
@@ -61,12 +61,11 @@ public class MainController extends HttpServlet
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-        
+		}        
 	}
 	
-	public void testDoFunction2(HttpServletRequest req, HttpServletResponse resp)
+	public void GetSaleProductList(HttpServletRequest req, HttpServletResponse resp)
 	{
-		System.out.println("testDoFunction2");
+		MainDAO dao = new MainDAO();
 	}
 }

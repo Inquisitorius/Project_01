@@ -1,6 +1,5 @@
 package Main;
 
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Vector;

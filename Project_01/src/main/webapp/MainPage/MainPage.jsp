@@ -93,7 +93,7 @@ body {
 			<div class= "row d-flex flex-nowrap" style = "justify-content: space-between; margin-top: 24px; margin-bottom: 40px;">
 				<div class="swiper mySwiper_card" style = "max-width: 1050px;">
 		    		<div class="swiper-wrapper">
-		      			<div class="swiper-slide">
+		      			<div class="swiper-slide" id = "maincard_00">
 		      				<jsp:include page="/MainPage/MainPageCardItem.jsp"/>
 		      			</div>
 		      			<div class="swiper-slide">
@@ -199,13 +199,84 @@ body {
 	<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 	<script>
 	
-		var dateTest = "2024.06.20 00:00:00";
+		$(document).ready(function()
+		{				
+			<!-- time function -->
+			timeUpdate();
+			circle_clockFunction();		
+			
+			//사진변경
+			$('#maincard_00').find('.maincard_img').attr('src','/resources/img/product/WildTurkeyMasters.jpg');
+			
+			//일단 서버에서 데이터 받아오자.
+			Get_SaleProductList();
+			
+			
+		});
+		
+		function Get_SaleProductList()
+		{
+			var data = {
+					test_00: "this is ajax ||||;;sada",
+					test_01: "very good"
+                };
+			
+			
+			var url = "http://localhost:8080/MainController";
+			//target URL INSERT
+			url += "/getSaleProductList";
+			
+		    $.ajax({
+		        type:"post",
+		        url:url,
+		        contentType: 'application/json',
+		        data: JSON.stringify(data),
+                success: function(response) 
+                {
+                	alert('good');
+                	/*$(response).each(function(){
+        				console.log(this.idx + " : " + this.Category_Name + " ");
+        				});*/
+                },
+		        error : function(request,status,error){
+		            alert('code:'+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); //에러 상태에 대한 세부사항 출력
+		            alert(e);
+		        }
+		    });
+		}
+		
+		function cardItemChange(cardName)
+		{
+			var data = {
+					test_00: "this is ajax ||||;;sada",
+					test_01: "very good"
+                };
+			
+			$('#test').text("text changer!!!!!!!!!!!");
+			
+			var url = "http://localhost:8080/MainController/test.do";
+		    $.ajax({
+		        type:"post",
+		        url:url,
+		        contentType: 'application/json',
+		        data: JSON.stringify(data),		       
+                success: function(response) 
+                {
+                	$(response).each(function(){
+        				console.log(this.idx + " : " + this.Category_Name + " ");
+        				});
+                },
+		        error : function(request,status,error){
+		            alert('code:'+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); //에러 상태에 대한 세부사항 출력
+		            alert(e);
+		        }
+		    });
+		}
+		
 		function timeUpdate()
 		{
-			//var arrayDate = dateTest.split(".");
-			
 			var now = new Date().getTime() / 1000;
-			var target = new Date(dateTest).getTime() /1000; //ms 단위
+			var target = new Date(getNextDate()).getTime() /1000; //ms 단위
 		
 			var hrs = Math.floor((target - now) / 3600); 		
 			var min = Math.floor(((target - now) % 3600) / 60);
@@ -224,43 +295,52 @@ body {
 			$('#time_m').text(min);
 			$('#time_s').text(sec);
 		}
-	
-		$(document).ready(function()
-		{				
+		
+		function getNextDate()
+		{
+			var dateTest;
 			
-			$('#test').click(function()
-			{
-				testAjax();
-			});
+			var d = new Date();
+			var sel_day = +1;
+			d.setDate(d.getDate() + sel_day );
+
+
+			var year    = d.getFullYear();
+			var month   = ('0' + (d.getMonth() +  1 )).slice(-2);
+			var day     = ('0' + d.getDate()).slice(-2);
+			dateTest = year+"-"+month+"-"+day+" " +" 00:00:00";
 			
-			<!-- tiem function -->
-			timeUpdate();
+			return dateTest;
+		}
+		
+		function circle_clockFunction()
+		{
 			setInterval(function(){
 				
-				var tr = $('#circle_clock').css('transform');				
-				var values = tr.split('(')[1].split(')')[0].split(',');
+			var tr = $('#circle_clock').css('transform');				
+			var values = tr.split('(')[1].split(')')[0].split(',');
 			
-				var a = values[0];
-				var b = values[1];
-				var c = values[2];
-				var d = values[3];
+			var a = values[0];
+			var b = values[1];
+			var c = values[2];
+			var d = values[3];
 
-				var scale = Math.sqrt(a*a + b*b);
-				var sin = b/scale;
-				var angle_0 = Math.round(Math.atan2(b, a) * (180/Math.PI));
+			var scale = Math.sqrt(a*a + b*b);
+			var sin = b/scale;
+			var angle_0 = Math.round(Math.atan2(b, a) * (180/Math.PI));
 				
 				//$("#circle_clock").rotate(angle + 30);
-				$("#circle_clock").rotate({
-				    angle: angle_0 - 360, //예정지
-				    animateTo: 89, //출발지
-				    duration: 990,
-				    callback: function(){
-				    	timeUpdate();
-				    }
-				});
+			$("#circle_clock").rotate({
+			    angle: angle_0 - 360, //예정지
+			    animateTo: 89, //출발지
+			    duration: 990,
+			    callback: function(){
+			    	timeUpdate();
+			    }
+			});
 				
 			},1000);
-		});
+		}
 		
 		function testAjax()
 		{
@@ -289,10 +369,6 @@ body {
 		        }
 		    });
 		}
-		
-		//ajax 방식을 통해서 통신
-		//여기서 받는 방식이 json type 이다.
-		
 	
 		<!-- Initialize Swiper -->
 	    var swiper = new Swiper(".mySwiper", {
