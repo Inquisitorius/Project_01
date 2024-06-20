@@ -205,8 +205,8 @@ body {
 					<div style = "width: 694px;">
 						<div class = "row" style = "padding-left : 0px; padding-right: 0px; display: inline-flex;">
 							<div class = "col-12">
-								<img src="https://3p-image.kurly.com/cdn-cgi/image/fit=crop,width=800,height=400,quality=85/files/b5efbc44-d31c-43c9-895d-ad087a2b77e3/fbf76cb1-47b3-4628-af7b-1a36b5b3c51b.jpg" 
-							data-nimg="fill" class="css-1zjvv7" style="min-width: 100%; max-width: 100%; hegith: auto; border-radius: 3%;  overflow: hidden; padding-left : 0px;">							
+								<img src="/resources/img/product/eventProduct_00.jpg" 
+							data-nimg="fill" id="timeLimitEvent_img" style="min-width: 100%; max-width: 100%; hegith: auto; border-radius: 3%;  overflow: hidden; padding-left : 0px;">							
 							</div>
 							
 						</div>
@@ -217,19 +217,19 @@ body {
 						</div>	
 						<div class = "row" style = "margin-top: 5px;">
 							<div class = "col-12" style = "display: inline-flex;">
-								<label class = "notoSans mainpage_cardFont2_subText">판매자배송, 모던심플한 10만원대 가성비 음식물처리기</label>
+								<label class = "notoSans mainpage_cardFont2_subText" id = "timeLimitEvent_sublabel">판매자배송, 모던심플한 10만원대 가성비 음식물처리기</label>
 							</div>
 						</div>
 						<div class = "row" style = "margin-top: 5px;">
 							<div class = "col-12" style = "display: inline-flex;">
-								<label class = "notoSans mainpage_cardFont2_mainText">[루펜] 음식물처리기 SLW-01 4종(택1)</label>
+								<label class = "notoSans mainpage_cardFont2_mainText" id = "timeLimitEvent_mainlabel">[루펜] 음식물처리기 SLW-01 4종(택1)</label>
 							</div>
 						</div>	
 						<div class = "row" style = "margin-top: 5px;">
 							<div class = "col-12" style = "display: inline-flex;">
-								<label class = "notoSans mainpage_cardFont2_SalePriceText">33%</label>
-								<label class = "notoSans mainpage_cardFont2_Price">30000원</label>
-								<label class = "notoSans mainpage_cardFont2_OriPrice">30000원</label>
+								<label class = "notoSans mainpage_cardFont2_SalePriceText" id = "timeLimitEvent_percent">33%</label>
+								<label class = "notoSans mainpage_cardFont2_Price" id = "timeLimitEvent_price">30000원</label>
+								<label class = "notoSans mainpage_cardFont2_OriPrice" id = "timeLimitEvent_oriprice">30000원</label>
 							</div>
 						</div>		
 					</div>				
@@ -242,21 +242,26 @@ body {
 	<script src="/resources/bootstrap/js/bootstrap.bundle.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 	<script>
-	
+		
+		var targetTime = 0;
+		
 		$(document).ready(function()
-		{				
+		{
 			<!-- time function -->
-			timeUpdate();
+			//timeUpdate();
 			circle_clockFunction();		
 			
 			//사진변경
-			$('#maincard_00').find('.maincard_img').attr('src','/resources/img/product/WildTurkeyMasters.jpg');
+			//$('#maincard_00').find('.maincard_img').attr('src','/resources/img/product/WildTurkeyMasters.jpg');
 			
-			//일단 서버에서 데이터 받아오자.
+			//time Limit
+			Get_timelimitSaleData(37);
+			
+			//swiper init;
 			Get_SaleProductList(2,'#maincard_');
 			Get_SaleProductList(21,'#maincard2_');
 			
-			
+						
 		});
 		
 		function Get_SaleProductList(id, element_id)
@@ -303,6 +308,48 @@ body {
 		    });
 		}
 		
+		function Get_timelimitSaleData(productId)
+		{
+			var data = 
+			{
+				product_id : productId
+            };
+			var url = "http://localhost:8080/MainController";
+			url += "/getTimeLimitSale";
+			
+			 $.ajax
+			 ({
+			    type:"post",
+			    url:url,
+			    crossOrigin: true,
+			    contentType: 'application/json',
+			    data: JSON.stringify(data),
+	            success: function(response) 
+	            {  
+	                targetTime = response.endDate;
+	                $('#timeLimitEvent_img').attr('src',response.product_img);
+	                $('#timeLimitEvent_mainlabel').html(response.name);
+	                $('#timeLimitEvent_sublabel').html(response.sub_text);
+	                
+	                $('#timeLimitEvent_oriprice').html(response.price_ori + "원");
+	                $('#timeLimitEvent_price').html(response.price_discount + "원");
+	                $('#timeLimitEvent_percent').html(response.price_percent + "%");
+	                //timeLimitEvent_oriprice
+	               
+	                
+	                
+	            },
+	            error : function(request,status,error)
+	            {
+			            alert('code:'+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); //에러 상태에 대한 세부사항 출력
+			            alert(e);
+			    }
+			 });
+	                
+			
+			
+		}
+		
 		function cardItemChange(cardName)
 		{
 			var data = {
@@ -331,11 +378,11 @@ body {
 		    });
 		}
 		
-		function timeUpdate()
+		function timeUpdate(inputTime)
 		{
 			var now = new Date().getTime() / 1000;
-			var target = new Date(getNextDate()).getTime() /1000; //ms 단위
-		
+			var target = new Date(inputTime + " 00:00:00").getTime() /1000; //ms 단위
+			
 			var hrs = Math.floor((target - now) / 3600); 		
 			var min = Math.floor(((target - now) % 3600) / 60);
 			var sec = Math.floor((((target - now) % 3600) % 60));
@@ -393,7 +440,7 @@ body {
 			    animateTo: 89, //출발지
 			    duration: 990,
 			    callback: function(){
-			    	timeUpdate();
+			    	timeUpdate(targetTime);
 			    }
 			});
 				

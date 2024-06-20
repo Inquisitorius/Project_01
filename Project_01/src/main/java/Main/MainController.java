@@ -38,8 +38,37 @@ public class MainController extends HttpServlet
 		{
 			GetSaleProductList(req,resp);
 		}		
+		else if(command.equals("/getTimeLimitSale"))
+		{
+			GetTimeLimitSale(req,resp);
+		}
 	}
 	
+	private void GetTimeLimitSale(HttpServletRequest req, HttpServletResponse resp) 
+	{
+		resp.setContentType("application/json");
+		resp.setCharacterEncoding("UTF-8");
+		
+		try 
+		{
+			BufferedReader reader = req.getReader();
+			Gson gson_in = new Gson();
+			AjaxDataTrans data = gson_in.fromJson(reader, AjaxDataTrans.class);
+			
+			MainDAO dao = new MainDAO();
+			ProductDTO dto = dao.GetTimeLimitSale(data.getProduct_id());
+			
+			 Gson gson = new Gson();
+			 String jsonResponse = gson.toJson(dto);
+			 resp.getWriter().write(jsonResponse);
+			 
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		
+	}
+
 	public void testDoFunction(HttpServletRequest req, HttpServletResponse resp)
 	{	
 		try 

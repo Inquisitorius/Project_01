@@ -1,5 +1,7 @@
 package DTO;
 
+import java.sql.Date;
+
 public class ProductDTO 
 {
 	/*
@@ -53,7 +55,15 @@ public class ProductDTO
 	public int event_id; //이벤트 식별자.
 	public int seller; //판매자 식별자
 	
+	public String endDate;
 	
+	
+	public String getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
 	public ProductDTO() {}
 	public ProductDTO(int product_id, int category_id, String name, String sub_text, String origin, String weight,
 			String dateInfo, String notifi, int price_ori, int price_percent, int price_discount, String unit,

@@ -89,10 +89,55 @@ public class MainDAO extends JDBConnect {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
+		}		
 		
 		return bbs;
+	}
+
+	public ProductDTO GetTimeLimitSale(int product_id) 
+	{
+		String sql = "SELECT * FROM PRODUCT p JOIN EVENT e ON p.EVENT_ID = e.IDX WHERE p.PRODUCT_ID =" + product_id;
+		
+		ProductDTO dto = new ProductDTO();
+		
+		try {
+			psmt = con.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			
+			rs.next();
+			
+			dto.setProduct_id(rs.getInt("PRODUCT_ID"));
+			dto.setCategory_id(rs.getInt("CATEGORY_ID"));
+			dto.setName(rs.getString("NAME"));
+			dto.setSub_text(rs.getString("SUB_TEXT"));
+			
+			dto.setOrigin(rs.getString("ORIGIN"));
+			dto.setWeight(rs.getString("WEIGHT"));
+			dto.setDateInfo(rs.getString("DATEINFO"));
+			dto.setNotifi(rs.getString("NOTIFI"));
+			
+			dto.setPrice_ori(rs.getInt("PRICE_ORI"));
+			dto.setPrice_percent(rs.getInt("PRICE_PERCENT"));
+			dto.setPrice_discount(rs.getInt("PRICE_DISCOUNT"));
+			dto.setUnit(rs.getString("UNIT"));
+			
+			dto.setPackaging_type(rs.getString("PACKAGING_TYPE"));
+			dto.setDelivery_type(rs.getString("DELIVERY_TYPE"));
+			dto.setProduct_img(rs.getString("PRODUCT_IMG"));
+			dto.setProduct_noti_img(rs.getString("PRODUCT_NOTI_IMG"));
+			dto.setProduct_noti_img2(rs.getString("PRODUCT_NOTI_IMG2"));
+			
+			dto.setEvent_id(rs.getInt("EVENT_ID"));
+			dto.setSeller(rs.getInt("SELLER"));
+			
+			dto.setEndDate(rs.getDate("ENDDATE").toString());
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		
+		return dto;
 	}
 
 }
