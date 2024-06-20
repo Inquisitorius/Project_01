@@ -68,8 +68,7 @@ body {
 			      </div>
 			      <div class="swiper-slide">
 			      	<img src="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/09193c01-e241-4666-9d41-ec55deeff5e7.jpg">
-				</div>
-			      <div class="swiper-slide">Slide 4</div>			
+				</div>			
 				</div>
 				<div class="swiper-button-next"></div>
 			    <div class="swiper-button-prev"></div>
@@ -80,38 +79,38 @@ body {
 			<div class= "row d-flex flex-nowrap" style = "justify-content: space-between;">
 				<div class = "col" href = "/MainPage/MainPage.jsp" style="display: inline-flex; justify-content: center;">
 					<a href = "/MainPage/MainPage.jsp" style ="text-decoration-line: none;">
-						<span class = "mainpage_SubTitle" style = "vertical-align : bottom;">🛒지금 가장 많이 담는 특가</span>
+						<span class = "mainpage_SubTitle" style = "vertical-align : bottom;">🛒지금 바로 위스키 특가</span>
 						<span><img src = "/resources/img/dash.svg" style = "width: 32px; height: 32px;"/></span>
 					</a>
 				</div>
 			</div>
 			<div class= "row d-flex flex-nowrap" style = "justify-content: space-between;">
 				<div class = "col" style="display: inline-flex; justify-content: center; text-decoration-line: none;">
-					<span class = "mainpage_SubText" >그린 추천 특가템 최대 30%</span>					
+					<span class = "mainpage_SubText" >그린 추천 특가템 최대 35%</span>					
 				</div>
 			</div>			
 			<div class= "row d-flex flex-nowrap" style = "justify-content: space-between; margin-top: 24px; margin-bottom: 40px;">
 				<div class="swiper mySwiper_card" style = "max-width: 1050px;">
 		    		<div class="swiper-wrapper">
-		      			<div class="swiper-slide" id = "maincard_00">
+		      			<div class="swiper-slide" id = "maincard_0">
 		      				<jsp:include page="/MainPage/MainPageCardItem.jsp"/>
 		      			</div>
-		      			<div class="swiper-slide">
+		      			<div class="swiper-slide" id = "maincard_1">
 		      				<jsp:include page="/MainPage/MainPageCardItem.jsp"/>
 		      			</div>
-		      			<div class="swiper-slide">
+		      			<div class="swiper-slide" id = "maincard_2">
 		      				<jsp:include page="/MainPage/MainPageCardItem.jsp"/>
 		      			</div>
-		      			<div class="swiper-slide">
+		      			<div class="swiper-slide" id = "maincard_3">
 		      				<jsp:include page="/MainPage/MainPageCardItem.jsp"/>
 		      			</div>
-		      			<div class="swiper-slide">
+		      			<div class="swiper-slide" id = "maincard_4">
 		      				<jsp:include page="/MainPage/MainPageCardItem.jsp"/>
 		      			</div>
-		      			<div class="swiper-slide">
+		      			<div class="swiper-slide" id = "maincard_5">
 		      				<jsp:include page="/MainPage/MainPageCardItem.jsp"/>
 		      			</div>
-		      			<div class="swiper-slide">
+		      			<div class="swiper-slide" id = "maincard_6">
 		      				<jsp:include page="/MainPage/MainPageCardItem.jsp"/>
 		      			</div>		
 		    		</div>
@@ -119,7 +118,53 @@ body {
 			    	<div class="swiper-button-prev card_list_prev"></div>
 		  		</div>
 			</div>
-		</div>		
+		</div>	
+		<!-- 2nd product list -->
+		<div class = "container" style = "max-width: 1050px; min-width: 1050px; padding-left: 0px; padding-right: 0px; padding-top: 40px;">
+			<div class= "row d-flex flex-nowrap" style = "justify-content: space-between;">
+				<div class = "col" href = "/MainPage/MainPage.jsp" style="display: inline-flex; justify-content: center;">
+					<a href = "/MainPage/MainPage.jsp" style ="text-decoration-line: none;">
+						<span class = "mainpage_SubTitle" style = "vertical-align : bottom;">🍈 신선한 과일 특가</span>
+						<span><img src = "/resources/img/dash.svg" style = "width: 32px; height: 32px;"/></span>
+					</a>
+				</div>
+			</div>
+			<div class= "row d-flex flex-nowrap" style = "justify-content: space-between;">
+				<div class = "col" style="display: inline-flex; justify-content: center; text-decoration-line: none;">
+					<span class = "mainpage_SubText" >그린 마켓에서 진행하는 특별 할인 행사</span>					
+				</div>
+			</div>			
+			<div class= "row d-flex flex-nowrap" style = "justify-content: space-between; margin-top: 24px; margin-bottom: 40px;">
+				<div class="swiper mySwiper_card2" style = "max-width: 1050px;">
+		    		<div class="swiper-wrapper">
+		      			<div class="swiper-slide" id = "maincard2_0">
+		      				<jsp:include page="/MainPage/MainPageCardItem.jsp"/>
+		      			</div>
+		      			<div class="swiper-slide" id = "maincard2_1">
+		      				<jsp:include page="/MainPage/MainPageCardItem.jsp"/>
+		      			</div>
+		      			<div class="swiper-slide" id = "maincard2_2">
+		      				<jsp:include page="/MainPage/MainPageCardItem.jsp"/>
+		      			</div>
+		      			<div class="swiper-slide" id = "maincard2_3">
+		      				<jsp:include page="/MainPage/MainPageCardItem.jsp"/>
+		      			</div>	
+		      			<div class="swiper-slide" id = "maincard2_4">
+		      				<jsp:include page="/MainPage/MainPageCardItem.jsp"/>
+		      			</div>
+		      			<div class="swiper-slide" id = "maincard2_5">
+		      				<jsp:include page="/MainPage/MainPageCardItem.jsp"/>
+		      			</div>
+		      			<div class="swiper-slide" id = "maincard2_6">
+		      				<jsp:include page="/MainPage/MainPageCardItem.jsp"/>
+		      			</div>			      			
+		    		</div>
+		    		<div class="swiper-button-next card_list_next"></div>
+			    	<div class="swiper-button-prev card_list_prev"></div>
+		  		</div>
+			</div>
+		</div>
+			
 		<div class = "container" style = "max-width: 1050px; min-width: 1050px; padding-left: 0px; padding-right: 0px; padding-top: 40px; margin-bottom: 40px;">
 			<div class= "row d-flex flex-nowrap" style = "justify-content: space-between;">
 				<div class = "col">
@@ -194,7 +239,6 @@ body {
 	</main>
 	<jsp:include page="/Common/Footer.jsp"/>
 
-	<!--  <script src="/resources/bootstrap/js/bootstrap.min.js"></script>-->
 	<script src="/resources/bootstrap/js/bootstrap.bundle.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 	<script>
@@ -209,34 +253,48 @@ body {
 			$('#maincard_00').find('.maincard_img').attr('src','/resources/img/product/WildTurkeyMasters.jpg');
 			
 			//일단 서버에서 데이터 받아오자.
-			Get_SaleProductList();
+			Get_SaleProductList(2,'#maincard_');
+			Get_SaleProductList(21,'#maincard2_');
 			
 			
 		});
 		
-		function Get_SaleProductList()
+		function Get_SaleProductList(id, element_id)
 		{
 			var data = {
-					test_00: "this is ajax ||||;;sada",
-					test_01: "very good"
+					event_id : id
                 };
-			
 			
 			var url = "http://localhost:8080/MainController";
 			//target URL INSERT
 			url += "/getSaleProductList";
 			
+			var num = 0;
+			
 		    $.ajax({
 		        type:"post",
 		        url:url,
+		        crossOrigin: true,
 		        contentType: 'application/json',
 		        data: JSON.stringify(data),
                 success: function(response) 
-                {
-                	alert('good');
-                	/*$(response).each(function(){
-        				console.log(this.idx + " : " + this.Category_Name + " ");
-        				});*/
+                {                	
+                	$(response).each(function()
+                	{
+                		//var id = '#maincard_' + num;
+                		var id = element_id + num;
+                		num = num + 1;
+                		
+                		$(id).find('.maincard_img').attr('src',this.product_img);
+                		$(id).find('.mainpage_Itemtitle').html(this.name);
+                		
+                		var oriPrice = this.price_ori;
+                		$(id).find('.mainpage_OripriceText').html(oriPrice.toLocaleString('ko-KR') + "원");
+                		$(id).find('.mainpage_SalepercentText').html(this.price_percent + "%");
+                		
+                		var discountPrice = this.price_discount;
+                		$(id).find('.mainpage_SalePriceText').html(discountPrice.toLocaleString('ko-KR') + "원");
+        			});
                 },
 		        error : function(request,status,error){
 		            alert('code:'+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); //에러 상태에 대한 세부사항 출력
@@ -391,6 +449,16 @@ body {
 	    });
 	    
 	    var swiper2 = new Swiper(".mySwiper_card", {
+	        slidesPerView: 4,
+	        spaceBetween: 30,	        
+	        navigation: 
+	        {
+		        nextEl: ".card_list_next",
+		        prevEl: ".card_list_prev",
+		     },
+	      });
+	    
+	    var swiper2 = new Swiper(".mySwiper_card2", {
 	        slidesPerView: 4,
 	        spaceBetween: 30,	        
 	        navigation: 

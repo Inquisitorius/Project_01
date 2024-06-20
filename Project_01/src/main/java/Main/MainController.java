@@ -7,6 +7,8 @@ import java.util.List;
 import com.google.gson.Gson;
 
 import Category.CategoryDTO;
+import DTO.AjaxDataTrans;
+import DTO.ProductDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -66,6 +68,25 @@ public class MainController extends HttpServlet
 	
 	public void GetSaleProductList(HttpServletRequest req, HttpServletResponse resp)
 	{
-		MainDAO dao = new MainDAO();
+		resp.setContentType("application/json");
+		resp.setCharacterEncoding("UTF-8");
+		
+		try 
+		{
+			BufferedReader reader = req.getReader();
+			Gson gson_in = new Gson();
+			AjaxDataTrans data = gson_in.fromJson(reader, AjaxDataTrans.class);
+			
+			MainDAO dao = new MainDAO();
+			List<ProductDTO> list = dao.GetSaleProductList(data.getEvent_id());
+			
+			 Gson gson = new Gson();
+			 String jsonResponse = gson.toJson(list);
+			 resp.getWriter().write(jsonResponse);
+			 
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
 }

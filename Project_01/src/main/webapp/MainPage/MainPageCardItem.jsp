@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 	<div class = "container" style="text-decoration-line: none;">
 					<div class ="row">
-						<img class = "maincard_img" src = "https://product-image.kurly.com/hdims/resize/%5E%3E360x%3E468/cropcenter/360x468/quality/85/src/product/image/b15f2d12-eca6-4491-b37e-83d156377cde.jpg?v=0531"
+						<img class = "maincard_img" src = "/resources/img/Loding.png"
 						style = "padding: 0px; width: 249px; height: 320px; border-radius: 2%;  overflow: hidden;"/>
 					</div>
 					<div class = "row" style = "margin-top: 5px;">
@@ -12,7 +12,7 @@
 					</div>
 					<div class = "row" style = "margin-top: 5px;">
 						<div class = "col-12" style = "padding-left : 0px;">
-							<div class = "mainpage_Itemtitle" style = "width: 249px; text-align:left; padding-right: 7px;">[해운대암소갈비집] 한우 소불고기 전골</div>
+							<div class = "mainpage_Itemtitle" style = "width: 249px; height : 46px; text-align:left; display: flex; align-items: center; padding-right: 7px;">[해운대암소갈비집] 한우 소불고기 전골</div>
 						</div>
 					</div>	
 					<div class = "row" style = "margin-top: 5px;">
