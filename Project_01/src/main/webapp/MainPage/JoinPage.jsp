@@ -254,7 +254,7 @@ a:hover {
 						</div>
 					</div>
 					<div class="col-md-6">
-						<input type="password" class="input_Style" id="inputPwd" placeholder="비밀번호를 입력해주세요." oninput="inputPwd(this.id)"
+						<input type="password" class="input_Style" id="inputPwd" placeholder="비밀번호를 입력해주세요." oninput="inputPwd(this.id)" maxlength="12"
 							onfocus="this.placeholder=''"
 							onblur="this.placeholder='비밀번호를 입력해주세요.'" name="memberPwd">
 					</div>
@@ -301,7 +301,7 @@ a:hover {
 						</div>
 					</div>
 					<div class="col-md-6">
-						<input type="password" class="input_Style"	id="inputPwdCheck"	oninput="inputPwdCheck(this.id)"
+						<input type="password" class="input_Style"	id="inputPwdCheck"	oninput="inputPwdCheck(this.id)" maxlength="12"
 							placeholder="비밀번호를 한번 더 입력해주세요" onfocus="this.placeholder=''"
 							onblur="this.placeholder='비밀번호를 한번 더 입력해주세요.'"
 							name="memberPwdCheck">
@@ -406,7 +406,6 @@ a:hover {
 					</div>
 					<div class="col-md-2">
 						<div class="button_Style">
-							<button type="button" class="btn btn-success">중복확인</button>
 						</div>
 					</div>
 				</div>
@@ -834,7 +833,7 @@ a:hover {
 			<div class="col-md-6"
 				style="display: flex; justify-content: center; padding: 40px 0px;">
 				<button type="submit" class="btn btn-success"
-					style="width: 240px; height: 56px;" name="join">가입하기</button>
+					style="width: 240px; height: 56px; font-size:20px;" name="join">가입하기</button>
 			</div>
 		</div>
 	</main>

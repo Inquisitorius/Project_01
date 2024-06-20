@@ -66,14 +66,13 @@ a:hover {
 		<div class="row">
 			<div class="login_Title">로그인</div>		
 		</div>
-		
+		<form action="/login.do" method="post">
 		<div class="row" style="justify-content: center;">
 			<div class="col-md-3" style="justify-content: center;">
 				<input type="text" class="input_Style" placeholder="아이디를 입력해주세요" onfocus="this.placeholder=''" onblur="this.placeholder='아이디를 입력해주세요.'" name="Id">
 				<input type="password" class="input_Style" placeholder="비밀번호를 입력해주세요" onfocus="this.placeholder=''" onblur="this.placeholder='비밀번호를 입력해주세요.'" name="Pwd">
 				</div>
 		</div>
-		
 		<div class="row" style="justify-content: center;">
 			<div class="col-md-3" style="display:flex; justify-content: flex-end;">
 				<a class="mini_Font">아이디 찾기</a> <span>|</span>
@@ -88,6 +87,8 @@ a:hover {
 				</div>
 			</div>
 		</div>
+		</form>
+		
 		<div class="row" style="justify-content: center;">
 			<div class="col-md-3" style="justify-content: center;">
 				<div class="button_Style">
