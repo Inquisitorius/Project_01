@@ -19,16 +19,7 @@ public class BoardDAO extends TestDBPool {
 		  		String query = " " 
 		  					 + " SELECT * FROM ( " 
 		  					 + "	SELECT Tb.*, ROWNUM rNum FROM ( " 		
-		  					 + "		SELECT * FROM board ";
-		  		if (map.get("searchWord") != null ) 
-		  		{ 
-		  				query += " WHERE "+ map.get("searchField") 
-		  				 	  + " LIKE '%" + map.get("searchWord") + "%' "; } 
-		  			   	query += " 		ORDER BY idx DESC "
-		  			 		  +  " ) Tb "
-		  					  +  " ) "	
-		  					  +  " WHERE rNum BETWEEN ? AND ?";
-			  		  
+		  					 + "		SELECT * FROM board ";	  
 			  	try {
 			  		psmt = con.prepareStatement(query);
 			  		psmt.setString(1, map.get("start").toString());
@@ -80,5 +71,29 @@ public class BoardDAO extends TestDBPool {
 		}
 		return dto;
 	}
+	public int insertWrite(BoardDTO dto) {
+		int result = 0;
+		
+		try {
+			String query = "INSERT INTO pboard ( "
+						 + " idx, name, title, content,ofile,sfile,pass )"
+						 + " values( "
+						 + " seq,board_num.NEXTVAL,?,?,?,?,?,?)";
+						 
+			psmt = con.prepareStatement(query);			 
+			psmt.setString(1, dto.getName());			  
+			psmt.setString(2, dto.getTitle());			 
+			psmt.setString(3, dto.getContent());			 
+			psmt.setString(4, dto.getOfile());		  
+			psmt.setString(5, dto.getSfile());		 
+			psmt.setString(6, dto.getPass());		 
+			result = psmt.executeUpdate();
+			}
+		catch(Exception e) {
+			System.out.println("게시물 입력 중 예외 발생");
+			  e.printStackTrace();
+	}
+		  return result;
+}
 }
 
