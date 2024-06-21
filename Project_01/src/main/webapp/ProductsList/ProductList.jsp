@@ -1,8 +1,28 @@
+<%@page import="java.util.Map"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="Category.CategoryDTO"%>
 <%@page import="ProductsListController.ListDTO"%>
 <%@page import="java.util.List"%>
-<% int currentPage = (Integer) request.getAttribute("currentPage"); %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<% 
+    int currentPage = (Integer) request.getAttribute("currentPage");
+    String category = request.getParameter("category");
+    int totalPages = (Integer) request.getAttribute("totalPages");
+
+    // 현재 페이지가 0 이하이면 1페이지로 설정
+    if (currentPage <= 0) {
+        currentPage = 1;
+    }
+
+    // 카테고리가 null일 경우 기본값 "all"로 설정
+    if (category == null) {
+        category = "all";
+    }
+
+    int startPage = Math.max(1, currentPage - 2);
+    int endPage = Math.min(totalPages, startPage + 4);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +37,7 @@
 
 <!-- Head, Footer CSS 링크 필수 -->
 <link rel="stylesheet" href="/resources/css/Common.css">
-<link rel="stylesheet" href="/resources/css/ProductList.css">
+<link rel="stylesheet" href="/resources/css/ProductList.css?after">
 
 <!-- jQuery 사용을 위한 JS 로드 -->
 <script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>
@@ -27,14 +47,27 @@
 	<div class="listbody">
 		<div class="container mt-5">
 			<h3 class="text-center listheader">상품 목록</h3>
+			
 			<ul class="justify-content-center itemnav">
-				<li class="item"><a class="link" href="#">인기신상랭킹</a></li>
-				<li class="item"><a class="link" href="2">입점특가</a></li>
-				<li class="item"><a class="link" href="3">간편한끼</a></li>
-				<li class="item"><a class="link" href="4">요즘간식</a></li>
-				<li class="item"><a class="link" href="5">주방·리빙</a></li>
-				<li class="item"><a class="link" href="6">뷰티</a></li>
-				<li class="item"><a class="link" href="7">패션·잡화</a></li>
+			<li class="item" id="item"><a class="link" href="<%=request.getContextPath()%>/ProductsList/ProductList.do?page=1&category=all" data-category="all">전체 상품</a></li>
+			<% 
+				Map<String, String> cateMap = new HashMap<>();
+				cateMap.put("주류", "alcohol");
+				cateMap.put("가구", "furniture");
+				cateMap.put("식품", "food");
+				cateMap.put("가전제품", "electronics");
+				cateMap.put("베이커리", "bakery");
+				cateMap.put("리빙가구", "living");
+				
+				List<CategoryDTO> cate = (List<CategoryDTO>) request.getAttribute("cate"); 
+				if(cate != null){
+					for(CategoryDTO dto : cate){
+					String CateName = dto.getCategory_Name();
+					String englishCateName = cateMap.get(CateName);
+			%>
+				<li class="item"><a class="link" href="<%=request.getContextPath()%>/ProductsList/ProductList.do?page=1&category=<%= englishCateName %>" data-category="<%= englishCateName %>"><%= dto.getCategory_Name() %></a></li>
+				<%}
+					} %>
 			</ul>
 		</div>
 		<div class="listcontainer">
@@ -50,35 +83,23 @@
 									<h5 class="title">카테고리</h5>
 									<span class="arrow">▲</span>
 								</div>
-								<div class="filter-content">
+								<div class="filter-content" id="categoryFilters">
 									<div>
 										<input type="checkbox" id="category1" name="category"
-											value="인기신상랭킹"> <label for="category1">인기신상랭킹</label>
+											value="인기신상랭킹" > <label for="category1">인기신상랭킹</label>
 									</div>
+									<% List<CategoryDTO> Childcate = (List<CategoryDTO>) request.getAttribute("Childcate");
+										if(Childcate != null){
+											int i = 2;
+											for(CategoryDTO cdto : Childcate){%>
 									<div>
-										<input type="checkbox" id="category2" name="category"
-											value="입점특가"> <label for="category2">입점특가</label>
+										<input type="checkbox" id="category<%=i%>" name="category"
+											value="<%=cdto.getCategory_Name() %>" > <label for="category<%=i%>"><%=cdto.getCategory_Name() %></label>
 									</div>
-									<div>
-										<input type="checkbox" id="category3" name="category"
-											value="간편한끼"> <label for="category3">간편한끼</label>
-									</div>
-									<div>
-										<input type="checkbox" id="category4" name="category"
-											value="요즘간식"> <label for="category4">요즘간식</label>
-									</div>
-									<div>
-										<input type="checkbox" id="category5" name="category"
-											value="주방·리빙"> <label for="category5">주방·리빙</label>
-									</div>
-									<div>
-										<input type="checkbox" id="category6" name="category"
-											value="뷰티"> <label for="category6">뷰티</label>
-									</div>
-									<div>
-										<input type="checkbox" id="category7" name="category"
-											value="패션·잡화"> <label for="category7">패션·잡화</label>
-									</div>
+									<%
+										i++;
+										}
+											}%>	
 								</div>
 							</div>
 							<div class="filter-group">
@@ -131,12 +152,12 @@
 				</div>
 				<div class="products">
 					<div class="productsortcontainer">
-						<div class="productscnt">
+						<div class="productscnt" id="productcnt">
 							총
 							<%=request.getAttribute("cnt")%>건
 						</div>
 						<ul class="productsort">
-							<li class="sort-li"><a href="#" class="sort-a">추천순</a></li>
+							<li class="sort-li"><a href="#" class="sort-a" id="">추천순</a></li>
 							<li class="sort-li"><a href="#" class="sort-a">신상품순</a></li>
 							<li class="sort-li"><a href="#" class="sort-a">판매량순</a></li>
 							<li class="sort-li"><a href="#" class="sort-a">혜택순</a></li>
@@ -144,7 +165,7 @@
 							<li class="sort-li"><a href="#" class="sort-a">높은 가격순</a></li>
 						</ul>
 					</div>
-					<div class="container list" style="text-decoration-line: none">
+					<div class="container list" id="productList" style="text-decoration-line: none;">
 						<%
 						List<ListDTO> list = (List<ListDTO>) request.getAttribute("list");
 						if (list != null) {
@@ -191,24 +212,18 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
         	<li class="page-item">
-                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= 1 %>" aria-label="Previous">
+        		
+                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= 1 %>&category=<%=category %>" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= Math.max(1, currentPage - 1) %>" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
+                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= Math.max(1, currentPage - 1) %>&category=<%=category %>" aria-label="Previous">
+                    <span aria-hidden="true"><</span>
                 </a>
             </li>
             <%  
-            // 페이지 번호 동적 생성
-            
-            int totalPages = (Integer) request.getAttribute("totalPages");
-            
-            // 현재 페이지 기준으로 버튼 시작 페이지와 끝 페이지 계산
-            int startPage = Math.max(1, currentPage - 2);
-            int endPage = Math.min(totalPages, startPage + 4);
-            
+
             if (startPage <= 1) {
                 endPage = Math.min(totalPages, 5);
             }
@@ -217,16 +232,16 @@
                 String activeClass = (currentPage == i) ? "active" : "";
             %>
             <li class="page-item <%= activeClass %>">
-                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= i %>"><%= i %></a>
+                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= i %>&category=<%=category %>"><%= i %></a>
             </li>
             <% } %>
             <li class="page-item">
-                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= Math.min(totalPages, currentPage + 1) %>" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
+                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= Math.min(totalPages, currentPage + 1) %>&category=<%=category %>" aria-label="Next">
+                    <span aria-hidden="true">></span>
                 </a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= totalPages %>" aria-label="Next">
+                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= totalPages %>&category=<%=category %>" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
@@ -238,31 +253,127 @@
 	</div>
 	<jsp:include page="/Common/Footer.jsp" />
 	<script>
-		$(document).ready(function() {
-			$('.toggle-btn').click(function() {
-				$(this).next('.filter-content').slideToggle();
-				$(this).find('.arrow').text(function(_, value) {
-					return value == '▲' ? '▼' : '▲';
-				});
-			});
-		});
+	$(document).ready(function() {
+	    function initializeEventHandlers() {
+	        console.log("Initializing event handlers");
 
-		$(function() {
-			var beforeChecked = -1;
+	        $('.toggle-btn').off('click').on('click', function() {
+	            var $arrow = $(this).find('.arrow');
+	            var $filterContent = $(this).next('.filter-content');
 
-			$("input[type='radio'][name='price']").on("click", function(e) {
-				var index = $(this).index("input[type='radio'][name='price']");
+	            $filterContent.stop().slideToggle(50, function() {
+	                if ($filterContent.is(':visible')) {
+	                    $arrow.text('▲');
+	                } else {
+	                    $arrow.text('▼');
+	                }
+	            });
+	        });
 
-				if (beforeChecked == index) {
-					// 이미 체크된 라디오 버튼을 클릭한 경우
-					beforeChecked = -1; // beforeChecked 초기화
-					$(this).prop("checked", false); // 체크 해제
-				} else {
-					// 새로운 라디오 버튼을 클릭한 경우
-					beforeChecked = index; // 현재 index를 저장
-				}
-			});
-		});
+	        // 라디오 버튼 클릭 이벤트 핸들러
+	        var beforeChecked = -1;
+	        $("input[type='radio'][name='price']").off('click').on("click", function() {
+	            var index = $(this).index("input[type='radio'][name='price']");
+	            if (beforeChecked == index) {
+	                beforeChecked = -1;
+	                $(this).prop("checked", false);
+	            } else {
+	                beforeChecked = index;
+	            }
+	        });
+	    }
+		
+	    var currentPage = <%= currentPage %>;
+	 	var category = '<%= category %>';
+	    
+	    // 네비게이션 링크 스타일링
+		function updateNavigationStyle(currentCategory) {
+			console.log("스타일 적용");
+			$('.itemnav .link').each(function() {
+		        var clickedCategory = $(this).data('category') || "all"; // 클릭된 카테고리 가져오기
+
+		        if (clickedCategory == currentCategory) {
+		            $(this).css({
+		                'color': 'green',
+		                'font-weight': 'bold'
+		            });
+		        } else {
+		            $(this).css({
+		                'color': '',
+		                'font-weight': ''
+		            });
+		        }
+		    });
+		}
+
+	    // 현재 URL 가져와서 스타일 적용
+	    updateNavigationStyle(category);
+	    // 초기 URL 설정
+	    var initialUrl = window.location.origin + '/ProductsList/ProductList.do?page=' + currentPage + '&category=' + category;
+	    history.replaceState({ page: currentPage, category: category }, null, initialUrl);
+	    updateNavigationStyle(category);
+	 // 카테고리 링크 클릭 이벤트 핸들러
+	    $('.itemnav .link .pagination').off('click').on('click', function(event) {
+	    	 // 초기 URL 설정
+	    	
+	        event.preventDefault();
+	        var clickedCategory = $(this).data('category') || "all";  // 클릭된 카테고리 가져오기
+	        console.log("클릭된 카테고리: " + clickedCategory);
+
+	       
+
+	        // 전역 변수인 category 업데이트
+	        category = clickedCategory;
+
+	        // AJAX 요청을 통해 업데이트된 카테고리와 초기화된 현재 페이지로 제품 목록 가져오기
+	        $.ajax({
+	            type: 'GET',
+	            url: window.location.origin + '/ProductsList/ProductList.do',
+	            data: {
+	        		page: 1,
+	                category: category
+	            },
+	            success: function(data) {
+	                console.log("AJAX 요청 성공");
+	                var productListHtml = $(data).find('#productList').html();
+	                var productcntHtml = $(data).find('#productcnt').html();
+	                var itemhtml = $(data).find('#item').html();
+	                var categoryFiltersHtml = $(data).find('#categoryFilters').html(); 
+
+	                console.log("제품 목록 HTML: ", productListHtml);
+	                console.log("제품 개수 HTML: ", productcntHtml);
+
+	                // 제품 목록과 개수 업데이트
+	                $('#productList').html(productListHtml);
+	                $('#productcnt').html(productcntHtml);
+	                $('#item').html(productcntHtml);
+	                $('#categoryFilters').html(categoryFiltersHtml);
+
+	                // 브라우저 URL 업데이트하여 현재 상태 반영
+	                var newUrl = window.location.origin + '/ProductsList/ProductList.do?page='+currentPage + '&category=' + category;
+	                history.pushState({page:currentPage, category: category }, null, newUrl);
+
+	                // 동적으로 로드된 콘텐츠에 이벤트 핸들러 재설정
+	                initializeEventHandlers();
+	                updateNavigationStyle();
+	            },
+	            error: function(xhr, status, error) {
+	                console.error("AJAX 요청 실패", status, error);
+	            }
+	        });
+	    });
+
+	 
+
+	    // 초기 이벤트 핸들러 설정
+	    initializeEventHandlers();
+
+	 	
+
+
+	});
+
+
 	</script>
 </body>
 </html>

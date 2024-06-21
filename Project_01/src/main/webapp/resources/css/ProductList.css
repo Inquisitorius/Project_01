@@ -43,15 +43,13 @@
 	color: rgb(51, 51, 51);
 }
 
-.link:active {
-	color: rgb(95, 0, 128);
-	font-weight: bold;
+.link:hover {
+    color: green;
+    font-weight: bold;
 }
 
-.link:hover {
-	color: rgb(95, 0, 128);
-	font-weight: bold;
-}
+
+
 
 .listcontainer {
 	display: flex;
@@ -126,13 +124,16 @@
 }
 
 .filter-content {
-	display: block;
+	display: none;
 	display: inline-block;
 	margin-top: 9px;
 	font-family: "Noto Sans KR", "malgun gothic", AppleGothic, dotum,
 		sans-serif;
 	font-size: 14px;
+	
 }
+
+
 
 input[type="checkbox"], input[type="radio"] {
 	display: none;
@@ -241,6 +242,10 @@ input[type="checkbox"]:checked+label:after, input[type="radio"]:checked+label:af
 	color: inherit;
 }
 
+.sort-a:hover {
+    color: inherit;
+}
+
 .list {
 	display: grid;
 	width: 100%;
@@ -248,7 +253,7 @@ input[type="checkbox"]:checked+label:after, input[type="radio"]:checked+label:af
 	gap: 60px;
 }
 
-/*부트스트랩 색상 설정*/
+
 .btn-navy {
 	color: #a0a0a0;
 	background-color: #ffffff;
@@ -256,7 +261,7 @@ input[type="checkbox"]:checked+label:after, input[type="radio"]:checked+label:af
 }
 
 .btn-navy:hover {
-	color: #fff;
+	color: green;
 	background-color: #47702e;
 	border-color: #163020;
 }
