@@ -23,8 +23,9 @@
 			<div class = "row">
 				<div style = "width: auto;">
 					<!--  <img src="/resources/img/kurly_logo.svg"/> -->
-					
+					<a href = "/MainPage/MainPage.jsp" style = "text-decoration: none;">
 					<img src="/resources/img/Green.svg"/ style = "width: 82px; height: 42px; padding-bottom: 5px;">
+					</a>
 					<button class = "fontCommon_Option" style="background: none; border: none; padding-left: 15px; font-size: 15px; color: gray;">마켓그린</button>
 					<button class = "fontCommon_Option" style="background: none; border: none; padding-left: 15px; font-size: 15px; color: gray;">뷰티그린</button>
 				</div>	
@@ -59,23 +60,82 @@
 			            	<img style = "width: 15px; height: auto; margin-right: 10px; padding-top: 2px;" src="/resources/img/menu.svg"/> 
 			            	<label class = "fontCommon_Option" style = "color: gray;">카테고리</label>
 			         	</div>
-			          	<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-			            	<li><a class="dropdown-item" href="#">Action</a></li>
-			            	<li><a class="dropdown-item" href="#">Another action</a></li>
-			            	<li><hr class="dropdown-divider"></li>
+			          	<ul class="dropdown-menu" aria-labelledby="navbarDropdown" style = "padding-top: 2px; padding-bottom: 2px;">	
 			            	<li class="dropend">
-			              		<a class="dropdown-item dropdown-toggle" href="#" id="submenuDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-			                		More options
-			              		</a>
-			              		<ul class="dropdown-menu" aria-labelledby="submenuDropdown">
-			                		<li><a class="dropdown-item" href="#">Submenu Action 1</a></li>
-			                		<li><a class="dropdown-item" href="#">Submenu Action 2</a></li>
+			            		<a class="dropdown-item dropdown-toggle dropdown-item_main" id="submenuDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="#" style = "">
+			            			<img class = "categoryImg" src = "/resources/img/category/wine.png" style = "width: 20px; height: auto;"/>
+			            			<label class = "category_ItemText categoryLabel" style = "height: 20px; padding-left: 10px;">주류</label>
+			            		</a>
+			            		<ul class="dropdown-menu" aria-labelledby="submenuDropdown" style = "padding-top: 2px; padding-bottom: 2px;">
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >와인</a></li>
+			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >위스키</a></li>
+			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >맥주</a></li>
+			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >증류주</a></li>
 			              		</ul>
 			            	</li>
-			            	<li>
-			            		<a class="dropdown-item" href="#">Something else here</a>
+			            	
+			            	<li class="dropend">
+			            		<a class="dropdown-item dropdown-toggle dropdown-item_main" id="submenuDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="#" style = "">
+			            			<img class = "categoryImg" src = "/resources/img/category/food.png" style = "width: 20px; height: auto;"/>
+			            			<label class = "category_ItemText categoryLabel" style = "height: 20px; padding-left: 10px;">식품</label>
+			            		</a>
+			            		<ul class="dropdown-menu" aria-labelledby="submenuDropdown" style = "padding-top: 2px; padding-bottom: 2px;">
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >과일</a></li>
+			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >수산</a></li>
+			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >정육</a></li>			                		
+			              		</ul>
+			            	</li>				            	
+			            	
+			            	<li class="dropend">
+			            		<a class="dropdown-item dropdown-toggle dropdown-item_main" id="submenuDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="#" style = "">
+			            			<img class = "categoryImg" src = "/resources/img/category/cleaner.png" style = "width: 20px; height: auto;"/>
+			            			<label class = "category_ItemText categoryLabel" style = "height: 20px; padding-left: 10px;">가전</label>
+			            		</a>
+			            		<ul class="dropdown-menu" aria-labelledby="submenuDropdown" style = "padding-top: 2px; padding-bottom: 2px;">
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >PC</a></li>
+			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >주방가전</a></li>
+			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >생활가전</a></li>			                		
+			              		</ul>
+			            	</li>	            	
+			            
+			            	<li class="dropend">
+			            		<a class="dropdown-item dropdown-toggle dropdown-item_main" id="submenuDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="#" style = "">
+			            			<img class = "categoryImg" src = "/resources/img/category/bread.png" style = "width: 20px; height: auto;"/>
+			            			<label class = "category_ItemText categoryLabel" style = "height: 20px; padding-left: 10px;">베이커리</label>
+			            		</a>
+			            		<ul class="dropdown-menu" aria-labelledby="submenuDropdown" style = "padding-top: 2px; padding-bottom: 2px;">
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >식빵·모닝빵</a></li>
+			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >잼·스프레드</a></li>
+			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >디저트</a></li>
+			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >케이크</a></li>			                		
+			              		</ul>
 			            	</li>
-			            	<li><hr class="dropdown-divider"></li>
+			            	
+			            	<li class="dropend">
+			            		<a class="dropdown-item dropdown-toggle dropdown-item_main" id="submenuDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" href="#" style = "">
+			            			<img class = "categoryImg" src = "/resources/img/category/light.png" style = "width: 20px; height: auto;"/>
+			            			<label class = "category_ItemText categoryLabel" style = "height: 20px; padding-left: 10px;">가구</label>
+			            		</a>
+			            		<ul class="dropdown-menu" aria-labelledby="submenuDropdown" style = "padding-top: 2px; padding-bottom: 2px;">
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >소파·체어</a></li>
+			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >침실가구</a></li>
+			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >메트리스·토퍼</a></li>
+			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >주방가구</a></li>			                		
+			              		</ul>
+			            	</li>
 			          	</ul>	
 			          					  
 					</div>	
@@ -91,5 +151,37 @@
 		{
 			console.log("mouseOver Hit");			
 		});
+		
+		$('.dropdown-item_main').mouseover(function()
+		{
+			var src = $(this).children('.categoryImg').attr("src");
+			src = src.slice(0, -4);
+			src = src + "_sel.png";
+			
+			$(this).children('.categoryLabel').css("color","#108c0d");			
+			$(this).children('.categoryImg').attr("src",src);			
+		});
+		
+		$('.dropdown-item_main').mouseout(function()
+		{
+			var src = $(this).children('.categoryImg').attr("src");
+			src = src.slice(0, -8);
+			src = src + ".png";
+			
+			$(this).children('.categoryLabel').css("color","rgb(51, 51, 51)");
+			$(this).children('.categoryImg').attr("src",src);
+		});
+		
+		$('.dropdown-item_sub').mouseover(function()
+		{
+			$(this).css("color","#108c0d");
+			
+		});
+		
+		$('.dropdown-item_sub').mouseout(function()
+		{
+			$(this).css("color","rgb(51, 51, 51)");	
+		});
+		
 	});
 </script>

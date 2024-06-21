@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.css">
 <jsp:include page="/Common/LinkFile.jsp"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
-<link rel="stylesheet" href="/resources/css/Common.css">
+<!--  <link rel="stylesheet" href="/resources/css/Common.css">-->
 <link rel="stylesheet" href="/resources/css/MainPage.css">
 <script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>
 <script src="/resources/bootstrap/js/jQueryRotate.js"></script>
@@ -244,6 +244,7 @@ body {
 	<script>
 		
 		var targetTime = 0;
+						
 		
 		$(document).ready(function()
 		{
@@ -270,6 +271,7 @@ body {
 					event_id : id
                 };
 			
+			console.log("element_id :" + element_id);
 			var url = "http://localhost:8080/MainController";
 			//target URL INSERT
 			url += "/getSaleProductList";
@@ -286,19 +288,20 @@ body {
                 {                	
                 	$(response).each(function()
                 	{
-                		//var id = '#maincard_' + num;
                 		var id = element_id + num;
                 		num = num + 1;
-                		
-                		$(id).find('.maincard_img').attr('src',this.product_img);
-                		$(id).find('.mainpage_Itemtitle').html(this.name);
-                		
-                		var oriPrice = this.price_ori;
-                		$(id).find('.mainpage_OripriceText').html(oriPrice.toLocaleString('ko-KR') + "원");
-                		$(id).find('.mainpage_SalepercentText').html(this.price_percent + "%");
-                		
-                		var discountPrice = this.price_discount;
-                		$(id).find('.mainpage_SalePriceText').html(discountPrice.toLocaleString('ko-KR') + "원");
+                		if(num < 8)
+                		{
+                			$(id).find('.maincard_img').attr('src',this.product_img);
+                    		$(id).find('.mainpage_Itemtitle').html(this.name);
+                    		
+                    		var oriPrice = this.price_ori;
+                    		$(id).find('.mainpage_OripriceText').html(oriPrice.toLocaleString('ko-KR') + "원");
+                    		$(id).find('.mainpage_SalepercentText').html(this.price_percent + "%");
+                    		
+                    		var discountPrice = this.price_discount;
+                    		$(id).find('.mainpage_SalePriceText').html(discountPrice.toLocaleString('ko-KR') + "원");
+                		}
         			});
                 },
 		        error : function(request,status,error){
@@ -345,9 +348,6 @@ body {
 			            alert(e);
 			    }
 			 });
-	                
-			
-			
 		}
 		
 		function cardItemChange(cardName)
