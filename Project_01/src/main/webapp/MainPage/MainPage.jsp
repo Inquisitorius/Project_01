@@ -286,6 +286,7 @@ body {
 		        data: JSON.stringify(data),
                 success: function(response) 
                 {                	
+                	console.log(response);
                 	$(response).each(function()
                 	{
                 		var id = element_id + num;
