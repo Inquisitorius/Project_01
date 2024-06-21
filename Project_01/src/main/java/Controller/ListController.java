@@ -20,7 +20,46 @@ public class ListController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	@Override	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws
+	  ServletException, IOException {
+		BoardDAO dao = new BoardDAO();
+		 Map<String, Object> map = new HashMap<String, Object>();
+		 int totalCount = dao.selectCount(map);
+		  
+		  ServletContext application = getServletContext(); 
+			
+			int pageSize =Integer.parseInt(application.getInitParameter("POSTS_PER_PAGE")); 
+			int blockPage = Integer.parseInt(application.getInitParameter("POSTS_PER_PAGE"));
+			int pageNum = 1; 
+			  String pageTemp = req.getParameter("pageNum");
+			  
+			  System.out.println("::: PageTemp :::: " + pageTemp); if (pageTemp != null &&
+			  !pageTemp.equals("")) pageNum = Integer.parseInt(pageTemp);
+			  
+			  int start = (pageNum - 1) * pageSize + 1; int end = pageNum * pageSize;
+				map.put("start", start);
+				map.put("end", end); 
+				List<BoardDTO> boardLists = dao.selectListPage(map);
+				  
+				  dao.close();
+				  
+				  String pagingImg = BoardPage.pagingStr(totalCount,pageSize, blockPage, pageNum, "../test/list.do"); 
+				  map.put("totalCount", totalCount);
+				  map.put("pagingImg", pagingImg); 
+				  map.put("pageSize",pageSize); 
+				  map.put("pageNum", pageNum);
+				  
+				  req.setAttribute("boardLists", boardLists); req.setAttribute("map", map);
+				  req.getRequestDispatcher("/test/List.jsp").forward(req, resp);
+	}
+}
+	
+	
+	
+	
+	
+	/*
 	  protected void service(HttpServletRequest req, HttpServletResponse resp) throws
 	  ServletException, IOException {
 		
@@ -30,10 +69,14 @@ public class ListController extends HttpServlet {
 	  int totalCount = dao.selectCount(map);
 	  
 	  ServletContext application = getServletContext(); 
-	  int pageSize = Integer.parseInt(application.getInitParameter("POSTS_PER_PAGE"));
-	  int blockPage = Integer.parseInt(application.getInitParameter("POSTS_PER_PAGE"));
-	  int pageSize1 =Integer.parseInt(req.getParameter("POSTS_PER_PAGE")); 
-	  int blockPage1 = Integer.parseInt(req.getParameter("POSTS_PER_PAGE"));
+		
+		int pageSize =Integer.parseInt(application.getInitParameter("POSTS_PER_PAGE")); 
+		int blockPage = Integer.parseInt(application.getInitParameter("POSTS_PER_PAGE"));
+		 
+		
+	//	int pageSize =Integer.parseInt(req.getParameter("POSTS_PER_PAGE")); 
+	//	int blockPage = Integer.parseInt(req.getParameter("POSTS_PER_PAGE"));
+			
 	  int pageNum = 1; 
 	  String pageTemp = req.getParameter("pageNum");
 	  
@@ -42,14 +85,14 @@ public class ListController extends HttpServlet {
 	  
 	  int start = (pageNum - 1) * pageSize + 1; int end = pageNum * pageSize;
 		map.put("start", start);
-		map.put("end", end); /* 페이지 처리 end */
+		map.put("end", end); 
 	  
 	  List<BoardDTO> boardLists = dao.selectListPage(map);
 	  
 	  dao.close();
 	  
-	  String pagingImg = BoardPage.pagingStr
-			  (pageSize, blockPage, pageNum, "../test/list.do"); 
+	  String pagingImg = BoardPage.pagingStr(totalCount,pageSize, blockPage, pageNum, "../test/list.do"); 
+	  map.put("totalCount", totalCount);
 	  map.put("pagingImg", pagingImg); 
 	  map.put("pageSize",pageSize); 
 	  map.put("pageNum", pageNum);
@@ -57,4 +100,4 @@ public class ListController extends HttpServlet {
 	  req.setAttribute("boardLists", boardLists); req.setAttribute("map", map);
 	  req.getRequestDispatcher("/test/List.jsp").forward(req, resp); }
 	 
-}
+} */

@@ -9,6 +9,7 @@ public class BoardDTO {
 	private String ofile;
 	private String sfile;
 	private String pass;
+	
 	public String getIdx() {
 		return idx;
 	}

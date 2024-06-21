@@ -35,7 +35,7 @@ dao.close();
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Productpage</title>
-
+<jsp:include page="/Common/LinkFile.jsp"/>
 <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.css">
 <link rel="stylesheet" href="/resources/css/Common.css">
 <script src="/resources/js/jquery-3.7.1.js"></script>
@@ -110,7 +110,7 @@ section.notice {
   display: none;
 }
 
-.btn {
+/* .btn {
   display: inline-block;
   padding: 0 30px;
   font-size: 15px;
@@ -136,7 +136,7 @@ section.notice {
   -ms-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
-}
+} */
 
 .btn-dark {
   background: #555;

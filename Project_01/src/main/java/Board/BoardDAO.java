@@ -14,7 +14,7 @@ public class BoardDAO extends TestDBPool {
 	}
 	public int selectCount(Map<String, Object> map) {
 		int totalCount = 0;
-
+		
 		String query = "SELECT COUNT(*) FROM pboard";
 		if (map.get("searchWord") != null) {
 			query += " WHERE " + map.get("searchField") + " " + " LIKE '%" + map.get("searchWord") + "%'";
@@ -31,21 +31,19 @@ public class BoardDAO extends TestDBPool {
 
 		return totalCount;
 	}
-	public List<BoardDTO> selectListPage(Map<String, Object> map) {
+	 public List<BoardDTO> selectListPage(Map<String, Object> map) {
 		  List<BoardDTO> board = new Vector<BoardDTO>();
 		  
 			String query = /*
 							 * " " + " SELECT * FROM ( " + "	SELECT Tb.*, ROWNUM rNum FROM ( " +
-							 */ "		SELECT * FROM pboard ";	  
+							 */ "		SELECT * FROM pboard ORDER BY IDX";	  
 			  	try {
 			  		psmt = con.prepareStatement(query);
-			  		psmt.setString(1, map.get("start").toString());
-			  		psmt.setString(2, map.get("end").toString());
 			  		rs=psmt.executeQuery();
 			  		
 			  		while(rs.next()) {
 			  			BoardDTO dto = new BoardDTO();
-			  			
+			  		
 			  			dto.setIdx(rs.getString(1));
 			  			dto.setName(rs.getString(2));
 			  			dto.setTitle(rs.getString(3));
@@ -56,6 +54,8 @@ public class BoardDAO extends TestDBPool {
 			  			dto.setPass(rs.getString(8));
 			 
 			  			board.add(dto);
+			  			System.out.println("----test----");	
+			  			System.out.println(dto.getName());	
 			  		}
 		  	}
 			  	catch(Exception e) {
