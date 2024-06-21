@@ -9,6 +9,7 @@ public class LoginDTO {
 		private String address;
 		private String address_sub;
 		private String gender;
+		private String birthdate;
 		
 		public String getId() {
 			return id;
@@ -58,6 +59,10 @@ public class LoginDTO {
 		public void setGender(String gender) {
 			this.gender = gender;
 		}
-		
-		
+		public String getBirthdate() {
+			return birthdate;
+		}
+		public void setBirthdate(String birthdate) {
+			this.birthdate = birthdate;
+		}
 }

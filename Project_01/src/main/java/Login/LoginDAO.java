@@ -1,7 +1,5 @@
 package Login;
 
-import java.sql.PreparedStatement;
-
 public class LoginDAO extends DBConnTest {
 	public LoginDAO() {
 		super();
@@ -9,23 +7,23 @@ public class LoginDAO extends DBConnTest {
 	
 	public LoginDTO Login(String id,String pwd) {
 		LoginDTO logindto = null;
-		PreparedStatement pstmt=null;
-		rs = null;
 		logindto = new LoginDTO();
 		try {
-			pstmt=con.prepareStatement("SELECT * FROM USER_INFO WHERE id=? AND pass=?");
-			pstmt.setString(1, id);
-			pstmt.setString(2, pwd);
+			psmt=con.prepareStatement("SELECT * FROM USER_INFO WHERE id=? AND pass=?");
+			psmt.setString(1, id);
+			psmt.setString(2, pwd);
+			rs=psmt.executeQuery();
 			
-			rs=pstmt.executeQuery();
 			if(rs.next()) {
 				logindto.setId(rs.getString("id"));
 				logindto.setPass(rs.getString("pass"));
 				logindto.setName(rs.getString("name"));
 				logindto.setEmail(rs.getString("email"));
+				logindto.setPhone(rs.getString("phone"));
 				logindto.setAddress(rs.getString("address"));
 				logindto.setAddress_sub(rs.getString("address_sub"));
 				logindto.setGender(rs.getString("gender"));
+				logindto.setBirthdate(rs.getString("birthdate"));
 		}
 	}catch (Exception e) {
 			e.printStackTrace();
@@ -33,7 +31,7 @@ public class LoginDAO extends DBConnTest {
 		finally {
 			try {
 				 rs.close(); 
-				 pstmt.close();
+				 psmt.close();
 			}catch(Exception e){
 				e.printStackTrace();
 			}

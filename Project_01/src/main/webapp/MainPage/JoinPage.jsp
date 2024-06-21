@@ -285,7 +285,7 @@ a:hover {
 			function inputPwd(pwd) {
 				var pwd = document.getElementById(pwd).value;
 				if(pwd.length < 8){
-				pwdWarning.textContent = "비밀번호는 8자리 이상으로 설정해주세요."	
+				pwdWarning.textContent = "비밀번호는 8자리 이상으로 설정해주세요."
 				}else{
 				pwdWarning.textContent = "";
 				}

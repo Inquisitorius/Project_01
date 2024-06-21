@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>로그인</title>
 <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.css">
+<script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>
 
 <style type="text/css">
 
@@ -45,7 +46,7 @@
 	margin-top: 5px;
 	font-size: 10px;
 	color: rgb(102, 102, 102);
-	font-weight: 500;
+	font-weight: 600;
 	text-decoration: none;
 	
 }
@@ -69,21 +70,24 @@ a:hover {
 		<form action="/login.do" method="post">
 		<div class="row" style="justify-content: center;">
 			<div class="col-md-3" style="justify-content: center;">
-				<input type="text" class="input_Style" placeholder="아이디를 입력해주세요" onfocus="this.placeholder=''" onblur="this.placeholder='아이디를 입력해주세요.'" name="Id">
-				<input type="password" class="input_Style" placeholder="비밀번호를 입력해주세요" onfocus="this.placeholder=''" onblur="this.placeholder='비밀번호를 입력해주세요.'" name="Pwd">
+				<input id = "input_id" type="text" class="input_Style" placeholder="아이디를 입력해주세요" onfocus="this.placeholder=''" onblur="this.placeholder='아이디를 입력해주세요.'" name="id">
+				<input id = "input_pw" type="password" class="input_Style" placeholder="비밀번호를 입력해주세요" onfocus="this.placeholder=''" onblur="this.placeholder='비밀번호를 입력해주세요.'" name="pass">
 				</div>
 		</div>
 		<div class="row" style="justify-content: center;">
-			<div class="col-md-3" style="display:flex; justify-content: flex-end;">
+			<div class="col-md-3" style="display:flex; align-items: center; height:40px; padding:15px;">
+				<div class="col-md-7"><p id="loginWarning" style="margin:0px; font-size:10px; color:red; user-select:none;"></p></div>
+				<div class="col-md-5"  style="display:flex; justify-content: flex-end;">		
 				<a class="mini_Font">아이디 찾기</a> <span>|</span>
 				<a class="mini_Font">비밀번호 찾기</a>
+				</div>
 			</div>
 		</div>
 		
 		<div class="row" style="justify-content: center;">
 			<div class="col-md-3" style="justify-content: center;">
 				<div class="button_Style">
-					<button type="submit" class="btn btn-success" style="width:100%;" >로그인</button>
+					<button type="button" class="btn btn-success" id = "loginBtn" style="width:100%;" >로그인</button>
 				</div>
 			</div>
 		</div>
@@ -99,7 +103,67 @@ a:hover {
 	</main>
 	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 	<script src="/resources/bootstrap/js/bootstrap.bundle.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+	<script	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+	<script>	
+		var prevPage = document.referrer;
+		$(document).ready(function()
+		{
+			$('#loginBtn').click(function()
+			{	
+				if($('#input_id').val() == ""){
+					$('#loginWarning').html("아이디를 입력해주세요.");
+					$('#input_id').focus();
+				}
+				else if($('#input_pw').val() == ""){
+					$('#loginWarning').html("비밀번호를 입력해주세요.");
+					$('#input_pw').focus();
+				}else{
+					LoginFunction();	
+				}
+			});
+		});
+		
+		function LoginFunction()
+		{
+			var input_id = $('#input_id').val();
+			var input_pw = $('#input_pw').val();
+			
+			var url = "http://localhost:8080/login/loginTry";
+			
+			var data = 
+			{
+				id : input_id,
+				pass : input_pw
+            };
+			
+			 $.ajax
+			 ({
+				 type:"post",
+				 url:url,
+				 contentType: 'application/json',
+				 data: JSON.stringify(data),
+		         success: function(response)
+		         {
+		        	if(response.stringData_00 == 'false')
+		        	{
+		        		//실패 안내문.
+		        		$('#loginWarning').html("아이디 비밀번호를 다시 확인해주세요.");
+		        	}
+		        	else
+		        	{
+		        		//메인으로? 요청 한 페이지?
+		        		location.replace(prevPage);
+		        	}
+		         },
+		         error : function(request,status,error)
+		         {
+		        	 alert('code:'+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); //에러 상태에 대한 세부사항 출력
+				     alert(e);
+				 }
+			 });
+		}
+	
+	
+	</script>
 </body>
 </html>
