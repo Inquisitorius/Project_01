@@ -41,7 +41,7 @@
 					right: -325px; top: -42px; 
 					width : 200px; height: 42px; 					
 					display: flex; align-items: center; justify-content: space-evenly;">
-						<div style = "width: 36px; height: auto;"><img style = "width: 36px; height: auto;" src="/resources/img/seller.svg"/></div>
+						<div style = "width: 36px; height: auto;"><img id = "sellerIconImg" style = "width: 36px; height: auto;" src="/resources/img/seller.svg"/></div>
 						<div style = "width: 36px; height: auto;"><img style = "width: 36px; height: auto;" src="/resources/img/login.svg"/></div>
 						<div style = "width: 36px; height: auto;"><img style = "width: 36px; height: auto;" src="/resources/img/logout.svg"/></div>
 						<div style = "width: 36px; height: auto;"><img style = "width: 36px; height: auto;" src="/resources/img/user_add.svg"/></div>
@@ -149,9 +149,10 @@
 <script>
 	$(document).ready(function()
 	{
-		$("#categoryText").mouseover(function()
+		$('#sellerIconImg').css('cursor','pointer');
+		$("#sellerIconImg").click(function()
 		{
-			console.log("mouseOver Hit");			
+			location.href = "/SellerPage/SellerMainPage.jsp";
 		});
 		
 		$('.dropdown-item_main').mouseover(function()

@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.css">
 <jsp:include page="/Common/LinkFile.jsp"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
-<!--  <link rel="stylesheet" href="/resources/css/Common.css">-->
+
 <link rel="stylesheet" href="/resources/css/MainPage.css">
 <script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>
 <script src="/resources/bootstrap/js/jQueryRotate.js"></script>
@@ -271,7 +271,7 @@ body {
 					event_id : id
                 };
 			
-			console.log("element_id :" + element_id);
+			console.log("element_id :" + id);
 			var url = "http://localhost:8080/MainController";
 			//target URL INSERT
 			url += "/getSaleProductList";
@@ -285,8 +285,7 @@ body {
 		        contentType: 'application/json',
 		        data: JSON.stringify(data),
                 success: function(response) 
-                {                	
-                	console.log(response);
+                {                	                	
                 	$(response).each(function()
                 	{
                 		var id = element_id + num;

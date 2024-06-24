@@ -99,7 +99,7 @@ public class MainController extends HttpServlet
 	{
 		resp.setContentType("application/json");
 		resp.setCharacterEncoding("UTF-8");
-		
+				
 		try 
 		{
 			BufferedReader reader = req.getReader();
