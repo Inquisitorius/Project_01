@@ -72,6 +72,7 @@ public class BoardDAO extends TestDBPool {
 			  		e.printStackTrace();
 			  	}
 			  	return board;
+			  	
 }
 	public BoardDTO View(String idx) {
 		BoardDTO dto = new BoardDTO();
@@ -102,17 +103,17 @@ public class BoardDAO extends TestDBPool {
 		
 		try {
 			String query = "INSERT INTO pboard ( "
-						 + " idx, name, title, content,ofile,sfile,pass )"
+						 + " idx, name, title, content )"
 						 + " values( "
-						 + " seq,board_num.NEXTVAL,?,?,?,?,?,?)";
+						 + " seq,board_num.NEXTVAL,?,?,?)";
 						 
 			psmt = con.prepareStatement(query);			 
 			psmt.setString(1, dto.getName());			  
 			psmt.setString(2, dto.getTitle());			 
 			psmt.setString(3, dto.getContent());			 
-			psmt.setString(4, dto.getOfile());		  
-			psmt.setString(5, dto.getSfile());		 
-			psmt.setString(6, dto.getPass());		 
+		//	psmt.setString(4, dto.getOfile());		  
+		//	psmt.setString(5, dto.getSfile());		 
+		//	psmt.setString(6, dto.getPass());		 
 			result = psmt.executeUpdate();
 			}
 		catch(Exception e) {

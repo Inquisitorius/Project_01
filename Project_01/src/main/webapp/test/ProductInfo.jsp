@@ -19,19 +19,21 @@ dao.close();
 	function count(type)  {
 		  // 결과를 표시할 element
 		  const resultElement = document.getElementById('result');
-		  
+		  const resultElement2 = document.getElementById('price');
 		  // 현재 화면에 표시된 값
 		  let number = resultElement.innerText;
-		  
+		  let price = resultElement2.innerText;
 		  // 더하기/빼기
 		  if(type === 'plus') {
 		    number = parseInt(number) + 1;
-		    
+		    price  += parseInt(number) ;
 		  }else if(type === 'minus' && number!=1)  {
 		    number = parseInt(number) - 1;
+		    price -= parseInt(number) ;
 		  }
 		  // 결과 출력
 		  resultElement.innerText = number;
+		  resultElement2.innerText = price;
 		}
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -395,7 +397,7 @@ color: black;
 			<div class= "row">
 				<div class = "col-md-12 fontgray right" style="display:inline-flex;align-items: center;">
 				총 상품 금액:<label style="font-weight:bold;font-size:25px">9900//<%= dto.getPrice()%></label>원</div>
-				
+				<label class="fontCommon_nomal2" id='price' min="9900">9900</label>
 			</div>
 			<div class="row">
 				<div class= "col -4"style= "padding-bottom: 50px;">

@@ -199,8 +199,9 @@ section.notice {
 </style>
 </head>
 <body>
-	
+
 	<h3><%= dto.getIdx() %></h3>
+	<h3><%= dto.getName() %></h3>
 	<%-- <c:forEach var="boardVO" items="${boardList}">    <p><c:out value="${boardVO.title}" /></p></c:forEach> --%>
 
 	<c:forEach var="board" items= "${boardLists}" varStatus="status">

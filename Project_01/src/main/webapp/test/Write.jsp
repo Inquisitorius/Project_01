@@ -7,6 +7,11 @@
 <title>문의하기</title>
 <script type = "text/javascript">
 function validateForm(form) {
+	if (form.name.value == "") {
+		alert("이름을 입력하세요.");
+		form.content.focus();
+		return false;
+	}
 	if (form.title.value == "") {
 		alert("제목을 입력하세요.");
 		form.title.focus();
@@ -28,6 +33,12 @@ function validateForm(form) {
 	<tr>
 		<input type="image" src = "../resources/img/melon.jpg" style="width:150px;"/>
 		<td>상품이름</td>
+	</tr><br/>
+	<tr>
+		<td>유저</td>
+		<td>
+		<input type="text" name="name" style="width:30%;" />
+		</td>
 	</tr><br/>
 	<tr>
 		<td>제목</td>

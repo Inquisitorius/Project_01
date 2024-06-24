@@ -20,6 +20,6 @@ dao.close();
 		
 			<p>${ dto.idx }</p>
 			<p>${ dto.name }</p>
-			<h2><%@ %></h2>
+			<h2>mm</h2>
 </body>
 </html>

@@ -20,6 +20,16 @@ public class WriteController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
 		BoardDAO dao = new BoardDAO();
+		String name = req.getParameter("id");
+		String title = req.getParameter("title");
+		String content = req.getParameter("content");
+		String pass = req.getParameter("pass");
+		
+		System.out.println("name :" + name);
+		System.out.println("title :" + title);
+		System.out.println("content :" + content);
+		System.out.println("pass :" + pass);
+		
 		req.getRequestDispatcher("/test/Write.jsp").forward(req, resp);
 }
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
@@ -29,7 +39,6 @@ public class WriteController extends HttpServlet {
 		dto.setName(req.getParameter("name"));
 		dto.setTitle(req.getParameter("title"));
 		dto.setContent(req.getParameter("content"));
-		dto.setPass(req.getParameter("pass"));
 		
 		BoardDAO dao = new BoardDAO();
 		int result = dao.insertWrite(dto);

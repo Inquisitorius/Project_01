@@ -33,7 +33,11 @@ public class ListController extends HttpServlet {
 			req.setAttribute("boardLists", boardLists); req.setAttribute("map", map);
 			req.getRequestDispatcher("/test/List.jsp").forward(req, resp);
 	}
-
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		int num = Integer.parseInt(req.getParameter("num"));
+		int price = Integer.parseInt(req.getParameter("price"));
+		
+	}	
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws
 	  ServletException, IOException {
 		
