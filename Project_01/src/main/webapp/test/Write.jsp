@@ -48,5 +48,6 @@ function validateForm(form) {
 		</td>
 	</tr>
 	</form>
+
 </body>
 </html>

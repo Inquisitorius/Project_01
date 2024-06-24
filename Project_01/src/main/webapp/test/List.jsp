@@ -9,15 +9,20 @@
 <%@ page import="Main.JDBConnect"%>
 <%@ page import="Main.TestDBPool"%>
 
-<% 
+<%
+String idx = request.getParameter("idx");
 BoardDAO dao = new BoardDAO();
-Map<String, Object> param = new HashMap<String, Object>();
-int totalCount = dao.selectCount(param);
-List<BoardDTO> boardLists = dao.selectListPage(param);
-
+BoardDTO dto = new BoardDTO();
+List<BoardDTO> boardLists = dao.selectListPage();
 dao.close();
+%> 
+<script>
+function Listt() {
+	var 
 
-%>
+}
+
+</script>
 <!DOCTYPE html>
 <html>
 <head>
@@ -194,29 +199,15 @@ section.notice {
 </style>
 </head>
 <body>
+	
+	<h3><%= dto.getIdx() %></h3>
+	<%-- <c:forEach var="boardVO" items="${boardList}">    <p><c:out value="${boardVO.title}" /></p></c:forEach> --%>
 
-	<%-- <section class="notice">
-		<div class = "container">
-		<h3>상품 문의</h3>
-		
-		<c:choose>
-			<c:when test="${ empty pBoardList }">
-				<p>등록된 게시물이 없습니다</p>
-				<p>${ boardLists }</p>
-				<p>${ boradLists.name() }</p>
-			</c:when>
-			<c:otherwise>
-				<c:forEach items="${ boardLists }" var="row" varStatus="loop">
-				<p>${ map.totalCount - (((map.pageNum-1) * map.pageSize) + loop.index)}
-				<h3> ${ dto.getName() }</h3>
-				</p>
-				<p>${ row.name } </p>
-				</c:forEach>
-			</c:otherwise>
-		</c:choose>
-	</div>
-	</section>	 --%>
-	<%
+	<c:forEach var="board" items= "${boardLists}" varStatus="status">
+	<c:out value="${status.index}" /> / <c:out value ="${status.end}" /> 
+	<h3><%= dto.getName() %></h3>
+	</c:forEach>
+<%-- <%
 	if (boardLists.isEmpty()) {
 	%>
 		<tr>
@@ -246,7 +237,7 @@ section.notice {
 	<%
 		}
 	}
-	%>
+	%>  --%>
 	<section class="notice">
   <div class="page-title">
         <div class="container">
@@ -254,7 +245,9 @@ section.notice {
             
 	<div class="row">
 	<div class="col" style="display:flex;justify-content:flex-end;padding-bottom:10px;">
-	<button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="상품 문의하기">문의하기</button>
+	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="제목을 입력하시오.">문의하기</button>
+	
+</div>
 </div>
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -311,7 +304,7 @@ section.notice {
                     <a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a>
                     </th>
                     <td>김진성</td>
-                    <td>2017.06.15</td>
+                    <td>20220624</td>
                 </tr>
 
                 <tr>

@@ -11,7 +11,6 @@ public class TestDAO extends JDBConnect {
 	public TestDTO View(String num) {
 		TestDTO dto = new TestDTO();
 		String query = "SELECT * FROM product2 WHERE NUM=?";
-		System.out.println("----test----");
 		
 		try {
 			psmt = con.prepareStatement(query);

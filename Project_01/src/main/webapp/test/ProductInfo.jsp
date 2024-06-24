@@ -1,3 +1,4 @@
+
 <%@page import="Info.TestDAO"%>
 <%@page import="Info.TestDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -5,9 +6,9 @@
 <%@ page import="Main.JDBConnect"%>
 <%@ page import="Main.TestDBPool"%>
 <% 
-String num = request.getParameter("1");
+String num = request.getParameter("idx");
 TestDAO dao = new TestDAO(application);
-TestDTO dto = dao.View("1");
+TestDTO dto = dao.View("idx");
 dao.close();
 %>
 <!DOCTYPE html>
@@ -439,15 +440,46 @@ color: black;
 		 </div>
 		 <!-- 후기  -->
 		 <div class="row">
-		 <div class="col-12" style="width:500px; height:300;">
+		 <div class="col fontCommon_nomal" style="width:500px; height:300; display:flex; justify-content: space-around;">
 		 <h2>후기</h2>
 		
 		 </div>
 		 <!-- 문의 -->
 		 <section class="notice">
-  		<div class="page-title">
-        <div class="container">
+  		<div class="page-title fontCommon_nomal">
+        <div class="container ">
             <h3>상품 문의</h3>
+            <div class="row">
+	<div class="col" style="display:flex;justify-content:flex-end;padding-bottom:10px;">
+	<button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="상품 문의하기">문의하기</button>
+</div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">상품 문의하기</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">제목</label>
+            <input type="text" class="form-control" id="recipient-name">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">내용</label>
+            <textarea class="form-control" id="message-text">메시지를 입력하시오.</textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-outline-success">등록</button>
+      </div>
+    </div>
+  </div>
+</div>
 		 </div>
 		 <div id="board-list">
         <div class="container">
@@ -499,6 +531,7 @@ color: black;
 </main>
 <jsp:include page="/Common/Footer.jsp"/>
 
+				<h3></h3>
 	<script>
 	$(document).ready(function())
 	{
@@ -509,6 +542,24 @@ color: black;
 	});
 	
 	</script>
+	<script>
+var exampleModal = document.getElementById('exampleModal')
+exampleModal.addEventListener('show.bs.modal', function (event) {
+  // Button that triggered the modal
+  var button = event.relatedTarget
+  // Extract info from data-bs-* attributes
+  var recipient = button.getAttribute('data-bs-whatever')
+  // If necessary, you could initiate an AJAX request here
+  // and then do the updating in a callback.
+  //
+  // Update the modal's content.
+  var modalTitle = exampleModal.querySelector('.modal-title')
+  var modalBodyInput = exampleModal.querySelector('.modal-body input')
+
+  modalTitle.textContent = ' ' + recipient
+  modalBodyInput.value = recipient
+})
+</script>
 	
 	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 	<script src="/resources/bootstrap/js/bootstrap.bundle.js"></script>

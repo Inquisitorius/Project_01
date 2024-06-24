@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/test/View.do")
+@WebServlet("/test/ProductInfo.do")
 	public class ViewController extends HttpServlet {
 		private static final long serialVersionUID = 1L;
 
