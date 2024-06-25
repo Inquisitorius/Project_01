@@ -120,5 +120,27 @@ public class BoardDAO extends TestDBPool {
 	}
 		  return result;
 }
+	public int ModalWrite(BoardDTO dto) {
+		int result = 0;
+		System.out.println("-------test-------");
+		
+		try {
+			String query = "INSERT INTO pboard ( "
+						 + " idx, name, title, content )"
+						 + " values( "
+						 + " seq_board_num.NEXTVAL,?,?,?)";
+						 
+			psmt = con.prepareStatement(query);			 
+			psmt.setString(1, dto.getName());			  
+			psmt.setString(2, dto.getTitle());			 
+			psmt.setString(3, dto.getContent());			 	 
+			result = psmt.executeUpdate();
+			}
+		catch(Exception e) {
+			System.out.println("게시물 입력 중 예외 발생");
+			  e.printStackTrace();
+	}
+		  return result;
+}
 }
 

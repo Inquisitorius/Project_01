@@ -56,7 +56,7 @@ function validateForm(form) {
 	<tr>
 		<td colspan="2" align="center">
 			<button type="cancle">취소</button>
-			<button type="submit" onclick="location.href='/test/List.do'">등록</button>
+			<button type="submit" onclick="location.href='/test/List.do';">>등록</button>
 		</td>
 	</tr>
 	</form>

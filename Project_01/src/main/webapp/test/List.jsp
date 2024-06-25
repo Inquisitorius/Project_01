@@ -8,20 +8,35 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ page import="Main.JDBConnect"%>
 <%@ page import="Main.TestDBPool"%>
-<script>
-function Listt() {
-	var 
-}
 
-</script>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>목록</title>
+<script>
+function validateForm(form) {
+	if (form.name.value == "") {
+		alert("이름을 입력하세요.");
+		form.content.focus();
+		return false;
+	}
+	if (form.title.value == "") {
+		alert("제목을 입력하세요.");
+		form.title.focus();
+		return false;
+	}
+	if (form.content.value == "") {
+		alert("내용을 입력하세요.");
+		form.content.focus();
+		return false;
+	}
+}
+
+</script>
 <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.css">
 <link rel="stylesheet" href="/resources/css/Common.css">
-<script src="/resources/js/jquery-3.7.1.js"></script>
+<script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>
 <script src="https://kit.fontawesome.com/a0b08e370a.js" crossorigin="anonymous"></script>
 <style>a{text-decoration:none;}</style>
 <style type="text/css">
@@ -56,6 +71,12 @@ section.notice {
 
 .page-title h3 {
   font-size: 28px;
+  color: #333333;
+  font-weight: 400;
+  text-align: center;
+}
+.page-title h2 {
+  font-size: 35px;
   color: #333333;
   font-weight: 400;
   text-align: center;
@@ -190,47 +211,59 @@ section.notice {
 </style>
 </head>
 <body>
-<h2>Employee List</h2>
 
-    </table>
 	<section class="notice">
   <div class="page-title">
         <div class="container">
-            <h3>상품 문의</h3>
+            <h2>상품 문의</h2>
             
 	<div class="row">
 	<div class="col" style="display:flex;justify-content:flex-end;padding-bottom:10px;">
-	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="제목을 입력하시오.">문의하기</button>
-	
+	<button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="제목을 입력하시오.">문의하기</button>
 </div>
 </div>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered">>
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">제목을 입력하시오.</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form>
-          <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">제목</label>
-            <input type="text" class="form-control" id="recipient-name">
+        <div class="row">
+        <div class="col-3">
+        <img src="../resources/img/melon.jpg" style="width:100px;">
+        </div>
+        <div class="col-6">
+        <label for="message-test" class="col-form-label" style="width:50px;font-size:20px;">멜론</label>
+        </div>
+		<div>
+
+		<form action="../test/List.do"  method="post" enctype="multpart/form-data"
+		 onsubmit="return validateForm(this);"id="ModalWriteForm">
+        <div class="form-group-mb-3">
+            <label for="recipient-title" class="col-form-label">이름</label>
+            <input type="text" class="form-control" name="name" required>
           </div>
-          <div class="mb-3">
+          <div class="form-group-mb-3">
+            <label for="recipient-name" class="col-form-label">제목</label>
+            <input type="text" class="form-control" name="title" required>
+          </div>
+          <div class="form-group-mb-3">
             <label for="message-text" class="col-form-label">내용</label>
-            <textarea class="form-control" id="message-text">메시지를 입력하시오.</textarea>
+            <textarea class="form-control" name="content" required>메시지를 입력하시오.</textarea>
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-        <button type="button" class="btn btn-outline-success">등록</button>
+        <button type="submit" class="btn btn-outline-success" id="submitFormButton">등록</button>
       </div>
     </div>
-  </div>
+  </div>	
 </div>
-
+</div>
+</div></div>
   <!-- board list area -->
     <div id="board-list">
         <div class="container">
@@ -262,6 +295,15 @@ section.notice {
 </section>
 
 <script>
+$(document).ready(function() {
+	console.log("ready");
+	$('#submitFormButton').click(function()
+	{	
+		console.log("hit!;");
+		$('#ModalWriteForm').submit();
+	});
+});
+
 var exampleModal = document.getElementById('exampleModal')
 exampleModal.addEventListener('show.bs.modal', function (event) {
   // Button that triggered the modal
@@ -270,20 +312,18 @@ exampleModal.addEventListener('show.bs.modal', function (event) {
   var recipient = button.getAttribute('data-bs-whatever')
   // If necessary, you could initiate an AJAX request here
   // and then do the updating in a callback.
-  //
   // Update the modal's content.
   var modalTitle = exampleModal.querySelector('.modal-title')
   var modalBodyInput = exampleModal.querySelector('.modal-body input')
 
-  modalTitle.textContent = ' 상품문의하기 ' 
+  var myModalEl = document.getElementById('myModal')
+var modal = bootstrap.Modal.getInstance(myModalEl) 
+
+  modalTitle.textContent = ' 상품 문의하기 ' 
   modalBodyInput.value = recipient
-  $(document).on("click","#OrderDialog",function() {
-	  var title=$(this).data('id');
-	  $(".modal-body")
-  }
-		  )
-})
-</script>
+});
+
+  </script>
 
 <script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 	<script src="/resources/bootstrap/js/bootstrap.bundle.js"></script>

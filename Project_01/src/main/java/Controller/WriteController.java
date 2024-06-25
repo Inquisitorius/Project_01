@@ -34,9 +34,9 @@ public class WriteController extends HttpServlet {
 		BoardDAO dao = new BoardDAO();
 		int result = dao.insertWrite(dto);
 		dao.close();
-		
+	
 		if (result == 1) {
-			resp.sendRedirect("../test/list.do");
+			resp.sendRedirect("/test/list.do");
 		}
 		else {
 			System.out.println("글쓰기에 실패.");

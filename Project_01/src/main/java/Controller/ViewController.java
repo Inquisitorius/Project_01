@@ -23,8 +23,7 @@ import jakarta.servlet.http.HttpServletResponse;
 			String idx = req.getParameter("idx");
 			BoardDTO dto = dao.View(idx);
 			dao.close();
-			
-		System.out.println("------------");
+
 		String ext = null, fileName = dto.getSfile();
 		if(fileName!=null) {
 			ext = fileName.substring(fileName.lastIndexOf(".")+1);
