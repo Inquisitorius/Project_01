@@ -8,18 +8,9 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ page import="Main.JDBConnect"%>
 <%@ page import="Main.TestDBPool"%>
-
-<%
-String idx = request.getParameter("idx");
-BoardDAO dao = new BoardDAO();
-BoardDTO dto = new BoardDTO();
-List<BoardDTO> boardLists = dao.selectListPage();
-dao.close();
-%> 
 <script>
 function Listt() {
 	var 
-
 }
 
 </script>
@@ -195,50 +186,13 @@ section.notice {
   width: 1px;
   height: 1px;
 }
-
+	
 </style>
 </head>
 <body>
+<h2>Employee List</h2>
 
-	<h3><%= dto.getIdx() %></h3>
-	<h3><%= dto.getName() %></h3>
-	<%-- <c:forEach var="boardVO" items="${boardList}">    <p><c:out value="${boardVO.title}" /></p></c:forEach> --%>
-
-	<c:forEach var="board" items= "${boardLists}" varStatus="status">
-	<c:out value="${status.index}" /> / <c:out value ="${status.end}" /> 
-	<h3><%= dto.getName() %></h3>
-	</c:forEach>
-<%-- <%
-	if (boardLists.isEmpty()) {
-	%>
-		<tr>
-			<td colspan="5" align="center">
-			등록된 게시물이 없습니다.
-			</td>
-		</tr>				
-	<%
-	}
-	else {
-		int virtualNum = 0;
-		for (BoardDTO dto : boardLists)
-		{
-			virtualNum = totalCount--;
-	%>
-		<tr align="center">	
-		<td><%= virtualNum %></td>
-		<td align="left">
-			<a href="View.jsp?num=<%= dto.getName() %>"></a>
-			</td>
-			
-			<td align="center"><%= dto.getIdx() %> </td>
-			<td align="center"><%= dto.getPostdate() %></td>
-			<td align="center"><%= dto.getContent() %></td>
-			<th scope="col" class="th-num"><%= dto.getIdx() %> </th>
-	</tr>
-	<%
-		}
-	}
-	%>  --%>
+    </table>
 	<section class="notice">
   <div class="page-title">
         <div class="container">
@@ -254,7 +208,7 @@ section.notice {
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">상품 문의하기</h5>
+        <h5 class="modal-title" id="exampleModalLabel">제목을 입력하시오.</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -276,6 +230,7 @@ section.notice {
     </div>
   </div>
 </div>
+
   <!-- board list area -->
     <div id="board-list">
         <div class="container">
@@ -284,45 +239,27 @@ section.notice {
                 <tr>
                     <th scope="col" class="th-num">번호</th>
                     <th scope="col" class="th-title">제목</th>
-                    <th scope="col" class="th-writer">작성자</th>
-                    <th scope="col" class="th-date">등록일</th>
+                    <th scope="col" class="th-writer">이름</th>
+                    <th scope="col" class="th-date">날짜</th>
                 </tr>
                 </thead>
+                <c:forEach var="BoardDTO" items="${boardLists}">
                 <tbody>
                 <tr>
-                    <td>3</td>
+                    <td>${ BoardDTO.idx }</td>
                     <th>
-                      <a href="#!">[공지사항] 개인정보 처리방침 변경안내처리방침</a>
-                      <p>테스트</p>
+                      <a href="#!">${ BoardDTO.title }</a>
+                      <p>${ BoardDTO.name }</p>
                     </th>
-                    <td>김진성</td>
-                    <td>20221</td>
+                    <td>${ BoardDTO.name }</td>
+                    <td>${ BoardDTO.postdate }</td>
                 </tr>
-
-                <tr>
-                    <td>2</td>
-                    <th>
-                    <a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a>
-                    </th>
-                    <td>김진성</td>
-                    <td>20220624</td>
-                </tr>
-
-                <tr>
-                    <td>1</td>
-                    <th>
-                    <a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a>
-                    </th>
-                    <td>김진성</td>
-                    <td>2017.06.15</td>
-                </tr>
-                </tbody>
+                </tbody>  
+                </c:forEach>
             </table>
         </div>
-    </div>
+    </div> 
 </section>
-
-
 
 <script>
 var exampleModal = document.getElementById('exampleModal')
@@ -338,8 +275,13 @@ exampleModal.addEventListener('show.bs.modal', function (event) {
   var modalTitle = exampleModal.querySelector('.modal-title')
   var modalBodyInput = exampleModal.querySelector('.modal-body input')
 
-  modalTitle.textContent = ' ' + recipient
+  modalTitle.textContent = ' 상품문의하기 ' 
   modalBodyInput.value = recipient
+  $(document).on("click","#OrderDialog",function() {
+	  var title=$(this).data('id');
+	  $(".modal-body")
+  }
+		  )
 })
 </script>
 

@@ -27,7 +27,7 @@ public class BoardDAO extends TestDBPool {
 			Class.forName("oracle.jdbc.OracleDriver");
 
 			String url = "jdbc:oracle:thin:@localhost:1521:xe";
-			String id = "green";
+			String id = "c##green";
 			String pwd = "1234";
 			con = DriverManager.getConnection(url, id, pwd);
 			
@@ -64,7 +64,6 @@ public class BoardDAO extends TestDBPool {
 			  			dto.setPass(rs.getString("pass"));
 			 
 			  			board.add(dto);
-			  			System.out.println(dto.getName());	
 			  		}
 		  	}
 			  	catch(Exception e) {
@@ -77,7 +76,6 @@ public class BoardDAO extends TestDBPool {
 	public BoardDTO View(String idx) {
 		BoardDTO dto = new BoardDTO();
 		String query = "SELECT * FROM product2 WHERE NUM=?";
-		System.out.println("----test----");
 		
 		try {
 			psmt = con.prepareStatement(query);
@@ -89,7 +87,7 @@ public class BoardDAO extends TestDBPool {
 				dto.setName(rs.getString(2));
 				dto.setTitle(rs.getString(3));
 				dto.setContent(rs.getString(4));
-				System.out.println("----test----");
+				
 			}
 		}
 		catch(Exception e) {
@@ -105,7 +103,7 @@ public class BoardDAO extends TestDBPool {
 			String query = "INSERT INTO pboard ( "
 						 + " idx, name, title, content )"
 						 + " values( "
-						 + " seq,board_num.NEXTVAL,?,?,?)";
+						 + " seq_board_num.NEXTVAL,?,?,?)";
 						 
 			psmt = con.prepareStatement(query);			 
 			psmt.setString(1, dto.getName());			  

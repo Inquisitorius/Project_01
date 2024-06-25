@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,7 +56,7 @@ function validateForm(form) {
 	<tr>
 		<td colspan="2" align="center">
 			<button type="cancle">취소</button>
-			<button type="submit">등록</button>
+			<button type="submit" onclick="location.href='/test/List.do'">등록</button>
 		</td>
 	</tr>
 	</form>
