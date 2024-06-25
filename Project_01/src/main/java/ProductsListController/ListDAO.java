@@ -195,5 +195,50 @@ public class ListDAO extends TestDBPool {
 		}
 		return Childcate;
 	}
+	
+	public List<ListDTO> ViewChildList(int start, int end, String filters){
+		List<ListDTO> list = new Vector<ListDTO>();
+		Map<String, String> map = new HashMap<String, String>();
+		
+		map.put("wine", "와인");
+		String koreanMap = map.getOrDefault(filters, filters);
+		String sql = "SELECT * FROM ( "
+		           + "    SELECT Tb.*, ROWNUM rNum "
+		           + "    FROM ( "
+		           + "        SELECT P.TITLE, P.CONTENT, P.OPRICE, P.SALEPER, P.NPRICE, P.DELIVERY "
+		           + "        FROM PRODUCTS P "
+		           + "        JOIN CATEGORY C ON P.CATEGORY_NAME = C.CATEGORY_NAME "
+		           + "        WHERE C.CATEGORY_NAME = ?"
+		           + "        ORDER BY P.NUM DESC "
+		           + "    ) Tb "
+		           + "    WHERE ROWNUM <= ? "
+		           + ") "
+		           + "WHERE rNum >= ?";
+		
+		try {
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, koreanMap);
+			psmt.setInt(2, end);
+			psmt.setInt(3, start);
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				ListDTO dto = new ListDTO();
+				
+				dto.setTitle(rs.getString(1));
+				dto.setContent(rs.getString(2));
+				dto.setOprice(rs.getInt(3));
+				dto.setSaleper(rs.getInt(4));
+				dto.setNprice(rs.getInt(5));
+				dto.setDelivery(rs.getString(6));
+				
+				list.add(dto);
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			System.out.println("카테고리 예외");
+		}
+		return list;
+	}
 
 }

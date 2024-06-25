@@ -24,6 +24,9 @@ public class ProductsListController extends HttpServlet {
 		int page = 1;
 		int pageSize = 60;
 		String category = request.getParameter("category");
+		String filters = request.getParameter("filters");
+		String price = request.getParameter("price");
+		String delivery = request.getParameter("delivery");
 		if (request.getParameter("page") != null || request.getParameter("category") != null) {
 			page = Integer.parseInt(request.getParameter("page"));
 		}
@@ -44,8 +47,16 @@ public class ProductsListController extends HttpServlet {
 	        category = "all";
 	    }
 		
-		if(category.equals(category)) {
+		
+		
+		if(category.equals("all") && (filters == null || filters.isEmpty())) {
 			list = dao.selectListPage(start, end);
+			Childcate = dao.selectChildcate(category);
+			cnt = dao.ListCount();
+		}
+		
+		else if(category.equals(category)&&filters.equals(filters)) {
+			list = dao.ViewChildList(start, end, filters);
 			Childcate = dao.selectChildcate(category);
 			cnt = dao.ListCount();
 		}
