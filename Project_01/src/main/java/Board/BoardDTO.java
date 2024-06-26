@@ -59,4 +59,83 @@ public class BoardDTO {
 		this.pass = pass;
 	}
 	
+	// 상품 테이블
+	private int p_num;
+	private String pkind;
+	private String pname;
+	private int pprice;
+	private String delivertype;
+	private String packagingtype;
+	private String notice;
+	private String origin;
+	private String unit;
+	private int weight;
+	private String script;
+
+	public int getP_num() {
+		return p_num;
+	}
+	public void setP_num(int p_num) {
+		this.p_num = p_num;
+	}
+	public String getPkind() {
+		return pkind;
+	}
+	public void setPkind(String p_kind) {
+		this.pkind = p_kind;
+	}
+	public String getPname() {
+		return pname;
+	}
+	public void setPname(String p_name) {
+		this.pname = p_name;
+	}
+	public int getPprice() {
+		return pprice;
+	}
+	public void setPprice(int p_price) {
+		this.pprice = p_price;
+	}
+	public String getDelivertype() {
+		return delivertype;
+	}
+	public void setDelivertype(String delivertype) {
+		this.delivertype = delivertype;
+	}
+	public String getPackagingtype() {
+		return packagingtype;
+	}
+	public void setPackagingtype(String packagingtype) {
+		this.packagingtype = packagingtype;
+	}
+	public String getNotice() {
+		return notice;
+	}
+	public void setNotice(String notice) {
+		this.notice = notice;
+	}
+	public String getOrigin() {
+		return origin;
+	}
+	public void setOrigin(String origin) {
+		this.origin = origin;
+	}
+	public String getUnit() {
+		return unit;
+	}
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+	public int getWeight() {
+		return weight;
+	}
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
+	public String getScript() {
+		return script;
+	}
+	public void setScript(String script) {
+		this.script = script;
+	}
 }

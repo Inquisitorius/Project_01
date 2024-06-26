@@ -12,31 +12,41 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/test/View.do")
+@WebServlet("/test/ProductInfo.do")
 	public class ViewController extends HttpServlet {
 		private static final long serialVersionUID = 1L;
 
-		@Override
-		protected void service(HttpServletRequest req, HttpServletResponse resp) 
-		  throws ServletException, IOException {
+		public ViewController() {
+			super();
+		}
+		protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws
+		  ServletException, IOException {
+				BoardDAO dao = new BoardDAO();
+			 	//Map<String, Object> map = new HashMap<String, Object>();
+			// 	int totalCount = dao.selectCount(map);
+				List<BoardDTO> product = dao.View();
+			 	List<BoardDTO> boardLists = dao.selectListPage();
+			 	dao.close();
+			 	req.setAttribute("product", product);
+				req.setAttribute("boardLists", boardLists);
+				req.getRequestDispatcher("/test/ProductInfo.jsp").forward(req, resp);
+		}
+		protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+			req.setCharacterEncoding("UTF-8");
+			
+			BoardDTO dto = new BoardDTO();
+			dto.setName(req.getParameter("name"));
+			dto.setTitle(req.getParameter("title"));
+			dto.setContent(req.getParameter("content"));
+			
 			BoardDAO dao = new BoardDAO();
-			String idx = req.getParameter("idx");
-			BoardDTO dto = dao.View(idx);
+			int result = dao.ModalWrite(dto);
 			dao.close();
-
-		String ext = null, fileName = dto.getSfile();
-		if(fileName!=null) {
-			ext = fileName.substring(fileName.lastIndexOf(".")+1);
+			if (result == 1) {
+				resp.sendRedirect("/test/ProductInfo.do");
+			}
+			else {
+				System.out.println("글쓰기에 실패.");
 		}
-		String[] mimeStr = {"png","jpg","gif"};
-		List<String> mimeList = Arrays.asList(mimeStr);
-		boolean isImage = false;
-		if(mimeList.contains(ext)) {
-			isImage = true;
-		}
-		req.setAttribute("dto", dto);
-		req.setAttribute("isImage", isImage);
-		req.getRequestDispatcher("/test/View.jsp").forward(req, resp);
-		}
-		
+		}	
 }

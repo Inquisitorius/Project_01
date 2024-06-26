@@ -343,14 +343,6 @@ hr {
 				$content.slideDown();
 			}
 		});
-		/* $('.board-table tr'[data-bs-toggle="collapse"]).click(function() {
-		    var target = $(this).data('target');
-		    $(target).collapse('toggle');
-		    $('#click2').slideDown('fast');
-		    
-		    console.log("123123");
-		}); */
-
 	});
 
 	var exampleModal = document.getElementById('exampleModal')

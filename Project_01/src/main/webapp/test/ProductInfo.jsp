@@ -1,16 +1,12 @@
-
-<%@page import="Info.TestDAO"%>
-<%@page import="Info.TestDTO"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ page import="Board.BoardDAO"%>
+<%@ page import="Board.BoardDTO"%>
 <%@ page import="Main.JDBConnect"%>
 <%@ page import="Main.TestDBPool"%>
-<% 
-String num = request.getParameter("idx");
-TestDAO dao = new TestDAO(application);
-TestDTO dto = dao.View("idx");
-dao.close();
-%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,6 +31,23 @@ dao.close();
 		  resultElement.innerText = number;
 		  resultElement2.innerText = price;
 		}
+	function validateForm(form) {
+		if (form.name.value == "") {
+			alert("이름을 입력하세요.");
+			form.content.focus();
+			return false;
+		}
+		if (form.title.value == "") {
+			alert("제목을 입력하세요.");
+			form.title.focus();
+			return false;
+		}
+		if (form.content.value == "") {
+			alert("내용을 입력하세요.");
+			form.content.focus();
+			return false;
+		}
+	}
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Productpage</title>
@@ -91,10 +104,6 @@ section.notice {
 
 .board-table .th-date {
   width: 200px;
-}
-
-.board-table th, .board-table td {
-  padding: 14px 0;
 }
 
 .board-table tbody td {
@@ -270,13 +279,31 @@ p{
 font-family: "Noto Sans KR";
 font-optical-sizing: auto;
 font-style: normal;
-
 color: black;
 }
+.board-table .hidden-content {
+	display: none; /* Hide content initially */
+	padding: 10px;
+	background-color: #f9f9f9;
+}
+
+.board-table tr {
+	cursor: pointer; /* Change cursor to indicate clickable rows */
+}
+
+hr {
+	border: 1px solid gray;
+}
+
 </style>
 </head>
 <body>
 <jsp:include page="/Common/Header.jsp"/>
+
+ <c:forEach var="BoardDTO" items="${product}">
+ <p>${ BoardDTO.pname } </p>
+ <p>${ BoardDTO.p_num} </p> 
+ </c:forEach>
 <main>
 <div class="container"style = "max-width: 1050px; min-width:1050px; padding-left: 0px;padding-top: 20px;" >
 <div class="row d-flex flex-nowrap">	
@@ -292,17 +319,17 @@ color: black;
 			</div>
 		 	<div class = "row">
 					<div class = "col-md-12 fontCommon_Option" style = "font-size: 24px; font-weight: 700; color: #333;">
-						[쉘퍼] 머스크멜론 1.6kg // <%= dto.getName() %>
+						[쉘퍼] 머스크멜론 1.6kg 
 					</div>
 			</div>
 			<div class= "row">
 				<div class = "col-md-12 fontgray">
-					촉촉하게 머금은 달콤함 // <%= dto.getScript()%>
+					촉촉하게 머금은 달콤함 
 				</div>
 			</div>	
 			<div class= "row">
 				<div class = "col-md-12 fontCommon_nomal">
-					9900 원//<%= dto.getPrice() %>
+					9900 원
 				</div>
 			</div>	
 			<div class= "row">
@@ -396,7 +423,7 @@ color: black;
 			</div>
 			<div class= "row">
 				<div class = "col-md-12 fontgray right" style="display:inline-flex;align-items: center;">
-				총 상품 금액:<label style="font-weight:bold;font-size:25px">9900//<%= dto.getPrice()%></label>원</div>
+				총 상품 금액:<label style="font-weight:bold;font-size:25px">9900//</label>원</div>
 				<label class="fontCommon_nomal2" id='price' min="9900">9900</label>
 			</div>
 			<div class="row">
@@ -446,125 +473,154 @@ color: black;
 		 <h2>후기</h2>
 		
 		 </div>
+		
 		 <!-- 문의 -->
-		 <section class="notice">
-  		<div class="page-title fontCommon_nomal">
-        <div class="container ">
-            <h3>상품 문의</h3>
-            <div class="row">
+    
+    <section class="notice"style="min-width:1050px; height:1000px; display:flex; justify-content: space-around;">
+  <div class="page-title">
+  <h2>상품 문의</h2>
+        <div class="container"style="min-width:1050px; height:auto; display:flex; justify-content: flex-end;">
+
+	<div class="row">
 	<div class="col" style="display:flex;justify-content:flex-end;padding-bottom:10px;">
-	<button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="상품 문의하기">문의하기</button>
+	<button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="제목을 입력하시오.">문의하기</button>
 </div>
 </div>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered modal-dialog modal-dialog-scrollable modal-dialog modal-lg">>
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">상품 문의하기</h5>
+        <h5 class="modal-title texttop_01" id="exampleModalLabel">상품 문의하기</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form>
-          <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">제목</label>
-            <input type="text" class="form-control" id="recipient-name">
+        <div class="row"style="padding-bottom:5px;padding-top:5px;">
+        <div class="col-3">
+        <img src="../resources/img/melon.jpg" style="width:100px; padding-bottom:10px;">
+        </div>
+        <div class="col-6">	
+        <div class="col" style="font-size:20px;display:flex;align-items: center;height:100%;">
+        [쉘퍼] 머스크멜론 1.6kg
+        </div>
+        </div>
+        
+		<div>
+		<hr style="width:100%; margin: auto;">
+		<form action="../test/List.do"  method="post" enctype="multpart/form-data"
+		 onsubmit="return validateForm(this);"id="ModalWriteForm">
+        <div class="form-group-mb-3">
+            <label for="recipient-title" class="col-form-label">이름</label>
+            <input type="text" class="form-control" name="name">
           </div>
-          <div class="mb-3">
+          <div class="form-group-mb-3">
+            <label for="recipient-name" class="col-form-label">제목</label>
+            <input type="text" class="form-control" name="title">
+          </div>
+          <div class="form-group-mb-3">
             <label for="message-text" class="col-form-label">내용</label>
-            <textarea class="form-control" id="message-text">메시지를 입력하시오.</textarea>
+            <textarea class="form-control" name="content" rows="4">메시지를 입력하시오.</textarea>
           </div>
         </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-        <button type="button" class="btn btn-outline-success">등록</button>
+      <div class="modal-footer"style="display:flex;justify-content:center;">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"style="width:100px;height:40px;">취소</button>
+        <button type="submit" class="btn btn-outline-success" id="submitFormButton"style="width:100px;height:40px;">등록</button>
       </div>
     </div>
-  </div>
+  </div>	
 </div>
-		 </div>
-		 <div id="board-list">
-        <div class="container">
-            <table class="board-table">
-                <thead>
-                <tr>
+</div>
+</div></div>
+  <!-- board list area -->
+    <div id="board-list">
+        <div class="panel-faq-container"style="min-width: 1050px;height:auto; display:flex; justify-content: space-around;">
+            <table class="board-table table">
+            	    <thead>
+            	    <tr>
                     <th scope="col" class="th-num">번호</th>
                     <th scope="col" class="th-title">제목</th>
-                    <th scope="col" class="th-writer">작성자</th>
-                    <th scope="col" class="th-date">등록일</th>
+                    <th scope="col" class="th-writer">이름</th>
+                    <th scope="col" class="th-date">날짜</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <td>3</td>
+                <c:forEach var="BoardDTO" items="${boardLists}">
+                <tbody style="border:none;">
+                 <tr class="board-row" data-target="#content${ BoardDTO.idx }"style="border:none;">
+                    <td>${ BoardDTO.idx }</td>
                     <th>
-                      <a href="#!">[공지사항] 개인정보 처리방침 변경안내처리방침</a>
-                      <p>테스트</p>
-                    </th>
-                    <td>김진성</td>
-                    <td>2017.07.13</td>
+                      <a href="#!">${ BoardDTO.title }</a>
+                      <p>${ BoardDTO.name }</p>
+                    </th>	
+                    <td>${ BoardDTO.name }</td>
+                    <td>${ BoardDTO.postdate }</td>
+                     <tr id="content${ BoardDTO.idx }" class="hidden-content-row"style="width:150px;hegiht:300px;"> 
+                        <td colspan="4"style="padding : 0px;border:none;">
+                        <div class="hidden-content">
+                            <div style="display:flex;padding-left:30px;font-size:15px;width:1000px;hegiht:100%;"> 
+                             &nbsp;&nbsp;&nbsp;
+                             문의내용 :
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              ${ BoardDTO.content }
+                           </div>
+                           </div>
+                        </td>
                 </tr>
-
-                <tr>
-                    <td>2</td>
-                    <th>
-                    <a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a>
-                    </th>
-                    <td>김진성</td>
-                    <td>2017.06.15</td>
-                </tr>
-
-                <tr>
-                    <td>1</td>
-                    <th>
-                    <a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a>
-                    </th>
-                    <td>김진성</td>
-                    <td>2017.06.15</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-     </div>
-		 </div>
-		 </div>
-    </section>
+                </tbody>  
+                </c:forEach>
+            </table>   
+        </div>	
+      </table>
+    </div> 
+</section>
 </main>
 <jsp:include page="/Common/Footer.jsp"/>
 
-				<h3></h3>
 	<script>
-	$(document).ready(function())
-	{
-		alert("Clicked");
-		$('.inputtest')
-		add();
-		del();
-	});
-	
-	</script>
-	<script>
-var exampleModal = document.getElementById('exampleModal')
-exampleModal.addEventListener('show.bs.modal', function (event) {
-  // Button that triggered the modal
-  var button = event.relatedTarget
-  // Extract info from data-bs-* attributes
-  var recipient = button.getAttribute('data-bs-whatever')
-  // If necessary, you could initiate an AJAX request here
-  // and then do the updating in a callback.
-  //
-  // Update the modal's content.
-  var modalTitle = exampleModal.querySelector('.modal-title')
-  var modalBodyInput = exampleModal.querySelector('.modal-body input')
+	$(document).ready(function() {
+		console.log("ready");
+		$('#submitFormButton').click(function() {
+			console.log("hit!;");
+			$('#ModalWriteForm').submit();
+		});
 
-  modalTitle.textContent = ' ' + recipient
-  modalBodyInput.value = recipient
-})
+		$('.board-row').on('click', function() {
+			var target = $(this).data('target'); // Get the target content ID
+			var $content = $(target).find('.hidden-content'); // Find the content to slide
+
+			if ($content.is(':visible')) {
+				$content.slideUp(); // Hide the content if it is visible
+			} else {
+				// Optionally: Close other open items if single open item behavior is needed
+				$('.hidden-content').slideUp(); // Hide all other open contents
+
+				// Show the clicked content
+				$content.slideDown();
+			}
+		});
+	});
+	var exampleModal = document.getElementById('exampleModal')
+	exampleModal.addEventListener('show.bs.modal', function(event) {
+		// Button that triggered the modal
+		var button = event.relatedTarget
+		// Extract info from data-bs-* attributes
+		var recipient = button.getAttribute('data-bs-whatever')
+		// If necessary, you could initiate an AJAX request here
+		// and then do the updating in a callback.
+		// Update the modal's content.	
+		var modalTitle = exampleModal.querySelector('.modal-title')
+		var modalBodyInput = exampleModal.querySelector('.modal-body input')
+
+		var myModalEl = document.getElementById('myModal')
+		var modal = bootstrap.Modal.getInstance(myModalEl)
+
+		modalTitle.textContent = ' 상품 문의하기 '
+		modalBodyInput.value = recipient
+	});
 </script>
 	
-	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 	<script src="/resources/bootstrap/js/bootstrap.bundle.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+	 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

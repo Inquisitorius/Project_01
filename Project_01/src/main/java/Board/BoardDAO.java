@@ -73,28 +73,37 @@ public class BoardDAO extends TestDBPool {
 			  	return board;
 			  	
 }
-	public BoardDTO View(String idx) {
-		BoardDTO dto = new BoardDTO();
-		String query = "SELECT * FROM product2 WHERE NUM=?";
-		
+	public List<BoardDTO> View() {
+		List<BoardDTO> pro = new Vector<BoardDTO>();
+		String query = "SELECT * FROM product ";
+			
 		try {
 			psmt = con.prepareStatement(query);
-			psmt.setString(1, "152");
 			rs = psmt.executeQuery();
 			
-			if(rs.next()) {
-				dto.setIdx(rs.getString(1));
-				dto.setName(rs.getString(2));
-				dto.setTitle(rs.getString(3));
-				dto.setContent(rs.getString(4));
+			while(rs.next()) {
+				BoardDTO dto = new BoardDTO();
+				dto.setP_num(rs.getInt("p_num"));
+				dto.setPkind(rs.getString("pkind"));
+				dto.setPname(rs.getString("pname"));
+				dto.setPprice(rs.getInt("pprice"));
+				dto.setDelivertype(rs.getString("delivertype"));
+				dto.setPackagingtype(rs.getString("packagingtype"));
+				dto.setNotice(rs.getString("notice"));
+				dto.setOrigin(rs.getString("origin"));
+				dto.setUnit(rs.getString("origin"));
+				dto.setWeight(rs.getInt("weight"));
+				dto.setScript(rs.getString("script"));
 				
+				System.out.println(dto.getP_num());
+				pro.add(dto);
 			}
 		}
 		catch(Exception e) {
 			System.out.println("예외 발생");
 			e.printStackTrace();
 		}
-		return dto;
+		return pro;
 	}
 	public int insertWrite(BoardDTO dto) {
 		int result = 0;

@@ -29,7 +29,9 @@ public class ListController extends HttpServlet {
 			BoardDAO dao = new BoardDAO();
 		 	//Map<String, Object> map = new HashMap<String, Object>();
 		// 	int totalCount = dao.selectCount(map);
+			String num = req.getParameter("num");
 		 	List<BoardDTO> boardLists = dao.selectListPage();
+		 	dao.close();
 			req.setAttribute("boardLists", boardLists);
 			req.getRequestDispatcher("/test/List.jsp").forward(req, resp);
 	}
