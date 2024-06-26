@@ -38,6 +38,7 @@ function validateForm(form) {
 <link rel="stylesheet" href="/resources/css/Common.css">
 <script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>
 <script src="https://kit.fontawesome.com/a0b08e370a.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" >
 <style>a{text-decoration:none;}</style>
 <style type="text/css">
 
@@ -103,7 +104,7 @@ section.notice {
 }
 
 .board-table .th-num {
-  width: 100px;
+  width: 100	px;
   text-align: center;
 }
 
@@ -207,23 +208,44 @@ section.notice {
   width: 1px;
   height: 1px;
 }
-	
+.panel-faq-container
+{
+padding: 10px;
+background-color: #f9f9f9;
+}
+.panel-faq-container .board-table th,
+.panel-faq-container .board-table td
+{
+cursor: pointer;
+}
+hr {
+border: 1px solid gray;
+}
 </style>
 </head>
 <body>
+	<table style = "border: 1px solid #000;">         
+         <tr style = "border: 1px solid #ccc;">
+            <td>
+            <p><a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">On</a></p>
+            <div class="collapse" id="collapseExample">12341234</div>            
+            </td>
+         </tr>
+      </table>
+	
 
-	<section class="notice">
+	<section class="notice"style="min-width:1050px; height:1000px; display:flex; justify-content: space-around;">
   <div class="page-title">
-        <div class="container">
-            <h2>상품 문의</h2>
-            
+  <h2>상품 문의</h2>
+        <div class="container"style="min-width:1050px; height:auto; display:flex; justify-content: flex-end;">
+
 	<div class="row">
 	<div class="col" style="display:flex;justify-content:flex-end;padding-bottom:10px;">
 	<button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="제목을 입력하시오.">문의하기</button>
 </div>
 </div>
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
-  <div class="modal-dialog modal-dialog-centered">>
+  <div class="modal-dialog modal-dialog-centered modal-dialog modal-dialog-scrollable modal-dialog modal-lg">>
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">제목을 입력하시오.</h5>
@@ -235,23 +257,24 @@ section.notice {
         <img src="../resources/img/melon.jpg" style="width:100px;">
         </div>
         <div class="col-6">
-        <label for="message-test" class="col-form-label" style="width:50px;font-size:20px;">멜론</label>
+        <label for="message-test" class="col-form-label" style="width:50px;font-size:20px;">머스크멜론</label>
         </div>
+        <hr style=>
 		<div>
 
 		<form action="../test/List.do"  method="post" enctype="multpart/form-data"
 		 onsubmit="return validateForm(this);"id="ModalWriteForm">
         <div class="form-group-mb-3">
             <label for="recipient-title" class="col-form-label">이름</label>
-            <input type="text" class="form-control" name="name" required>
+            <input type="text" class="form-control" name="name">
           </div>
           <div class="form-group-mb-3">
             <label for="recipient-name" class="col-form-label">제목</label>
-            <input type="text" class="form-control" name="title" required>
+            <input type="text" class="form-control" name="title">
           </div>
           <div class="form-group-mb-3">
             <label for="message-text" class="col-form-label">내용</label>
-            <textarea class="form-control" name="content" required>메시지를 입력하시오.</textarea>
+            <textarea class="form-control" name="content">메시지를 입력하시오.</textarea>
           </div>
         </form>
       </div>
@@ -266,10 +289,10 @@ section.notice {
 </div></div>
   <!-- board list area -->
     <div id="board-list">
-        <div class="container">
-            <table class="board-table">
-                <thead>
-                <tr>
+        <div class="panel-faq-container"style="min-width: 1050px;height:auto; display:flex; justify-content: space-around;">
+            <table class="board-table tr">
+            	    <thead>
+            	    <tr>
                     <th scope="col" class="th-num">번호</th>
                     <th scope="col" class="th-title">제목</th>
                     <th scope="col" class="th-writer">이름</th>
@@ -278,7 +301,7 @@ section.notice {
                 </thead>
                 <c:forEach var="BoardDTO" items="${boardLists}">
                 <tbody>
-                <tr>
+                <tr data-bs-toggle="collapse" role="button"data-bs-target="#content${ BoardDTO.idx }"aria-expanded="false" aria-controls="content${ BoardDTO.idx }">
                     <td>${ BoardDTO.idx }</td>
                     <th>
                       <a href="#!">${ BoardDTO.title }</a>
@@ -286,11 +309,28 @@ section.notice {
                     </th>
                     <td>${ BoardDTO.name }</td>
                     <td>${ BoardDTO.postdate }</td>
+                     <tr class="collapse" id="content${ BoardDTO.idx }"> 
+                        <td colspan="4">
+                            <div style="display:flex;padding-left: 30px;font-size:15px;">
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             문의내용 :
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              ${ BoardDTO.content }
+                            </div>
+                        </td>
                 </tr>
                 </tbody>  
                 </c:forEach>
-            </table>
-        </div>
+            </table>   
+        </div>	
+        <table style = "border: 1px solid #000;">         
+         <tr style = "border: 1px solid #ccc;">
+            <td>
+            <p><a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">On</a></p>
+            <div class="collapse" id="collapseExample">12341234</div>            
+            </td>
+         </tr>
+      </table>
     </div> 
 </section>
 
@@ -302,7 +342,20 @@ $(document).ready(function() {
 		console.log("hit!;");
 		$('#ModalWriteForm').submit();
 	});
+	
+	/*  // Example: Handle click event to toggle collapse
+    $('.board-table tr'[data-bs-toggle="collapse"]).click(function() {
+        var target = $(this).data('target');
+        $(target).collapse('toggle');
+        
+        console.log("123123");
+    }); */
 });
+
+
+
+   
+
 
 var exampleModal = document.getElementById('exampleModal')
 exampleModal.addEventListener('show.bs.modal', function (event) {
@@ -312,7 +365,7 @@ exampleModal.addEventListener('show.bs.modal', function (event) {
   var recipient = button.getAttribute('data-bs-whatever')
   // If necessary, you could initiate an AJAX request here
   // and then do the updating in a callback.
-  // Update the modal's content.
+  // Update the modal's content.	
   var modalTitle = exampleModal.querySelector('.modal-title')
   var modalBodyInput = exampleModal.querySelector('.modal-body input')
 
@@ -322,11 +375,12 @@ var modal = bootstrap.Modal.getInstance(myModalEl)
   modalTitle.textContent = ' 상품 문의하기 ' 
   modalBodyInput.value = recipient
 });
-
   </script>
 
 <script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 	<script src="/resources/bootstrap/js/bootstrap.bundle.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+	 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
