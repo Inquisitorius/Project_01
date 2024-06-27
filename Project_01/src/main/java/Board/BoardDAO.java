@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import DTO.ProductDTO;
 import Info.TestDTO;
 import Main.TestDBPool;
 import jakarta.servlet.ServletContext;
@@ -48,6 +49,12 @@ public class BoardDAO extends TestDBPool {
 					 * " " + " SELECT * FROM ( " + "	SELECT Tb.*, ROWNUM rNum FROM ( " +
 					 */ " SELECT * FROM pboard ORDER BY IDX";
 			  	try {
+			  		Class.forName("oracle.jdbc.OracleDriver");
+
+					String url = "jdbc:oracle:thin:@localhost:1521:xe";
+					String id = "c##musthave";
+					String pwd = "1234";
+					con = DriverManager.getConnection(url, id, pwd);
 			  		psmt = con.prepareStatement(query);
 			  		rs=psmt.executeQuery();
 			  		
@@ -150,5 +157,51 @@ public class BoardDAO extends TestDBPool {
 	}
 		  return result;
 }
+	public List<ProductDTO> View2() {
+		List<ProductDTO> pro2 = new Vector<ProductDTO>();
+		String query = "SELECT * FROM PRODUCT WHERE product_id=21";
+			
+			try {
+				Class.forName("oracle.jdbc.OracleDriver");
+
+				String url = "jdbc:oracle:thin:@14.42.124.35:1521:xe";
+				String id = "C##PROJECT_01DB";
+				String pwd = "1234";
+				con = DriverManager.getConnection(url, id, pwd);
+			psmt = con.prepareStatement(query);
+			rs = psmt.executeQuery();
+			
+			
+			while(rs.next()) {
+				ProductDTO dto2 = new ProductDTO();
+				dto2.setProduct_id(rs.getInt("product_id"));
+				dto2.setCategory_id(rs.getInt("category_id"));
+				dto2.setName(rs.getString("name"));
+				dto2.setSub_text(rs.getString("sub_text"));
+				dto2.setOrigin(rs.getString("origin"));
+				dto2.setWeight(rs.getString("weight"));
+				dto2.setDateInfo(rs.getString("dateInfo"));
+				dto2.setNotifi(rs.getString("notifi"));
+				dto2.setPrice_ori(rs.getInt("price_ori"));
+				dto2.setPrice_percent(rs.getInt("price_percent"));
+				dto2.setPrice_discount(rs.getInt("price_discount"));
+				dto2.setUnit(rs.getString("unit"));
+				dto2.setPackaging_type(rs.getString("packaging_type"));
+				dto2.setDelivery_type(rs.getString("delivery_type"));
+				dto2.setProduct_img(rs.getString("product_img"));
+				dto2.setProduct_noti_img(rs.getString("product_noti_img"));
+				dto2.setProduct_noti_img2(rs.getString("product_noti_img2"));
+				dto2.setEvent_id(rs.getInt("event_id"));
+				dto2.setSeller(rs.getInt("seller"));
+				
+				pro2.add(dto2);
+			}
+		}
+		catch(Exception e) {
+			System.out.println("예외 발생");
+			e.printStackTrace();
+		}
+		return pro2;
+	}
 }
 

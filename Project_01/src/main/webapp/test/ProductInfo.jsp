@@ -242,40 +242,40 @@ hr {
 
 <main>
 <div class="container"style = "max-width: 1050px; min-width:1050px; padding-left: 0px;padding-top: 20px;" >
-<div class="row d-flex flex-nowrap"><c:forEach var="BoardDTO" items="${product}">
-		 <div class="col-5">
-		 	<img src = "${ BoardDTO.script }" style = "width: 400px; height: auto; border-radius: 2%;
+<div class="row d-flex flex-nowrap">
+		 <div class="col-5"><c:forEach var="ProductDTO" items="${product2}">
+		 	<img src = "${ ProductDTO.product_img }" style = "width: 400px; height: auto; border-radius: 2%;
 		 	overflow: hidden; margin-right: 300px;"/>
 		 </div>
 		 <div class = "col-7">
 		 	<div class= "row">
 				<div class = "col-md-12 fontgray">
-					샛별배송${ BoardDTO.delivertype }
+					${ ProductDTO.delivery_type } 
 				</div>
 			</div>
 		 	<div class = "row">
 					<div class = "col-md-12 fontCommon_Option" style = "font-size: 24px; font-weight: 600; color: #333;">
-					[쉘퍼] 머스크멜론 1.6kg ${ BoardDTO.pname }
+					${ ProductDTO.name }
 					</div>
 			</div>
 			<div class= "row">
 				<div class = "col-md-12 fontgray">
-					촉촉하게 머금은 달콤함 
+					${ ProductDTO.sub_text } 
 				</div>
 			</div>	
 			<div class= "row">
 				<div class = "col-md-12 fontCommon_price" style = "font-size: 26px;font-weight: 750; color: #333;">
-					<sapn style="color:red;">10% </sapn>${ BoardDTO.pprice }<sapn style="font-weight:500";>원</sapn>
+					<sapn style="color:red;">${ ProductDTO.price_percent }% </sapn>${ ProductDTO.price_discount}<sapn style="font-weight:500";>원</sapn>
 				</div>
 			</div>	
 			<div class= "row">
 				<div class = "col-md-12 font_line" style="padding-bottom:10px;">
-					11000
+					${ ProductDTO.price_ori }
 				</div>
 			</div>	
 			<div class= "row">
 				<div class = "col-md-12 fontCommon_nomal">
-					원산지 국산
+					원산지 ${ ProductDTO.origin }
 				</div>
 			</div>	
 			<div class= "row">
@@ -289,7 +289,7 @@ hr {
 					배송
 				</div>
 				<div class = "col-md-4 fontgray">
-					샛별배송
+					${ ProductDTO.delivery_type }
 				</div>
 			</div>
 			<hr style="height:1px;border:none;background-color:gray;">
@@ -298,7 +298,7 @@ hr {
 					판매자
 				</div>
 				<div class = "col-md-4 fontgray">
-					컬리
+					${ ProductDTO.seller }
 				</div>
 			</div>	
 			<hr style="height:1px;border:none;background-color:gray;">
@@ -307,7 +307,7 @@ hr {
 					포장타입
 				</div>
 				<div class = "col-md-4 fontgray">
-					냉장(종이포장)
+					${ ProductDTO.packaging_type }
 				</div>
 			</div>	
 			<hr style="height:1px;border:none;background-color:gray;">
@@ -316,7 +316,7 @@ hr {
 					판매단위
 				</div>
 				<div class = "col-md-4 fontgray">
-					1통
+					${ ProductDTO.unit }
 				</div>
 			</div>
 			<hr style="height:1px;border:none;background-color:gray;">
@@ -325,7 +325,7 @@ hr {
 					중량
 				</div>
 				<div class = "col-md-4 fontgray">
-					1.6kg 내외
+					${ ProductDTO.weight }
 				</div>
 			</div>
 			<hr style="height:1px;border:none;background-color:gray;">
@@ -334,8 +334,7 @@ hr {
 					소비기한정보
 				</div>
 				<div class = "col-md-8 fontgray">
-					농산물로 소비기한은 없으나 빠르게
-					섭취하시는 것을 권장드립니다.
+					${ ProductDTO.dateInfo }
 				</div>
 			</div>
 			<hr style="height:1px;border:none;background-color:gray;">
@@ -344,6 +343,8 @@ hr {
 					안내사항
 				</div>
 				<div class = "col-md-8 fontgray">
+					${ ProductDTO.notifi } <br />
+					
 					상품특성상 3%내외의 중량차이가 있을 수 있습니다.<br/>
 					신선식품 특성상 원물마다 크기 및 형태가 일정하지 않을 수 있습니다.
 				</div>
@@ -364,7 +365,7 @@ hr {
 			</div>
 			<div class= "row">
 				<div class = "col-md-12 fontgray right" style="display:inline-flex;align-items: center;">
-				총 상품 금액:<label style="font-weight:bold;font-size:25px">9900</label>원</div>
+				총 상품 금액:<label style="font-weight:bold;font-size:25px">${ ProductDTO.price_discount }</label>원</div>
 			</c:forEach>
 			</div>
 			<div class="row">
@@ -393,15 +394,16 @@ hr {
 		 <div class="container" style = "max-width: 1050px; min-width:1050px; padding-left: 0px;padding-top: 20px;">
 		 <!-- 상품설명 -->
 		 <div class="row" style="overflow: hidden;">
-		 <div class="col-12">	
-		 	<img src = "../resources/img/melon.jpg" style = "width: 1000px; height: 400; border-radius: 2%;z-index: 5;"/>
+		 <div class="col-12">
+		 <c:forEach var="ProductDTO" items="${product2}">
+		 	<img src = "${ ProductDTO.product_noti_img }" style = "width: 1000px; height: 400; border-radius: 2%;z-index: 5;padding-bottom:30px;"/>
 		 </div>
-		 <c:forEach var="BoardDTO" items="${product}">
+		 
 		 <div class="row">
-		 <h3>촉촉하게 머금은 달콤함</h3>
-		 <h3>머스크 멜론${ BoardDTO.pname }</h3>
+		 <h3>${ ProductDTO.sub_text }</h3>
+		 <h3 style= "padding-bottom:30px;">${ ProductDTO.name }</h3><br />
 		 <hr>
-		 <p>멜론은 촉촉한 식감과 입안에 감도는 단맛으로 그만의 매력을 톡톡히 발산하는 과일이죠. 
+		 <p style="padiing-top:30px;">멜론은 촉촉한 식감과 입안에 감도는 단맛으로 그만의 매력을 톡톡히 발산하는 과일이죠. 
 		 그중에서도 달콤한 맛과 향을 품은 머스캣멜론을 마켓그린에서 합리적인 가격으로 만나보세요. 
 		 국내 농가에서 정성스레 재배해 묵직하게 잘 익은 머스크 멜론이랍니다. 
 		 맛도 맛이지만 비타민c칼륨도 풍부하게 함유하고있어 꾸준히 즐겨찾는분들도 계시죠. 
@@ -434,15 +436,15 @@ hr {
         <h5 class="modal-title texttop_01" id="exampleModalLabel">상품 문의하기</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <c:forEach var="BoardDTO" items="${product}">
+      <c:forEach var="ProductDTO" items="${product2}">
       <div class="modal-body">
         <div class="row"style="padding-bottom:5px;padding-top:5px;">
         <div class="col-3">
-        <img src=${ BoardDTO.script }style="width:100px; padding-bottom:10px;">
+        <img src=${ ProductDTO.product_img}style="width:100px; padding-bottom:10px;">
         </div>
         <div class="col-6">	
         <div class="col" style="font-size:20px;display:flex;align-items: center;height:100%;">
-        ${ BoardDTO.name }
+        ${ ProductDTO.name }
         </div>
         </div>
         </c:forEach>

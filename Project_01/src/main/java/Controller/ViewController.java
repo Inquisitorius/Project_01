@@ -6,6 +6,7 @@ import java.util.List;
 
 import Board.BoardDAO;
 import Board.BoardDTO;
+import DTO.ProductDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -25,9 +26,11 @@ import jakarta.servlet.http.HttpServletResponse;
 			 	//Map<String, Object> map = new HashMap<String, Object>();
 			// 	int totalCount = dao.selectCount(map);
 				List<BoardDTO> product = dao.View();
+				List<ProductDTO> product2 = dao.View2();
 			 	List<BoardDTO> boardLists = dao.selectListPage();
 			 	dao.close();
 			 	req.setAttribute("product", product);
+			 	req.setAttribute("product2", product2);
 				req.setAttribute("boardLists", boardLists);
 				req.getRequestDispatcher("/test/ProductInfo.jsp").forward(req, resp);
 		}
