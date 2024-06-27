@@ -93,6 +93,7 @@ public class MainDAO extends JDBConnect {
 		
 		return bbs;
 	}
+	
 
 	public ProductDTO GetTimeLimitSale(int product_id) 
 	{

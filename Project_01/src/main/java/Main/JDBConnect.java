@@ -19,8 +19,8 @@ public class JDBConnect {
 			
 			Class.forName("oracle.jdbc.OracleDriver");
 			
-			String url = "jdbc:oracle:thin:@localhost:1521:xe";
-			String id = "c##musthave";
+			String url = "jdbc:oracle:thin:@14.42.124.35:1521:xe";
+			String id = "C##PROJECT_01DB";
 			String pwd = "1234";
 			con = DriverManager.getConnection(url, id, pwd);
 			

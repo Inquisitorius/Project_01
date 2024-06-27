@@ -7,8 +7,18 @@ public class AjaxDataTrans {
 	public int intData_00;
 	public int intData_01;
 	public int event_id;
-	public int product_id;
+	public int product_id;	
+	public int seller_id;
 	
+	// SellerController 용
+	public String dateInfo;
+	public int refundCnt;
+	public int sellCnt;
+	
+	
+
+	
+
 	public int getProduct_id() {
 		return product_id;
 	}
@@ -19,8 +29,9 @@ public class AjaxDataTrans {
 
 	public AjaxDataTrans() {}	
 
+
 	public AjaxDataTrans(String stringData_00, String stringData_01, int intData_00, int intData_01, int event_id,
-			int product_id) {
+			int product_id, int seller_id, String dateInfo, int refundCnt, int sellCnt) {
 		super();
 		this.stringData_00 = stringData_00;
 		this.stringData_01 = stringData_01;
@@ -28,6 +39,41 @@ public class AjaxDataTrans {
 		this.intData_01 = intData_01;
 		this.event_id = event_id;
 		this.product_id = product_id;
+		this.seller_id = seller_id;
+		this.dateInfo = dateInfo;
+		this.refundCnt = refundCnt;
+		this.sellCnt = sellCnt;
+	}
+
+	public String getDateInfo() {
+		return dateInfo;
+	}
+
+	public void setDateInfo(String dateInfo) {
+		this.dateInfo = dateInfo;
+	}
+
+	public int getRefundCnt() {
+		return refundCnt;
+	}
+
+	public void setRefundCnt(int refundCnt) {
+		this.refundCnt = refundCnt;
+	}
+
+	public int getSellCnt() {
+		return sellCnt;
+	}
+
+	public void setSellCnt(int sellCnt) {
+		this.sellCnt = sellCnt;
+	}
+
+	public int getSeller_id() {
+		return seller_id;
+	}
+	public void setSeller_id(int seller_id) {
+		this.seller_id = seller_id;
 	}
 
 	public int getEvent_id() {

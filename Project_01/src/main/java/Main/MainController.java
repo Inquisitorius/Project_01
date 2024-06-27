@@ -24,7 +24,8 @@ public class MainController extends HttpServlet
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		String uri = req.getRequestURI();
-		// /MainController/test.do
+		
+		
 		int lastSlash = uri.lastIndexOf('/');		
 		String command = uri.substring(lastSlash);	
 		

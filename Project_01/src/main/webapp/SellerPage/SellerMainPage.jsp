@@ -9,15 +9,20 @@
 <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.css">
 <jsp:include page="/Common/LinkFile.jsp"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+<link href="https://unpkg.com/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet">
+<link href="/resources/css/tabulator_site.css" rel="stylesheet">
 
 <link rel="stylesheet" href="/resources/css/MainPage.css">
-<link href="https://cdn.jsdelivr.net/npm/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
 
 <script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>
 <script src="/resources/bootstrap/js/jQueryRotate.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.umd.js"></script>
-<style>
 
+<script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
+<style>
+.tabulator.tabulator-header
+{
+	border-bottom: 1px solid #3FB449;	
+}
 </style>
 </head>
 <body>
@@ -56,7 +61,7 @@
 			</div>	
 			<div class = "row" style="padding-bottom: 4px;">
 				<div class = "col-12">
-					<button class = "btn btn-navy rounded-1 fontCommon_Option" type = "button" style="width: 100%; height: 55px;">
+					<button class = "btn btn-navy rounded-1 fontCommon_Option" id = "orderListBtn" type = "button" style="width: 100%; height: 55px;">
 					등록된 환불 요청
 					</button>
 				</div>				
@@ -68,14 +73,14 @@
 	</div>
 	<div class= "row d-flex flex-nowrap" style = "justify-content: space-between;">
 		<div class = "col-12" style = "padding-bottom : 20px;">
-			<label class = "sellerMainTitle_sub">환불 요청 내역</label>
+			<label class = "sellerMainTitle_sub">최근 환불 요청</label>
 		</div>
 	</div>
-	<div class= "row d-flex flex-nowrap" style = "justify-content: space-between;">
+	<div class= "row d-flex flex-nowrap" style = "justify-content: space-between; padding-bottom: 40px; min-height: 400px;">
 		<div class = "col-12">
-			<div id="wrapper" style = "width: 100%;"></div>
+			<div id="example-table" style = "border-bottom: 4px solid #163020;"></div>
 		</div>
-	</div>
+	</div>	
 </div>
 </main>
 <jsp:include page="/Common/Footer.jsp"/>
@@ -86,41 +91,74 @@
 <script>
 $(document).ready(function()
 {
-	ChartInit();
+	//ChartInit();
+	get_SellerCountData();
 	
 	//Grid used
-	GridInit();
+	get_SellerListData();
+	
+	$('#orderListBtn').click(function()
+	{		
+		location.replace("/SellerPage/OrderListPage.jsp");
+	});
 });
 
-function GridInit()
+/*
+ {title:"주문번호", field:"order_id"},
+ {title:"상품명", field:"progress", sorter:"number"},
+{title:"상품수량", field:"gender"},
+{title:"지연상태", field:"rating", formatter:"traffic", hozAlign:"center", formatterParams:{ min:0,max:10,color:["green", "orange", "red"] }},
+{title:"ㅁㄴㅇ", field:"col"},
+{title:"신청일자", field:"dob", hozAlign:"center"},  
+*/
+
+function OrderListPage_Click()
 {
-	var date = new Date();
-	new gridjs.Grid({
-		  columns: ["주문번호", "제품", "수량", "신청 날짜"],
-		  data: [
-		    ["112312", "제품 머시기", "3", get_DateFormat_MD_HHMMSS(date)],
-		    ["112312", "제품 머시기", "2", get_DateFormat_MD_HHMMSS(date)],
-		    ["112312", "제품 머시기", "1", get_DateFormat_MD_HHMMSS(date)],
-		    ["112312", "sarahcdd@gmail.com", "3",  get_DateFormat_MD_HHMMSS(date)],
-		    ["112312", "afshin@mail.com", "2", get_DateFormat_MD_HHMMSS(date)]
-		  ],
-		  style: {
-			    table: {
-			      border : '1px solid #ccc'
-			    },
-			    th: {
-			      'background-color': 'rgba(0, 0, 0, 0.1)',
-			      color: '#000',
-			      'border': '1px solid #ccc',			      
-			      'text-align': 'center'
-			    },
-			    td: {
-			      'text-align': 'center'
-			    }
-			  },
-			className: {
-	                table: 'custom-gridjs-table'}
-		}).render(document.getElementById("wrapper"));
+	
+}
+ 
+
+function GridInit(list)
+{
+	var data_save = [];
+	
+	list.forEach((dto, index) => 
+	{
+		var nowDate = new Date();
+		var oldDate = new Date(dto.order_date);
+		
+		var differenceInMillis = nowDate - oldDate; //ms
+		var differenceInDays = Math.floor(differenceInMillis / (1000 * 60 * 60 *24)); //일단위 변환
+		
+		data_save.push({id:index, order_id:dto.order_id, name:dto.name, product_cnt : dto.product_cnt , rating: differenceInDays, order_date:dto.order_date });
+	});
+	
+	
+	var table = new Tabulator("#example-table", {
+	    height:"fitData",	    
+	    columns:
+	    [
+		    {title:"주문번호", field:"order_id", sorter:"number"},
+		    {title:"상품명", field:"name"},
+		    {title:"상품수량", field:"product_cnt", hozAlign:"center"},		    
+		    {title:"신청일자", field:"order_date", hozAlign:"center"},
+		    {title:"지연상태", field:"rating", formatter:"traffic", hozAlign:"center", formatterParams:{ min:0,max:10,color:["green", "orange", "red"] }},	
+	    ],
+	    layout:"fitColumns",
+	    data: data_save
+	    /*[
+	    	{id:1, order_id:list[0].order_id, name:list[0].name, product_cnt : "12", rating:"10", order_date: get_DateFormat_MD_HHMMSS(new Date())},
+	    	{id:2, order_id:"11234", name:"[한정]조니실버핸드 800ml", product_cnt : "12", rating:"8", order_date: get_DateFormat_MD_HHMMSS(new Date())},
+	    	{id:3, order_id:"11234", name:"[한정]조니실버핸드 800ml", product_cnt : "12", rating:"6", order_date: get_DateFormat_MD_HHMMSS(new Date())},
+	    	{id:4, order_id:"11234", name:"[한정]조니실버핸드 800ml", product_cnt : "12", rating:"4", order_date: get_DateFormat_MD_HHMMSS(new Date())},
+	    	{id:5, order_id:"11234", name:"[한정]조니실버핸드 800ml", product_cnt : "12", rating:"2", order_date: get_DateFormat_MD_HHMMSS(new Date())}
+        ]*/
+	});
+	
+	table.on("rowClick", function(e,row){
+		//페이지 이동 처리 
+	   console.log(row.getData().name);
+	});
 }
 
 function get_DateFormat_MD_HHMMSS(date)
@@ -141,20 +179,79 @@ function get_DateFormat_MD(minus)
 	return nowMonth + "/" + nowDay;
 }
 
-function ChartInit()
+function get_SellerCountData()
+{
+	var id = 2;
+	var data = 
+	{
+		seller_id : id
+	};
+	var url = "http://localhost:8080/SellerController/mainCnt.func";
+	
+	$.ajax({
+		type:"post",
+        url:url,
+        contentType: 'application/json',
+        data: JSON.stringify(data),		       
+        success: function(response) 
+        {
+        	//여기서 테이블 초기화
+        	console.log(response);
+        	ChartInit(response);
+        },
+        error : function(request,status,error){
+            alert('code:'+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); //에러 상태에 대한 세부사항 출력
+            alert(e);
+        }
+	});
+}
+
+function get_SellerListData()
+{
+	//seller id 필요
+	var id = 2;
+	
+	var data = 
+	{
+		seller_id : id
+	};
+	
+	var result;
+	
+	var url = "http://localhost:8080/SellerController/main.func";
+	$.ajax({
+		type:"post",
+        url:url,
+        contentType: 'application/json',
+        data: JSON.stringify(data),		       
+        success: function(response) 
+        {
+        	//여기서 테이블 초기화
+        	GridInit(response);
+        },
+        error : function(request,status,error){
+            alert('code:'+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); //에러 상태에 대한 세부사항 출력
+            alert(e);
+        }
+	});
+	
+	return result;
+}
+
+function ChartInit(severData)
 {	
 	//필요한것 
 	//데이터 : 날짜 -> 현재 날짜를 기준으로 -7일		
-	var minus = 6;
+	var temp = 0;
 	var date_label = 
 		[
-			get_DateFormat_MD(minus--),
-			get_DateFormat_MD(minus--),
-			get_DateFormat_MD(minus--),
-			get_DateFormat_MD(minus--),
-			get_DateFormat_MD(minus--),
-			get_DateFormat_MD(minus--),
-			get_DateFormat_MD(minus--)
+			severData[0].dateInfo,
+			severData[1].dateInfo,
+			severData[2].dateInfo,
+			severData[3].dateInfo,
+			severData[4].dateInfo,
+			severData[5].dateInfo,
+			severData[6].dateInfo
 		];	
 	
 	//데이터 : 환불 및 판매건수 
@@ -173,7 +270,16 @@ function ChartInit()
 			  datasets: [
 				{
 				      label: '환불건',
-				      data: Samples.utils.numbers(NUMBER_CFG),
+				      data:
+				    	  [
+				    		  severData[0].refundCnt, 
+				    		  severData[1].refundCnt, 
+				    		  severData[2].refundCnt, 
+				    		  severData[3].refundCnt, 
+				    		  severData[4].refundCnt, 
+				    		  severData[5].refundCnt, 
+				    		  severData[6].refundCnt, 
+				    	  ],
 				      borderColor: window.chartColors.blue,
 				      backgroundColor: Samples.utils.my_transparentize(window.chartColors.blue, 0.4),
 				      borderWidth: 1,
@@ -182,7 +288,16 @@ function ChartInit()
 				},
 			    {
 			      label: '판매량',
-			      data: Samples.utils.numbers(NUMBER_CFG),
+			      data:
+			    	  [
+			    		  severData[0].sellCnt, 
+			    		  severData[1].sellCnt, 
+			    		  severData[2].sellCnt, 
+			    		  severData[3].sellCnt, 
+			    		  severData[4].sellCnt, 
+			    		  severData[5].sellCnt, 
+			    		  severData[6].sellCnt, 
+			    	  ],
 			      borderColor: window.chartColors.red,
 			      backgroundColor: Samples.utils.my_transparentize( window.chartColors.red , 0.4),
 			      borderWidth: 1,
