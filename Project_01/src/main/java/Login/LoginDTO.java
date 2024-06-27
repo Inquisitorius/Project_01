@@ -1,5 +1,7 @@
 package Login;
 
+import java.sql.Date;
+
 public class LoginDTO {
 		private String id;
 		private String pass;
@@ -9,7 +11,7 @@ public class LoginDTO {
 		private String address;
 		private String address_sub;
 		private String gender;
-		private String birthdate;
+		private Date birthdate;
 		
 		public String getId() {
 			return id;
@@ -59,10 +61,10 @@ public class LoginDTO {
 		public void setGender(String gender) {
 			this.gender = gender;
 		}
-		public String getBirthdate() {
+		public Date getBirthdate() {
 			return birthdate;
 		}
-		public void setBirthdate(String birthdate) {
+		public void setBirthdate(Date birthdate) {
 			this.birthdate = birthdate;
 		}
 }

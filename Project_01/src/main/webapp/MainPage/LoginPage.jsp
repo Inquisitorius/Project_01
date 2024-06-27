@@ -152,7 +152,7 @@ a:hover {
 		        	else
 		        	{
 		        		//메인으로? 요청 한 페이지?
-		        		location.replace(prevPage);
+		        		location.replace("/MainPage/MainPage.jsp");
 		        	}
 		         },
 		         error : function(request,status,error)

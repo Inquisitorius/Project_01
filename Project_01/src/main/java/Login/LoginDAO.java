@@ -23,7 +23,7 @@ public class LoginDAO extends DBConnTest {
 				logindto.setAddress(rs.getString("address"));
 				logindto.setAddress_sub(rs.getString("address_sub"));
 				logindto.setGender(rs.getString("gender"));
-				logindto.setBirthdate(rs.getString("birthdate"));
+				logindto.setBirthdate(rs.getDate("birthdate"));
 		}
 	}catch (Exception e) {
 			e.printStackTrace();

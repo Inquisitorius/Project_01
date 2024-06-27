@@ -2,10 +2,7 @@ package Login;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
-
 import com.google.gson.Gson;
-
 import DTO.AjaxDataTrans;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -33,8 +30,18 @@ public class LoginController extends HttpServlet {
 		{
 			LoginTry(req, resp);
 		}
+		if(command.equals("/logoutTry")) {
+			LogoutTry(req,resp);
+		}
 	}
 	
+	private void LogoutTry(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		HttpSession session= req.getSession();
+		session.invalidate();
+		resp.sendRedirect("MainPage.jsp");
+	}
+
 	public void LoginTry(HttpServletRequest req, HttpServletResponse resp)
 	{
 		resp.setContentType("application/json");
@@ -89,33 +96,7 @@ public class LoginController extends HttpServlet {
 		session.setAttribute("address", logindto.getAddress());
 		session.setAttribute("address_sub", logindto.getAddress_sub());
 		session.setAttribute("gender", logindto.getGender());
+		session.setAttribute("birthdate", logindto.getBirthdate());
 	}
 	
-
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String id = req.getParameter("id");
-		String pass = req.getParameter("pass");
-		
-		LoginDAO logindao = new LoginDAO();
-		LoginDTO logindto = logindao.Login(id,pass);
-		HttpSession session = req.getSession();
-		if(logindto.getId() != null) {
-			session.setAttribute("id", logindto.getId());
-			session.setAttribute("pass", logindto.getPass());
-			session.setAttribute("name", logindto.getName());
-			session.setAttribute("email", logindto.getEmail());
-			session.setAttribute("phone", logindto.getPhone());
-			session.setAttribute("address", logindto.getAddress());
-			session.setAttribute("address_sub", logindto.getAddress_sub());
-			session.setAttribute("gender", logindto.getGender());
-			resp.sendRedirect("/../MainPage/MainPage.jsp");
-		}else {
-			PrintWriter out = resp.getWriter();
-			out.print("<script>");
-			out.println("history.back();");
-			out.print("</script>");
-		}
-	}
-
 }

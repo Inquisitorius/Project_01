@@ -194,7 +194,7 @@ a:hover {
 				</div>
 			</div>
 		</div>
-
+	<form action="/Join.do" method="post" name="formJoin" >
 		<div class="row" style="justify-content: center;">
 			<div class="col-md-6">
 				<div class="line_Style">
@@ -204,19 +204,44 @@ a:hover {
 						</div>
 					</div>
 					<div class="col-md-6">
-						<input type="text" class="input_Style" id ="inputId" maxlength="16" oninput="inputId(this.id)" placeholder="아이디를 입력해주세요."
+						<input type="text" class="input_Style" id ="input_id" maxlength="16" oninput="inputId(this.id)" placeholder="아이디를 입력해주세요."
 							onfocus="this.placeholder=''"
 							onblur="this.placeholder='아이디를 입력해주세요.'" name="memberId">
 					</div>
 					<div class="col-md-2">
 						<div class="button_Style">
 						
-							<button type="button" class="btn btn-success">중복확인</button>
+							<button type="button" id="repetitionBtn" class="btn btn-success" onclick="repetitionCheck()">중복확인</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		
+		<script>
+			function repetitionCheck(){
+				var id = document.getElementById("input_id").value;
+				if(id != "" && idWarning.textContent == ""){
+					 $.ajax({
+		                    url: '/Join/JoinCheck',
+		                    method: 'GET',
+		                    data: { id: id },
+		                    success: function(response) {
+		                        if (response.isDuplicate) {
+		                            idWarning.textContent = "이미 사용중인 아이디 입니다.";
+		                        } else {
+		                            idWarning.textContent = "사용 가능한 아이디 입니다.";
+		                        }
+		                    },
+		                    error: function(error) {
+		                        console.error('Error checking ID:', error);
+		                        idWarning.textContent = "Error checking ID.";
+		                    }
+		                });
+		            }
+		        }
+
+		</script>
 		
 		<div class="row" style="justify-content: center;">
 			<div class="col-md-6" style="display:flex; justify-content: center;">
@@ -239,7 +264,8 @@ a:hover {
 				var id = document.getElementById(id).value;
 				const re = /^(?=.*[a-zA-Z])[a-z0-9]{6,16}$/;
 				if(re.test(id)){
-					idWarning.textContent = "";	
+					idWarning.textContent = "";
+					
 				}else{
 				idWarning.textContent = "6자 이상 16자 이하의 영문 혹은 영문과 숫자";}
 				}
@@ -254,7 +280,7 @@ a:hover {
 						</div>
 					</div>
 					<div class="col-md-6">
-						<input type="password" class="input_Style" id="inputPwd" placeholder="비밀번호를 입력해주세요." oninput="inputPwd(this.id)" maxlength="12"
+						<input type="password" class="input_Style" id="input_pwd" placeholder="비밀번호를 입력해주세요." oninput="inputPwd(this.id)" maxlength="12"
 							onfocus="this.placeholder=''"
 							onblur="this.placeholder='비밀번호를 입력해주세요.'" name="memberPwd">
 					</div>
@@ -301,7 +327,7 @@ a:hover {
 						</div>
 					</div>
 					<div class="col-md-6">
-						<input type="password" class="input_Style"	id="inputPwdCheck"	oninput="inputPwdCheck(this.id)" maxlength="12"
+						<input type="password" class="input_Style"	id="input_pwdcheck"	oninput="inputPwdCheck(this.id)" maxlength="12"
 							placeholder="비밀번호를 한번 더 입력해주세요" onfocus="this.placeholder=''"
 							onblur="this.placeholder='비밀번호를 한번 더 입력해주세요.'"
 							name="memberPwdCheck">
@@ -330,9 +356,9 @@ a:hover {
 			</div>
 			
 		<script>
-		function inputPwdCheck(pwdCheck){
-		var pwd = document.getElementById("inputPwd").value;
-		var pwdcheck = document.getElementById(pwdCheck).value;
+		function inputPwdCheck(pwdcheck){
+		var pwd = document.getElementById("input_pwd").value;
+		var pwdcheck = document.getElementById(pwdcheck).value;
 		if(pwd == pwdcheck){
 			pwdCheckWarning.textContent = "비밀번호가 일치합니다.";
 		}else{
@@ -352,7 +378,7 @@ a:hover {
 						</div>
 					</div>
 					<div class="col-md-6">
-						<input type="text" class="input_Style" placeholder="이름을 입력해주세요" id="inputName" oninput="inputNameCheck(this.id)" maxlength=10;
+						<input type="text" class="input_Style" placeholder="이름을 입력해주세요" id="input_name" oninput="inputNameCheck(this.id)" maxlength=10;
 							onfocus="this.placeholder=''"
 							onblur="this.placeholder='이름을 입력해주세요.'" name="memberName">
 					</div>
@@ -400,7 +426,7 @@ a:hover {
 						</div>
 					</div>
 					<div class="col-md-6">
-						<input type="text" class="input_Style" placeholder="이메일을 입력해주세요" id="inputEmail" oninput="inputEmailCheck(this.id)" maxlength="25"
+						<input type="text" class="input_Style" placeholder="이메일을 입력해주세요" id="input_email" oninput="inputEmailCheck(this.id)" maxlength="25"
 							onfocus="this.placeholder=''"
 							onblur="this.placeholder='이메일을 입력해주세요.'" name="memberEmail">
 					</div>
@@ -449,7 +475,7 @@ a:hover {
 						</div>
 					</div>
 					<div class="col-md-6">
-						<input type="text" class="input_Style" placeholder="숫자만 입력해주세요" id="inputPhone" oninput="inputPhone(this.id)" maxlength="11" 
+						<input type="text" class="input_Style" placeholder="숫자만 입력해주세요" id="input_phone" oninput="inputPhone(this.id)" maxlength="11" 
 							onfocus="this.placeholder=''"
 							onblur="this.placeholder='숫자만 입력해주세요.'" name="memberPhone">
 					</div>
@@ -505,10 +531,10 @@ a:hover {
 								onclick="execDaumPostcode()" ><span><img src="/resources/img/joinSearchIcon.png" width=20px;/>주소 검색</span></button>
 						
 						
-							<input type="text" class="input_Style" id="memberAddr" style="display:none;"
+							<input type="text" class="input_Style" id="input_addr" name="memberAddr" style="display:none;"
 								placeholder="주소">
 						</div>
-						<input type="text" class="input_Style" id="detailAddr" style="display:none;"
+						<input type="text" class="input_Style" id="input_addrsub" name="memberAddrsub" style="display:none;"
 							placeholder="상세주소">
 						<!-- <input type="text" id="sample6_extraAddress" placeholder="참고항목">	 -->
 						<div class="mini_Font">
@@ -532,8 +558,8 @@ a:hover {
 											oncomplete : function(data) {
 												// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 													document.getElementById("searchButton").style.display ="none";
-													document.getElementById("memberAddr").style.display ="block";
-													document.getElementById("detailAddr").style.display ="block";
+													document.getElementById("input_addr").style.display ="block";
+													document.getElementById("input_addrsub").style.display ="block";
 													document.getElementById("noticeSpan").style.display ="flex";
 													document.getElementById("noticeSpan2").style.display ="block";
 													document.getElementById("researchButton").style.display ="block";
@@ -576,9 +602,9 @@ a:hover {
 												
 												// 우편번호와 주소 정보를 해당 필드에 넣는다.
 												document.getElementById('sample6_postcode').value = data.zonecode; */
-												document.getElementById("memberAddr").value = addr;
+												document.getElementById("input_addr").value = addr;
 												// 커서를 상세주소 필드로 이동한다.
-												document.getElementById("detailAddr").focus();}}).open({
+												document.getElementById("input_addrsub").focus();}}).open({
 													    left: (window.screen.width / 2) - (width / 2),
 													    top: (window.screen.height / 2) - (height / 2)
 												});
@@ -600,19 +626,19 @@ a:hover {
 					<div class="col-md-6" style="display: flex">
 						<div class="col-md-4">
 							<div class="ban_Select">
-								<input type="radio" name="memberGender" value="man"> <span
+								<input type="radio" name="memberGender" value="man" > <span
 									class="gender_Font"> 남자</span>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="ban_Select">
-								<input type="radio" name="memberGender" value="woman"> <span
+								<input type="radio" name="memberGender" value="woman" > <span
 									class="gender_Font"> 여자</span>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="ban_Select">
-								<input type="radio" name="memberGender" value="noSelect" checked>
+								<input type="radio" name="memberGender" value="none" checked>
 								<span class="gender_Font"> 선택안함</span>
 							</div>
 						</div>
@@ -634,25 +660,25 @@ a:hover {
 						<div class="input_Style">
 							<div class="col-md-4">
 								<input type="text" maxlength='4' class="birth_Input"
-									id="memberBirthYear" oninput="inputNum(this.id)"
+									id="input_birthyear" oninput="inputNum(this.id)"
 									placeholder="YYYY" onfocus="this.placeholder=''"
-									onblur="this.placeholder='YYYY'" name="memberBirth">
+									onblur="this.placeholder='YYYY'" name="memberBirthYear">
 							</div>
 							<span class="ban_Select" style="color: grey">/</span>
 
 							<div class="col-md-4">
 								<input type="text" maxlength='2' class="birth_Input"
-									id="memberBirthMonth" oninput="inputNum(this.id)"
+									id="input_birthmonth" oninput="inputNum(this.id)"
 									placeholder="MM" onfocus="this.placeholder=''"
-									onblur="this.placeholder='MM'" name="memberBirth">
+									onblur="this.placeholder='MM'" name="memberBirthMonth">
 							</div>
 							<span class="ban_Select" style="color: grey">/</span>
 
 							<div class="col-md-4">
 								<input type="text" maxlength='2' class="birth_Input"
-									id="memberBirthDay" oninput="inputNum(this.id)"
+									id="input_birthday" oninput="inputNum(this.id)"
 									placeholder="DD" onfocus="this.placeholder=''"
-									onblur="this.placeholder='DD'" name="memberBirth">
+									onblur="this.placeholder='DD'" name="memberBirthDay">
 							</div>
 						</div>
 					</div>
@@ -678,11 +704,11 @@ a:hover {
 				var element = document.getElementById(id);
 				element.value = element.value.replace(/[^0-9]/gi, "");
 				
-				year = document.getElementById("memberBirthYear").value;
-				month = document.getElementById("memberBirthMonth").value;
-				day = document.getElementById("memberBirthDay").value;
+				year = document.getElementById("input_birthyear").value;
+				month = document.getElementById("input_birthmonth").value;
+				day = document.getElementById("input_birthday").value;
 				
-				if(id == "memberBirthYear" || id == "memberBirthMonth" || id == "memberBirthDay" ){
+				if(id == "input_birthyear" || id == "input_birthmonth" || id == "input_birthday" ){
 					if(year > 1924 && year < 2024){
 						birthWarning.textContent = "태어난 월을 확인해주세요.";
 						birthWarning.style.visibility = 'visible';
@@ -832,10 +858,38 @@ a:hover {
 		<div class="row" style="justify-content: center;">
 			<div class="col-md-6"
 				style="display: flex; justify-content: center; padding: 40px 0px;">
-				<button type="submit" class="btn btn-success"
-					style="width: 240px; height: 56px; font-size:20px;" name="join">가입하기</button>
+				<button type="button" class="btn btn-success" id="joinBtn"
+					style="width: 240px; height: 56px; font-size:20px;" name="join" >가입하기</button>
 			</div>
 		</div>
+		
+		<script>
+		$(document).ready(function()
+				{
+					$('#joinBtn').click(function()
+					{	
+						if(idWarning.textContent == ""){
+							idWarning.textContent =="아이디를 다시 확인해주세요";
+							idWarning.focus();
+						}
+						
+						
+						else{
+							createFunction();
+						}
+					});
+				});
+		
+		
+		function createFunction()
+		{
+			formJoin.method = "post";
+			formJoin.action = "/Join/JoinTry"; 
+			formJoin.submit();
+		}
+		</script>
+		
+	</form>
 	</main>
 	<jsp:include page="/Common/Footer.jsp" />
 	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
