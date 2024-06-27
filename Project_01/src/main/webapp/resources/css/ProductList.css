@@ -261,7 +261,7 @@ input[type="checkbox"]:checked+label:after, input[type="radio"]:checked+label:af
 }
 
 .btn-navy:hover {
-	color: green;
+	color: white;
 	background-color: #47702e;
 	border-color: #163020;
 }

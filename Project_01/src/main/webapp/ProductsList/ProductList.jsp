@@ -1,3 +1,4 @@
+<%@page import="DTO.ProductDTO"%>
 <%@page import="ProductsListController.CategoryMap"%>
 <%@page import="ProductsListController.ChildCategoryMap"%>
 <%@page import="java.util.Map"%>
@@ -59,7 +60,7 @@
 
 <!-- Head, Footer CSS 링크 필수 -->
 <link rel="stylesheet" href="/resources/css/Common.css">
-<link rel="stylesheet" href="/resources/css/ProductList.css?after">
+<link rel="stylesheet" href="/resources/css/ProductList.css">
 
 <!-- jQuery 사용을 위한 JS 로드 -->
 <script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>
@@ -100,10 +101,7 @@
 									<span class="arrow">▲</span>
 								</div>
 								<div class="filter-content" id="categoryFilters">
-									<div>
-										<input type="checkbox" id="category1" name="filters"
-											value="new" > <label for="category1">인기신상랭킹</label>
-									</div>
+									
 									<% 
 										Map<String, String> childmap = ChildCategoryMap.getChildMap();
 										List<CategoryDTO> Childcate = (List<CategoryDTO>) request.getAttribute("Childcate");
@@ -153,15 +151,26 @@
 										<h5 class="title">배송</h5>
 										<span class="arrow">▲</span>
 									</div>
-									<div class="filter-content">
+									<div class="filter-content" id="delivery_Type">
+									<% Map<String, String> deliverymap = CategoryMap.GetdeliveryMap();
+									   List<ProductDTO> delivery_Type = (List<ProductDTO>) request.getAttribute("delivery_type");
+												if(delivery_Type != null){
+													for(ProductDTO dto : delivery_Type){
+													
+													String getDelivery_Type = dto.getDelivery_type();
+													String engDelivery = deliverymap.getOrDefault(getDelivery_Type, getDelivery_Type);
+													
+									%>
 										<div>
-											<input type="checkbox" id="morning" name="delivery"
-												value="morning"> <label for="morning">샛별배송</label>
+											<input type="checkbox" id="<%=engDelivery %>" name="delivery"
+												value="<%=engDelivery %>"> <label for="<%=engDelivery %>"><%=getDelivery_Type %></label>
 										</div>
-										<div>
-											<input type="checkbox" id="nomal" name="delivery"
-												value="nomal"> <label for="nomal">판매자배송</label>
-										</div>
+										<%
+													}
+												}
+										%>
+										
+										
 									</div>
 								</div>
 							</div>
@@ -169,6 +178,8 @@
 								<button type="submit" class="btn btn-primary">적용</button>
 							</div>
 						</form>
+						
+
 					</div>
 				</div>
 				<div class="products">
@@ -178,7 +189,6 @@
 							<%=request.getAttribute("cnt")%>건
 						</div>
 						<ul class="productsort">
-							<li class="sort-li"><a href="#" class="sort-a" id="">추천순</a></li>
 							<li class="sort-li"><a href="#" class="sort-a">신상품순</a></li>
 							<li class="sort-li"><a href="#" class="sort-a">판매량순</a></li>
 							<li class="sort-li"><a href="#" class="sort-a">혜택순</a></li>
@@ -188,32 +198,32 @@
 					</div>
 					<div class="container list" id="productList" style="text-decoration-line: none;">
 						<%
-						List<ListDTO> list = (List<ListDTO>) request.getAttribute("list");
+						List<ProductDTO> list = (List<ProductDTO>) request.getAttribute("list");
 						if (list != null) {
-							for (ListDTO dto : list) {
+							for (ProductDTO dto : list) {
 						%>
 						<div class="row">
 							<a href="#" style="text-decoration-line: none;"> <img
-								src="https://product-image.kurly.com/hdims/resize/%5E%3E360x%3E468/cropcenter/360x468/quality/85/src/product/image/b15f2d12-eca6-4491-b37e-83d156377cde.jpg?v=0531"
+								src="<%=dto.getProduct_img() %>"
 								style="padding: 0px; width: 249px; height: 320px; border-radius: 2%; overflow: hidden;">
 								<button class="btn btn-navy rounded-1 fontCommon_Option"
 									type="button"
 									style="width: 249px; height: 36px; margin-top: 5px;">구매</button>
-								<div class="delivery" style="text-align: left; margin-top: 5px;"><%=dto.getDelivery()%></div>
+								<div class="delivery" style="text-align: left; margin-top: 5px;"><%=dto.getDelivery_type()%></div>
 								<div class="list_Itemtitle"
-									style="width: 249px; text-align: left;"><%=dto.getTitle()%></div>
+									style="width: 249px; text-align: left;"><%=dto.getName()%></div>
 								<div class="row" style="margin-top: 5px;">
-									<div class="explation" style="text-align: left;"><%=dto.getContent()%></div>
+									<div class="explation" style="text-align: left;"><%=dto.getSub_text()%></div>
 									<div class="col-12">
-										<span class="OripriceText" style="width: 249px;"><%=dto.getOprice()%>원</span>
+										<span class="OripriceText" style="width: 249px;"><%= String.format("%,d", dto.getPrice_ori()) %>원</span>
 									</div>
 								</div>
 								<div class="row" style="margin-top: 5px;">
 									<div class="col-2" style="display: inline-flex;">
-										<span class="SalePercentText" style="text-align: left"><%=dto.getSaleper()%>%</span>
+										<span class="SalePercentText" style="text-align: left"><%=dto.getPrice_percent()%>%</span>
 									</div>
 									<div class="col" style="display: inline-flex;">
-										<span class="SalePriceText" style="text-align: left"><%=dto.getNprice()%>원</span>
+										<span class="SalePriceText" style="text-align: left"><%= String.format("%,d", dto.getPrice_discount()) %>원</span>
 									</div>
 								</div>
 							</a>
@@ -273,6 +283,12 @@
 
 	</div>
 	<jsp:include page="/Common/Footer.jsp" />
+	<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>내용을 입력하세요.</p>
+    </div>
+</div>
 <script>
     $(document).ready(function() {
         let currentPage = '<%= currentPage %>';
@@ -382,7 +398,7 @@
             let selectedDelivery = $('input[name="delivery"]:checked').map(function() {
                 return $(this).val();
             }).get();
-
+            
             // handleFilterFormSubmit 함수 호출
             handleFilterFormSubmit(category, selectedFilters, selectedPrice, selectedDelivery);
            
@@ -393,7 +409,7 @@
         function handleFilterFormSubmit(clickedCategory, selectedFilters, selectedPrice, selectedDelivery) {
             // 가격이 undefined인 경우 빈 문자열로 처리
             let priceParam = selectedPrice !== undefined ? '&price=' + selectedPrice : '';
-
+			
             $.ajax({
                 type: 'GET',
                 url: window.location.origin + '/ProductsList/ProductList.do',
@@ -410,13 +426,15 @@
                     let productcntHtml = $(data).find('#productcnt').html();
                     let itemhtml = $(data).find('#item').html();
                     let categoryFiltersHtml = $(data).find('#categoryFilters').html();
+                    let delivery_type = $(data).find('delivery_Type').html();
+                    
 			
                     // 제품 목록과 개수 업데이트
                     $('#productList').html(productListHtml);
                     $('#productcnt').html(productcntHtml);
                     $('#item').html(itemhtml);
                     $('#categoryFilters').html(categoryFiltersHtml);
-                    
+                    $('#delivery_Type').html(delivery_type);
                     updateFilterState(selectedFilters, selectedPrice, selectedDelivery);
 
                     // 브라우저 URL 업데이트하여 현재 상태 반영
@@ -432,6 +450,13 @@
                     updateNavigationStyle(clickedCategory);
                     retainFilterState(selectedFilters, selectedPrice, selectedDelivery);
                     document.location.reload();
+                    
+                    // 아무 선택도 되지 않았을때 모달
+                    if(!selectedFilters && !selectedPrice && !selectedDelivery){
+        				event.preventDefault(); 
+        				openModal('가격을 선택해주세요.');
+        		        return;
+        			}
                 },
                 error: function(xhr, status, error) {
                     console.error("AJAX 요청 실패", status, error);
@@ -495,6 +520,55 @@
         // 초기 이벤트 핸들러 설정 호출
         initializeEventHandlers();
     });
+    
+    function openModal() {
+        // 모달 요소 가져오기
+        let modal = document.getElementById('myModal');
+
+        // 모달 보이기
+        modal.style.display = 'block';
+
+        // 모달 닫기 버튼에 이벤트 리스너 추가
+        let closeBtn = modal.querySelector('.close');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', closeModal);
+        }
+
+        // 모달 외부 클릭 시 닫기
+        window.addEventListener('click', function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        });
+
+        // ESC 키로 모달 닫기
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    }
+
+    // 모달 닫기 함수
+    function closeModal() {
+        let modal = document.getElementById('myModal');
+        modal.style.display = 'none';
+
+        // 이벤트 리스너 제거
+        let closeBtn = modal.querySelector('.close');
+        if (closeBtn) {
+            closeBtn.removeEventListener('click', closeModal);
+        }
+
+        // ESC 키 이벤트 리스너 제거
+        document.removeEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    }
+    
+
 </script>
 
 </body>
