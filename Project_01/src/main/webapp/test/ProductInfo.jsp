@@ -11,57 +11,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script>
-	function count(type)  {
-		  // 결과를 표시할 element
-		  const resultElement = document.getElementById('result');
-		  const resultElement2 = document.getElementById('price');
-		  // 현재 화면에 표시된 값
-		  let number = resultElement.innerText;
-		  let price = resultElement2.innerText;
-		  // 더하기/빼기
-		  if(type === 'plus') {
-		    number = parseInt(number) + 1;
-		    price  += parseInt(number) ;
-		  }else if(type === 'minus' && number!=1)  {
-		    number = parseInt(number) - 1;
-		    price -= parseInt(number) ;
-		  }
-		  // 결과 출력
-		  resultElement.innerText = number;
-		  resultElement2.innerText = price;
-		}
-	function validateForm(form) {
-		if (form.name.value == "") {
-			alert("이름을 입력하세요.");
-			form.content.focus();
-			return false;
-		}
-		if (form.title.value == "") {
-			alert("제목을 입력하세요.");
-			form.title.focus();
-			return false;
-		}
-		if (form.content.value == "") {
-			alert("내용을 입력하세요.");
-			form.content.focus();
-			return false;
-		}
-	}
-</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Productpage</title>
 <jsp:include page="/Common/LinkFile.jsp"/>
 <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.css">
 <link rel="stylesheet" href="/resources/css/Common.css">
-<script src="/resources/js/jquery-3.7.1.js"></script>
 <script src="https://kit.fontawesome.com/a0b08e370a.js" crossorigin="anonymous"></script>
+<script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>
+<script src="/resources/bootstrap/js/jQueryRotate.js"></script>
 <style type="text/css">
 /*문의사항 css */
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
 section.notice {
   padding: 80px 0;
 }
@@ -69,7 +28,7 @@ section.notice {
 .page-title {
   margin-bottom: 60px;
 }
-
+	
 .page-title h3 {
   font-size: 28px;
   color: #333333;
@@ -77,12 +36,10 @@ section.notice {
   text-align: center;
 }
 .board-table {
-  font-size: 13px;
-  width: 100%;
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
+	font-size: 13px;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
 }
-
 .board-table a {
   color: #333;
   display: inline-block;
@@ -92,7 +49,7 @@ section.notice {
 }
 .board-table a:hover {
   text-decoration: underline;
-}
+} 
 .board-table th {
   text-align: center;
 }
@@ -121,34 +78,6 @@ section.notice {
 .board-table tbody th p{
   display: none;
 }
-
-/* .btn {
-  display: inline-block;
-  padding: 0 30px;
-  font-size: 15px;
-  font-weight: 400;
-  background: transparent;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -ms-touch-action: manipulation;
-  touch-action: manipulation;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  border: 1px solid transparent;
-  text-transform: uppercase;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  border-radius: 0;
-  -webkit-transition: all 0.3s;
-  -moz-transition: all 0.3s;
-  -ms-transition: all 0.3s;
-  -o-transition: all 0.3s;
-  transition: all 0.3s;
-} */
 
 .btn-dark {
   background: #555;
@@ -182,7 +111,6 @@ font-size: 30px;
 }
 .product_01
 {
-/* background-image: url("../resources/img/melon.jpg"); */
 background-pozsition: left;
 background-sie: cover;
 border-radius: 24px;
@@ -194,6 +122,13 @@ font-optical-sizing: auto;
 font-style: normal;
 color: #333333;
 margin-bottom:10px
+}
+.fontCommon_price
+{
+font-family: "Noto Sans KR", sans-serif;
+font-optical-sizing: auto;
+font-style: normal;
+color: #333333;
 }
 .fontCommon_nomal
 {
@@ -228,6 +163,13 @@ font-style: normal;
 color: gray;
 margin-bottom:10px
 }
+.font_line
+{
+font-family: "Noto Sans KR", serif;
+text-decoration:line-through;
+font-style: normal;
+color: gray;
+}
 .right
 {
 display: flex;
@@ -252,6 +194,7 @@ height: auto;
 top: 0px;
 z-index: 10;
 position: sticky;
+
 }
 .button_style2
 {
@@ -264,11 +207,8 @@ width:50%;
 border:none;
 background-color:gray;
 }
-body {
-overflow-x: hidden;
-overflow-y: scroll; 
-}
-h3{
+
+h3 {
 text-align:center;
 font-family: "Noto Sans KR";
 font-optical-sizing: auto;
@@ -282,13 +222,13 @@ font-style: normal;
 color: black;
 }
 .board-table .hidden-content {
-	display: none; /* Hide content initially */
+	display: none; 
 	padding: 10px;
 	background-color: #f9f9f9;
 }
 
 .board-table tr {
-	cursor: pointer; /* Change cursor to indicate clickable rows */
+	cursor: pointer; 
 }
 
 hr {
@@ -300,26 +240,22 @@ hr {
 <body>
 <jsp:include page="/Common/Header.jsp"/>
 
- <c:forEach var="BoardDTO" items="${product}">
- <p>${ BoardDTO.pname } </p>
- <p>${ BoardDTO.p_num} </p> 
- </c:forEach>
 <main>
 <div class="container"style = "max-width: 1050px; min-width:1050px; padding-left: 0px;padding-top: 20px;" >
-<div class="row d-flex flex-nowrap">	
+<div class="row d-flex flex-nowrap"><c:forEach var="BoardDTO" items="${product}">
 		 <div class="col-5">
-		 	<img src = "../resources/img/melon.jpg" style = "width: 400px; height: auto; border-radius: 2%;
+		 	<img src = "${ BoardDTO.script }" style = "width: 400px; height: auto; border-radius: 2%;
 		 	overflow: hidden; margin-right: 300px;"/>
 		 </div>
 		 <div class = "col-7">
 		 	<div class= "row">
 				<div class = "col-md-12 fontgray">
-					샛별배송
+					샛별배송${ BoardDTO.delivertype }
 				</div>
 			</div>
 		 	<div class = "row">
-					<div class = "col-md-12 fontCommon_Option" style = "font-size: 24px; font-weight: 700; color: #333;">
-						[쉘퍼] 머스크멜론 1.6kg 
+					<div class = "col-md-12 fontCommon_Option" style = "font-size: 24px; font-weight: 600; color: #333;">
+					[쉘퍼] 머스크멜론 1.6kg ${ BoardDTO.pname }
 					</div>
 			</div>
 			<div class= "row">
@@ -328,8 +264,13 @@ hr {
 				</div>
 			</div>	
 			<div class= "row">
-				<div class = "col-md-12 fontCommon_nomal">
-					9900 원
+				<div class = "col-md-12 fontCommon_price" style = "font-size: 26px;font-weight: 750; color: #333;">
+					<sapn style="color:red;">10% </sapn>${ BoardDTO.pprice }<sapn style="font-weight:500";>원</sapn>
+				</div>
+			</div>	
+			<div class= "row">
+				<div class = "col-md-12 font_line" style="padding-bottom:10px;">
+					11000
 				</div>
 			</div>	
 			<div class= "row">
@@ -423,8 +364,8 @@ hr {
 			</div>
 			<div class= "row">
 				<div class = "col-md-12 fontgray right" style="display:inline-flex;align-items: center;">
-				총 상품 금액:<label style="font-weight:bold;font-size:25px">9900//</label>원</div>
-				<label class="fontCommon_nomal2" id='price' min="9900">9900</label>
+				총 상품 금액:<label style="font-weight:bold;font-size:25px">9900</label>원</div>
+			</c:forEach>
 			</div>
 			<div class="row">
 				<div class= "col -4"style= "padding-bottom: 50px;">
@@ -434,7 +375,7 @@ hr {
 		 </div>
 		 </div>
 		 </div>
-		 <div class="container" style = "max-width: 1050px; min-width:1050px; padding-left: 0px;position: sticky;top: 0px;z-index: 0;height:40px;">
+		 <div class="container" style = "max-width: 1050px; min-width:1050px; padding-left: 0px;position: sticky;top: 0px;z-index: 10;height:40px;">
 		 <div class="row">
 		 		<div class= "col-4">
 				<button type="button" class="btn btn-outline-success button_style">상품설명</button>
@@ -451,14 +392,14 @@ hr {
 		 <!-- 버튼이후 -->
 		 <div class="container" style = "max-width: 1050px; min-width:1050px; padding-left: 0px;padding-top: 20px;">
 		 <!-- 상품설명 -->
-		 <div class="row">
+		 <div class="row" style="overflow: hidden;">
 		 <div class="col-12">	
-		 	<img src = "../resources/img/melon.jpg" style = "width: 1040px; height: 600; border-radius: 2%;
-		 	overflow: hidden;"/>
+		 	<img src = "../resources/img/melon.jpg" style = "width: 1000px; height: 400; border-radius: 2%;z-index: 5;"/>
 		 </div>
+		 <c:forEach var="BoardDTO" items="${product}">
 		 <div class="row">
 		 <h3>촉촉하게 머금은 달콤함</h3>
-		 <h3>머스크 멜론</h3>
+		 <h3>머스크 멜론${ BoardDTO.pname }</h3>
 		 <hr>
 		 <p>멜론은 촉촉한 식감과 입안에 감도는 단맛으로 그만의 매력을 톡톡히 발산하는 과일이죠. 
 		 그중에서도 달콤한 맛과 향을 품은 머스캣멜론을 마켓그린에서 합리적인 가격으로 만나보세요. 
@@ -467,18 +408,18 @@ hr {
 		 과일 디저트는 물론이고 근사한 안주로 즐겨도 좋을 거예요. </p>
 		 </div>
 		 </div>
+		 </c:forEach>
 		 <!-- 후기  -->
 		 <div class="row">
 		 <div class="col fontCommon_nomal" style="width:500px; height:300; display:flex; justify-content: space-around;">
-		 <h2>후기</h2>
-		
+		 <h3>후기</h3>
 		 </div>
-		
+		 <br />
+
 		 <!-- 문의 -->
-    
     <section class="notice"style="min-width:1050px; height:1000px; display:flex; justify-content: space-around;">
   <div class="page-title">
-  <h2>상품 문의</h2>
+  <h3>상품 문의</h3>
         <div class="container"style="min-width:1050px; height:auto; display:flex; justify-content: flex-end;">
 
 	<div class="row">
@@ -493,17 +434,18 @@ hr {
         <h5 class="modal-title texttop_01" id="exampleModalLabel">상품 문의하기</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <c:forEach var="BoardDTO" items="${product}">
       <div class="modal-body">
         <div class="row"style="padding-bottom:5px;padding-top:5px;">
         <div class="col-3">
-        <img src="../resources/img/melon.jpg" style="width:100px; padding-bottom:10px;">
+        <img src=${ BoardDTO.script }style="width:100px; padding-bottom:10px;">
         </div>
         <div class="col-6">	
         <div class="col" style="font-size:20px;display:flex;align-items: center;height:100%;">
-        [쉘퍼] 머스크멜론 1.6kg
+        ${ BoardDTO.name }
         </div>
         </div>
-        
+        </c:forEach>
 		<div>
 		<hr style="width:100%; margin: auto;">
 		<form action="../test/List.do"  method="post" enctype="multpart/form-data"
@@ -598,6 +540,39 @@ hr {
 			}
 		});
 	});
+	function count(type)  {
+		  // 결과를 표시할 element
+		  const resultElement = document.getElementById('result');
+		  // 현재 화면에 표시된 값
+		  let number = resultElement.innerText;
+		 
+		  // 더하기/빼기
+		  if(type === 'plus') {
+		    number = parseInt(number) + 1;
+
+		  }else if(type === 'minus' && number!=1)  {
+		    number = parseInt(number) - 1;
+		  }
+		  // 결과 출력
+		  resultElement.innerText = number;
+		}
+	function validateForm(form) {
+		if (form.name.value == "") {
+			alert("이름을 입력하세요.");
+			form.content.focus();
+			return false;
+		}
+		if (form.title.value == "") {
+			alert("제목을 입력하세요.");
+			form.title.focus();
+			return false;
+		}
+		if (form.content.value == "") {
+			alert("내용을 입력하세요.");
+			form.content.focus();
+			return false;
+		}
+	}
 	var exampleModal = document.getElementById('exampleModal')
 	exampleModal.addEventListener('show.bs.modal', function(event) {
 		// Button that triggered the modal
@@ -611,7 +586,6 @@ hr {
 		var modalBodyInput = exampleModal.querySelector('.modal-body input')
 
 		var myModalEl = document.getElementById('myModal')
-		var modal = bootstrap.Modal.getInstance(myModalEl)
 
 		modalTitle.textContent = ' 상품 문의하기 '
 		modalBodyInput.value = recipient

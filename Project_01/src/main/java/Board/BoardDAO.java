@@ -75,7 +75,7 @@ public class BoardDAO extends TestDBPool {
 }
 	public List<BoardDTO> View() {
 		List<BoardDTO> pro = new Vector<BoardDTO>();
-		String query = "SELECT * FROM product ";
+		String query = "SELECT * FROM product WHERE P_NUM =2";
 			
 		try {
 			psmt = con.prepareStatement(query);
@@ -95,7 +95,6 @@ public class BoardDAO extends TestDBPool {
 				dto.setWeight(rs.getInt("weight"));
 				dto.setScript(rs.getString("script"));
 				
-				System.out.println(dto.getP_num());
 				pro.add(dto);
 			}
 		}
