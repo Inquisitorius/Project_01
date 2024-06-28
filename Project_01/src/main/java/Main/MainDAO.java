@@ -48,7 +48,6 @@ public class MainDAO extends JDBConnect {
 	public List<ProductDTO> GetSaleProductList(int event_id)
 	{
 		String sql = "SELECT * FROM product WHERE product.EVENT_ID = " + event_id;
-		System.out.println("GetSaleProductList = " + event_id); 
 		
 		List<ProductDTO> bbs = new Vector<ProductDTO>();
 		
@@ -98,7 +97,7 @@ public class MainDAO extends JDBConnect {
 	public ProductDTO GetTimeLimitSale(int product_id) 
 	{
 		String sql = "SELECT * FROM PRODUCT p JOIN EVENT e ON p.EVENT_ID = e.IDX WHERE p.PRODUCT_ID =" + product_id;
-		System.out.println(sql);
+		
 		ProductDTO dto = new ProductDTO();
 		
 		try {

@@ -175,8 +175,14 @@ function Refund_Progress(flag)
         data: JSON.stringify(data),		       
         success: function(response) 
         {
-        	alert('처리 완료');
-        	location.replace("/SellerPage/OrderListPage.jsp");
+        	swal({
+				  title: "처리가 완료되었습니다.",		
+				  //text : "asdsad",
+				  icon: "success", //"success"
+				  button: "확인",
+				}).then((value) => {
+					location.replace("/SellerPage/OrderListPage.jsp");
+			});		
         },
         error : function(request,status,error){
             alert('code:'+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); //에러 상태에 대한 세부사항 출력

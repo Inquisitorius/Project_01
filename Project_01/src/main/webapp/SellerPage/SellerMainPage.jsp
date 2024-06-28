@@ -47,7 +47,7 @@
 			</div>	
 			<div class = "row" style="padding-bottom: 4px;">
 				<div class = "col-12">
-					<button class = "btn btn-navy rounded-1 fontCommon_Option" type = "button" style="width: 100%; height: 55px;">
+					<button class = "btn btn-navy rounded-1 fontCommon_Option" id = "inqueryListBtn" type = "button" style="width: 100%; height: 55px;">
 					판매자 문의사항 확인
 					</button>
 				</div>				
@@ -107,6 +107,15 @@ $(document).ready(function()
 	{		
 		location.replace("/SellerPage/OrderListPage.jsp");
 	});
+	
+	//inqueryListBtn
+	$('#inqueryListBtn').click(function()
+	{		
+		location.replace("/SellerPage/Inquery_Seller.jsp");
+	});
+	
+	
+	
 });
 
 

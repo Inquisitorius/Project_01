@@ -42,9 +42,8 @@ public class SellerDAO extends JDBConnect
 				+ "GROUP BY  "
 				+ "    dr.ORDER_DATE "
 				+ "ORDER BY  "
-				+ "    dr.ORDER_DATE";
+				+ "    dr.ORDER_DATE";		
 		
-		System.out.println("Get_Seller_SellCount");
 		List<AjaxDataTrans> list = new Vector<AjaxDataTrans>();
 		
 		try 
@@ -74,13 +73,11 @@ public class SellerDAO extends JDBConnect
 	
 	public String DateConvert(String dateStr)
 	{
-		System.out.println("1. " + dateStr);
 		String result = "";
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		try 
 		{
-			Date date = formatter.parse(dateStr);
-			System.out.println("2. " + date);
+			Date date = formatter.parse(dateStr);			
 			SimpleDateFormat format = new SimpleDateFormat("MM / dd");
 			result = format.format(date);
 			
