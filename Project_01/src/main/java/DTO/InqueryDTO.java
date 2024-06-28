@@ -12,12 +12,15 @@ public class InqueryDTO
 	public String seller_content;
 	public Date inquery_date;
 	
+	public String product_name;
+	public String user_name;
 	
 	public InqueryDTO() {
-		// TODO Auto-generated constructor stub
-	}
+			
+		}	 
+	
 	public InqueryDTO(int inquery_id, int product_id, int user_id, String inquery_title, String inquery_content,
-			String seller_content, Date inquery_date) {
+			String seller_content, Date inquery_date, String product_name, String user_name) {
 		super();
 		this.inquery_id = inquery_id;
 		this.product_id = product_id;
@@ -26,7 +29,22 @@ public class InqueryDTO
 		this.inquery_content = inquery_content;
 		this.seller_content = seller_content;
 		this.inquery_date = inquery_date;
+		this.product_name = product_name;
+		this.user_name = user_name;		
 	}
+
+	public String getProduct_name() {
+		return product_name;
+	}
+	public void setProduct_name(String product_name) {
+		this.product_name = product_name;
+	}
+	public String getUser_name() {
+		return user_name;
+	}
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}	
 	
 	public int getInquery_id() {
 		return inquery_id;
