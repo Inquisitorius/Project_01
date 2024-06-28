@@ -54,8 +54,8 @@ public class LoginController extends HttpServlet {
 			LoginDAO dao = new LoginDAO();
 			String id = req.getParameter("id");
 			String second = req.getParameter("second");
-			id = dao.PwdSearch(id, second);
-			 if (id != null) {
+			pwd = dao.PwdSearch(id, second);
+			 if (pwd != null) {
 		            out.write("{\"status\": \"success\", \"pwd\": \"" + pwd + "\"}");
 		        } else {
 		            out.write("{\"status\": \"failure\"}");
