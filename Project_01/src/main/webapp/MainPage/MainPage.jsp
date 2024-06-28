@@ -238,7 +238,16 @@ body {
 		</div>
 	</main>
 	<jsp:include page="/Common/Footer.jsp"/>
-
+	
+	<form method="post" id = "form_for_productInfo" style = "display: none" action = "/test/ProductInfo.jsp">
+		<input name = "product_id" id = "product_id_trans" value = ""/>
+	</form>
+	<!-- 
+	product_id
+	구매하기 버튼을 누르면 form 의 submit 를 실행
+	실행하기 전에 버튼 내부에 있는 정보 초기화 해주고 넘겨야 제대로 id 받음.
+	
+	 -->
 	<script src="/resources/bootstrap/js/bootstrap.bundle.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 	<script>
@@ -261,6 +270,18 @@ body {
 			//swiper init;
 			Get_SaleProductList(2,'#maincard_');
 			Get_SaleProductList(21,'#maincard2_');
+			
+			//click event
+			
+			$('.productBtn_forDetail').click(function()
+			{
+				console.log($(this).siblings('#mainpage_productid').val());
+				
+				var product_id = $(this).siblings('#mainpage_productid').val();
+				$('#product_id_trans').val(product_id);
+				
+				$('#form_for_productInfo').submit();				
+			});
 			
 						
 		});
@@ -292,6 +313,8 @@ body {
                 		num = num + 1;
                 		if(num < 8)
                 		{
+                			$(id).find('#mainpage_productid').val(this.product_id);
+                			
                 			$(id).find('.maincard_img').attr('src',this.product_img);
                     		$(id).find('.mainpage_Itemtitle').html(this.name);
                     		

@@ -7,7 +7,8 @@
 					</div>
 					<div class = "row" style = "margin-top: 5px;">
 						<div class = "col-12" style = "padding-left : 0px; padding-right: 0px; display: inline-flex;">
-							<button class="btn btn-navy rounded-1 fontCommon_Option" type = "button" style = "width: 249px; height: 36px;">구매</button>
+							<button class="btn btn-navy rounded-1 fontCommon_Option productBtn_forDetail" type = "button" style = "width: 249px; height: 36px;">구매</button>
+							<input id = "mainpage_productid" type = "hidden" value = ""/>	
 						</div>
 					</div>
 					<div class = "row" style = "margin-top: 5px;">
@@ -27,5 +28,6 @@
 						<div class = "col" style = "padding-left : 0px; padding-right: 0px; display: inline-flex;">
 							<span class = "mainpage_SalePriceText" style = "text-align:left;">99999원</span>
 						</div>
-					</div>				
+					</div>		
+						
 	</div>
