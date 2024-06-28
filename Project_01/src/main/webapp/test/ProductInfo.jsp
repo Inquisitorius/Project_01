@@ -450,11 +450,7 @@ hr {
 		<div>
 		<hr style="width:100%; margin: auto;">
 		<form action="../test/List.do"  method="post" enctype="multpart/form-data"
-		 onsubmit="return validateForm(this);"id="ModalWriteForm">
-        <div class="form-group-mb-3">
-            <label for="recipient-title" class="col-form-label">이름</label>
-            <input type="text" class="form-control" name="name">
-          </div>
+		 onsubmit="return validateForm(this);"id="ModalWriteForm">	
           <div class="form-group-mb-3">
             <label for="recipient-name" class="col-form-label">제목</label>
             <input type="text" class="form-control" name="title">
@@ -515,6 +511,48 @@ hr {
       </table>
     </div> 
 </section>
+<!-- board list area -->
+    <div id="board-list">
+        <div class="panel-faq-container"style="min-width: 1050px;height:auto; display:flex; justify-content: space-around;">
+            <table class="board-table table">
+            	    <thead>
+            	    <tr>
+                    <th scope="col" class="th-num">번호</th>
+                    <th scope="col" class="th-title">제목</th>
+                    <th scope="col" class="th-writer">이름</th>
+                    <th scope="col" class="th-date">날짜</th>
+                </tr>
+                </thead>
+                <c:forEach var="InqueryDTO" items="${board}">
+                <tbody style="border:none;">
+                 <tr class="board-row" data-target="#content${ InqueryDTO.inquery_id }"style="border:none;">
+                    <td>${ InqueryDTO.inquery_id }</td>
+                    <th>
+                      <a href="#!">${ InqueryDTO.inquery_title }</a>
+                      <p>${ InqueryDTO.user_id }</p>
+                    </th>	
+                    <td>${ InqueryDTO.user_id }</td>
+                    <td>${ InqueryDTO.inquery_date }</td>
+                     <tr id="content${ InqueryDTO.inquery_id }" class="hidden-content-row"style="width:150px;hegiht:300px;"> 
+                        <td colspan="4"style="padding : 0px;border:none;">
+                        <div class="hidden-content">
+                            <div style="display:flex;padding	-left:30px;font-size:15px;width:1000px;hegiht:100%;"> 
+                             &nbsp;&nbsp;&nbsp;
+                             문의내용 :
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              ${ InqueryDTO.inquery_content }
+                              <br />
+                              ${ InqueryDTO.seller_content }
+                           </div>
+                           </div>
+                        </td>
+                </tr>
+                </tbody>  
+                </c:forEach>
+            </table>   
+        </div>	
+      </table>
+    </div> 
 </main>
 <jsp:include page="/Common/Footer.jsp"/>
 
@@ -558,11 +596,6 @@ hr {
 		  resultElement.innerText = number;
 		}
 	function validateForm(form) {
-		if (form.name.value == "") {
-			alert("이름을 입력하세요.");
-			form.content.focus();
-			return false;
-		}
 		if (form.title.value == "") {
 			alert("제목을 입력하세요.");
 			form.title.focus();

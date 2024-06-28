@@ -6,6 +6,7 @@ import java.util.List;
 
 import Board.BoardDAO;
 import Board.BoardDTO;
+import DTO.InqueryDTO;
 import DTO.ProductDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -24,21 +25,23 @@ import jakarta.servlet.http.HttpServletResponse;
 		  ServletException, IOException {
 				BoardDAO dao = new BoardDAO();
 				String product_id = req.getParameter("product_id");
-				System.out.println(product_id);
+				
 				List<BoardDTO> product = dao.View();
 				List<ProductDTO> product2 = dao.View2(Integer.parseInt(product_id));
 			 	List<BoardDTO> boardLists = dao.selectListPage();
+			 	List<InqueryDTO> board = dao.Inquerylist(Integer.parseInt(product_id));
+			 	
 			 	dao.close();
 			 	req.setAttribute("product", product);
 			 	req.setAttribute("product2", product2);
 				req.setAttribute("boardLists", boardLists);
+				req.setAttribute("board", board);
 				req.getRequestDispatcher("/test/ProductInfo.jsp").forward(req, resp);
 		}
 		protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 			req.setCharacterEncoding("UTF-8");
 			
 			BoardDTO dto = new BoardDTO();
-			dto.setName(req.getParameter("name"));
 			dto.setTitle(req.getParameter("title"));
 			dto.setContent(req.getParameter("content"));
 			

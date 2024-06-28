@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import DTO.InqueryDTO;
 import DTO.ProductDTO;
 import Info.TestDTO;
 import Main.TestDBPool;
@@ -80,41 +81,47 @@ public class BoardDAO extends TestDBPool {
 			  	return board;
 			  	
 }
-	 public List<ProductDTO> Inquerylist() {
-		 List<ProductDTO> Inquery = new Vector<ProductDTO>();
-		 String query = /*
-					 * " " + " SELECT * FROM ( " + "	SELECT Tb.*, ROWNUM rNum FROM ( " +
-					 */ " SELECT * FROM pboard ORDER BY IDX";
+	 public List<InqueryDTO> Inquerylist(int product_id) {
+		 String query = " SELECT * FROM inquery,product WHERE product.product_id = " + product_id;
+		 System.out.println("GetSaleProductList = " + product_id);
+		 
+		 List<InqueryDTO> Inquery = new Vector<InqueryDTO>();
 			  	try {
 			  		Class.forName("oracle.jdbc.OracleDriver");
 
-					String url = "jdbc:oracle:thin:@localhost:1521:xe";
-					String id = "c##musthave";
+					String url = "jdbc:oracle:thin:@14.42.124.35:1521:xe";
+					String id = "C##PROJECT_01DB";
 					String pwd = "1234";
 					con = DriverManager.getConnection(url, id, pwd);
 			  		psmt = con.prepareStatement(query);
 			  		rs=psmt.executeQuery();
 			  		
 			  		while(rs.next()) {
-			  			BoardDTO dto = new BoardDTO();
+			  			InqueryDTO dto3 = new InqueryDTO();
 			  			
-			  			dto.setIdx(rs.getString("idx"));
-			  			dto.setName(rs.getString("name"));
-			  			dto.setTitle(rs.getString("title"));
-			  			dto.setContent(rs.getString("content"));
-			  			dto.setPostdate(rs.getDate("postdate"));
-			  			dto.setOfile(rs.getString("ofile"));
-			  			dto.setSfile(rs.getString("sfile"));
-			  			dto.setPass(rs.getString("pass"));
-			 
-			  			board.add(dto);
+			  			dto3.setInquery_id(rs.getInt("inquery_id"));
+			  			dto3.setProduct_id(rs.getInt("product_id"));
+			  			dto3.setUser_id(rs.getInt("user_id"));
+			  			dto3.setInquery_title(rs.getString("inquery_title"));
+			  			dto3.setInquery_content(rs.getString("inquery_content"));
+			  			dto3.setSeller_content(rs.getString("seller_content"));
+			  			dto3.setInquery_date(rs.getDate("inquery_date"));
+					
+						/*
+						 * dto3.setProduct_name(rs.getString("product_name"));
+						 * dto3.setUser_name(rs.getString("user_name"));
+						 */
+					
+			  			System.out.println("여기까지 들어오면 = " + product_id);
+			  			Inquery.add(dto3);
+			  			
 			  		}
 		  	}
 			  	catch(Exception e) {
 			  		System.out.println("예외 발생");
 			  		e.printStackTrace();
 			  	}
-			  	return board;
+			  	return Inquery;
 }
 	public List<BoardDTO> View() {
 		List<BoardDTO> pro = new Vector<BoardDTO>();
@@ -177,9 +184,9 @@ public class BoardDAO extends TestDBPool {
 		
 		try {
 			String query = "INSERT INTO pboard ( "
-						 + " idx, name, title, content )"
+						 + " idx, title, content )"
 						 + " values( "
-						 + " seq_board_num.NEXTVAL,?,?,?)";
+						 + " seq_board_num.NEXTVAL,?,?)";
 						 
 			psmt = con.prepareStatement(query);			 
 			psmt.setString(1, dto.getName());			  

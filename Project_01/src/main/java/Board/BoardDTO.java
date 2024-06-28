@@ -138,4 +138,56 @@ public class BoardDTO {
 	public void setScript(String script) {
 		this.script = script;
 	}
+	
+	private int INQUERY_ID;
+	private int num ;
+	private String USER_ID;
+	private String INQUERY_TITLE;
+	private String INQUERY_CONTENT;
+	public int getINQUERY_ID() {
+		return INQUERY_ID;
+	}
+	public void setINQUERY_ID(int iNQUERY_ID) {
+		INQUERY_ID = iNQUERY_ID;
+	}
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
+	public String getUSER_ID() {
+		return USER_ID;
+	}
+	public void setUSER_ID(String uSER_ID) {
+		USER_ID = uSER_ID;
+	}
+	public String getINQUERY_TITLE() {
+		return INQUERY_TITLE;
+	}
+	public void setINQUERY_TITLE(String iNQUERY_TITLE) {
+		INQUERY_TITLE = iNQUERY_TITLE;
+	}
+	public String getINQUERY_CONTENT() {
+		return INQUERY_CONTENT;
+	}
+	public void setINQUERY_CONTENT(String iNQUERY_CONTENT) {
+		INQUERY_CONTENT = iNQUERY_CONTENT;
+	}
+	public String getSELLER_CONTENT() {
+		return SELLER_CONTENT;
+	}
+	public void setSELLER_CONTENT(String sELLER_CONTENT) {
+		SELLER_CONTENT = sELLER_CONTENT;
+	}
+	public java.sql.Date getINQUERY_DATE() {
+		return INQUERY_DATE;
+	}
+	public void setINQUERY_DATE(java.sql.Date iNQUERY_DATE) {
+		INQUERY_DATE = iNQUERY_DATE;
+	}
+
+	private String SELLER_CONTENT;
+	private java.sql.Date INQUERY_DATE ;
+	
 }
