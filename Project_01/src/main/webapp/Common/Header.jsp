@@ -49,8 +49,8 @@
 						<div style = "width: 36px; height: auto;"><img id = "sellerIconImg" style = "width: 36px; height: auto; display: none;" src="/resources/img/seller.svg"/></div>
 						<div id = "loginBtn_Header" style = "width: 36px; height: auto; display: none;"><img style = "width: 36px; height: auto;" src="/resources/img/login.svg"/></div>
 						<div id = "logoutBtn_Header" style = "width: 36px; height: auto; display: none;"><img style = "width: 36px; height: auto;" src="/resources/img/logout.svg"/></div>
-						<div style = "width: 36px; height: auto;"><img style = "width: 36px; height: auto;" src="/resources/img/user_add.svg"/></div>
-						<div style = "width: 36px; height: auto;"><img style = "width: 36px; height: auto;" src="/resources/img/user_page.svg"/></div>
+						<div id = "useraddBtn_Header" style = "width: 36px; height: auto;"><img style = "width: 36px; height: auto;" src="/resources/img/user_add.svg"/></div>
+						<div id = "userpageBtn_Header" style = "width: 36px; height: auto;"><img style = "width: 36px; height: auto;" src="/resources/img/user_page.svg"/></div>
 						<div></div>
 					</div>					
 				</div>					
@@ -197,11 +197,18 @@
 		{
 			$('#logoutBtn_Header').css('display','none');	
 			$('#loginBtn_Header').css('display','block');	
+			
+			//로그인 이 안되있으니 회원가입
+			$('#useraddBtn_Header').css('display','block');
+			$('#userpageBtn_Header').css('display','none');
 		}
 		else
 		{
 			$('#loginBtn_Header').css('display','none');
 			$('#logoutBtn_Header').css('display','block');	
+			
+			$('#useraddBtn_Header').css('display','none');
+			$('#userpageBtn_Header').css('display','block');
 		}
 		
 		if(authCheck == '0' || authCheck == 'null')
@@ -214,6 +221,20 @@
 		}
 			
 		
+		//useraddBtn_Header
+		$('#useraddBtn_Header').css('cursor','pointer');
+		$('#userpageBtn_Header').css('cursor','pointer');
+		$('#useraddBtn_Header').click(function()
+		{
+			location.href = "/MainPage/JoinPage.jsp";
+		});	
+		
+		$('#userpageBtn_Header').click(function()
+		{
+			location.href = "/MyPage/MyPageMain.jsp";
+		});	
+		
+		
 		
 		$('#loginBtn_Header').css('cursor','pointer');
 		$('#loginBtn_Header').click(function()
@@ -224,11 +245,11 @@
 		//logoutTry
 		$('#logoutBtn_Header').css('cursor','pointer');
 		$('#logoutBtn_Header').click(function()
-		{			
-			
+		{	
 			swal({
-				  title: "로그아웃되었습니다.",				 
-				  icon: "info",
+				  title: "로그아웃되었습니다.",		
+				  //text : "asdsad",
+				  icon: "info", //"success"
 				  button: "확인",
 				}).then((value) => {
 				location.href = "/login/logoutTry";

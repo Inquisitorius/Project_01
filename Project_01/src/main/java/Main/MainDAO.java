@@ -98,13 +98,12 @@ public class MainDAO extends JDBConnect {
 	public ProductDTO GetTimeLimitSale(int product_id) 
 	{
 		String sql = "SELECT * FROM PRODUCT p JOIN EVENT e ON p.EVENT_ID = e.IDX WHERE p.PRODUCT_ID =" + product_id;
-		
+		System.out.println(sql);
 		ProductDTO dto = new ProductDTO();
 		
 		try {
 			psmt = con.prepareStatement(sql);
 			rs = psmt.executeQuery();
-			
 			rs.next();
 			
 			dto.setProduct_id(rs.getInt("PRODUCT_ID"));

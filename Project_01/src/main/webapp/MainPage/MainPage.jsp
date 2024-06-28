@@ -265,7 +265,7 @@ body {
 			//$('#maincard_00').find('.maincard_img').attr('src','/resources/img/product/WildTurkeyMasters.jpg');
 			
 			//time Limit
-			Get_timelimitSaleData(37);
+			Get_timelimitSaleData(121);
 			
 			//swiper init;
 			Get_SaleProductList(2,'#maincard_');
