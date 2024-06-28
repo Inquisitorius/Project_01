@@ -12,6 +12,8 @@
 	<a href="../test/View.do">test view</a> <br/>
 	<a href="../test/Write.do">글쓰기</a><br/>
 	<a href="../test/ProductInfo.do">상품 얘는안됨</a>
+	
+	<a href="../test/productInfo.do">테스트 상품</a>
 		
 		<form action="../test/List.do" method="get">
 		<a>폼 태그</a>

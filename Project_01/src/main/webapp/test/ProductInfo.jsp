@@ -239,7 +239,6 @@ hr {
 </head>
 <body>
 <jsp:include page="/Common/Header.jsp"/>
-
 <main>
 <div class="container"style = "max-width: 1050px; min-width:1050px; padding-left: 0px;padding-top: 20px;" >
 <div class="row d-flex flex-nowrap">

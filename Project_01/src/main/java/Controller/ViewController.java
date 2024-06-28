@@ -23,10 +23,10 @@ import jakarta.servlet.http.HttpServletResponse;
 		protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws
 		  ServletException, IOException {
 				BoardDAO dao = new BoardDAO();
-			 	//Map<String, Object> map = new HashMap<String, Object>();
-			// 	int totalCount = dao.selectCount(map);
+				String product_id = req.getParameter("product_id");
+				System.out.println(product_id);
 				List<BoardDTO> product = dao.View();
-				List<ProductDTO> product2 = dao.View2();
+				List<ProductDTO> product2 = dao.View2(Integer.parseInt(product_id));
 			 	List<BoardDTO> boardLists = dao.selectListPage();
 			 	dao.close();
 			 	req.setAttribute("product", product);
