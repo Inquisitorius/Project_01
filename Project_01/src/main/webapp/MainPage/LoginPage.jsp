@@ -78,7 +78,7 @@ a:hover {
 			<div class="col-md-3" style="display:flex; align-items: center; height:40px; padding:15px;">
 				<div class="col-md-7"><p id="loginWarning" style="margin:0px; font-size:10px; color:red; user-select:none;"></p></div>
 				<div class="col-md-5"  style="display:flex; justify-content: flex-end;">		
-				<a class="mini_Font">아이디 찾기</a> <span>|</span>
+				<a class="mini_Font" onclick="location.href='/LoginPage/ForgotId.jsp';">아이디 찾기</a> <span>|</span>
 				<a class="mini_Font">비밀번호 찾기</a>
 				</div>
 			</div>
@@ -95,12 +95,13 @@ a:hover {
 		
 		<div class="row" style="justify-content: center;">
 			<div class="col-md-3" style="justify-content: center;">
-				<div class="button_Style">
+				<div class="button_Style" style="margin-bottom: 80px; ">
 					<button type="button" class="btn btn-success" style="width:100%;" onclick="location.href='/MainPage/JoinPage.jsp';">회원가입</button>
 				</div>
 			</div>
 		</div>
 	</main>
+	<jsp:include page="/Common/Footer.jsp" />
 	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 	<script src="/resources/bootstrap/js/bootstrap.bundle.js"></script>
 	<script	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
