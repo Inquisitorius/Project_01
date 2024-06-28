@@ -83,6 +83,12 @@
 	</div>	
 </div>
 </main>
+<div style = "display: none;">
+	<form id = "dataForm" name="data" method="post" action = "/SellerPage/SellerListDetail.jsp">
+		<input id = "form_order_id" type="hidden" name ="order_id" value="">
+		<input id = "form_name" type="hidden" name ="name" value="">
+	</form>
+</div>
 <jsp:include page="/Common/Footer.jsp"/>
 <script src="/resources/bootstrap/js/bootstrap.bundle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
@@ -103,19 +109,7 @@ $(document).ready(function()
 	});
 });
 
-/*
- {title:"주문번호", field:"order_id"},
- {title:"상품명", field:"progress", sorter:"number"},
-{title:"상품수량", field:"gender"},
-{title:"지연상태", field:"rating", formatter:"traffic", hozAlign:"center", formatterParams:{ min:0,max:10,color:["green", "orange", "red"] }},
-{title:"ㅁㄴㅇ", field:"col"},
-{title:"신청일자", field:"dob", hozAlign:"center"},  
-*/
 
-function OrderListPage_Click()
-{
-	
-}
  
 
 function GridInit(list)
@@ -155,10 +149,17 @@ function GridInit(list)
         ]*/
 	});
 	
+	
 	table.on("rowClick", function(e,row){
 		//페이지 이동 처리 
-	   console.log(row.getData().name);
-	});
+	   console.log(row.getData());
+		
+	   	$('#form_order_id').val(row.getData().order_id);
+   		$("#form_name").val(row.getData().name);
+		
+	   $('#dataForm').submit();
+	   //pageContext.forward("/SellerPage/SellerMainPage.jsp");
+    });
 }
 
 function get_DateFormat_MD_HHMMSS(date)

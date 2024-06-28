@@ -34,7 +34,7 @@
 <div class = "container" style = "max-width: 1050px; min-width: 1050px; padding-left: 0px; padding-right: 0px; padding-top: 40px;">
 	<div class = "row" style = "border-bottom: 1px solid #efefef; padding-bottom: 20px;">
 		<div class = "col-12" style="display: inline-flex;justify-content: center;">
-			<label class = "sellerMainTitle">환불 내역</label>
+			<label class = "sellerMainTitle">환불 요청 내역</label>
 		</div>
 	</div>
 </div>
@@ -57,13 +57,7 @@
 <script type="text/javascript">
 $(document).ready(function()
 {
-	//get_SellerListData();
-	
-	
-	//testcode
-	var table = tabulatorInit();	
-	//table.setData("/SellerController/orderListTableData.func",
-	//		{seller : 2});
+	var table = tabulatorInit();		
 });
 
 

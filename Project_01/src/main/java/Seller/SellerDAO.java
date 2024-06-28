@@ -202,4 +202,37 @@ public class SellerDAO extends JDBConnect
 		
 		return dto;
 	}
+
+	public AjaxDataTrans UpdateRefundState(RefundDTO data) 
+	{
+		String sql = "UPDATE REFUND SET REFUND_STATE = '" + data.getRefund_state() +"' WHERE REFUND_ID  = " + data.getRefund_id();
+		String sql2 = "UPDATE ORDER_INFO SET ORDER_STATE = '" + data.getRefund_state()+ "'  WHERE ORDER_ID = " + data.getOrder_id();
+		int result = 0;
+		try 
+		{
+			psmt = con.prepareStatement(sql);
+			result = psmt.executeUpdate();
+			
+			if( result != 1)
+			{
+				System.out.println("Err UpdateRefundState");
+			}
+			
+			result = psmt.executeUpdate(sql2);
+			
+			if( result != 1)
+			{
+				System.out.println("Err UpdateRefundState");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		AjaxDataTrans dto = new AjaxDataTrans();
+		dto.setIntData_00(result);
+		
+		return dto;
+	}
 }

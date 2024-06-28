@@ -28,6 +28,17 @@
 .label_element
 {
 	margin_right: 10px;
+	height: 70px;
+	line-height: 4.5;
+	
+	min-width: 200px;
+}
+.label_title
+{
+	min-width: 110px;
+	margin_right: 10px;
+	height: 70px;
+	line-height: 4.5;
 }
 </style>
 </head>
@@ -43,33 +54,50 @@
 		</div>
 	</div>
 	<div class = "container" style = "max-width: 1050px; min-width: 1050px; padding-left: 0px; padding-right: 0px; padding-top: 40px;">
-		<div class = "row" style = "border-bottom: 1px solid #efefef; padding-bottom: 20px;">
-			<div class = "col-12" style="display: inline-flex;justify-content: center; justify-content: flex-start;">
+		<div class = "row" style = "border-bottom: 1px solid #efefef; border-top: 1px solid #163020;">
+			<div class = "col-12" style="display: inline-flex; justify-content: center; justify-content: flex-start;">
 				<div style = "margin-right : 10px;">
-					<label class = "label_element">주문 번호</label>
-					<label class = "label_element" id = "order_id">order_id</label>
+					<label class = "label_title fontCommon_Option">주문 번호</label>
+					<label class = "label_element" id = "order_id" style = "margin-left: 20px;">order_id</label>
+				</div>
+				<div style = "margin-right : 10px;">
+					<label class = "label_title fontCommon_Option" >환불 번호</label>
+					<label class = "label_element" id = "refund_id" style = "margin-left: 20px;">refund_id</label>
 				</div>
 			</div>
 		</div>
-		<div class = "row" style = "border-bottom: 1px solid #efefef; padding-bottom: 20px;">
+		<div class = "row" style = "border-bottom: 1px solid #efefef;">
 			<div class = "col-12" style="display: inline-flex;justify-content: center; justify-content: flex-start;">
-				<div style = "margin-right : 10px;">
-					<label class = "label_element">환불 번호</label>
-					<label class = "label_element" id = "refund_id">refund_id</label>
-					
-					<label class = "label_element">환불 요청시간</label>
-					<label class = "label_element" id = "refund_date">refund_date</label>
-					
-					<label class = "label_element">환불 요청 상태</label>
-					<label class = "label_element" id = "refund_state">refund_state</label>
+				<div style = "margin-right : 10px;">										
+					<label class = "label_title fontCommon_Option">환불 요청시간</label>
+					<label class = "label_element" id = "refund_date" style = "margin-left: 20px;">refund_date</label>
+				</div>
+				<div style = "margin-right : 10px;">				
+					<label class = "label_title fontCommon_Option">환불 요청상태</label>
+					<label class = "label_element" id = "refund_state" style = "margin-left: 20px;">refund_state</label>
 				</div>
 			</div>
 		</div>
-		<div class = "row" style = "border-bottom: 1px solid #efefef; padding-bottom: 20px;">
+		<div class = "row" style = "border-bottom: 1px solid #efefef;">
 			<div class = "col-12" style="display: inline-flex;justify-content: center; justify-content: flex-start;">
 				<div style = "margin-right : 10px;">
-					<label class = "label_element">환불 신청내용</label>
-					<label class = "label_element" id = "refund_reason">refund_reason</label>					
+					<label class = "label_title fontCommon_Option">환불 신청내용</label>
+				</div>
+			</div>
+		</div>
+		<div class = "row" style = "border-bottom: 1px solid #efefef;">
+			<div class = "col-12" style="display: inline-flex;justify-content: center; justify-content: flex-start;">
+				<div style = "margin-right : 10px;">
+					<label id = "refund_reason" class = "label_title fontCommon_Option"></label>
+				</div>
+			</div>
+		</div>
+		<div class = "row" style = "padding-top: 30px;">
+			<div class = "col-12" style="display: inline-flex;justify-content: center; justify-content: flex-end;">
+				<div style = "margin-right : 10px; ">
+					<button class = "btn btn-primary rounded-1" id = "updateBtn" type = "button" >환불승인</button>
+					<button class = "btn btn-secondary rounded-1" id = "cancelBtn" type = "button">환불거절</button>
+					<button class = "btn btn-success rounded-1 " id = "returnBtn" type = "button">돌아가기</button>
 				</div>
 			</div>
 		</div>
@@ -83,6 +111,21 @@
 $(document).ready(function()
 {
 	DetailDataLoasd();	
+	
+	$('#returnBtn').click(function()
+	{		
+		location.replace("/SellerPage/OrderListPage.jsp");
+	});
+	
+	$('#updateBtn').click(function()
+	{
+		Refund_Progress('환불승인');
+	});
+	
+	$('#cancelBtn').click(function()
+	{
+		Refund_Progress('환불거절');
+	});
 });
 
 function DetailDataLoasd()
@@ -104,6 +147,36 @@ function DetailDataLoasd()
         {
         	//여기서 테이블 초기화
         	PageDataInsert(response);
+        },
+        error : function(request,status,error){
+            alert('code:'+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); //에러 상태에 대한 세부사항 출력
+            alert(e);
+        }
+	});
+}
+
+function Refund_Progress(flag)
+{
+	var data = 
+	{
+		refund_id : $('#refund_id').html(),
+		refund_state : flag,
+		order_id : $('#order_id').html()
+	};
+	
+	console.log(data);
+	var result;
+	
+	var url = "http://localhost:8080/SellerController/RefundUpdate.func";
+	$.ajax({
+		type:"post",
+        url:url,
+        contentType: 'application/json',
+        data: JSON.stringify(data),		       
+        success: function(response) 
+        {
+        	alert('처리 완료');
+        	location.replace("/SellerPage/OrderListPage.jsp");
         },
         error : function(request,status,error){
             alert('code:'+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); //에러 상태에 대한 세부사항 출력

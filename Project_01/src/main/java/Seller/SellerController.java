@@ -56,6 +56,39 @@ public class SellerController extends HttpServlet
 		{
 			RefundDetail(req,resp);
 		}
+		else if(command.equals("/RefundUpdate.func"))
+		{
+			RefundUpdate(req,resp);
+		}
+	}
+	
+	public void RefundUpdate(HttpServletRequest req, HttpServletResponse resp)
+	{
+		resp.setContentType("application/json");
+		resp.setCharacterEncoding("UTF-8");			
+		
+		try {
+			BufferedReader reader = req.getReader();
+			Gson gson_in = new Gson();			
+			
+			RefundDTO data = gson_in.fromJson(reader, RefundDTO.class);
+			
+			data.getRefund_id();
+			
+			SellerDAO dao = new SellerDAO();
+			AjaxDataTrans dto = dao.UpdateRefundState(data);			
+			
+			Gson gson = new Gson();
+			String jsonResponse = gson.toJson(dto);
+			resp.getWriter().write(jsonResponse);
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+					
+		
 	}
 	
 	public void RefundDetail(HttpServletRequest req, HttpServletResponse resp)
