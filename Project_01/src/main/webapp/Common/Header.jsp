@@ -1,6 +1,8 @@
+<%@page import="oracle.jdbc.internal.OracleConnection.XSSessionSetOperationCode"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="/resources/css/Common.css">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <header class="container-fluid shadow_eff">
 	<div class="row" style="display: flex; justify-content: center; min-height: 35px; background-color: #163020;">
 		<div class="col-12" style="padding-top: 10px; max-width: 1050px;">
@@ -13,7 +15,10 @@
 					<div style = "font-size: 12px; padding-right: 10px; color: 217, 217, 217;"><i class="fa-solid fa-grip-lines-vertical"></i></div>
 					
 					<div style = "display:inline; font-size: 12px; padding-right: 3px; color: 217, 217, 217;">고객센터</div>	
-				</div> -->
+					
+				</div> -->				
+				<input id = "loginSave" type = "hidden" value = "<%= session.getAttribute("idx")%>"/>
+				<input id = "authSave" type = "hidden" value = "<%= session.getAttribute("auth_type")%>"/>
 			</div>
 		</div>
 	</div>	
@@ -41,9 +46,9 @@
 					right: -325px; top: -42px; 
 					width : 200px; height: 42px; 					
 					display: flex; align-items: center; justify-content: space-evenly;">
-						<div style = "width: 36px; height: auto;"><img id = "sellerIconImg" style = "width: 36px; height: auto;" src="/resources/img/seller.svg"/></div>
-						<div style = "width: 36px; height: auto;"><img style = "width: 36px; height: auto;" src="/resources/img/login.svg"/></div>
-						<div style = "width: 36px; height: auto;"><img style = "width: 36px; height: auto;" src="/resources/img/logout.svg"/></div>
+						<div style = "width: 36px; height: auto;"><img id = "sellerIconImg" style = "width: 36px; height: auto; display: none;" src="/resources/img/seller.svg"/></div>
+						<div id = "loginBtn_Header" style = "width: 36px; height: auto; display: none;"><img style = "width: 36px; height: auto;" src="/resources/img/login.svg"/></div>
+						<div id = "logoutBtn_Header" style = "width: 36px; height: auto; display: none;"><img style = "width: 36px; height: auto;" src="/resources/img/logout.svg"/></div>
 						<div style = "width: 36px; height: auto;"><img style = "width: 36px; height: auto;" src="/resources/img/user_add.svg"/></div>
 						<div style = "width: 36px; height: auto;"><img style = "width: 36px; height: auto;" src="/resources/img/user_page.svg"/></div>
 						<div></div>
@@ -149,11 +154,7 @@
 <script>
 	$(document).ready(function()
 	{
-		$('#sellerIconImg').css('cursor','pointer');
-		$("#sellerIconImg").click(function()
-		{
-			location.href = "/SellerPage/SellerMainPage.jsp";
-		});
+		HeaderInit();	
 		
 		$('.dropdown-item_main').mouseover(function()
 		{
@@ -184,7 +185,60 @@
 		$('.dropdown-item_sub').mouseout(function()
 		{
 			$(this).css("color","rgb(51, 51, 51)");	
+		});		
+	});
+	
+	function HeaderInit()
+	{
+		var loginCheck = $('#loginSave').val();
+		var authCheck = $('#authSave').val();
+		
+		if(loginCheck == 'null')
+		{
+			$('#logoutBtn_Header').css('display','none');	
+			$('#loginBtn_Header').css('display','block');	
+		}
+		else
+		{
+			$('#loginBtn_Header').css('display','none');
+			$('#logoutBtn_Header').css('display','block');	
+		}
+		
+		if(authCheck == '0' || authCheck == 'null')
+		{
+			$('#sellerIconImg').css('display','none');
+		}
+		else if(authCheck == '2')
+		{
+			$('#sellerIconImg').css('display','block');
+		}
+			
+		
+		
+		$('#loginBtn_Header').css('cursor','pointer');
+		$('#loginBtn_Header').click(function()
+		{
+			location.href = "/MainPage/LoginPage.jsp";
+		});		
+		
+		//logoutTry
+		$('#logoutBtn_Header').css('cursor','pointer');
+		$('#logoutBtn_Header').click(function()
+		{			
+			
+			swal({
+				  title: "로그아웃되었습니다.",				 
+				  icon: "info",
+				  button: "확인",
+				}).then((value) => {
+				location.href = "/login/logoutTry";
+			});			
 		});
 		
-	});
+		$('#sellerIconImg').css('cursor','pointer');
+		$("#sellerIconImg").click(function()
+		{
+			location.href = "/SellerPage/SellerMainPage.jsp";
+		});
+	}
 </script>
