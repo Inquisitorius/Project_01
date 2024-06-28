@@ -21,11 +21,12 @@ public class LoginController extends HttpServlet {
 		String uri = req.getRequestURI();
 		int lastSlash = uri.lastIndexOf('/');		
 		String command = uri.substring(lastSlash);	
+		String uri2 = req.getHeader("Referer");
 		
-		  String uri2 = req.getHeader("Referer");
-		  if (uri2 != null && !uri2.contains("/login")) {
-		        req.getSession().setAttribute("prevPage", uri2);
-		    }
+		if (uri2 != null && !uri2.contains("/login")) 
+		{
+		    req.getSession().setAttribute("prevPage", uri2);
+		}
 		if(command.equals("/loginTry"))
 		{
 			LoginTry(req, resp);
@@ -33,13 +34,30 @@ public class LoginController extends HttpServlet {
 		if(command.equals("/logoutTry")) {
 			LogoutTry(req,resp);
 		}
+		if(command.equals("/isLogined")) {
+			IsLogined(req,resp);
+		}
 	}
+	
+	private boolean IsLogined(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		boolean Islogined = false;
+		try {
+			
+		}catch(Exception e) {
+			HttpSession session = req.getSession();
+			if(session != null && session.getAttribute("id") != null) {
+				Islogined = true;
+			}
+		}
+		return Islogined;
+	}
+	
 	
 	private void LogoutTry(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session= req.getSession();
 		session.invalidate();
-		resp.sendRedirect("MainPage.jsp");
+		resp.sendRedirect("/MainPage/MainPage.jsp");
 	}
 
 	public void LoginTry(HttpServletRequest req, HttpServletResponse resp)
@@ -88,6 +106,8 @@ public class LoginController extends HttpServlet {
 	{
 		HttpSession session = req.getSession();
 		
+		
+		session.setAttribute("idx", logindto.getIdx());
 		session.setAttribute("id", logindto.getId());
 		session.setAttribute("pass", logindto.getPass());
 		session.setAttribute("name", logindto.getName());
@@ -97,6 +117,7 @@ public class LoginController extends HttpServlet {
 		session.setAttribute("address_sub", logindto.getAddress_sub());
 		session.setAttribute("gender", logindto.getGender());
 		session.setAttribute("birthdate", logindto.getBirthdate());
+		session.setAttribute("auth_type", logindto.getAuth_type());
 	}
 	
 }

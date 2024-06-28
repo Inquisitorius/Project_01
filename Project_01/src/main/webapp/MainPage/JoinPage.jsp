@@ -177,6 +177,19 @@ a:hover {
 </style>
 </head>
 <body>
+<%
+String id = (String)session.getAttribute("id");
+System.out.println("id =" + id);
+
+%>
+
+
+
+
+
+
+
+
 	<jsp:include page="/Common/Header.jsp" />
 	<main class="container">
 		<div class="row">

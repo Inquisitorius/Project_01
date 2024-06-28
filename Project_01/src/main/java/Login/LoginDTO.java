@@ -3,6 +3,7 @@ package Login;
 import java.sql.Date;
 
 public class LoginDTO {
+		private int idx;
 		private String id;
 		private String pass;
 		private String name;
@@ -12,7 +13,15 @@ public class LoginDTO {
 		private String address_sub;
 		private String gender;
 		private Date birthdate;
+		private int auth_type;
 		
+		
+		public int getIdx() {
+			return idx;
+		}
+		public void setIdx(int idx) {
+			this.idx = idx;
+		}
 		public String getId() {
 			return id;
 		}
@@ -67,4 +76,12 @@ public class LoginDTO {
 		public void setBirthdate(Date birthdate) {
 			this.birthdate = birthdate;
 		}
+		public int getAuth_type() {
+			return auth_type;
+		}
+		public void setAuth_type(int auth_type) {
+			this.auth_type = auth_type;
+		}
+		
+		
 }

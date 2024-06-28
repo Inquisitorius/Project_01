@@ -15,6 +15,7 @@ public class LoginDAO extends DBConnTest {
 			rs=psmt.executeQuery();
 			
 			if(rs.next()) {
+				logindto.setIdx(rs.getInt("idx"));
 				logindto.setId(rs.getString("id"));
 				logindto.setPass(rs.getString("pass"));
 				logindto.setName(rs.getString("name"));
@@ -24,6 +25,8 @@ public class LoginDAO extends DBConnTest {
 				logindto.setAddress_sub(rs.getString("address_sub"));
 				logindto.setGender(rs.getString("gender"));
 				logindto.setBirthdate(rs.getDate("birthdate"));
+				logindto.setAuth_type(rs.getInt("auth_type"));
+				
 		}
 	}catch (Exception e) {
 			e.printStackTrace();
