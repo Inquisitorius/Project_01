@@ -239,7 +239,7 @@ body {
 	</main>
 	<jsp:include page="/Common/Footer.jsp"/>
 	
-	<form method="post" id = "form_for_productInfo" style = "display: none" action = "/test/ProductInfo.jsp">
+	<form method="get" id = "form_for_productInfo" style = "display: none" action = "/test/ProductInfo.do">
 		<input name = "product_id" id = "product_id_trans" value = ""/>
 	</form>
 	<!-- 
