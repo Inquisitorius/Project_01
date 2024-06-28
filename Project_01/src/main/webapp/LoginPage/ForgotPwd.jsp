@@ -68,7 +68,7 @@
 <jsp:include page="/Common/Header.jsp" />
 <main class="container">
 		<div class="row">
-			<div class="login_Title">아이디 찾기</div>		
+			<div class="login_Title">비밀번호 찾기</div>		
 		</div>
 	<div class="row" style="justify-content:center; height:40px; margin-top:20px; margin-bottom:20px">
 		<div class="col-md-3" style="display:flex; justify-content: space-around; padding:0px;">
@@ -93,29 +93,29 @@
 	<form name ="IdSearch">
 		<div class="row" style="justify-content: center;">
 			<div class="col-md-3" style="justify-content: center;">
-				<div><span class="font_Style">이름</span></div>
-				<input id = "input_name" type="text" class="input_Style" placeholder="이름을 입력해주세요" oninput="inputNameCheck(this.id)" onfocus="this.placeholder=''" onblur="this.placeholder='이름을 입력해주세요.'" name="name">
+				<div><span class="font_Style">아이디</span></div>
+				<input id = "input_id" type="text" class="input_Style" placeholder="아이디을 입력해주세요" oninput="inputid(this.id)" onfocus="this.placeholder=''" onblur="this.placeholder='아이디을 입력해주세요.'" name="input_id">
 				<div><span class="font_Style" id="second_content">휴대폰 번호</span></div>
 				<input type="text" class="input_Style" placeholder="숫자만 입력해주세요" id="input_second" oninput="inputSecond(this.id)" maxlength="25" 
 							onfocus="this.placeholder=''"
 							onblur="this.placeholder='숫자만 입력해주세요.'" name="phone">
 				<p id="Warning" class="red_Color" ></p>
-				<button type="button" class="btn btn-success" id="submit_button" onclick="idSearch()" style="margin-top:40px; margin-bottom:40px; height:38px; width:100%;">찾기</button>
+				<button type="button" class="btn btn-success" id="submit_button" onclick="pwdSearch()" style="margin-top:40px; margin-bottom:40px; height:38px; width:100%;">찾기</button>
 				</div>
 		</div>
 	</form>	
 		<script>
-		function idSearch(){
-			var name = $("#input_name").val();
+		function pwdSearch(){
+			var id = $("#input_id").val();
             var second = $("#input_second").val();
             $.ajax({
                 type: "POST",
-                url: "/login/idSearch",
-                data: { name: name, second: second },
+                url: "/login/pwdSearch",
+                data: { id: id, second: second },
                 dataType: "json",
                 success: function(response) {
                     if (response.status === "success") {
-                        alert('가입 하신 아이디는 ' + response.id + '입니다.');
+                        alert('가입하신 비밀번호는 ' + response.pwd + '입니다.');
                         window.location.href = "/MainPage/LoginPage.jsp";
                     } 
                     else{
@@ -128,15 +128,15 @@
             });
 		}
 		
-		function inputNameCheck(name){
-			var name = document.getElementById(name).value;
-			var re = /^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/;
-			if(re.test(name)){
+		function inputid(id){
+				var id = document.getElementById(id).value;
+				const re = /^(?=.*[a-zA-Z])[a-z0-9]{6,16}$/;
+				if(re.test(id)){
 				Warning.textContent = "";
-			}else{
-				Warning.textContent = "이름 형식이 틀립니다.";
-			}
-		}
+					
+				}else{
+				Warning.textContent = "6자 이상 16자 이하의 영문 혹은 영문과 숫자";}
+				}
 		
 		function inputSecond(id){
 		contents = document.getElementById("second_content").textContent;

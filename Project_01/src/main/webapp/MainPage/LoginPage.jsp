@@ -56,12 +56,13 @@ a:visited {
 }
 
 a:hover {
-  color: black;
+  color: green;
 }
 
 </style>
 </head>
 <body>
+    
 	<jsp:include page="/Common/Header.jsp" />
 	<main class="container">
 		<div class="row">
@@ -77,9 +78,9 @@ a:hover {
 		<div class="row" style="justify-content: center;">
 			<div class="col-md-3" style="display:flex; align-items: center; height:40px; padding:15px;">
 				<div class="col-md-7"><p id="loginWarning" style="margin:0px; font-size:10px; color:red; user-select:none;"></p></div>
-				<div class="col-md-5"  style="display:flex; justify-content: flex-end;">		
+				<div class="col-md-5"  style="display:flex; justify-content: flex-end; user-select:none;">		
 				<a class="mini_Font" onclick="location.href='/LoginPage/ForgotId.jsp';">아이디 찾기</a> <span>|</span>
-				<a class="mini_Font">비밀번호 찾기</a>
+				<a class="mini_Font" onclick="location.href='/LoginPage/ForgotPwd.jsp';">비밀번호 찾기</a>
 				</div>
 			</div>
 		</div>
@@ -106,7 +107,6 @@ a:hover {
 	<script src="/resources/bootstrap/js/bootstrap.bundle.js"></script>
 	<script	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 	<script>	
-		var prevPage = document.referrer;
 		$(document).ready(function()
 		{
 			$('#loginBtn').click(function()
@@ -163,8 +163,6 @@ a:hover {
 				 }
 			 });
 		}
-	
-	
 	</script>
 </body>
 </html>

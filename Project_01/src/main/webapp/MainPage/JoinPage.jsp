@@ -194,7 +194,7 @@ a:hover {
 				</div>
 			</div>
 		</div>
-	<form action="/Join.do" method="post" name="formJoin" >
+	<form name="formJoin" >
 		<div class="row" style="justify-content: center;">
 			<div class="col-md-6">
 				<div class="line_Style">
