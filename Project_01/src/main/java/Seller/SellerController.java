@@ -12,6 +12,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import DTO.AjaxDataTrans;
+import DTO.InqueryDTO;
 import DTO.SellerMainDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -60,6 +61,39 @@ public class SellerController extends HttpServlet
 		{
 			RefundUpdate(req,resp);
 		}
+		else if(command.equals("/InqueryList.func"))
+		{
+			Get_InqueryList(req,resp);
+		}
+	}
+	
+	public void Get_InqueryList(HttpServletRequest req, HttpServletResponse resp)
+	{
+		
+		resp.setContentType("application/json");
+		resp.setCharacterEncoding("UTF-8");	
+		
+		try 
+		{
+			String seller = req.getParameter("seller");
+			int seller_id = Integer.parseInt(seller);
+			
+			//여기에 dao 코드
+			SellerDAO dao = new SellerDAO();
+			List<InqueryDTO> list = dao.Get_InqueryList(seller_id);
+				
+			Gson gson = new Gson();
+			String jsonResponse = gson.toJson(list);
+			resp.getWriter().write(jsonResponse);
+			
+			
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 	
 	public void RefundUpdate(HttpServletRequest req, HttpServletResponse resp)

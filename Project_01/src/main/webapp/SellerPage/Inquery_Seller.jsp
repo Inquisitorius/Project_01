@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="/resources/css/MainPage.css">
 <script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>
 <script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/luxon/2.3.0/luxon.min.js"></script>
 <style>
 .tabulator.tabulator-header
 {
@@ -109,14 +110,10 @@
 				      <label class = "table-label">Field: </label>
 				      <select id="filter-field">
 				        <option></option>
-				        <option value="name">Name</option>
-				        <option value="progress">Progress</option>
-				        <option value="gender">Gender</option>
-				        <option value="rating">Rating</option>
-				        <option value="col">Favourite Colour</option>
-				        <option value="dob">Date Of Birth</option>
-				        <option value="car">Drives</option>
-				        <option value="function">Drives &amp; Rating &lt; 3</option>
+				        <option value="product_id">제품번호</option>
+				        <option value="product_name">상품명</option>
+				        <option value="inquery_title">질의제목</option>
+				        <option value="inquery_date">신청일자</option>				        
 				      </select>
 			</span>
 			<span style = "margin-right: 40px;">
@@ -162,33 +159,90 @@
 	</div>
 <jsp:include page="/Common/Footer.jsp" />
 <script type="text/javascript">
+var table;
 $(document).ready(function()
 {
-	var table = tabulatorInit();		
+	table = tabulatorInit();	
+	
+	document.getElementById("filter-field").addEventListener("change", updateFilter);
+	document.getElementById("filter-type").addEventListener("change", updateFilter);
+	document.getElementById("filter-value").addEventListener("keyup", updateFilter);
+	
+	document.getElementById("filter-clear").addEventListener("click", function(){
+		document.getElementById("filter-field").value = "";
+		document.getElementById("filter-type").value = "=";
+		document.getElementById("filter-value").value = "";
+		
+		Array.from(document.getElementById("filter-type").options).forEach((option, index) => {
+			option.disabled = false;
+	});
+
+		 table.clearFilter();
+	});
 });
+
+function FilterInit()
+{
+	
+}
+
+function updateFilter()
+{
+	var fieldEl = document.getElementById("filter-field");
+	var typeEl = document.getElementById("filter-type");
+	var valueEl = document.getElementById("filter-value");
+	
+	var filterVal = fieldEl.options[fieldEl.selectedIndex].value;
+	var typeVal = typeEl.options[typeEl.selectedIndex].value;
+	var filter = filterVal == "function" ? customFilter : filterVal;
+	
+	Array.from(typeEl.options).forEach((option, index) => {
+			option.disabled = false;
+	});
+	
+	
+	if(filterVal == 'product_name' || filterVal ==  'inquery_title')
+	{
+		Array.from(typeEl.options).forEach((option, index) => {
+			if(index >= 1 && index < 5)
+				option.disabled = true;				
+		});
+	}
+	
+	if(filterVal){
+	    table.setFilter(filter,typeVal, valueEl.value);
+	  }	
+}
 
 function tabulatorInit()
 {
+	var seller_id = 2;
+	
 	var table = new Tabulator("#example-table", {
 	    height:"430px",
 	    layout: "fitColumns",
 	    pagination: "local",          // 로컬 페이징 사용
 	    paginationSize: 10,           // 페이지당 행 수
 	    paginationSizeSelector: [5, 10, 20, 50], // 선택 가능한 페이지당 행 수
-	    ajaxURL: "/SellerController/orderListTableData.func", // 데이터 로드할 URL
+	    ajaxURL: "/SellerController/InqueryList.func", // 데이터 로드할 URL
 	    ajaxParams: { 
-	        seller: 2
+	        seller: seller_id
 	    },
 	    ajaxConfig: {
 	        method: "GET"
 	    },
 	    columns:
 	    [
-		    {title:"주문번호", field:"order_id", sorter:"number"},
-		    {title:"상품명", field:"name"},
-		    {title:"상품수량", field:"product_cnt", hozAlign:"center"},		    
-		    {title:"신청일자", field:"order_date", hozAlign:"center"},
-		    {title:"지연상태", field:"rating", formatter:"traffic", hozAlign:"center", formatterParams:{ min:0,max:10,color:["green", "orange", "red"] }},	
+	    	{title:"질의번호", field:"inquery_id", visible: false},
+	    	{title:"판매자번호", field:"seller_id", visible: false},
+		    {title:"제품번호", field:"product_id", sorter:"number"},
+		    {title:"상품명", field:"product_name"},		   		
+		    {title:"질의제목", field:"inquery_title", hozAlign:"center"},
+		    {title:"신청일자", field:"inquery_date_format", hozAlign:"center", 
+		    	formatter: "datetime", 
+		    	formatterParams: {
+		    	outputFormat: "yyyy-MM-dd HH:mm:ss",
+                invalidPlaceholder: "(invalid date)"}},	
 	    ],
 	    layout:"fitColumns"
 	});

@@ -3,11 +3,13 @@ package Seller;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
 import DTO.AjaxDataTrans;
+import DTO.InqueryDTO;
 import DTO.SellerMainDTO;
 import Main.JDBConnect;
 import jakarta.servlet.ServletContext;
@@ -129,6 +131,45 @@ public class SellerDAO extends JDBConnect
 		
 		return list;
 	}
+	
+	public List<InqueryDTO> Get_InqueryList(int seller_id) {
+		// TODO Auto-generated method stub
+		String sql = "SELECT p.SELLER, p.NAME, a.* from ";
+		sql += " (SELECT ui.NAME AS user_name  ,i.*  ";
+		sql += " FROM INQUERY i JOIN USER_INFO ui ON UI.IDX = i.user_id) a ";
+		sql += " JOIN PRODUCT p ON p.PRODUCT_ID = a.PRODUCT_ID ";
+		sql += " WHERE seller = " + seller_id +" AND a.seller_content IS NULL";
+		
+		List<InqueryDTO> list = new ArrayList<InqueryDTO>();
+		
+		try 
+		{
+			psmt = con.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			
+			while(rs.next())
+			{
+				InqueryDTO dto = new InqueryDTO();
+				
+				dto.setInquery_id(rs.getInt("INQUERY_ID"));
+				dto.setSeller_id(rs.getInt("SELLER"));
+				dto.setProduct_id(rs.getInt("PRODUCT_ID"));
+				dto.setProduct_name(rs.getString("NAME"));
+				dto.setInquery_title(rs.getString("INQUERY_TITLE"));
+				dto.setInquery_date(rs.getDate("INQUERY_DATE"));
+				
+				list.add(dto);
+			}			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return list;
+	}
+	
 
 	public List<SellerMainDTO> Get_SellerOrderList(int seller_id) 
 	{
@@ -232,4 +273,6 @@ public class SellerDAO extends JDBConnect
 		
 		return dto;
 	}
+
+	
 }

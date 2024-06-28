@@ -1,5 +1,6 @@
 package DTO;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class InqueryDTO 
@@ -14,13 +15,32 @@ public class InqueryDTO
 	
 	public String product_name;
 	public String user_name;
+	public int seller_id;
 	
+	public String inquery_date_format;
+	
+	public void Set_inquery_date_format(Date date)
+	{
+		SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+		
+		String formattedDate1 = formatter.format(date);
+		System.out.println(formattedDate1);
+		
+		this.inquery_date_format = formattedDate1;
+	}
+	
+	
+	public String getInquery_date_format() {
+		return inquery_date_format;
+	}
+
 	public InqueryDTO() {
 			
 		}	 
 	
+
 	public InqueryDTO(int inquery_id, int product_id, int user_id, String inquery_title, String inquery_content,
-			String seller_content, Date inquery_date, String product_name, String user_name) {
+			String seller_content, Date inquery_date, String product_name, String user_name, int seller_id) {
 		super();
 		this.inquery_id = inquery_id;
 		this.product_id = product_id;
@@ -30,9 +50,16 @@ public class InqueryDTO
 		this.seller_content = seller_content;
 		this.inquery_date = inquery_date;
 		this.product_name = product_name;
-		this.user_name = user_name;		
+		this.user_name = user_name;
+		this.seller_id = seller_id;
 	}
 
+	public int getSeller_id() {
+		return seller_id;
+	}
+	public void setSeller_id(int seller_id) {
+		this.seller_id = seller_id;
+	}
 	public String getProduct_name() {
 		return product_name;
 	}
@@ -87,6 +114,7 @@ public class InqueryDTO
 	}
 	public void setInquery_date(Date inquery_date) {
 		this.inquery_date = inquery_date;
+		Set_inquery_date_format(inquery_date);
 	}
 	
 	
