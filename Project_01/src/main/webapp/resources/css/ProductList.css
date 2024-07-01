@@ -48,6 +48,18 @@
     font-weight: bold;
 }
 
+.sort-link {
+	letter-spacing: -1px;
+	cursor: pointer;
+	text-decoration: none;
+	color: rgb(51, 51, 51);
+	font-family: "Noto Sans KR", "malgun gothic", AppleGothic, dotum, sans-serif;
+}
+
+.sort-link:hover {
+   color: rgb(51, 51, 51);
+}
+
 
 
 
@@ -350,3 +362,4 @@ input[type="checkbox"]:checked+label:after, input[type="radio"]:checked+label:af
     align-items: center;
     margin-top: 36px;
 }
+

@@ -15,6 +15,7 @@
     String[] filters = request.getParameterValues("filters");
     String price = request.getParameter("price");
     String[] delivery = request.getParameterValues("delivery");
+    String type = request.getParameter("type");
 
     // 현재 페이지가 0 이하이면 1페이지로 설정
     if (currentPage <= 0) {
@@ -34,12 +35,12 @@
 	 // 필터와 딜리버리 값을 문자열로 합치는 로직
     String filtersStr = "";
     if (filters != null && filters.length > 0) {
-        filtersStr = String.join("%", filters); // 배열을 "%"로 구분하여 문자열로 합침
+        filtersStr = String.join(",", filters); // 배열을 "%"로 구분하여 문자열로 합침
     }
 
     String deliveryStr = "";
     if (delivery != null && delivery.length > 0) {
-        deliveryStr = String.join("%", delivery); // 배열을 "%"로 구분하여 문자열로 합침
+        deliveryStr = String.join(",", delivery); // 배열을 "%"로 구분하여 문자열로 합침
     }
 	
 
@@ -60,10 +61,11 @@
 
 <!-- Head, Footer CSS 링크 필수 -->
 <link rel="stylesheet" href="/resources/css/Common.css">
-<link rel="stylesheet" href="/resources/css/ProductList.css">
+<link rel="stylesheet" href="/resources/css/ProductList.css?after">
 
 <!-- jQuery 사용을 위한 JS 로드 -->
 <script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>
+<script src="/resources/bootstrap/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 	<jsp:include page="/Common/Header.jsp" />
@@ -72,7 +74,7 @@
 			<h3 class="text-center listheader">상품 목록</h3>
 			
 			<ul class="justify-content-center itemnav">
-			<li class="item" id="item"><a class="link" href="<%=request.getContextPath()%>/ProductsList/ProductList.do?page=1&category=all&filters=&price=&delivery=" data-category="all">전체 상품</a></li>
+			<li class="item" id="item"><a class="link" href="<%=request.getContextPath()%>/ProductsList/ProductList.do?page=1&category=all&filters=&price=&delivery=&type=" data-category="all">전체 상품</a></li>
 			<% 
 				Map<String, String> cateMap = CategoryMap.getCateMap();
 				
@@ -82,7 +84,7 @@
 					String CateName = dto.getCategory_Name();
 					String englishCateName = cateMap.getOrDefault(CateName, CateName);
 			%>
-				<li class="item"><a class="link" href="<%=request.getContextPath()%>/ProductsList/ProductList.do?page=1&category=<%= englishCateName %>&filters=&price=&delivery=" data-category="<%= englishCateName %>"><%= dto.getCategory_Name() %></a></li>
+				<li class="item"><a class="link" href="<%=request.getContextPath()%>/ProductsList/ProductList.do?page=1&category=<%= englishCateName %>&filters=&price=&delivery=&type" data-category="<%= englishCateName %>"><%= dto.getCategory_Name() %></a></li>
 				<%}
 					} %>
 			</ul>
@@ -128,17 +130,17 @@
 								</div>
 								<div class="filter-content" id="price-filter">
 									<div>
-										<input type="radio" id="price1" name="price" value="8499">
+										<input type="radio" id="price1" name="price" value="8500">
 										<label for="price1">8,500원 미만</label>
 									</div>
 									<div>
 										<input type="radio" id="price2" name="price"
-											value="15999"> <label for="price2">8,500원
+											value="8500-16900"> <label for="price2">8,500원
 											~ 16,900원</label>
 									</div>
 									<div>
 										<input type="radio" id="price3" name="price"
-											value="34999"> <label for="price3">16,900원
+											value="16900-35000"> <label for="price3">16,900원
 											~ 35,000원</label>
 									</div>
 									<div>
@@ -174,9 +176,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="filter-group">
-								<button type="submit" class="btn btn-primary">적용</button>
-							</div>
+							
 						</form>
 						
 
@@ -185,15 +185,13 @@
 				<div class="products">
 					<div class="productsortcontainer">
 						<div class="productscnt" id="productcnt">
-							총
-							<%=request.getAttribute("cnt")%>건
+							총 <%=request.getAttribute("cnt")%>건
 						</div>
 						<ul class="productsort">
-							<li class="sort-li"><a href="#" class="sort-a">신상품순</a></li>
-							<li class="sort-li"><a href="#" class="sort-a">판매량순</a></li>
-							<li class="sort-li"><a href="#" class="sort-a">혜택순</a></li>
-							<li class="sort-li"><a href="#" class="sort-a">낮은 가격순</a></li>
-							<li class="sort-li"><a href="#" class="sort-a">높은 가격순</a></li>
+							<li class="sort-li"><a class="sort-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= 1 %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=new" data-type="new" class="sort-a">신상품순</a></li>
+							<li class="sort-li"><a class="sort-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= 1 %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=saleprice" data-type="saleprice" class="sort-a">혜택순</a></li>
+							<li class="sort-li"><a class="sort-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= 1 %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=lowprice" data-type="lowprice" class="sort-a">낮은 가격순</a></li>
+							<li class="sort-li"><a class="sort-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= 1 %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=highprice" data-type="highprice" class="sort-a">높은 가격순</a></li>
 						</ul>
 					</div>
 					<div class="container list" id="productList" style="text-decoration-line: none;">
@@ -232,7 +230,6 @@
 						}
 						}
 						%>
-
 					</div>
 
 
@@ -244,12 +241,12 @@
         <ul class="pagination justify-content-center">
         	<li class="page-item">
         		
-                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= 1 %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>" aria-label="Previous">
+                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= 1 %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= Math.max(1, currentPage - 1) %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>" aria-label="Previous">
+                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= Math.max(1, currentPage - 1) %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>" aria-label="Previous">
                     <span aria-hidden="true"><</span>
                 </a>
             </li>
@@ -263,16 +260,16 @@
                 String activeClass = (currentPage == i) ? "active" : "";
             %>
             <li class="page-item <%= activeClass %>">
-                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= i %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>"><%= i %></a>
+                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= i %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"><%= i %></a>
             </li>
             <% } %>
             <li class="page-item">
-                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= Math.min(totalPages, currentPage + 1) %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>" aria-label="Next">
+                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= Math.min(totalPages, currentPage + 1) %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>" aria-label="Next">
                     <span aria-hidden="true">></span>
                 </a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= totalPages %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>" aria-label="Next">
+                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= totalPages %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
@@ -283,6 +280,7 @@
 
 	</div>
 	<jsp:include page="/Common/Footer.jsp" />
+	
 	<div id="myModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
@@ -296,11 +294,15 @@
         let filters = '<%= filtersStr %>';
         let price = '<%= price %>';
         let delivery = '<%= deliveryStr %>';
+        let type = '<%= type %>';
         let selectedFilters = getParameterByName('filters') ? getParameterByName('filters').split(',') : [];
         let selectedPrice = getParameterByName('price');
         let selectedDelivery = getParameterByName('delivery') ? getParameterByName('delivery').split(',') : [];
         
+        
         updateFilterState(selectedFilters, selectedPrice, selectedDelivery);
+        
+        
         
         
         function getParameterByName(name, url = window.location.href) {
@@ -332,24 +334,41 @@
 
             // 라디오 버튼 클릭 이벤트 핸들러
             let beforeChecked = null;
-            $("input[type='radio'][name='price']").off('click').on("click", function() {
-                let isChecked = $(this).prop("checked");
-                if (isChecked && this !== beforeChecked) {
-                    beforeChecked = this;
-                } else if (isChecked && this === beforeChecked) {
+            $("input[type='radio'][name='price']").on("click", function() {
+                if (this === beforeChecked) {
                     $(this).prop("checked", false);
-                    beforeChecked = null;
+                    
+                    updateUrlParameter('price', '');
+                    document.location.reload();
+                } else {
+                    beforeChecked = this;
+                    updateUrlParameter('price', $(this).val());
                 }
             });
-			
-            
         }
+       	
+     // URL에 특정 파라미터 추가 또는 업데이트 함수
+        function updateUrlParameter(parameter, value) {
+            var url = new URL(window.location.href);
+            // 값이 존재하는 경우 파라미터를 추가하거나 업데이트
+            if (value) {
+                url.searchParams.set(parameter, value);
+            } else {
+                // 값이 없는 경우 파라미터를 삭제
+                url.searchParams.delete(parameter);  
+            }
+            // URL 업데이트
+            history.pushState(null, '', url);
+           
+        }
+
+ 
        
 
         // 네비게이션 링크 스타일링 함수
         function updateNavigationStyle(currentCategory) {
             console.log("스타일 적용");
-            $('.itemnav .link').each(function() {
+            $('.link').each(function() {
                 let clickedCategory = $(this).data('category') || "all"; // 클릭된 카테고리 가져오기
 
                 if (clickedCategory == currentCategory) {
@@ -365,26 +384,55 @@
                 }
             });
         }
+        
+        function updateProductSortNavigationStyle(currentType){
+        	 console.log("현재 타입:", currentType);
+     	   $('.sort-link').each(function () {
+				let clickedType = $(this).data('type');
+				
+				if(clickedType == currentType) {
+					$(this).css({
+						
+						'color': 'rgb(51, 51, 51)',
+                        'font-weight': 'bold'
+                        	
+					});
+				}else {
+					$(this).css({
+						'color' : '',
+					    'font-weight' : ''
+						});
+				}
+				console.log("현재 타입:", clickedType);
+			});
+      }
+        
+
+         
+        
 
         // 초기 URL 설정 및 스타일 적용
-        updateNavigationStyle(category);
-        let initialUrl = window.location.origin + '/ProductsList/ProductList.do?page=' + currentPage + '&category=' + category + '&filters=' + filters + '&price=' + price + '&delivery=' + delivery;
+       
+        let initialUrl = window.location.origin + '/ProductsList/ProductList.do?page=' + currentPage + '&category=' + category + '&filters=' + filters + '&price=' + price + '&delivery=' + delivery + '&type=' + type;
         history.replaceState({ page: currentPage, category: category, filters: filters, price: price, delivery: delivery }, null, initialUrl);
         updateNavigationStyle(category);
+        updateProductSortNavigationStyle(type);
         
      // 다음 버튼 클릭 이벤트 핸들러
         $('.itemnav .link .pagination').off('click').on('click', function(event) {
             event.preventDefault();
             let clickedCategory = $(this).data('category');
-
-           
+			let clickedType = $(this).data('type');
+           	
+           	
+         
 
             // handleFilterFormSubmit 함수 호출
-            handleFilterFormSubmit(clickedCategory, selectedFilters, selectedPrice, selectedDelivery);
+            handleFilterFormSubmit(clickedCategory, selectedFilters, selectedPrice, selectedDelivery, clickedType);
         });
 
-     // 필터 폼 제출 이벤트 핸들러
-        $('#filterForm').submit(function(event) {
+        // 필터 폼 제출 이벤트 핸들러
+        $('#filterForm').change(function(event) {
             event.preventDefault();
 			page = 1;
 			
@@ -393,20 +441,26 @@
             $('input[name="filters"]:checked').each(function() {
                 selectedFilters.push($(this).val());
             });
-
+			
             let selectedPrice = $('input[name="price"]:checked').val();
             let selectedDelivery = $('input[name="delivery"]:checked').map(function() {
                 return $(this).val();
             }).get();
             
+            
             // handleFilterFormSubmit 함수 호출
-            handleFilterFormSubmit(category, selectedFilters, selectedPrice, selectedDelivery);
-           
+            handleFilterFormSubmit(category, selectedFilters, selectedPrice, selectedDelivery, type);
             // 필터링된 결과를 반영한 콘텐츠에 이벤트 핸들러 재설정
             initializeEventHandlers();
+            
         });
-
-        function handleFilterFormSubmit(clickedCategory, selectedFilters, selectedPrice, selectedDelivery) {
+        
+     	function updatePagination(){
+     		$('.pagination').load(window.location.href + ' .pagination')
+     	}
+        
+		
+        function handleFilterFormSubmit(clickedCategory, selectedFilters, selectedPrice, selectedDelivery, clickedType) {
             // 가격이 undefined인 경우 빈 문자열로 처리
             let priceParam = selectedPrice !== undefined ? '&price=' + selectedPrice : '';
 			
@@ -418,17 +472,37 @@
                     category: clickedCategory,
                     filters: selectedFilters.join(','),
                     price: selectedPrice,
-                    delivery: selectedDelivery.join(',')
+                    delivery: selectedDelivery.join(','),
+                    type: clickedType
                 },
                 success: function(data) {
+                	
                     console.log("AJAX 요청 성공");
+                    
                     let productListHtml = $(data).find('#productList').html();
                     let productcntHtml = $(data).find('#productcnt').html();
                     let itemhtml = $(data).find('#item').html();
                     let categoryFiltersHtml = $(data).find('#categoryFilters').html();
                     let delivery_type = $(data).find('delivery_Type').html();
+                    console.log(productcntHtml);
                     
-			
+                    if (!productListHtml || productListHtml.trim() === '') {
+                        console.log('productListHtml 값이 null 또는 빈 문자열입니다.');
+                        swal({
+                            title: "상품이 없습니다.",
+                            icon: "error",
+                            button: "확인",
+                        }).then((value) => {
+                            let newUrl = '/ProductsList/ProductList.do?page=' + currentPage
+                                       + '&category=' + category
+                                       + '&filters=' + filters
+                                       + '&price=' 
+                                       + '&delivery=' + delivery
+                                       + '&type=' + type;
+                            location.replace(newUrl);
+                        });
+                    }else{
+                    
                     // 제품 목록과 개수 업데이트
                     $('#productList').html(productListHtml);
                     $('#productcnt').html(productcntHtml);
@@ -438,32 +512,32 @@
                     updateFilterState(selectedFilters, selectedPrice, selectedDelivery);
 
                     // 브라우저 URL 업데이트하여 현재 상태 반영
-                    let newUrl = window.location.origin + '/ProductsList/ProductList.do?page=1'
+                    let newUrl = window.location.origin + '/ProductsList/ProductList.do?page='+page
                                  + '&category=' + clickedCategory
                                  + '&filters=' + encodeURIComponent(selectedFilters.join(','))
                                  + priceParam
-                                 + '&delivery=' + encodeURIComponent(selectedDelivery.join(','));
-                    history.pushState({ page: 1, category: clickedCategory, filters: selectedFilters, price: selectedPrice, delivery: selectedDelivery }, null, newUrl);
-					
-                    // 필터링된 결과를 반영한 콘텐츠에 이벤트 핸들러 재설정
-                    initializeEventHandlers();
-                    updateNavigationStyle(clickedCategory);
-                    retainFilterState(selectedFilters, selectedPrice, selectedDelivery);
-                    document.location.reload();
+                                 + '&delivery=' + encodeURIComponent(selectedDelivery.join(','))
+                    			 + '&type=' + clickedType;
+                    history.pushState({ page: 1, category: clickedCategory, filters: selectedFilters, price: selectedPrice, delivery: selectedDelivery, type: clickedType }, null, newUrl);
+					console.log(clickedType);
+                  
                     
-                    // 아무 선택도 되지 않았을때 모달
-                    if(!selectedFilters && !selectedPrice && !selectedDelivery){
-        				event.preventDefault(); 
-        				openModal('가격을 선택해주세요.');
-        		        return;
-        			}
+                    // 필터링된 결과를 반영한 콘텐츠에 이벤트 핸들러 재설정
+                    
+                    updateNavigationStyle(clickedCategory);
+                    updateProductSortNavigationStyle(clickedType);
+                    retainFilterState(selectedFilters, selectedPrice, selectedDelivery);
+                    updatePagination();
+                    
+                   
+                }
                 },
                 error: function(xhr, status, error) {
                     console.error("AJAX 요청 실패", status, error);
                 }
             });
         }
-     
+       
         // 필터 상태 유지 함수
         function retainFilterState(selectedFilters, selectedPrice, selectedDelivery) {
             // 필터 체크박스 상태 유지
@@ -493,7 +567,7 @@
                 }
             });
         }
-        
+       
         function updateFilterState(selectedFilters, selectedPrice, selectedDelivery) {
             // 모든 필터 체크박스 초기화
             $('input[name="filters"]').prop('checked', false);
@@ -517,59 +591,15 @@
         }
 
        
-        // 초기 이벤트 핸들러 설정 호출
+     // 초기 이벤트 핸들러 설정 호출
         initializeEventHandlers();
     });
-    
-    function openModal() {
-        // 모달 요소 가져오기
-        let modal = document.getElementById('myModal');
 
-        // 모달 보이기
-        modal.style.display = 'block';
-
-        // 모달 닫기 버튼에 이벤트 리스너 추가
-        let closeBtn = modal.querySelector('.close');
-        if (closeBtn) {
-            closeBtn.addEventListener('click', closeModal);
-        }
-
-        // 모달 외부 클릭 시 닫기
-        window.addEventListener('click', function(event) {
-            if (event.target == modal) {
-                closeModal();
-            }
-        });
-
-        // ESC 키로 모달 닫기
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                closeModal();
-            }
-        });
-    }
-
-    // 모달 닫기 함수
-    function closeModal() {
-        let modal = document.getElementById('myModal');
-        modal.style.display = 'none';
-
-        // 이벤트 리스너 제거
-        let closeBtn = modal.querySelector('.close');
-        if (closeBtn) {
-            closeBtn.removeEventListener('click', closeModal);
-        }
-
-        // ESC 키 이벤트 리스너 제거
-        document.removeEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                closeModal();
-            }
-        });
-    }
     
 
 </script>
+   
+
 
 </body>
 </html>

@@ -1,6 +1,6 @@
 package ProductsListController;
 
-import java.sql.DriverManager;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,9 +15,54 @@ public class ListDAO extends TestDBPool {
 		super();
 	}
 
-	public int ListCount() {
+	public int ListCount(String delivery, String[] Arraydeliverys, String price, String[] Arrayprice) {
 		int totalcnt = 0;
+		
+		Map<String, String> deliveryMap = CategoryMap.getKoreandeliveryMap();
+		StringBuilder splitDelivery = new StringBuilder();
+		for (String deliverystr : Arraydeliverys) {
+			splitDelivery.append("'").append(deliveryMap.getOrDefault(deliverystr, deliverystr)).append("',");
+		}
+
+		if (splitDelivery.length() > 0) {
+			splitDelivery.setLength(splitDelivery.length() - 1);
+		}
+		StringBuilder splitPrice = new StringBuilder();
+		for(String pricestr : Arrayprice) {
+			splitPrice.append("'").append(pricestr).append("',");
+		}
+		if(splitPrice.length() > 0) {
+			splitPrice.setLength(splitPrice.length() - 1);
+		}
+		
+		String[] prices = splitPrice.toString().split(",");
+		boolean hasCondition = false;
 		String sql = "SELECT COUNT(*) FROM PRODUCT";
+		if(delivery != null && !delivery.isEmpty()) {
+			sql += " WHERE DELIVERY_TYPE IN ("+splitDelivery.toString()+")";
+			hasCondition = true;
+		}if (price != null && !price.isEmpty()) {
+			if (prices.length == 1) {
+		        if (hasCondition) {
+		            sql += " AND";
+		        } else {
+		            sql += " WHERE";
+		            hasCondition = true;
+		        }
+		        if ("35000".equals(price)) {
+		            sql += " PRICE_DISCOUNT >= " + prices[0];
+		        } else {
+		            sql += " PRICE_DISCOUNT < " + prices[0];
+		        }
+		    } else if (prices.length == 2) {
+		        if (hasCondition) {
+		            sql += " AND";
+		        } else {
+		            sql += " WHERE";
+		        }
+		        sql += " PRICE_DISCOUNT >= " + prices[0] + " AND PRICE_DISCOUNT < " + prices[1];
+		    }
+		}
 
 		try {
 			psmt = con.prepareStatement(sql);
@@ -30,14 +75,22 @@ public class ListDAO extends TestDBPool {
 			e.printStackTrace();
 			System.out.println("카운트 예외발생");
 		}
-
 		return totalcnt;
 	}
 
-	public int ChildCount(String[] Arrayfilters) {
+	public int ChildCount(String category, String[] Arrayfilters, String filters, String delivery, String[] Arraydeliverys, String price, String[] Arrayprice) {
 		int totalcnt = 0;
 		Map<String, String> map = ChildCategoryMap.getKoreanChildMap();
 		StringBuilder splitfilter = new StringBuilder();
+		Map<String, String> deliveryMap = CategoryMap.getKoreandeliveryMap();
+		StringBuilder splitDelivery = new StringBuilder();
+		for (String deliverystr : Arraydeliverys) {
+			splitDelivery.append("'").append(deliveryMap.getOrDefault(deliverystr, deliverystr)).append("',");
+		}
+
+		if (splitDelivery.length() > 0) {
+			splitDelivery.setLength(splitDelivery.length() - 1);
+		}
 		
 		for (String filter : Arrayfilters) {
 			splitfilter.append("'").append(map.getOrDefault(filter, filter)).append("',");
@@ -46,10 +99,52 @@ public class ListDAO extends TestDBPool {
 		if (splitfilter.length() > 0) {
 			splitfilter.setLength(splitfilter.length() - 1);
 		}
+		StringBuilder splitPrice = new StringBuilder();
+		for(String pricestr : Arrayprice) {
+			splitPrice.append("'").append(pricestr).append("',");
+		}
+		if(splitPrice.length() > 0) {
+			splitPrice.setLength(splitPrice.length() - 1);
+		}
+		String[] prices = splitPrice.toString().split(",");
+		Map<String, String> cate = ChildCategoryMap.getselectCate();
+		String NumCate = cate.getOrDefault(category, category);
+		String sql = "SELECT COUNT(*) " + "FROM PRODUCT P " + "JOIN CATEGORY C ON P.CATEGORY_ID = C.IDX ";
+		boolean hasCondition = false;
+				
+				if (filters != null && !filters.isEmpty()) {
+				    sql += " WHERE C.CATEGORY_NAME IN (" + splitfilter.toString() + ") ";
+				    hasCondition = true; // 첫 번째 조건이 추가되었음을 표시
+				}
 
-		
-		String sql = "SELECT COUNT(*) " + "FROM PRODUCT P " + "JOIN CATEGORY C ON P.CATEGORY_ID = C.IDX "
-				+ "WHERE C.CATEGORY_NAME IN("+ splitfilter.toString()+")";
+				if (delivery != null && !delivery.isEmpty()) {
+				    if (hasCondition) {
+				        sql += " AND";
+				    } else {
+				        sql += " WHERE C.CATEGORY_PARENT = " + NumCate + " AND ";
+				        hasCondition = true; // 첫 번째 조건이 추가되었음을 표시
+				    }
+				    sql += " P.DELIVERY_TYPE IN (" + splitDelivery.toString() + ")";
+				}
+
+				if (price != null && !price.isEmpty()) {
+				    if (hasCondition) {
+				        sql += " AND";
+				    } else {
+				        sql += " WHERE C.CATEGORY_PARENT = " + NumCate + " AND ";
+				    }
+
+				    if (prices.length == 1) {
+				        if ("35000".equals(price)) {
+				            sql += " PRICE_DISCOUNT >= " + prices[0];
+				        } else {
+				            sql += " PRICE_DISCOUNT < " + prices[0];
+				        }
+				    } else if (prices.length == 2) {
+				        sql += " PRICE_DISCOUNT >= " + prices[0] + " AND PRICE_DISCOUNT < " + prices[1];
+				    }
+				}
+
 		try {
 			psmt = con.prepareStatement(sql);
 			rs = psmt.executeQuery();
@@ -66,14 +161,9 @@ public class ListDAO extends TestDBPool {
 
 	public int CategoryCount(String category) {
 		int totalcnt = 0;
-		Map<String, String> map = ChildCategoryMap.getKoreanChildMap();
-		map.put("alcohol", "1");
-		map.put("furniture", "11");
-		map.put("food", "21");
-		map.put("electronics", "25");
-		map.put("bakery", "41");
-		map.put("living", "46");
+		Map<String, String> map = ChildCategoryMap.getselectCate();
 		String NumMap = map.getOrDefault(category, category);
+		
 		String sql = "SELECT COUNT(*) " + "FROM PRODUCT P " + "JOIN CATEGORY C ON P.CATEGORY_ID = C.IDX "
 				+ "WHERE C.CATEGORY_PARENT = ?";
 		try {
@@ -91,10 +181,70 @@ public class ListDAO extends TestDBPool {
 		return totalcnt;
 	}
 
-	public List<ProductDTO> selectListPage(int start, int end) {
+	public List<ProductDTO> selectListPage(int start, int end, String category, String delivery, String[] Arraydeliverys, String price, String[] Arrayprice, String type) {
 		List<ProductDTO> list = new Vector<>();
-		String sql = "SELECT * FROM ( SELECT Tb.*, ROWNUM rNum FROM (SELECT NAME, SUB_TEXT, PRICE_ORI, PRICE_PERCENT, PRICE_DISCOUNT, DELIVERY_TYPE, PRODUCT_IMG FROM PRODUCT ORDER BY PRODUCT_ID DESC) Tb WHERE ROWNUM <= ?) WHERE rNum >= ?";
+		
+		Map<String, String> deliveryMap = CategoryMap.getKoreandeliveryMap();
+		StringBuilder splitDelivery = new StringBuilder();
+		for (String deliverystr : Arraydeliverys) {
+			splitDelivery.append("'").append(deliveryMap.getOrDefault(deliverystr, deliverystr)).append("',");
+		}
 
+		if (splitDelivery.length() > 0) {
+			splitDelivery.setLength(splitDelivery.length() - 1);
+		}
+		StringBuilder splitPrice = new StringBuilder();
+		for(String pricestr : Arrayprice) {
+			splitPrice.append("'").append(pricestr).append("',");
+		}
+		if(splitPrice.length() > 0) {
+			splitPrice.setLength(splitPrice.length() - 1);
+		}
+		
+		String[] prices = splitPrice.toString().split(",");
+		System.out.println(prices[0]);
+		String sql = "SELECT * FROM ( SELECT Tb.*, ROWNUM rNum FROM (SELECT NAME, SUB_TEXT, PRICE_ORI, PRICE_PERCENT, PRICE_DISCOUNT, DELIVERY_TYPE, PRODUCT_IMG FROM PRODUCT ";
+		boolean hasCondition = false;
+		
+		if (delivery != null && !delivery.isEmpty()) {
+		    sql += " WHERE DELIVERY_TYPE IN (" + splitDelivery.toString() + ")";
+		    hasCondition = true;
+		}
+		
+		if (price != null && !price.isEmpty()) {
+			if (prices.length == 1) {
+		        if (hasCondition) {
+		            sql += " AND";
+		        } else {
+		            sql += " WHERE";
+		            hasCondition = true;
+		        }
+		        if ("35000".equals(price)) {
+		            sql += " PRICE_DISCOUNT >= " + prices[0];
+		        } else {
+		            sql += " PRICE_DISCOUNT < " + prices[0];
+		        }
+		    } else if (prices.length == 2) {
+		        if (hasCondition) {
+		            sql += " AND";
+		        } else {
+		            sql += " WHERE";
+		        }
+		        sql += " PRICE_DISCOUNT >= " + prices[0] + " AND PRICE_DISCOUNT < " + prices[1];
+		    }
+		}
+		if(type == null || type.equals("new")) {
+		sql += " ORDER BY PRODUCT_ID DESC) Tb WHERE ROWNUM <= ?) WHERE rNum >= ?";
+		}else if(type.equals("lowprice")) {
+			sql += " ORDER BY PRICE_DISCOUNT ASC) Tb WHERE ROWNUM <= ?) WHERE rNum >= ?";
+		}else if(type.equals("highprice")) {
+			sql += " ORDER BY PRICE_DISCOUNT DESC) Tb WHERE ROWNUM <= ?) WHERE rNum >= ?";
+		}else {
+			sql += " ORDER BY PRICE_PERCENT DESC) Tb WHERE ROWNUM <= ?) WHERE rNum >= ?";
+		}
+		
+
+		System.out.println("Generated SQL: " + sql); 
 		try {
 			psmt = con.prepareStatement(sql);
 			psmt.setInt(1, end);
@@ -117,9 +267,7 @@ public class ListDAO extends TestDBPool {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("게시물 조회 중 예외발생");
-		} finally {
-			close();
-		}
+		} 
 		return list;
 	}
 
@@ -161,12 +309,7 @@ public class ListDAO extends TestDBPool {
 				+ "WHERE category_parent = (SELECT IDX FROM CATEGORY WHERE category_name =?)"
 				+ "  AND category_layer = 1";
 		try {
-			Class.forName("oracle.jdbc.OracleDriver");
-
-			String url = "jdbc:oracle:thin:@14.42.124.35:1521:xe";
-			String id = "C##PROJECT_01DB";
-			String pwd = "1234";
-			con = DriverManager.getConnection(url, id, pwd);
+			
 			psmt = con.prepareStatement(sql);
 			psmt.setString(1, koreanMap);
 			rs = psmt.executeQuery();
@@ -183,35 +326,96 @@ public class ListDAO extends TestDBPool {
 		return Childcate;
 	}
 
-	public List<ProductDTO> ViewChildList(int start, int end, String[] Arrayfilters, String[] Arraydeliverys) {
+	public List<ProductDTO> ViewChildList(int start, int end, String[] Arrayfilters, String[] Arraydeliverys, String filters, String delivery, String category, String price, String[] Arrayprice, String type) {
 		List<ProductDTO> list = new Vector<ProductDTO>();
 		Map<String, String> map = ChildCategoryMap.getKoreanChildMap();
 		Map<String, String> deliveryMap = CategoryMap.getKoreandeliveryMap();
+		Map<String, String> cateMap = ChildCategoryMap.getselectCate();
+		String NumCate = cateMap.getOrDefault(category, category);
+		System.out.println(NumCate);
 		StringBuilder splitfilter = new StringBuilder();
 		StringBuilder splitDelivery = new StringBuilder();
+		
 		for (String filter : Arrayfilters) {
 			splitfilter.append("'").append(map.getOrDefault(filter, filter)).append("',");
 		}
 
-		for (String delivery : Arraydeliverys) {
-			splitDelivery.append("'").append(deliveryMap.getOrDefault(delivery, delivery)).append("',");
+		splitDelivery = new StringBuilder();
+		for (String deliverystr : Arraydeliverys) {
+			splitDelivery.append("'").append(deliveryMap.getOrDefault(deliverystr, deliverystr)).append("',");
+		}
+
+		if (splitDelivery.length() > 0) {
+			splitDelivery.setLength(splitDelivery.length() - 1);
 		}
 
 		if (splitfilter.length() > 0) {
 			splitfilter.setLength(splitfilter.length() - 1);
 		}
 
-		if (splitDelivery.length() > 0) {
-			splitDelivery.setLength(splitDelivery.length() - 1);
+		StringBuilder splitPrice = new StringBuilder();
+		for(String pricestr : Arrayprice) {
+			splitPrice.append("'").append(pricestr).append("',");
+		}
+		if(splitPrice.length() > 0) {
+			splitPrice.setLength(splitPrice.length() - 1);
 		}
 		
-		String sql = "SELECT * FROM ( " + "    SELECT Tb.*, ROWNUM rNum " + "    FROM ( "
-				+ "        SELECT P.NAME, P.SUB_TEXT, P.PRICE_ORI, P.PRICE_PERCENT, P.PRICE_DISCOUNT, P.DELIVERY_TYPE, P.PRODUCT_IMG "
-				+ "        FROM PRODUCT P " + "        JOIN CATEGORY C ON P.CATEGORY_ID = C.IDX "
-				+ "        WHERE C.CATEGORY_NAME IN (" + splitfilter.toString() + ") "
-				+ "        ORDER BY P.PRODUCT_ID DESC " + "    ) Tb " + "    WHERE ROWNUM <= ? " + ") "
-				+ "WHERE rNum >= ?";
+		String[] prices = splitPrice.toString().split(",");
+		System.out.println(splitDelivery.toString());
+		String sql = "SELECT * FROM ( " +
+	             "    SELECT Tb.*, ROWNUM rNum " +
+	             "    FROM ( " +
+	             "        SELECT P.NAME, P.SUB_TEXT, P.PRICE_ORI, P.PRICE_PERCENT, P.PRICE_DISCOUNT, P.DELIVERY_TYPE, P.PRODUCT_IMG " +
+	             "        FROM PRODUCT P " +
+	             "        JOIN CATEGORY C ON P.CATEGORY_ID = C.IDX ";
+		boolean hasCondition = false;
 
+		if (filters != null && !filters.isEmpty()) {
+		    sql += " WHERE C.CATEGORY_NAME IN (" + splitfilter.toString() + ") ";
+		    hasCondition = true; // 첫 번째 조건이 추가되었음을 표시
+		}
+
+		if (delivery != null && !delivery.isEmpty()) {
+		    if (hasCondition) {
+		        sql += " AND";
+		    } else {
+		        sql += " WHERE C.CATEGORY_PARENT = " + NumCate + " AND ";
+		        hasCondition = true; // 첫 번째 조건이 추가되었음을 표시
+		    }
+		    sql += " P.DELIVERY_TYPE IN (" + splitDelivery.toString() + ")";
+		}
+
+		if (price != null && !price.isEmpty()) {
+		    if (hasCondition) {
+		        sql += " AND";
+		    } else {
+		        sql += " WHERE C.CATEGORY_PARENT = " + NumCate + " AND ";
+		    }
+
+		    if (prices.length == 1) {
+		        if ("35000".equals(price)) {
+		            sql += " PRICE_DISCOUNT >= " + prices[0];
+		        } else {
+		            sql += " PRICE_DISCOUNT < " + prices[0];
+		        }
+		    } else if (prices.length == 2) {
+		        sql += " PRICE_DISCOUNT >= " + prices[0] + " AND PRICE_DISCOUNT < " + prices[1];
+		    }
+		}
+				
+		
+		
+		if(type == null || type.equals("new")) {
+			sql += " ORDER BY PRODUCT_ID DESC) Tb WHERE ROWNUM <= ?) WHERE rNum >= ?";
+			}else if(type.equals("lowprice")) {
+				sql += " ORDER BY PRICE_DISCOUNT ASC) Tb WHERE ROWNUM <= ?) WHERE rNum >= ?";
+			}else if(type.equals("highprice")) {
+				sql += " ORDER BY PRICE_DISCOUNT DESC) Tb WHERE ROWNUM <= ?) WHERE rNum >= ?";
+			}else {
+				sql += " ORDER BY PRICE_PERCENT DESC) Tb WHERE ROWNUM <= ?) WHERE rNum >= ?";
+			}
+	System.out.println(sql);
 		try {
 			psmt = con.prepareStatement(sql);
 			psmt.setInt(1, end);
@@ -235,20 +439,29 @@ public class ListDAO extends TestDBPool {
 			// TODO: handle exception
 			e.printStackTrace();
 			System.out.println("카테고리 예외");
+			
 		}
 
 		return list;
 	}
 
-	public List<ProductDTO> ViewCategoryProducts(int start, int end, String category) {
+	public List<ProductDTO> ViewCategoryProducts(int start, int end, String category, String type) {
 		List<ProductDTO> list = new Vector<ProductDTO>();
 		Map<String, String> map = ChildCategoryMap.getselectCate();
 		String NumMap = map.getOrDefault(category, category);
 		String sql = "SELECT * FROM ( " + "    SELECT Tb.*, ROWNUM rNum " + "    FROM ( "
 				+ "        SELECT P.NAME, P.SUB_TEXT, P.PRICE_ORI, P.PRICE_PERCENT, P.PRICE_DISCOUNT, P.DELIVERY_TYPE, P.PRODUCT_IMG "
 				+ "        FROM PRODUCT P " + "        JOIN CATEGORY C ON P.CATEGORY_ID = C.IDX "
-				+ "        WHERE C.CATEGORY_PARENT = ?" + "        ORDER BY P.PRODUCT_ID DESC " + "    ) Tb "
-				+ "    WHERE ROWNUM <= ? " + ") " + "WHERE rNum >= ?";
+				+ "        WHERE C.CATEGORY_PARENT = ?" ;
+		if(type == null || type.equals("new")) {
+			sql += " ORDER BY PRODUCT_ID DESC) Tb WHERE ROWNUM <= ?) WHERE rNum >= ?";
+			}else if(type.equals("lowprice")) {
+				sql += " ORDER BY PRICE_DISCOUNT ASC) Tb WHERE ROWNUM <= ?) WHERE rNum >= ?";
+			}else if(type.equals("highprice")) {
+				sql += " ORDER BY PRICE_DISCOUNT DESC) Tb WHERE ROWNUM <= ?) WHERE rNum >= ?";
+			}else {
+				sql += " ORDER BY PRICE_PERCENT DESC) Tb WHERE ROWNUM <= ?) WHERE rNum >= ?";
+			}
 
 		try {
 			psmt = con.prepareStatement(sql);

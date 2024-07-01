@@ -23,13 +23,23 @@ public class ProductsListController extends HttpServlet {
 			throws ServletException, IOException {
 
 		int page = 1;
-		int pageSize = 60;
+		int pageSize = 30;
 		String category = request.getParameter("category");
 		String filters = request.getParameter("filters");
 		String delivery = request.getParameter("delivery");
 		String price = request.getParameter("price");
 		String[] Arrayfilters = filters != null ? filters.split(",") : new String[0];
 		String[] Arraydeliverys = delivery != null ? delivery.split(",") : new String[0];
+		String[] Arrayprice;
+		String type = request.getParameter("type");
+		if (price != null && price.contains("-")) {
+		    Arrayprice = price.split("-");
+		} else if (price != null) {
+		    Arrayprice = new String[] { price }; 
+		} else {
+		    Arrayprice = new String[0]; 
+		}
+		
 
 		if (request.getParameter("page") != null || request.getParameter("category") != null) {
 			page = Integer.parseInt(request.getParameter("page"));
@@ -54,23 +64,47 @@ public class ProductsListController extends HttpServlet {
 		
 		
 		
-		if ("all".equals(category)) {
+		if ("all".equals(category) || (category != null && category.isEmpty() && (delivery == null || delivery.isEmpty()) && (price == null || price.isEmpty() && (type == null || type.isEmpty())))) {
 		    deliverytList = dao.GetdeliveryType(category, Arrayfilters, filters);
-		    list = dao.selectListPage(start, end);
+		    list = dao.selectListPage(start, end, category, delivery, Arraydeliverys, price, Arrayprice, type);
 		    Childcate = dao.selectChildcate(category);
-		    cnt = dao.ListCount();
-		} else {
-		    deliverytList = dao.GetdeliveryType(category, Arrayfilters, filters);
-		    if (filters == null || filters.isEmpty()) {
-		        list = dao.ViewCategoryProducts(start, end, category);
-		        cnt = dao.CategoryCount(category);
-		    } else {
-		        list = dao.ViewChildList(start, end, Arrayfilters, Arraydeliverys);
-		        cnt = dao.ChildCount(Arrayfilters);
+		    cnt = dao.ListCount(delivery, Arraydeliverys, price, Arrayprice);
+		    if (delivery != null && !delivery.isEmpty() && price != null && !price.isEmpty()) {
+		        list = dao.selectListPage(start, end, category, delivery, Arraydeliverys, price, Arrayprice, type);
+		        cnt = dao.ListCount(delivery, Arraydeliverys, price, Arrayprice);
+		    } else if (delivery == null || delivery.isEmpty() && price != null && !price.isEmpty()) {
+		        list = dao.selectListPage(start, end, category, delivery, Arraydeliverys, price, Arrayprice, type);
+		        cnt = dao.ListCount(delivery, Arraydeliverys, price, Arrayprice);
 		    }
+		}
+		else {
+		    deliverytList = dao.GetdeliveryType(category, Arrayfilters, filters);
+		    if ((filters == null || filters.isEmpty()) && (delivery == null || delivery.isEmpty()) && (price == null || price.isEmpty())) {
+		        // 카테고리 필터와 배송 필터 가격 필터모두 비어 있는 경우
+		        list = dao.ViewCategoryProducts(start, end, category, type);
+		        cnt = dao.CategoryCount(category);
+		    } else if (filters != null && (delivery == null || delivery.isEmpty()) && (price == null || price.isEmpty())) {
+		        list = dao.ViewChildList(start, end, Arrayfilters, Arraydeliverys, filters, delivery, category, price, Arrayprice, type);
+		        cnt = dao.ChildCount(category, Arrayfilters, filters, delivery, Arraydeliverys, price, Arrayprice);
+		    } else if (filters != null && delivery != null && price == null) {  
+		        list = dao.ViewChildList(start, end, Arrayfilters, Arraydeliverys, filters, delivery, category, price, Arrayprice, type);
+		        cnt = dao.ChildCount(category, Arrayfilters, filters, delivery, Arraydeliverys,price, Arrayprice);
+		    } else if (filters != null && delivery != null &&  price != null) {
+		    	list = dao.ViewChildList(start, end, Arrayfilters, Arraydeliverys, filters, delivery, category, price, Arrayprice, type);
+		        cnt = dao.ChildCount(category, Arrayfilters, filters, delivery, Arraydeliverys, price, Arrayprice);
+		    } else if (filters == null && delivery != null && price != null) {
+		    	list = dao.ViewChildList(start, end, Arrayfilters, Arraydeliverys, filters, delivery, category, price, Arrayprice, type);
+		        cnt = dao.ChildCount(category, Arrayfilters, filters, delivery, Arraydeliverys, price, Arrayprice);
+		    } else if (filters == null && delivery == null && price != null) {
+		    	list = dao.ViewChildList(start, end, Arrayfilters, Arraydeliverys, filters, delivery, category, price, Arrayprice, type);
+		        cnt = dao.ChildCount(category, Arrayfilters, filters, delivery, Arraydeliverys, price, Arrayprice);
+		    } else if (filters == null && delivery != null && price == null ) {
+		    	list = dao.ViewChildList(start, end, Arrayfilters, Arraydeliverys, filters, delivery, category, price, Arrayprice, type);
+		        cnt = dao.ChildCount(category, Arrayfilters, filters, delivery, Arraydeliverys, price, Arrayprice);
+		    }
+		    
 		    Childcate = dao.selectChildcate(category);
 		}
-
 		
 	
 		

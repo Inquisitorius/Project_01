@@ -7,6 +7,7 @@ public class ChildCategoryMap {
 	private static final Map<String, String> ChildMap = new HashMap<>();
 	private static final Map<String, String> KoreanChildMap = new HashMap<>();
 	private static final Map<String, String> selectCate = new HashMap<>();
+	private static final Map<String, String> engCate = new HashMap<>();
 	static {
 		ChildMap.put("와인", "wine");
 		ChildMap.put("위스키", "whisky");
@@ -18,7 +19,7 @@ public class ChildCategoryMap {
 		ChildMap.put("거실가구", "livingroom_furniture");
 		ChildMap.put("과일", "fruit");
 		ChildMap.put("수산", "seafood");
-		ChildMap.put("정육", "meet");
+		ChildMap.put("정육", "meat");
 		ChildMap.put("PC", "PC");
 		ChildMap.put("주방가전", "kitchen_appliances");
 		ChildMap.put("생활가전", "living_appliances");
@@ -64,6 +65,13 @@ public class ChildCategoryMap {
 		selectCate.put("bakery", "41");
 		selectCate.put("living", "46");
 		
+		engCate.put("1", "alcohol");
+		engCate.put("11", "furniture");
+		engCate.put("21", "food");
+		engCate.put("25", "electronics");
+		engCate.put("41", "bakery");
+		engCate.put("46", "living");
+		
 	}
 	
 
@@ -78,5 +86,9 @@ public class ChildCategoryMap {
 	
 	public static Map<String, String> getselectCate() {
 		return selectCate;
+	}
+	
+	public static Map<String, String> getEngCate(){
+		return engCate;
 	}
 }
