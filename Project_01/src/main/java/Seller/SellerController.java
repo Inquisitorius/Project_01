@@ -65,6 +65,64 @@ public class SellerController extends HttpServlet
 		{
 			Get_InqueryList(req,resp);
 		}
+		else if(command.equals("/Get_InqueryData"))
+		{
+			Get_InqueryData(req,resp);
+		}
+		else if(command.equals("/Set_SellerContent"))
+		{
+			Set_SellerContent(req,resp);
+		}
+	}
+	
+	public void Set_SellerContent(HttpServletRequest req, HttpServletResponse resp)
+	{
+		resp.setContentType("application/json");
+		resp.setCharacterEncoding("UTF-8");		
+		
+		try 
+		{
+			BufferedReader reader = req.getReader();
+			Gson gson_in = new Gson();
+			InqueryDTO data = gson_in.fromJson(reader, InqueryDTO.class);
+						
+			SellerDAO dao = new SellerDAO();			
+			
+			AjaxDataTrans result = dao.Set_SellerContent(data.getInquery_id(),data.getSeller_content());
+			
+			Gson gson = new Gson();
+			String jsonResponse = gson.toJson(result);
+			resp.getWriter().write(jsonResponse);
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void Get_InqueryData(HttpServletRequest req, HttpServletResponse resp)
+	{
+		resp.setContentType("application/json");
+		resp.setCharacterEncoding("UTF-8");		
+
+		try 
+		{
+			BufferedReader reader = req.getReader();
+			Gson gson_in = new Gson();
+			InqueryDTO data = gson_in.fromJson(reader, InqueryDTO.class);
+						
+			SellerDAO dao = new SellerDAO();			
+			
+			InqueryDTO result = dao.Get_InqueryData(data.getInquery_id());
+			
+			Gson gson = new Gson();
+			String jsonResponse = gson.toJson(result);
+			resp.getWriter().write(jsonResponse);
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void Get_InqueryList(HttpServletRequest req, HttpServletResponse resp)
@@ -157,7 +215,6 @@ public class SellerController extends HttpServlet
 		try 
 		{
 			BufferedReader reader = req.getReader();
-			System.out.println(reader.readLine());
 			
 			String seller = req.getParameter("seller");
 			int seller_id = Integer.parseInt(seller);

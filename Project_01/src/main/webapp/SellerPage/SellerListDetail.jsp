@@ -57,11 +57,11 @@
 		<div class = "row" style = "border-bottom: 1px solid #efefef; border-top: 1px solid #163020;">
 			<div class = "col-12" style="display: inline-flex; justify-content: center; justify-content: flex-start;">
 				<div style = "margin-right : 10px;">
-					<label class = "label_title fontCommon_Option">주문 번호</label>
+					<label class = "label_title fontCommon_Option">주문 번호 :</label>
 					<label class = "label_element" id = "order_id" style = "margin-left: 20px;">order_id</label>
 				</div>
 				<div style = "margin-right : 10px;">
-					<label class = "label_title fontCommon_Option" >환불 번호</label>
+					<label class = "label_title fontCommon_Option" >환불 번호 :</label>
 					<label class = "label_element" id = "refund_id" style = "margin-left: 20px;">refund_id</label>
 				</div>
 			</div>
@@ -69,11 +69,11 @@
 		<div class = "row" style = "border-bottom: 1px solid #efefef;">
 			<div class = "col-12" style="display: inline-flex;justify-content: center; justify-content: flex-start;">
 				<div style = "margin-right : 10px;">										
-					<label class = "label_title fontCommon_Option">환불 요청시간</label>
+					<label class = "label_title fontCommon_Option">환불 요청시간 :</label>
 					<label class = "label_element" id = "refund_date" style = "margin-left: 20px;">refund_date</label>
 				</div>
 				<div style = "margin-right : 10px;">				
-					<label class = "label_title fontCommon_Option">환불 요청상태</label>
+					<label class = "label_title fontCommon_Option">환불 요청상태 :</label>
 					<label class = "label_element" id = "refund_state" style = "margin-left: 20px;">refund_state</label>
 				</div>
 			</div>

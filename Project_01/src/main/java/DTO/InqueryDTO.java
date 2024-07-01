@@ -24,7 +24,6 @@ public class InqueryDTO
 		SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
 		
 		String formattedDate1 = formatter.format(date);
-		System.out.println(formattedDate1);
 		
 		this.inquery_date_format = formattedDate1;
 	}

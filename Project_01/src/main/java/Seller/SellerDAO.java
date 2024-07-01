@@ -274,5 +274,61 @@ public class SellerDAO extends JDBConnect
 		return dto;
 	}
 
+	public InqueryDTO Get_InqueryData(int inquery_id) 
+	{
+		String sql = "SELECT i.INQUERY_ID, i.PRODUCT_ID, i.INQUERY_TITLE , i.INQUERY_CONTENT, i.INQUERY_DATE, ";
+		sql += "ui.name, ui.idx AS USER_ID FROM INQUERY i JOIN USER_INFO ui ON ui.IDX = i.USER_ID ";
+		sql += "WHERE i.INQUERY_ID  = " + inquery_id;
+		InqueryDTO dto = null;
+
+		try 
+		{
+			psmt = con.prepareStatement(sql);
+			rs = psmt.executeQuery();		
+			
+			rs.next();
+			
+			dto = new InqueryDTO();
+			dto.setInquery_id(rs.getInt("INQUERY_ID"));
+			dto.setInquery_title(rs.getString("INQUERY_TITLE"));
+			dto.setInquery_content(rs.getString("INQUERY_CONTENT"));
+			dto.setInquery_date(rs.getDate("INQUERY_DATE"));
+			dto.setUser_id(rs.getInt("USER_ID"));
+			dto.setUser_name(rs.getString("NAME"));			
+			
+			dto.setProduct_id(rs.getInt("PRODUCT_ID"));
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return dto;
+	}
+
+	public AjaxDataTrans Set_SellerContent(int inquery_id, String seller_content) 
+	{
+		String sql = "UPDATE INQUERY SET SELLER_CONTENT = '" + seller_content;
+		sql += "' WHERE INQUERY_ID = " + inquery_id;
+		
+		int result = 0;
+		
+		try 
+		{
+			psmt = con.prepareStatement(sql);
+			result  = psmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		AjaxDataTrans dto = new AjaxDataTrans();
+		dto.setIntData_00(result);
+		return dto;		
+	}
+
 	
 }

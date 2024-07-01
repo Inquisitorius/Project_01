@@ -113,7 +113,7 @@
 				        <option value="product_id">제품번호</option>
 				        <option value="product_name">상품명</option>
 				        <option value="inquery_title">질의제목</option>
-				        <option value="inquery_date">신청일자</option>				        
+				        <option value="inquery_date_format">신청일자</option>				        
 				      </select>
 			</span>
 			<span style = "margin-right: 40px;">
@@ -144,17 +144,13 @@
 		</div>
 	</div>
 </div>
-<div style = "display: none;">
-	<form id = "dataForm" name="data" method="post" action = "/SellerPage/SellerListDetail.jsp">
-		<input id = "form_order_id" type="hidden" name ="order_id" value="">
-		<input id = "form_name" type="hidden" name ="name" value="">
-	</form>
-</div>
 </main>
 	<div style = "display: none;">
-		<form id = "dataForm" name="data" method="post" action = "/SellerPage/SellerListDetail.jsp">
-			<input id = "form_order_id" type="hidden" name ="order_id" value="">
-			<input id = "form_name" type="hidden" name ="name" value="">
+		<form id = "dataForm" name="data" method="post" action = "/SellerPage/Inquery_Seller_Detail.jsp">
+			<input id = "form_inquery_id" type="hidden" name ="order_id" value="">
+			<input id = "form_seller_id" type="hidden" name ="seller_id" value="">
+			<input id = "form_product_id" type="hidden" name ="product_id" value="">
+			<input id = "form_product_name" type="hidden" name ="product_name" value="">
 		</form>
 	</div>
 <jsp:include page="/Common/Footer.jsp" />
@@ -251,10 +247,13 @@ function tabulatorInit()
 			//페이지 이동 처리 
 		   console.log(row.getData());
 			
-		   	$('#form_order_id').val(row.getData().order_id);
-	   		$("#form_name").val(row.getData().name);
-			
-		   $('#dataForm').submit();
+		   	$('#form_inquery_id').val(row.getData().inquery_id);
+	   		$("#form_seller_id").val(row.getData().seller_id);
+	   		
+	   		$("#form_product_id").val(row.getData().product_id);
+	   		$("#form_product_name").val(row.getData().product_name);	   		
+	   		
+		  	$('#dataForm').submit();
 		   //pageContext.forward("/SellerPage/SellerMainPage.jsp");
 	    });
 	    
