@@ -125,15 +125,15 @@ a:hover {
 	color: green;
 }
 
-[type="radio"] {
-	appearance: none;
-	width: 13px;
-	height: 13px;
-	border: 1px solid green;
-	border-radius: 50%;
+.gender_radio {
+    appearance: none;
+    width: 13px;
+    height: 13px;
+    border: 1px solid green;
+    border-radius: 50%;
 }
 
-[type="radio"]:checked {
+.gender_radio:checked {
 	appearance: none;
 	width: 13px;
 	height: 13px;
@@ -707,19 +707,19 @@ a:hover {
 					<div class="col-md-6" style="display: flex">
 						<div class="col-md-4">
 							<div class="ban_Select">
-								<input type="radio" name="memberGender" value="Man" > <span
+								<input type="radio" class="gender_radio" name="memberGender" value="Man" > <span
 									class="gender_Font"> 남자</span>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="ban_Select">
-								<input type="radio" name="memberGender" value="WOMAN" > <span
+								<input type="radio" class="gender_radio" name="memberGender" value="WOMAN" > <span
 									class="gender_Font"> 여자</span>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="ban_Select">
-								<input type="radio" name="memberGender" value="NONE" checked>
+								<input type="radio" class="gender_radio" name="memberGender" value="NONE" checked>
 								<span class="gender_Font"> 선택안함</span>
 							</div>
 						</div>
