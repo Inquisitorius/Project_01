@@ -6,6 +6,7 @@
 <%@ page import="Board.BoardDTO"%>
 <%@ page import="Main.JDBConnect"%>
 <%@ page import="Main.TestDBPool"%>
+<%@ page import="DTO.InqueryDTO"%>
 
 <!DOCTYPE html>
 <html>
@@ -55,7 +56,7 @@ section.notice {
 }
 
 .board-table .th-num {
-  width: 100px;
+  width: 150px;
   text-align: center;
 }
 
@@ -63,6 +64,10 @@ section.notice {
   width: 200px;
 }
 
+.board-table .th-title{
+	text-align: center;
+	 width: 400px;
+}
 .board-table tbody td {
   border-top: 1px solid #e7e7e7;
   text-align: center;
@@ -77,6 +82,7 @@ section.notice {
 
 .board-table tbody th p{
   display: none;
+  
 }
 
 .btn-dark {
@@ -449,15 +455,15 @@ hr {
         </c:forEach>
 		<div>
 		<hr style="width:100%; margin: auto;">
-		<form action="../test/List.do"  method="post" enctype="multpart/form-data"
+		<form action="../test/ProductInfo.do"  method="post" enctype="multpart/form-data"
 		 onsubmit="return validateForm(this);"id="ModalWriteForm">	
           <div class="form-group-mb-3">
             <label for="recipient-name" class="col-form-label">제목</label>
-            <input type="text" class="form-control" name="title">
+            <input type="text" class="form-control" name="inquery_title">
           </div>
           <div class="form-group-mb-3">
             <label for="message-text" class="col-form-label">내용</label>
-            <textarea class="form-control" name="content" rows="4">메시지를 입력하시오.</textarea>
+            <textarea class="form-control" name="inquery_content" rows="4">메시지를 입력하시오.</textarea>
           </div>
         </form>
       </div>
@@ -470,47 +476,6 @@ hr {
 </div>
 </div>
 </div></div>
-  <!-- board list area -->
-    <div id="board-list">
-        <div class="panel-faq-container"style="min-width: 1050px;height:auto; display:flex; justify-content: space-around;">
-            <table class="board-table table">
-            	    <thead>
-            	    <tr>
-                    <th scope="col" class="th-num">번호</th>
-                    <th scope="col" class="th-title">제목</th>
-                    <th scope="col" class="th-writer">이름</th>
-                    <th scope="col" class="th-date">날짜</th>
-                </tr>
-                </thead>
-                <c:forEach var="BoardDTO" items="${boardLists}">
-                <tbody style="border:none;">
-                 <tr class="board-row" data-target="#content${ BoardDTO.idx }"style="border:none;">
-                    <td>${ BoardDTO.idx }</td>
-                    <th>
-                      <a href="#!">${ BoardDTO.title }</a>
-                      <p>${ BoardDTO.name }</p>
-                    </th>	
-                    <td>${ BoardDTO.name }</td>
-                    <td>${ BoardDTO.postdate }</td>
-                     <tr id="content${ BoardDTO.idx }" class="hidden-content-row"style="width:150px;hegiht:300px;"> 
-                        <td colspan="4"style="padding : 0px;border:none;">
-                        <div class="hidden-content">
-                            <div style="display:flex;padding-left:30px;font-size:15px;width:1000px;hegiht:100%;"> 
-                             &nbsp;&nbsp;&nbsp;
-                             문의내용 :
-                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                              ${ BoardDTO.content }
-                           </div>
-                           </div>
-                        </td>
-                </tr>
-                </tbody>  
-                </c:forEach>
-            </table>   
-        </div>	
-      </table>
-    </div> 
-</section>
 <!-- board list area -->
     <div id="board-list">
         <div class="panel-faq-container"style="min-width: 1050px;height:auto; display:flex; justify-content: space-around;">
@@ -527,32 +492,36 @@ hr {
                 <tbody style="border:none;">
                  <tr class="board-row" data-target="#content${ InqueryDTO.inquery_id }"style="border:none;">
                     <td>${ InqueryDTO.inquery_id }</td>
-                    <th>
-                      <a href="#!">${ InqueryDTO.inquery_title }</a>
-                      <p>${ InqueryDTO.user_id }</p>
-                    </th>	
-                    <td>${ InqueryDTO.user_id }</td>
-                    <td>${ InqueryDTO.inquery_date }</td>
+                    	<th>
+                      		<a href="#!">${ InqueryDTO.inquery_title }</a>
+                     		<p>${ InqueryDTO.user_id }</p>
+                    	</th>	
+                    	<td>${ InqueryDTO.user_id }</td>
+                    	<td>${ InqueryDTO.inquery_date }</td>
                      <tr id="content${ InqueryDTO.inquery_id }" class="hidden-content-row"style="width:150px;hegiht:300px;"> 
                         <td colspan="4"style="padding : 0px;border:none;">
-                        <div class="hidden-content">
-                            <div style="display:flex;padding	-left:30px;font-size:15px;width:1000px;hegiht:100%;"> 
-                             &nbsp;&nbsp;&nbsp;
+                          <div class="hidden-content">
+                            <div class="row" style="display:flex;font-size:15px;"> 
                              문의내용 :
                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                              ${ InqueryDTO.inquery_content }
-                              <br />
-                              ${ InqueryDTO.seller_content }
+                             ${ InqueryDTO.inquery_content }
+                              	
+                             <div class="hideen-content2-row" data-target2="#content2%${ InqueryDTO.seller_content }"
+                             style="display:flex;justify-content: flex-start;">
+                             <br />
+                             ${ InqueryDTO.seller_content }
+                             </div> 
                            </div>
                            </div>
-                        </td>
-                </tr>
+                     </td>
+               	 </tr>
                 </tbody>  
                 </c:forEach>
             </table>   
-        </div>	
-      </table>
-    </div> 
+      	  </div>	
+     	 </table>
+   	 </div> 
+    </section>
 </main>
 <jsp:include page="/Common/Footer.jsp"/>
 
@@ -567,7 +536,14 @@ hr {
 		$('.board-row').on('click', function() {
 			var target = $(this).data('target'); // Get the target content ID
 			var $content = $(target).find('.hidden-content'); // Find the content to slide
-
+			var target2 = $(this).data('target2');
+			var $content2 = $(target).find('.hidden-content2'); 
+			if ($content2.is(null)) {
+				$content2.hidden();
+			}
+			else {
+				
+			}
 			if ($content.is(':visible')) {
 				$content.slideUp(); // Hide the content if it is visible
 			} else {
@@ -596,14 +572,14 @@ hr {
 		  resultElement.innerText = number;
 		}
 	function validateForm(form) {
-		if (form.title.value == "") {
+		if (form.inquery_title.value == "") {
 			alert("제목을 입력하세요.");
-			form.title.focus();
+			form.inquery_title.focus();
 			return false;
 		}
-		if (form.content.value == "") {
+		if (form.inquery_content.value == "") {
 			alert("내용을 입력하세요.");
-			form.content.focus();
+			form.inquery_content.focus();
 			return false;
 		}
 	}

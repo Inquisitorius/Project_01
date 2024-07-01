@@ -82,7 +82,8 @@ public class BoardDAO extends TestDBPool {
 			  	
 }
 	 public List<InqueryDTO> Inquerylist(int product_id) {
-		 String query = " SELECT * FROM inquery,product WHERE product.product_id = " + product_id;
+		 String query = " SELECT * FROM inquery JOIN product ON inquery.product_id "
+		 			  + "= product.product_id WHERE product.product_id =" + product_id;
 		 System.out.println("GetSaleProductList = " + product_id);
 		 
 		 List<InqueryDTO> Inquery = new Vector<InqueryDTO>();
@@ -111,8 +112,6 @@ public class BoardDAO extends TestDBPool {
 						 * dto3.setProduct_name(rs.getString("product_name"));
 						 * dto3.setUser_name(rs.getString("user_name"));
 						 */
-					
-			  			System.out.println("여기까지 들어오면 = " + product_id);
 			  			Inquery.add(dto3);
 			  			
 			  		}
@@ -123,82 +122,36 @@ public class BoardDAO extends TestDBPool {
 			  	}
 			  	return Inquery;
 }
-	public List<BoardDTO> View() {
-		List<BoardDTO> pro = new Vector<BoardDTO>();
-		String query = "SELECT * FROM product WHERE P_NUM =2";
-			
-		try {
-			psmt = con.prepareStatement(query);
-			rs = psmt.executeQuery();
-			
-			while(rs.next()) {
-				BoardDTO dto = new BoardDTO();
-				dto.setP_num(rs.getInt("p_num"));
-				dto.setPkind(rs.getString("pkind"));
-				dto.setPname(rs.getString("pname"));
-				dto.setPprice(rs.getInt("pprice"));
-				dto.setDelivertype(rs.getString("delivertype"));
-				dto.setPackagingtype(rs.getString("packagingtype"));
-				dto.setNotice(rs.getString("notice"));
-				dto.setOrigin(rs.getString("origin"));
-				dto.setUnit(rs.getString("origin"));
-				dto.setWeight(rs.getInt("weight"));
-				dto.setScript(rs.getString("script"));
-				
-				pro.add(dto);
-			}
-		}
-		catch(Exception e) {
-			System.out.println("예외 발생");
-			e.printStackTrace();
-		}
-		return pro;
-	}
-	public int insertWrite(BoardDTO dto) {
-		int result = 0;
+	public int ModalWrite(String inquery_title, String inquery_content) {
+			int result = 0;
+			InqueryDTO dto4 = new InqueryDTO();
 		
 		try {
-			String query = "INSERT INTO pboard ( "
-						 + " idx, name, title, content )"
-						 + " values( "
-						 + " seq_board_num.NEXTVAL,?,?,?)";
-						 
-			psmt = con.prepareStatement(query);			 
-			psmt.setString(1, dto.getName());			  
-			psmt.setString(2, dto.getTitle());			 
-			psmt.setString(3, dto.getContent());			 
-		//	psmt.setString(4, dto.getOfile());		  
-		//	psmt.setString(5, dto.getSfile());		 
-		//	psmt.setString(6, dto.getPass());		 
+			Class.forName("oracle.jdbc.OracleDriver");
+
+			String url = "jdbc:oracle:thin:@14.42.124.35:1521:xe";
+			String id = "C##PROJECT_01DB";
+			String pwd = "1234";
+			con = DriverManager.getConnection(url, id, pwd);
+			
+			String query = "INSERT INTO INQUERY VALUES ( "
+						 + "INQUERY_BNO.nextval,(SELECT p.PRODUCT_ID FROM PRODUCT p WHERE p.PRODUCT_ID = 4)"
+						 + ",(SELECT UI.IDX  FROM USER_INFO ui WHERE UI.IDX = 61) "
+						 + ",?,?,'',SYSDATE )";
+			 
+			psmt = con.prepareStatement(query);			  
+			psmt.setString(1, inquery_title);
+			psmt.setString(2, inquery_content);			 	 
 			result = psmt.executeUpdate();
-			}
+			
+		}
 		catch(Exception e) {
 			System.out.println("게시물 입력 중 예외 발생");
 			  e.printStackTrace();
 	}
 		  return result;
-}
-	public int ModalWrite(BoardDTO dto) {
-		int result = 0;
-		System.out.println("-------test-------");
-		
-		try {
-			String query = "INSERT INTO pboard ( "
-						 + " idx, title, content )"
-						 + " values( "
-						 + " seq_board_num.NEXTVAL,?,?)";
-						 
-			psmt = con.prepareStatement(query);			 
-			psmt.setString(1, dto.getName());			  
-			psmt.setString(2, dto.getTitle());			 
-			psmt.setString(3, dto.getContent());			 	 
-			result = psmt.executeUpdate();
-			}
-		catch(Exception e) {
-			System.out.println("게시물 입력 중 예외 발생");
-			  e.printStackTrace();
-	}
-		  return result;
+		  
+		  	
 }
 	public List<ProductDTO> View2(int product_id) 
 	{
@@ -218,7 +171,6 @@ public class BoardDAO extends TestDBPool {
 				
 			psmt = con.prepareStatement(query);
 			rs = psmt.executeQuery();
-			
 			
 			while(rs.next()) {
 				ProductDTO dto2 = new ProductDTO();

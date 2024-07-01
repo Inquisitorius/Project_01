@@ -19,43 +19,34 @@ import jakarta.servlet.http.HttpServletResponse;
 public class ListController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-	
-	public ListController() {
+
+public ListController() {
 		super();
 	}
-	
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws
-	  ServletException, IOException {
-			BoardDAO dao = new BoardDAO();
-		 	//Map<String, Object> map = new HashMap<String, Object>();
-		// 	int totalCount = dao.selectCount(map);
-			String num = req.getParameter("num");
-		 	List<BoardDTO> boardLists = dao.selectListPage();
-		 	dao.close();
-			req.setAttribute("boardLists", boardLists);
-			req.getRequestDispatcher("/test/List.jsp").forward(req, resp);
-	}
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.setCharacterEncoding("UTF-8");
-		
-		BoardDTO dto = new BoardDTO();
-		dto.setName(req.getParameter("name"));
-		dto.setTitle(req.getParameter("title"));
-		dto.setContent(req.getParameter("content"));
-		
-		BoardDAO dao = new BoardDAO();
-		int result = dao.ModalWrite(dto);
-		dao.close();
-		if (result == 1) {
-			resp.sendRedirect("/test/List.do");
-		}
-		else {
-			System.out.println("글쓰기에 실패.");
-	}
-	}	
-	
 }
 /*
+ * protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws
+ * ServletException, IOException { BoardDAO dao = new BoardDAO(); //Map<String,
+ * Object> map = new HashMap<String, Object>(); // int totalCount =
+ * dao.selectCount(map); String num = req.getParameter("num"); List<BoardDTO>
+ * boardLists = dao.selectListPage(); dao.close();
+ * req.setAttribute("boardLists", boardLists);
+ * req.getRequestDispatcher("/test/List.jsp").forward(req, resp); } }
+ * 
+ * protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+ * throws ServletException, IOException { req.setCharacterEncoding("UTF-8");
+ * 
+ * BoardDTO dto = new BoardDTO(); dto.setName(req.getParameter("name"));
+ * dto.setTitle(req.getParameter("title"));
+ * dto.setContent(req.getParameter("content"));
+ * 
+ * BoardDAO dao = new BoardDAO(); int result = dao.ModalWrite(dto); dao.close();
+ * if (result == 1) { resp.sendRedirect("/test/List.do"); } else {
+ * System.out.println("글쓰기에 실패."); } }
+ * 
+ * }
+ * 
+ * 
  * protected void service(HttpServletRequest req, HttpServletResponse resp)
  * throws ServletException, IOException {
  * 
@@ -94,3 +85,4 @@ public class ListController extends HttpServlet {
  * req.setAttribute("boardLists", boardLists); req.setAttribute("map", map);
  * req.getRequestDispatcher("/test/List.jsp").forward(req, resp); } }
  */
+ 
