@@ -72,7 +72,7 @@ a:hover {
 		<div class="row" style="justify-content: center;">
 			<div class="col-md-3" style="justify-content: center;">
 				<input id = "input_id" type="text" class="input_Style" placeholder="아이디를 입력해주세요" onfocus="this.placeholder=''" onblur="this.placeholder='아이디를 입력해주세요.'" name="id" onkeypress="enter(event)">
-				<input id = "input_pw" type="password" class="input_Style" placeholder="비밀번호를 입력해주세요" onfocus="this.placeholder=''" onblur="this.placeholder='비밀번호를 입력해주세요.'" name="pass" onkeypress="enter(event)">
+				<input id = "input_pw" type="password" class="input_Style" placeholder="비밀번호를 입력해주세요" onfocus="this.placeholder=''" autoComplete="off" onblur="this.placeholder='비밀번호를 입력해주세요.'" name="pass" onkeypress="enter(event)">
 				</div>
 		</div>
 		<div class="row" style="justify-content: center;">

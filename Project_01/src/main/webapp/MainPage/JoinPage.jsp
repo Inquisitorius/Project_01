@@ -7,6 +7,7 @@
 <title>회원가입</title>
 <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.css">
 <script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://kit.fontawesome.com/a0b08e370a.js"
 	crossorigin="anonymous"></script>
 <!-- 	<script>history.scrollRestoration = "manual"</script> -->
@@ -311,7 +312,7 @@ a:hover {
 					</div>
 					<div class="col-md-6">
 						<input type="password" class="input_Style" id="input_pwd" placeholder="비밀번호를 입력해주세요." oninput="inputPwd(this.id)" maxlength="12"
-							onfocus="this.placeholder=''"
+							onfocus="this.placeholder=''" autoComplete="off"
 							onblur="this.placeholder='비밀번호를 입력해주세요.'" name="memberPwd">
 					</div>
 					<div class="col-md-2">
@@ -363,7 +364,7 @@ a:hover {
 					<div class="col-md-6">
 						<input type="password" class="input_Style"	id="input_pwdcheck"	oninput="inputPwdCheck(this.id)" maxlength="12"
 							placeholder="비밀번호를 한번 더 입력해주세요" onfocus="this.placeholder=''"
-							onblur="this.placeholder='비밀번호를 한번 더 입력해주세요.'"
+							onblur="this.placeholder='비밀번호를 한번 더 입력해주세요.'" autoComplete="off"
 							name="memberPwdCheck">
 					</div>
 					<div class="col-md-2">
@@ -706,19 +707,19 @@ a:hover {
 					<div class="col-md-6" style="display: flex">
 						<div class="col-md-4">
 							<div class="ban_Select">
-								<input type="radio" name="memberGender" value="man" > <span
+								<input type="radio" name="memberGender" value="Man" > <span
 									class="gender_Font"> 남자</span>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="ban_Select">
-								<input type="radio" name="memberGender" value="woman" > <span
+								<input type="radio" name="memberGender" value="WOMAN" > <span
 									class="gender_Font"> 여자</span>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="ban_Select">
-								<input type="radio" name="memberGender" value="none" checked>
+								<input type="radio" name="memberGender" value="NONE" checked>
 								<span class="gender_Font"> 선택안함</span>
 							</div>
 						</div>
@@ -970,6 +971,7 @@ a:hover {
 						var phone = document.getElementById("input_phone").value;
 						var address = document.getElementById("input_addr").value;
 						var address_sub = document.getElementById("input_addrsub").value;
+						var gender = document.querySelector('input[name="membergender"]:checked');
 						var year = document.getElementById("input_birthyear").value;
 						var month = document.getElementById("input_birthmonth").value;
 						var day = document.getElementById("input_birthday").value;
@@ -1051,13 +1053,42 @@ a:hover {
 							
 						else{ 
 							if(repetitionBtn.classList.contains("btn-outline-secondary")) {
-							createFunction();
-							alert("회원 가입에 성공했습니다.");
+								 $.ajax({
+						                type: "POST",
+						                url: "/Join/JoinTry",
+								data: {
+									    id: id,
+									    pass: pass,
+									    name: name,
+									    email: email,
+									    phone: phone,
+									    address: address,
+									    address_sub: address_sub,
+									    gender : gender,
+									    year: year,
+									    month: month,
+									    day: day
+									},
+								 dataType: "json",
+								 success: function(response) {
+					          if (response.status === "success") { 
+								swal({
+	                  			 title: "회원가입에 성공 했습니다.",
+	                 			 icon: "info",
+	                 			 button: "확인",
+	              				 }).then((value) => {
+	              					location.replace("/MainPage/MainPage.jsp");
+	          			     });		
+	   		         }else{
+	                    	Warning.textContent = "입력 값을 다시 확인해주세요.";
+                 	} },error: function() {
+                        alert('서버 오류가 발생했습니다. 다시 시도해 주세요.');
 							}
-						}
+						});
+							}}	
 					});
 				});
-		
+					
 		function createFunction()
 		{
 			formJoin.method = "post";

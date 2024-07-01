@@ -52,15 +52,16 @@ public class JoinController extends HttpServlet {
 		
 	}
 
-	public void JoinTry(HttpServletRequest req, HttpServletResponse resp) {
-		
-		try {
+	public void JoinTry(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		resp.setContentType("application/json");
+		resp.setCharacterEncoding("UTF-8");
+		PrintWriter out = resp.getWriter();
+		try {	
 				JoinDAO dao = new JoinDAO();
 				LoginDTO dto = new LoginDTO();
-				String year = req.getParameter("memberBirthYear");
-				String month = req.getParameter("memberBirthMonth");
-				String day = req.getParameter("memberBirthDay");
-				
+				String year = req.getParameter("year");
+				String month = req.getParameter("month");
+				String day = req.getParameter("day");
 				String date = null;
 				if (year != null && month != null && day != null) {
 				    date = year + month + day;
@@ -72,27 +73,27 @@ public class JoinController extends HttpServlet {
 				LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyyMMdd"));	
 				memberBirthDate = Date.valueOf(localDate);	
 				}
-				System.out.println("join 컨트롤러 date"+date);
-				
-				dto.setId(req.getParameter("memberId"));
-				dto.setPass(req.getParameter("memberPwd"));
-				dto.setName(req.getParameter("memberName"));
-				dto.setEmail(req.getParameter("memberEmail"));
-				dto.setPhone(req.getParameter("memberPhone"));
-				dto.setAddress(req.getParameter("memberAddr"));
-				dto.setAddress_sub(req.getParameter("memberAddrsub"));
-				dto.setGender(req.getParameter("memberGender"));
+				System.out.println("id = " + req.getParameter("id"));
+				dto.setId(req.getParameter("id"));
+				dto.setPass(req.getParameter("pass"));
+				dto.setName(req.getParameter("name"));
+				dto.setEmail(req.getParameter("email"));
+				dto.setPhone(req.getParameter("phone"));
+				dto.setAddress(req.getParameter("address"));
+				dto.setAddress_sub(req.getParameter("address_sub"));
+				dto.setGender(req.getParameter("gender"));
 				dto.setBirthdate(memberBirthDate);
 				
-				dao.createAccount(dto);
-				
-				PrintWriter out = resp.getWriter();
-				out.print("<script>");
-			    out.print("location.href = '/MainPage/MainPage.jsp';");
-			    out.print("</script>");
-				out.close();
+				int result = dao.createAccount(dto);
+				if(result == 1) 
+				{
+				out.write("{\"status\": \"success\"}");
+				}
 		}catch(Exception e) {
 			e.printStackTrace();
+			out.write("{\"status\": \"error\"}");
+		}finally {
+			out.close();
 		}
 	}
 }
