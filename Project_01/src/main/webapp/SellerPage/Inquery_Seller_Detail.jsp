@@ -96,6 +96,7 @@
 
 </main>
 <jsp:include page="/Common/Footer.jsp"/>
+<script src="/resources/bootstrap/js/bootstrap.bundle.js"></script>
 </body>
 <script type="text/javascript">
 var table;

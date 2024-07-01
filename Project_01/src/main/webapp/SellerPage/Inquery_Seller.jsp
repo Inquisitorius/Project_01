@@ -154,6 +154,7 @@
 		</form>
 	</div>
 <jsp:include page="/Common/Footer.jsp" />
+<script src="/resources/bootstrap/js/bootstrap.bundle.js"></script>
 <script type="text/javascript">
 var table;
 $(document).ready(function()
