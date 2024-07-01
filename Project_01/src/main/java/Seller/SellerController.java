@@ -73,6 +73,34 @@ public class SellerController extends HttpServlet
 		{
 			Set_SellerContent(req,resp);
 		}
+		else if(command.equals("/Get_SellerChartData"))
+		{
+			this.Get_SellerChartData(req,resp);
+		}
+	}
+	
+	public void Get_SellerChartData(HttpServletRequest req, HttpServletResponse resp)
+	{
+		resp.setContentType("application/json");
+		resp.setCharacterEncoding("UTF-8");	
+		
+		try 
+		{
+			BufferedReader reader = req.getReader();
+			Gson gson_in = new Gson();
+			AjaxDataTrans data = gson_in.fromJson(reader, AjaxDataTrans.class);
+						
+			SellerDAO dao = new SellerDAO();
+			List<AjaxDataTrans> list = dao.Get_Seller_SellCount_Detail(data.getSeller_id(),data.getIntData_00());
+			
+			Gson gson = new Gson();
+			String jsonResponse = gson.toJson(list);
+			resp.getWriter().write(jsonResponse);
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void Set_SellerContent(HttpServletRequest req, HttpServletResponse resp)

@@ -54,8 +54,8 @@
 			</div>	
 			<div class = "row" style="padding-bottom: 4px;">
 				<div class = "col-12">
-					<button class = "btn btn-navy rounded-1 fontCommon_Option" type = "button" style="width: 100%; height: 55px;">
-					등록 및 판매현황
+					<button class = "btn btn-navy rounded-1 fontCommon_Option" id = "sellerChartBtn" type = "button" style="width: 100%; height: 55px;">
+					판매 현황
 					</button>
 				</div>				
 			</div>	
@@ -114,10 +114,11 @@ $(document).ready(function()
 		location.replace("/SellerPage/Inquery_Seller.jsp");
 	});
 	
-	
-	
+	$('#sellerChartBtn').click(function()
+	{
+		location.replace("/SellerPage/SellerChart.jsp");
+	});
 });
-
 
  
 

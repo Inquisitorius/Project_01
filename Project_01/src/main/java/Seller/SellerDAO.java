@@ -24,6 +24,55 @@ public class SellerDAO extends JDBConnect
 		super(application);
 	}
 	
+	public List<AjaxDataTrans> Get_Seller_SellCount_Detail(int seller_id, int dayInfo) 
+	{
+		String sql = "WITH date_range AS ( "
+				+ "    SELECT TRUNC(SYSDATE) - LEVEL + 1 AS ORDER_DATE "
+				+ "    FROM DUAL "
+				+ "    CONNECT BY LEVEL <= " + dayInfo 
+				+ " ) "
+				+ "SELECT  "
+				+ "    dr.ORDER_DATE AS DATEINFO, "
+				+ "    COALESCE(SUM(CASE WHEN oi.ORDER_STATE = '구매완료' THEN 1 ELSE 0 END), 0) AS ORDERCOUNT, "
+				+ "    COALESCE(SUM(CASE WHEN oi.ORDER_STATE IN ('환불신청', '환불완료') THEN 1 ELSE 0 END), 0) AS REFUNDCOUNT "
+				+ "FROM  "
+				+ "    date_range dr "
+				+ "LEFT JOIN  "
+				+ "    (SELECT * FROM ORDER_INFO oi JOIN PRODUCT p ON oi.PRODUCT_ID = p.PRODUCT_ID WHERE p.SELLER = " + seller_id +" ) oi "
+				+ "ON  "
+				+ "    dr.ORDER_DATE = TRUNC(oi.ORDER_DATE) "
+				+ "GROUP BY  "
+				+ "    dr.ORDER_DATE "
+				+ "ORDER BY  "
+				+ "    dr.ORDER_DATE";	
+		
+		List<AjaxDataTrans> list = new Vector<AjaxDataTrans>();
+		
+		try 
+		{
+			psmt = con.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			
+			while (rs.next()) 
+			{
+				AjaxDataTrans dto = new AjaxDataTrans();
+				
+				String dateStr = DateConvert(rs.getString("DATEINFO"));
+				
+				dto.setDateInfo(dateStr);
+				dto.setSellCnt(rs.getInt("ORDERCOUNT"));
+				dto.setRefundCnt(rs.getInt("REFUNDCOUNT"));				
+				list.add(dto);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
 	public List<AjaxDataTrans> Get_Seller_SellCount(int seller_id)
 	{
 		String sql = "WITH date_range AS ( "
@@ -329,6 +378,4 @@ public class SellerDAO extends JDBConnect
 		dto.setIntData_00(result);
 		return dto;		
 	}
-
-	
 }
