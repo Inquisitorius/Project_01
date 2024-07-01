@@ -12,7 +12,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/Join/*")
 public class JoinController extends HttpServlet {
@@ -58,11 +57,23 @@ public class JoinController extends HttpServlet {
 		try {
 				JoinDAO dao = new JoinDAO();
 				LoginDTO dto = new LoginDTO();
-				String date = req.getParameter("memberBirthYear")
-						+req.getParameter("memberBirthMonth")
-						+req.getParameter("memberBirthDay");
+				String year = req.getParameter("memberBirthYear");
+				String month = req.getParameter("memberBirthMonth");
+				String day = req.getParameter("memberBirthDay");
+				
+				String date = null;
+				if (year != null && month != null && day != null) {
+				    date = year + month + day;
+				}
+				Date memberBirthDate;
+				if(date == null || date.equals("")) {
+					memberBirthDate= null;
+				}else {
 				LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyyMMdd"));	
-				Date memberBirthDate = Date.valueOf(localDate);
+				memberBirthDate = Date.valueOf(localDate);	
+				}
+				System.out.println("join 컨트롤러 date"+date);
+				
 				dto.setId(req.getParameter("memberId"));
 				dto.setPass(req.getParameter("memberPwd"));
 				dto.setName(req.getParameter("memberName"));
@@ -75,6 +86,11 @@ public class JoinController extends HttpServlet {
 				
 				dao.createAccount(dto);
 				
+				PrintWriter out = resp.getWriter();
+				out.print("<script>");
+			    out.print("location.href = '/MainPage/MainPage.jsp';");
+			    out.print("</script>");
+				out.close();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

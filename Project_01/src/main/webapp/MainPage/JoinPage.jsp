@@ -206,7 +206,7 @@ a:hover {
 					<div class="col-md-6">
 						<input type="text" class="input_Style" id ="input_id" maxlength="16" oninput="inputId(this.id)" placeholder="아이디를 입력해주세요."
 							onfocus="this.placeholder=''"
-							onblur="this.placeholder='아이디를 입력해주세요.'" name="memberId">
+							onblur="this.placeholder='아이디를 입력해주세요.'" name="memberId" onkeypress="enterId(event)">
 					</div>
 					<div class="col-md-2">
 						<div class="button_Style">
@@ -219,18 +219,32 @@ a:hover {
 		</div>
 		
 		<script>
+		function enterId(e){
+			const key = e.code;
+			var repetitionBtn = document.getElementById("repetitionBtn");
+			if(key == 'Enter'){
+				$('#repetitionBtn').click(repetitionCheck());
+			}
+		}
 			function repetitionCheck(){
 				var id = document.getElementById("input_id").value;
-				if(id != "" && idWarning.textContent == ""){
+				if(id == ""){
+					idWarning.textContent = "아이디를 입력해주세요.";
+				}
+				if(id != "" && idWarning.textContent != "6자 이상 16자 이하의 영문 혹은 영문과 숫자"){
 					 $.ajax({
 		                    url: '/Join/JoinCheck',
 		                    method: 'GET',
 		                    data: { id: id },
 		                    success: function(response) {
 		                        if (response.isDuplicate) {
+		                        	idWarning.style.color = "red";
 		                            idWarning.textContent = "이미 사용중인 아이디 입니다.";
 		                        } else {
 		                            idWarning.textContent = "사용 가능한 아이디 입니다.";
+		                            idWarning.style.color = "green";
+		                            repetitionBtn.className = "btn btn-outline-secondary"
+		                            repetitionBtn.disabled = true;
 		                        }
 		                    },
 		                    error: function(error) {
@@ -263,11 +277,27 @@ a:hover {
 				function inputId(id) {
 				var id = document.getElementById(id).value;
 				const re = /^(?=.*[a-zA-Z])[a-z0-9]{6,16}$/;
+				if (!id) {
+	                idWarning.textContent = "";
+	                return;
+	            }
 				if(re.test(id)){
 					idWarning.textContent = "";
-					
 				}else{
+				idWarning.style.color="red";
 				idWarning.textContent = "6자 이상 16자 이하의 영문 혹은 영문과 숫자";}
+				
+				reinputId();
+				}
+				
+				function reinputId(){
+				var repetitionBtn = document.getElementById("repetitionBtn");
+				if(repetitionBtn.classList.contains("btn-outline-secondary")) {
+			        repetitionBtn.classList.remove("btn-outline-secondary");
+			        repetitionBtn.classList.add("btn-success");
+                   	 repetitionBtn.disabled = false;
+                   	 
+				}
 				}
 		</script>
 		
@@ -310,6 +340,10 @@ a:hover {
 			<script>
 			function inputPwd(pwd) {
 				var pwd = document.getElementById(pwd).value;
+				if (!pwd) {
+	                pwdWarning.textContent = "";
+	                return;
+	            }
 				if(pwd.length < 8){
 				pwdWarning.textContent = "비밀번호는 8자리 이상으로 설정해주세요."
 				}else{
@@ -359,10 +393,16 @@ a:hover {
 		function inputPwdCheck(pwdcheck){
 		var pwd = document.getElementById("input_pwd").value;
 		var pwdcheck = document.getElementById(pwdcheck).value;
+		if (!pwdcheck) {
+			pwdCheckWarning.textContent = "";
+            return;
+        }
 		if(pwd == pwdcheck){
 			pwdCheckWarning.textContent = "비밀번호가 일치합니다.";
+			pwdCheckWarning.style.color = "green";
 		}else{
 			pwdCheckWarning.textContent = "비밀번호가 일치하지 않습니다.";
+			pwdCheckWarning.style.color = "red";
 		}
 	}
 		
@@ -409,6 +449,10 @@ a:hover {
 		function inputNameCheck(name){
 		var name = document.getElementById(name).value;
 		var re = /^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/;
+		if (!name) {
+			nameWarning.textContent = "";
+            return;
+        }
 		if(re.test(name)){
 			nameWarning.textContent = "";
 		}else{
@@ -458,6 +502,10 @@ a:hover {
 		function inputEmailCheck(email){
 		var email = document.getElementById(email).value;
 		var email_re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+		if (!email) {
+			emailWarning.textContent = "";
+            return;
+        }
 		if(email_re.test(email)){
 			emailWarning.textContent = "";
 		}else{
@@ -507,6 +555,10 @@ a:hover {
 		var element = document.getElementById(id);
 		element.value = element.value.replace(/[^0-9]/gi, "");
 		var phone = element.value;
+		if (!phone) {
+			phoneWarning.textContent = "";
+            return;
+        }
 		if(phone.length < 10){
 			phoneWarning.textContent = "핸드폰 번호를 입력해주세요.";
 		}else{
@@ -531,10 +583,10 @@ a:hover {
 								onclick="execDaumPostcode()" ><span><img src="/resources/img/joinSearchIcon.png" width=20px;/>주소 검색</span></button>
 						
 						
-							<input type="text" class="input_Style" id="input_addr" name="memberAddr" style="display:none;"
+							<input type="text" class="input_Style" id="input_addr" name="memberAddr" style="display:none;" oninput="addrCheck(this.id)"
 								placeholder="주소">
 						</div>
-						<input type="text" class="input_Style" id="input_addrsub" name="memberAddrsub" style="display:none;"
+						<input type="text" class="input_Style" id="input_addrsub" name="memberAddrsub" style="display:none;" oninput="addrCheck(this.id)"
 							placeholder="상세주소">
 						<!-- <input type="text" id="sample6_extraAddress" placeholder="참고항목">	 -->
 						<div class="mini_Font">
@@ -603,19 +655,47 @@ a:hover {
 												// 우편번호와 주소 정보를 해당 필드에 넣는다.
 												document.getElementById('sample6_postcode').value = data.zonecode; */
 												document.getElementById("input_addr").value = addr;
+												addrWarning.textContent ="상세주소를 입력해주세요.";
 												// 커서를 상세주소 필드로 이동한다.
 												document.getElementById("input_addrsub").focus();}}).open({
 													    left: (window.screen.width / 2) - (width / 2),
 													    top: (window.screen.height / 2) - (height / 2)
 												});
 							}
-							
-												
 						</script>
 					</div>
 				</div>
 			</div>
 		</div>
+		
+		<script>
+			function addrCheck(id){
+			var addr = document.getElementById(id).value;
+			if(addr == ""){
+				addrWarning.textContent = "주소는 필수 입력사항입니다."
+			}
+			else
+				addrWarning.textContent = "";
+			}
+		</script>
+		
+			<div class="row" style="justify-content: center;">
+			<div class="col-md-6" style="display:flex; justify-content: center;">
+					<div class="col-md-3">
+						<div class="field_Name">
+						</div>
+					</div>
+					<div class="col-md-6" >
+					<p id="addrWarning" class="red_Color" ></p>
+					</div>
+					<div class="col-md-2">
+						<div class="button_Style">
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		
 
 		<div class="row" style="justify-content: center;">
 			<div class="col-md-6">
@@ -699,39 +779,42 @@ a:hover {
 			</div>
 		</div>
 
-		<script>  														//숫자 외 입력 금지
+		<script>  										
 				function inputNum(id) {
-				var element = document.getElementById(id);
-				element.value = element.value.replace(/[^0-9]/gi, "");
-				
-				year = document.getElementById("input_birthyear").value;
-				month = document.getElementById("input_birthmonth").value;
-				day = document.getElementById("input_birthday").value;
-				
-				if(id == "input_birthyear" || id == "input_birthmonth" || id == "input_birthday" ){
-					if(year > 1924 && year < 2024){
-						birthWarning.textContent = "태어난 월을 확인해주세요.";
-						birthWarning.style.visibility = 'visible';
-						year = true;
-					}else{
-						birthWarning.textContent = "태어난 년도를 정확히 입력해주세요.";
-					}
-					
-					if(year == true){
-						if(month > 0 && month < 13){
-						birthWarning.textContent = "태어난 일을 확인해주세요.";
-						month = true;
-						
-						if(month == true){
-							if(day > 0 && day <31){
-								day == true;
-								birthWarning.textContent = "";
-							}
-						}
-						}
-					}
-				}
-			}
+				 	year = document.getElementById("input_birthyear").value;
+		            month = document.getElementById("input_birthmonth").value;
+		            day = document.getElementById("input_birthday").value;
+		            
+		            var inputBirthmonth = document.getElementById("input_birthmonth");
+		            var inputBirthday = document.getElementById("input_birthday");
+		           	currentDate = new Date();
+		           	if (!year && !month && !day) {
+		                birthWarning.textContent = "";
+		                return;
+		            }
+		            if(id == "input_birthyear" || id == "input_birthmonth" || id == "input_birthday" || year == "") {
+		                if (year < (currentDate.getFullYear() - 100) || year > currentDate.getFullYear()) {
+		                    birthWarning.textContent = "태어난 년도를 4자리로 정확히 입력해주세요.";
+		                } else if (month < 1 || month > 12) {
+		                    birthWarning.textContent = "태어난 월을 다시 확인해주세요.";
+		                } else if (day < 1 || day > 31) {
+		                    birthWarning.textContent = "태어난 일을 다시 확인해주세요.";
+		                } else {
+		                    birthWarning.textContent = "";
+		                }
+		            }
+		            inputBirthmonth.addEventListener('blur', function() {
+		            	if ((month > 1 || month < 12) && month.length == 1){
+		            		document.getElementById("input_birthmonth").value = "0"+month;
+		            		}
+		            	});
+
+		            inputBirthday.addEventListener('blur', function() {
+		            	if ((day > 1 || day < 12) && day.length == 1){
+		            		document.getElementById("input_birthday").value = "0"+day;
+		            		}
+		            });
+		        }
 			</script>
 
 		<div class="row" style="justify-content: center;">
@@ -750,7 +833,7 @@ a:hover {
 					</div>
 					<div class="col-md-8"
 						style="user-select: none; display: flex; align-items: center">
-						<input type="checkbox" id="check_btn" class="agreeCheck"
+						<input type="checkbox" id="check_btn" class="agreeCheck" id = "all_checkedBtn"
 							onclick="checkAll(this)" /><label for="check_btn"></label> <span
 							class="ban_Select" style="font-weight: 600; font-size: 20px;">
 							전체 동의합니다.<br>
@@ -759,7 +842,18 @@ a:hover {
 				</div>
 			</div>
 		</div>
-
+		
+		<div class="row" style="justify-content: center;">
+			<div class="col-md-6" style="display:flex; justify-content: center;">
+					<div class="col-md-3">
+						<div class="field_Name"></div>
+					</div>
+					<div class="col-md-8" style="user-select: none; display: flex; align-items: center">
+							<p id="agreeWarning" class="red_Color"></p>
+					</div>
+				</div>
+			</div>
+		
 		<script>
 				function checkAll(el){
 					const checkBoxes  = document.querySelectorAll('.agreeCheck');
@@ -868,24 +962,109 @@ a:hover {
 				{
 					$('#joinBtn').click(function()
 					{	
-						if(idWarning.textContent == ""){
-							idWarning.textContent =="아이디를 다시 확인해주세요";
-							idWarning.focus();
+						var id = document.getElementById("input_id").value;
+						var pass = document.getElementById("input_pwd").value;
+						var passcheck = document.getElementById("input_pwdcheck").value;
+						var name = document.getElementById("input_name").value;
+						var email = document.getElementById("input_email").value;
+						var phone = document.getElementById("input_phone").value;
+						var address = document.getElementById("input_addr").value;
+						var address_sub = document.getElementById("input_addrsub").value;
+						var year = document.getElementById("input_birthyear").value;
+						var month = document.getElementById("input_birthmonth").value;
+						var day = document.getElementById("input_birthday").value;
+						var repetitionBtn = document.getElementById("repetitionBtn");
+						var agreebtn = document.getElementById("check_btn");
+						
+						const re = /^(?=.*[a-zA-Z])[a-z0-9]{6,16}$/;
+						
+						if(!re.test(id) && id != ""){
+						idWarning.style.color="red";
+						idWarning.textContent = "6자 이상 16자 이하의 영문 혹은 영문과 숫자";}
+						
+						else if(id == ""){
+							idWarning.style.color = "red";
+							idWarning.textContent = "아이디는 필수 입력사항 입니다.";
+						}
+						else if (id != "" && idWarning.textContent=="" ){
+							idWarning.style.color = "red";
+							idWarning.textContent = "아이디 중복 검사를 눌러 주세요.";
 						}
 						
+						else if(pwdWarning.textContent != "" || pass == ""){
+							pwdWarning.style.color = "red";
+							pwdWarning.textContent = "비밀번호를 다시 확인해주세요";
+							pwdWarning.focus();
+							if(pass ==""){
+								pwdWarning.textContent = "비밀번호는 필수 입력사항 입니다.";
+							}
+						}
 						
-						else{
+						else if((pass != passcheck) || passcheck == ""){
+							pwdCheckWarning.style.color = "red";
+							pwdCheckWarning.textContent = "비밀번호를 다시 입력해주세요";
+							pwdCheckWarning.focus();
+							if(passcheck ==""){
+								idWarning.style.color = "red";
+								pwdCheckWarning.textContent = "비밀번호 확인은 필수 입력사항 입니다.";
+							}
+						}
+						
+						else if(nameWarning.textContent != "" || name == ""){
+							nameWarning.textContent = "입력한 이름을 다시 확인해주세요";
+							nameWarning.focus();
+							if(name ==""){
+								nameWarning.textContent = "이름은 필수 입력사항 입니다.";
+							}
+						}
+						
+						else if(emailWarning.textContent != "" || email == ""){
+							emailWarning.textContent = "이메일을 다시 확인해주세요";
+							emailWarning.focus();
+							if(email ==""){
+								emailWarning.textContent = "이메일은 필수 입력사항 입니다.";
+							}
+						}
+						
+						else if(phoneWarning.textContent != "" || phone == ""){
+							phoneWarning.textContent = "휴대폰 번호를 다시 확인해주세요";
+							phoneWarning.focus();
+							if(phone ==""){
+								phoneWarning.textContent = "휴대폰 번호는 필수 입력사항 입니다.";
+							}
+						} 
+						
+						else if(address == "" && address_sub == ""){
+							addrWarning.textContent = "주소 검색을 해주세요."
+						}
+						
+						else if(address == "" || address_sub == ""){
+							addrWarning.textContent = "주소는 필수 입력사항 입니다."
+						}
+						
+						else if((birthWarning.textContent != "") && (year != "" || month != "" || day != "")){
+						}
+						
+						else if(!agreebtn.checked){
+							agreeWarning.textContent = "필수 항목은 모두 동의 하셔야 가입이 가능합니다."
+						}
+							
+						else{ 
+							if(repetitionBtn.classList.contains("btn-outline-secondary")) {
 							createFunction();
+							alert("회원 가입에 성공했습니다.");
+							}
 						}
 					});
 				});
-		
 		
 		function createFunction()
 		{
 			formJoin.method = "post";
 			formJoin.action = "/Join/JoinTry"; 
 			formJoin.submit();
+			var repetitionBtn = document.getElementById("repetitionBtn");
+		    repetitionBtn.disabled = false;
 		}
 		</script>
 		

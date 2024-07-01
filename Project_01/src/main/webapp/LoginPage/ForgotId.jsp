@@ -8,7 +8,7 @@
 <title>로그인</title>
 <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.css">
 <script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style type="text/css">
 .login_Title {
 	margin-top: 100px;
@@ -94,17 +94,24 @@
 		<div class="row" style="justify-content: center;">
 			<div class="col-md-3" style="justify-content: center;">
 				<div><span class="font_Style">이름</span></div>
-				<input id = "input_name" type="text" class="input_Style" placeholder="이름을 입력해주세요" oninput="inputNameCheck(this.id)" onfocus="this.placeholder=''" onblur="this.placeholder='이름을 입력해주세요.'" name="name">
+				<input id = "input_name" type="text" class="input_Style" placeholder="이름을 입력해주세요" oninput="inputNameCheck(this.id)" onfocus="this.placeholder=''" onblur="this.placeholder='이름을 입력해주세요.'" name="name" onkeypress="enter(event)">
 				<div><span class="font_Style" id="second_content">휴대폰 번호</span></div>
 				<input type="text" class="input_Style" placeholder="숫자만 입력해주세요" id="input_second" oninput="inputSecond(this.id)" maxlength="25" 
-							onfocus="this.placeholder=''"
-							onblur="this.placeholder='숫자만 입력해주세요.'" name="phone">
+							onfocus="this.placeholder=''" 
+							onblur="this.placeholder='숫자만 입력해주세요.'" name="phone" onkeypress="enter(event)">
 				<p id="Warning" class="red_Color" ></p>
 				<button type="button" class="btn btn-success" id="submit_button" onclick="idSearch()" style="margin-top:40px; margin-bottom:40px; height:38px; width:100%;">찾기</button>
 				</div>
 		</div>
 	</form>	
 		<script>
+		function enter(e){
+			const key = e.code;
+			if(key == 'Enter'){
+				$('#submit_button').click(idSearch());
+			}
+		}
+		
 		function idSearch(){
 			var name = $("#input_name").val();
             var second = $("#input_second").val();
@@ -115,9 +122,14 @@
                 dataType: "json",
                 success: function(response) {
                     if (response.status === "success") {
-                        alert('가입 하신 아이디는 ' + response.id + '입니다.');
-                        window.location.href = "/MainPage/LoginPage.jsp";
-                    } 
+                    	swal({
+                  			 title: "가입 하신 아이디는 '" + response.id + "'입니다.'",
+                 			 icon: "info",
+                 			 button: "확인",
+              				 }).then((value) => {
+              					location.replace("/MainPage/LoginPage.jsp");
+          			     });		
+   		         }
                     else{
                     	Warning.textContent = "입력 값을 다시 확인해주세요.";
                     	}
@@ -133,6 +145,7 @@
 			var re = /^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/;
 			if(re.test(name)){
 				Warning.textContent = "";
+				inputSecond("input_second");
 			}else{
 				Warning.textContent = "이름 형식이 틀립니다.";
 			}
@@ -140,6 +153,7 @@
 		
 		function inputSecond(id){
 		contents = document.getElementById("second_content").textContent;
+		
 		if(contents == "휴대폰 번호"){
 			var element = document.getElementById(id);
 			element.value = element.value.replace(/[^0-9]/gi, "");

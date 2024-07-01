@@ -94,17 +94,25 @@
 		<div class="row" style="justify-content: center;">
 			<div class="col-md-3" style="justify-content: center;">
 				<div><span class="font_Style">아이디</span></div>
-				<input id = "input_id" type="text" class="input_Style" placeholder="아이디을 입력해주세요" oninput="inputid(this.id)" onfocus="this.placeholder=''" onblur="this.placeholder='아이디을 입력해주세요.'" name="input_id">
+				<input id = "input_id" type="text" class="input_Style" placeholder="아이디을 입력해주세요" oninput="inputid(this.id)" onfocus="this.placeholder=''" onblur="this.placeholder='아이디을 입력해주세요.'" name="input_id" onkeypress="enter(event)">
 				<div><span class="font_Style" id="second_content">휴대폰 번호</span></div>
 				<input type="text" class="input_Style" placeholder="숫자만 입력해주세요" id="input_second" oninput="inputSecond(this.id)" maxlength="25" 
 							onfocus="this.placeholder=''"
-							onblur="this.placeholder='숫자만 입력해주세요.'" name="phone">
+							onblur="this.placeholder='숫자만 입력해주세요.'" name="phone" onkeypress="enter(event)">
 				<p id="Warning" class="red_Color" ></p>
 				<button type="button" class="btn btn-success" id="submit_button" onclick="pwdSearch()" style="margin-top:40px; margin-bottom:40px; height:38px; width:100%;">찾기</button>
 				</div>
 		</div>
 	</form>	
 		<script>
+		
+		function enter(e){
+			const key = e.code;
+			if(key == 'Enter'){
+				$('#submit_button').click(pwdSearch());
+			}
+		}
+		
 		function pwdSearch(){
 			var id = $("#input_id").val();
             var second = $("#input_second").val();
@@ -115,8 +123,13 @@
                 dataType: "json",
                 success: function(response) {
                     if (response.status === "success") {
-                        alert('가입하신 비밀번호는 ' + response.pwd + '입니다.');
-                        window.location.href = "/MainPage/LoginPage.jsp";
+                	swal({
+                    	title: "가입 하신 비밀번호는 '" + response.pwd + "'입니다.'",
+                    	icon: "info",
+             			button: "확인",
+                    }).then((value) => {
+       					location.replace("/MainPage/LoginPage.jsp");
+                    });
                     } 
                     else{
                     	Warning.textContent = "입력 값을 다시 확인해주세요.";
@@ -133,7 +146,7 @@
 				const re = /^(?=.*[a-zA-Z])[a-z0-9]{6,16}$/;
 				if(re.test(id)){
 				Warning.textContent = "";
-					
+				inputSecond("input_second");	
 				}else{
 				Warning.textContent = "6자 이상 16자 이하의 영문 혹은 영문과 숫자";}
 				}

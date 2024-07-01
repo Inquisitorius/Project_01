@@ -26,9 +26,13 @@ user-select:none;
 </style>
 </head>
 <body>
+<% HttpSession session2 = request.getSession(); 
+	String userId = (String)session.getAttribute("id");
+%>
+
 <main class="container" style="padding-left:0px">
 			<div style="width: 100%; height:200px; padding:30px; border: 1px solid green;">
-					<span style="font-size:25px; font-weight:600">김진성님 (사용자 id 부분)</span>
+					<span style="font-size:25px; font-weight:600"><%= userId %> 님</span>
 			</div>
 			
 			<div style="display:flex; justify-content: center">

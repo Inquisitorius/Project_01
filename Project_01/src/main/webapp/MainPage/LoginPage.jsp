@@ -8,7 +8,7 @@
 <title>로그인</title>
 <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.css">
 <script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style type="text/css">
 
 .login_Title {
@@ -71,8 +71,8 @@ a:hover {
 		<form action="/login.do" method="post">
 		<div class="row" style="justify-content: center;">
 			<div class="col-md-3" style="justify-content: center;">
-				<input id = "input_id" type="text" class="input_Style" placeholder="아이디를 입력해주세요" onfocus="this.placeholder=''" onblur="this.placeholder='아이디를 입력해주세요.'" name="id">
-				<input id = "input_pw" type="password" class="input_Style" placeholder="비밀번호를 입력해주세요" onfocus="this.placeholder=''" onblur="this.placeholder='비밀번호를 입력해주세요.'" name="pass">
+				<input id = "input_id" type="text" class="input_Style" placeholder="아이디를 입력해주세요" onfocus="this.placeholder=''" onblur="this.placeholder='아이디를 입력해주세요.'" name="id" onkeypress="enter(event)">
+				<input id = "input_pw" type="password" class="input_Style" placeholder="비밀번호를 입력해주세요" onfocus="this.placeholder=''" onblur="this.placeholder='비밀번호를 입력해주세요.'" name="pass" onkeypress="enter(event)">
 				</div>
 		</div>
 		<div class="row" style="justify-content: center;">
@@ -107,6 +107,13 @@ a:hover {
 	<script src="/resources/bootstrap/js/bootstrap.bundle.js"></script>
 	<script	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 	<script>	
+	
+		function enter(e){
+			const key = e.code;
+			if(key == 'Enter'){
+				$('#loginBtn').click();
+			}
+		}
 		$(document).ready(function()
 		{
 			$('#loginBtn').click(function()
@@ -153,7 +160,14 @@ a:hover {
 		        	else
 		        	{
 		        		//메인으로? 요청 한 페이지?
-		        		location.replace("/MainPage/MainPage.jsp");
+		        		swal({
+               			 title: "로그인 되었습니다.",
+              			 icon: "info",
+              			 button: "확인",
+           				 }).then((value) => {
+           					location.replace("/MainPage/MainPage.jsp");
+       			     });		
+		        		
 		        	}
 		         },
 		         error : function(request,status,error)
