@@ -44,43 +44,6 @@ public class BoardDAO extends TestDBPool {
 		}
 		return totalCount;
 	}
-	 public List<BoardDTO> selectListPage() {
-		 List<BoardDTO> board = new Vector<BoardDTO>();
-		 String query = /*
-					 * " " + " SELECT * FROM ( " + "	SELECT Tb.*, ROWNUM rNum FROM ( " +
-					 */ " SELECT * FROM pboard ORDER BY IDX";
-			  	try {
-			  		Class.forName("oracle.jdbc.OracleDriver");
-
-					String url = "jdbc:oracle:thin:@localhost:1521:xe";
-					String id = "c##musthave";
-					String pwd = "1234";
-					con = DriverManager.getConnection(url, id, pwd);
-			  		psmt = con.prepareStatement(query);
-			  		rs=psmt.executeQuery();
-			  		
-			  		while(rs.next()) {
-			  			BoardDTO dto = new BoardDTO();
-			  			
-			  			dto.setIdx(rs.getString("idx"));
-			  			dto.setName(rs.getString("name"));
-			  			dto.setTitle(rs.getString("title"));
-			  			dto.setContent(rs.getString("content"));
-			  			dto.setPostdate(rs.getDate("postdate"));
-			  			dto.setOfile(rs.getString("ofile"));
-			  			dto.setSfile(rs.getString("sfile"));
-			  			dto.setPass(rs.getString("pass"));
-			 
-			  			board.add(dto);
-			  		}
-		  	}
-			  	catch(Exception e) {
-			  		System.out.println("예외 발생");
-			  		e.printStackTrace();
-			  	}
-			  	return board;
-			  	
-}
 	 public List<InqueryDTO> Inquerylist(int product_id) {
 		 String query = " SELECT * FROM inquery JOIN product ON inquery.product_id "
 		 			  + "= product.product_id WHERE product.product_id =" + product_id;
@@ -122,7 +85,8 @@ public class BoardDAO extends TestDBPool {
 			  	}
 			  	return Inquery;
 }
-	public int ModalWrite(String inquery_title, String inquery_content) {
+	public int ModalWrite(String inquery_title, String inquery_content,
+			int product_id) {
 			int result = 0;
 			InqueryDTO dto4 = new InqueryDTO();
 		
@@ -135,24 +99,25 @@ public class BoardDAO extends TestDBPool {
 			con = DriverManager.getConnection(url, id, pwd);
 			
 			String query = "INSERT INTO INQUERY VALUES ( "
-						 + "INQUERY_BNO.nextval,(SELECT p.PRODUCT_ID FROM PRODUCT p WHERE p.PRODUCT_ID = 4)"
-						 + ",(SELECT UI.IDX  FROM USER_INFO ui WHERE UI.IDX = 61) "
-						 + ",?,?,'',SYSDATE )";
+						 + "INQUERY_BNO.nextval,(SELECT p.PRODUCT_ID FROM PRODUCT p WHERE p.PRODUCT_ID = ?"
+						 + "),(SELECT UI.IDX  FROM USER_INFO ui WHERE UI.IDX = 61"
+						 + "),?,?,'',SYSDATE )";
 			 
-			psmt = con.prepareStatement(query);			  
-			psmt.setString(1, inquery_title);
-			psmt.setString(2, inquery_content);			 	 
-			result = psmt.executeUpdate();
+			psmt = con.prepareStatement(query);
 			
+			psmt.setInt(1, product_id);        
+		    psmt.setString(2, inquery_title);
+		    psmt.setString(3, inquery_content);	 
+			result = psmt.executeUpdate();
 		}
 		catch(Exception e) {
 			System.out.println("게시물 입력 중 예외 발생");
 			  e.printStackTrace();
-	}
+	}	
 		  return result;
-		  
-		  	
-}
+	}
+	
+	
 	public List<ProductDTO> View2(int product_id) 
 	{
 		

@@ -1,12 +1,27 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="Board.BoardDAO"%>
 <%@ page import="Board.BoardDTO"%>
 <%@ page import="Main.JDBConnect"%>
 <%@ page import="Main.TestDBPool"%>
 <%@ page import="DTO.InqueryDTO"%>
+
+<%
+HttpSession session2 = request.getSession();
+Integer currentProductId = (Integer) session.getAttribute("currentProductId");
+Integer UserIDX = (Integer) session.getAttribute("idx");
+if (currentProductId != null) {
+    // currentProductId를 사용하여 필요한 처리를 수행합니다.
+    // DAO 호출 및 데이터 처리 등
+    
+} else {
+    // 세션에서 currentProductId가 없는 경우의 처리
+    // 예: 다시 메인 페이지로 이동하거나 오류 메시지 표시 등
+}
+
+%>
 
 <!DOCTYPE html>
 <html>
@@ -245,8 +260,14 @@ hr {
 </head>
 <body>
 <jsp:include page="/Common/Header.jsp"/>
+
 <main>
 <div class="container"style = "max-width: 1050px; min-width:1050px; padding-left: 0px;padding-top: 20px;" >
+
+<form id="idxForm" action="/SetSessionServlet" method="post" style="display:none;">
+    <input type="hidden" name="idx" value="<%= session.getAttribute("idx") %>" />
+    <button type="submit">Submit</button>
+</form>
 <div class="row d-flex flex-nowrap">
 		 <div class="col-5"><c:forEach var="ProductDTO" items="${product2}">
 		 	<img src = "${ ProductDTO.product_img }" style = "width: 400px; height: auto; border-radius: 2%;
@@ -431,7 +452,7 @@ hr {
 
 	<div class="row">
 	<div class="col" style="display:flex;justify-content:flex-end;padding-bottom:10px;">
-	<button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="제목을 입력하시오.">문의하기</button>
+	<button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal" >문의하기</button>
 </div>
 </div>
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
@@ -455,8 +476,9 @@ hr {
         </c:forEach>
 		<div>
 		<hr style="width:100%; margin: auto;">
-		<form action="../test/ProductInfo.do"  method="post" enctype="multpart/form-data"
-		 onsubmit="return validateForm(this);"id="ModalWriteForm">	
+		<form action="../test/ProductInfo.do" method="post" enctype="multpart/form-data"
+		 onsubmit="return validateForm(this)"id="ModalWriteForm" accept-charset="utf-8";>	
+		 <input type="hidden" name="product_id" id="product_id">
           <div class="form-group-mb-3">
             <label for="recipient-name" class="col-form-label">제목</label>
             <input type="text" class="form-control" name="inquery_title">
@@ -469,7 +491,8 @@ hr {
       </div>
       <div class="modal-footer"style="display:flex;justify-content:center;">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"style="width:100px;height:40px;">취소</button>
-        <button type="submit" class="btn btn-outline-success" id="submitFormButton"style="width:100px;height:40px;">등록</button>
+        <!-- <button type="submit" class="btn btn-outline-success" id="submitFormButton" style="width:100px; height:40px;" onclick="submitForm()">등록</button> -->
+         <button type="submit" class="btn btn-outline-success" form="ModalWriteForm" style="width:100px;height:40px;">등록</button>
       </div>
     </div>
   </div>	
@@ -523,16 +546,73 @@ hr {
    	 </div> 
     </section>
 </main>
+
+
 <jsp:include page="/Common/Footer.jsp"/>
 
 	<script>
-	$(document).ready(function() {
-		console.log("ready");
-		$('#submitFormButton').click(function() {
-			console.log("hit!;");
-			$('#ModalWriteForm').submit();
-		});
+/* 	document.getElementById('idxForm').submit(); */
+	$(document).ready(function() 
+	{
+		
+		var loginCheck = $('#loginSave').val();
+		var authCheck = $('#authSave').val();
+		
+		if(loginCheck == 'null') {
+			
 
+			console.log("체크");
+		}			
+		else
+		{ 
+			console.log("있음 체크");
+		}
+        $('#submitFormButton').click(function() {
+        	
+            $('#ModalWriteForm').submit();
+        });
+        
+        $('#exampleModal').on('shown.bs.modal', function (event) 
+        {
+            let productId = '<%= session.getAttribute("currentProductId") %>';
+            document.getElementById('product_id').value = productId;
+              	
+            var button = event.relatedTarget;
+            var modalTitle = this.querySelector('.modal-title');
+            var modalBodyInput = this.querySelector('.modal-body input');
+            modalTitle.textContent = '상품 문의하기';
+        });
+    });
+
+    function validateForm(form) {
+        if (form.inquery_title.value == "") {
+        	alert("제목을 입력하세요.")
+            form.inquery_title.focus();
+            return false;
+        }
+        if (form.inquery_content.value == "") {
+            alert("내용을 입력하세요.");
+            form.inquery_content.focus();
+            return false;
+        }
+        return true;
+    }
+		function count(type)  {
+		  // 결과를 표시할 element
+		  const resultElement = document.getElementById('result');
+		  // 현재 화면에 표시된 값
+		  let number = resultElement.innerText;
+		 
+		  // 더하기/빼기
+		  if(type === 'plus') {
+		    number = parseInt(number) + 1;
+
+		  }else if(type === 'minus' && number!=1)  {
+		    number = parseInt(number) - 1;
+		  }
+		  // 결과 출력
+		  resultElement.innerText = number;
+		}
 		$('.board-row').on('click', function() {
 			var target = $(this).data('target'); // Get the target content ID
 			var $content = $(target).find('.hidden-content'); // Find the content to slide
@@ -553,53 +633,8 @@ hr {
 				// Show the clicked content
 				$content.slideDown();
 			}
-		});
-	});
-	function count(type)  {
-		  // 결과를 표시할 element
-		  const resultElement = document.getElementById('result');
-		  // 현재 화면에 표시된 값
-		  let number = resultElement.innerText;
-		 
-		  // 더하기/빼기
-		  if(type === 'plus') {
-		    number = parseInt(number) + 1;
-
-		  }else if(type === 'minus' && number!=1)  {
-		    number = parseInt(number) - 1;
-		  }
-		  // 결과 출력
-		  resultElement.innerText = number;
-		}
-	function validateForm(form) {
-		if (form.inquery_title.value == "") {
-			alert("제목을 입력하세요.");
-			form.inquery_title.focus();
-			return false;
-		}
-		if (form.inquery_content.value == "") {
-			alert("내용을 입력하세요.");
-			form.inquery_content.focus();
-			return false;
-		}
-	}
-	var exampleModal = document.getElementById('exampleModal')
-	exampleModal.addEventListener('show.bs.modal', function(event) {
-		// Button that triggered the modal
-		var button = event.relatedTarget
-		// Extract info from data-bs-* attributes
-		var recipient = button.getAttribute('data-bs-whatever')
-		// If necessary, you could initiate an AJAX request here
-		// and then do the updating in a callback.
-		// Update the modal's content.	
-		var modalTitle = exampleModal.querySelector('.modal-title')
-		var modalBodyInput = exampleModal.querySelector('.modal-body input')
-
-		var myModalEl = document.getElementById('myModal')
-
-		modalTitle.textContent = ' 상품 문의하기 '
-		modalBodyInput.value = recipient
-	});
+		});	
+		
 </script>
 	
 	<script src="/resources/bootstrap/js/bootstrap.bundle.js"></script>
