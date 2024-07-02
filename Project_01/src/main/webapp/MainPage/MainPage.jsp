@@ -280,7 +280,7 @@ body {
 				var product_id = $(this).siblings('#mainpage_productid').val();
 				$('#product_id_trans').val(product_id);
 				
-				$('#form_for_productInfo').submit();				
+				$('#form_for_productInfo').submit();
 			});
 			
 						

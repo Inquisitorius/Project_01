@@ -26,15 +26,15 @@
 	<div class="row" style="display: flex; justify-content: center; align-content: center; min-height: 63px; min-width: 1050px;">
 		<div class="col-sm-12 d-flex flex-nowrap" style = "max-width: 1050px; padding : 0px;">
 			<div class = "row">
-				<div style = "width: auto;">
+				<div style = "width: auto; display: inline-flex; align-items: center;">
 					<!--  <img src="/resources/img/kurly_logo.svg"/> -->
 					<a href = "/MainPage/MainPage.jsp" style = "text-decoration: none;">
 					<img src="/resources/img/Green.svg"/ style = "width: 82px; height: 42px; padding-bottom: 5px;">
 					</a>
-					<button class = "fontCommon_Option" style="background: none; border: none; padding-left: 15px; font-size: 15px; color: gray;">마켓그린</button>
-					<button class = "fontCommon_Option" style="background: none; border: none; padding-left: 15px; font-size: 15px; color: gray;">뷰티그린</button>
+					<button class = "fontCommon_Option" style="background: none; border: none; padding-left: 15px; padding-top: 5px; font-size: 15px; color: gray;">마켓그린</button>
+					<button id = "contactBtn" class = "fontCommon_Option" style="background: none; border: none; padding-left: 15px; padding-top: 5px; font-size: 15px; color: gray;">회사소개</button>
 				</div>	
-				<div style = "width: auto; padding-left: 50px;">
+				<div style = "width: auto; padding-left: 90px;">
 					<form class="d-flex" role="search">
                     	<input class="form-control me-2 fontCommon_Option" type="search" placeholder="Search" aria-label="Search" style = "width: 300px;">
                     	<button class="btn btn-outline-success fontCommon_Option" type="submit" style = "color: rgb(71, 112, 46);">Search</button>
@@ -43,14 +43,15 @@
 				<div style = "position: relative;">
 					<div  
 					style = "position:absolute; width: auto; 
-					right: -325px; top: -42px; 
+					right: -255px; top: -42px; 
 					width : 200px; height: 42px; 					
-					display: flex; align-items: center; justify-content: space-evenly;">
-						<div style = "width: 36px; height: auto;"><img id = "sellerIconImg" style = "width: 36px; height: auto; display: none;" src="/resources/img/seller.svg"/></div>
-						<div id = "loginBtn_Header" style = "width: 36px; height: auto; display: none;"><img style = "width: 36px; height: auto;" src="/resources/img/login.svg"/></div>
-						<div id = "logoutBtn_Header" style = "width: 36px; height: auto; display: none;"><img style = "width: 36px; height: auto;" src="/resources/img/logout.svg"/></div>
-						<div id = "useraddBtn_Header" style = "width: 36px; height: auto;"><img style = "width: 36px; height: auto;" src="/resources/img/user_add.svg"/></div>
-						<div id = "userpageBtn_Header" style = "width: 36px; height: auto;"><img style = "width: 36px; height: auto;" src="/resources/img/user_page.svg"/></div>
+					display: flex; align-items: center;">
+						<div id = "adminBtn_Header" style = "width: 36px; margin-left: 10px; height: auto; display: none;"><img style = "width: 36px; height: auto;" src="/resources/img/admin.svg"/></div>
+						<div id = "sellerIconImg" style = "width: 36px; margin-left: 10px; height: auto; display: none;"><img style = "width: 36px; height: auto; " src="/resources/img/seller.svg"/></div>
+						<div id = "loginBtn_Header" style = "width: 36px; margin-left: 10px; height: auto; display: none;"><img style = "width: 36px; height: auto;" src="/resources/img/login.svg"/></div>
+						<div id = "logoutBtn_Header" style = "width: 36px; margin-left: 10px; height: auto; display: none;"><img style = "width: 36px; height: auto;" src="/resources/img/logout.svg"/></div>
+						<div id = "useraddBtn_Header" style = "width: 36px; margin-left: 10px; height: auto;"><img style = "width: 36px; height: auto;" src="/resources/img/user_add.svg"/></div>
+						<div id = "userpageBtn_Header" style = "width: 36px; margin-left: 10px; height: auto;"><img style = "width: 36px; height: auto;" src="/resources/img/user_page.svg"/></div>
 						<div></div>
 					</div>					
 				</div>					
@@ -156,6 +157,11 @@
 	{
 		HeaderInit();	
 		
+		$('#contactBtn').click(function()
+		{
+			location.href = "/MainPage/Contactus.jsp";
+		});
+		
 		$('.dropdown-item_main').mouseover(function()
 		{
 			var src = $(this).children('.categoryImg').attr("src");
@@ -214,11 +220,24 @@
 		if(authCheck == '0' || authCheck == 'null')
 		{
 			$('#sellerIconImg').css('display','none');
+			$('#adminBtn_Header').css('display','none');
 		}
 		else if(authCheck == '2')
 		{
 			$('#sellerIconImg').css('display','block');
+			$('#adminBtn_Header').css('display','none');
 		}
+		else if(authCheck == '3')
+		{
+			$('#adminBtn_Header').css('display','block');
+		}
+		
+		//adminBtn_Header
+		$('#adminBtn_Header').css('cursor','pointer');
+		$('#adminBtn_Header').click(function()
+		{
+			location.href = "/Admin/AdminMainPage.jsp";
+		});	
 			
 		
 		//useraddBtn_Header
