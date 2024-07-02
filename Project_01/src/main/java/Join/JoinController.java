@@ -66,14 +66,7 @@ public class JoinController extends HttpServlet {
 				if (year != null && month != null && day != null) {
 				    date = year + month + day;
 				}
-				Date memberBirthDate;
-				if(date == null || date.equals("")) {
-					memberBirthDate= null;
-				}else {
-				LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyyMMdd"));	
-				memberBirthDate = Date.valueOf(localDate);	
-				}
-				System.out.println("id = " + req.getParameter("id"));
+				
 				dto.setId(req.getParameter("id"));
 				dto.setPass(req.getParameter("pass"));
 				dto.setName(req.getParameter("name"));
@@ -82,7 +75,7 @@ public class JoinController extends HttpServlet {
 				dto.setAddress(req.getParameter("address"));
 				dto.setAddress_sub(req.getParameter("address_sub"));
 				dto.setGender(req.getParameter("gender"));
-				dto.setBirthdate(memberBirthDate);
+				dto.setBirthdate(date);
 				
 				int result = dao.createAccount(dto);
 				if(result == 1) 

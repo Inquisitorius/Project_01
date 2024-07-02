@@ -9,6 +9,8 @@
 <script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>
 <script src="https://kit.fontawesome.com/a0b08e370a.js"
 	crossorigin="anonymous"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
 <style type="text/css">
@@ -94,10 +96,10 @@ text-decoration: none;
 				<a class="detail_Astyle" onclick="changeInclude('MyInfo.jsp')">내 정보 확인/수정</a>
 				</div>
 				<div class="detail_Menu">
-				배송지 정보 변경
+				<a class="detail_Astyle" onclick="changeInclude('ChangeAddr.jsp')">배송지 정보 변경</a>
 				</div>
 				<div class="detail_Menu">
-				작성 후기
+				회원 탈퇴
 				</div>
 			</div>
 			</div>
@@ -143,15 +145,14 @@ text-decoration: none;
 				     var script = document.createElement('script');
 				     script.text = scripts[i].text;
 				     document.head.appendChild(script).parentNode.removeChild(script);
-				        }
+				       }
 				    }
 			</script>
 	</div>		
 	</main>		
 <jsp:include page="/Common/Footer.jsp" />
-	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
-	<script src="/resources/bootstrap/js/bootstrap.bundle.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
+<script src="/resources/bootstrap/js/bootstrap.bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 </body>
 </html>

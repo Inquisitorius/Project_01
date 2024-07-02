@@ -34,8 +34,7 @@ public class JoinDAO extends DBConnTest {
 			psmt.setString(6, dto.getAddress());
 			psmt.setString(7, dto.getAddress_sub());
 			psmt.setString(8, dto.getGender());
-			psmt.setDate(9, dto.getBirthdate());
-			System.out.println(dto.getBirthdate());
+			psmt.setString(9, dto.getBirthdate());
 
 			rs = psmt.executeQuery();
 			result = 1;

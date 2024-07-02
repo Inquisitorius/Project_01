@@ -971,7 +971,7 @@ a:hover {
 						var phone = document.getElementById("input_phone").value;
 						var address = document.getElementById("input_addr").value;
 						var address_sub = document.getElementById("input_addrsub").value;
-						var gender = document.querySelector('input[name="membergender"]:checked');
+						var gender = document.querySelector('input[name="memberGender"]:checked').value;
 						var year = document.getElementById("input_birthyear").value;
 						var month = document.getElementById("input_birthmonth").value;
 						var day = document.getElementById("input_birthday").value;

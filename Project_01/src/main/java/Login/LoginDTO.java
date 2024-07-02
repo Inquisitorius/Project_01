@@ -12,7 +12,7 @@ public class LoginDTO {
 		private String address;
 		private String address_sub;
 		private String gender;
-		private Date birthdate;
+		private String birthdate;
 		private int auth_type;
 		
 		
@@ -70,10 +70,10 @@ public class LoginDTO {
 		public void setGender(String gender) {
 			this.gender = gender;
 		}
-		public Date getBirthdate() {
+		public String getBirthdate() {
 			return birthdate;
 		}
-		public void setBirthdate(Date birthdate) {
+		public void setBirthdate(String birthdate) {
 			this.birthdate = birthdate;
 		}
 		public int getAuth_type() {
