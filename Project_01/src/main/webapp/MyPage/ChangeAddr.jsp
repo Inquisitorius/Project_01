@@ -77,7 +77,7 @@
 		<div class="line_Style">
 				<div class="col-md-8">
 				<input class="form-control" type="text" id="input_addr" name="memberAddr" oninput="addrCheck(this.id)"
-					placeholder="<%= addr %>"  aria-label= "<%= addr %>"  disabled>
+					placeholder= "<%= addr %>" value="<%= addr %>"  disabled>
 				</div>
 		</div>
 		</div>
@@ -191,6 +191,10 @@
 				var address_sub = document.getElementById("input_addrsub").value;
 				var changedData = {id:id};
 				
+				if(address == "<%= addr %>" && address_sub == "<%= addr_sub %>"){
+					addrWarning.textContent = "기존 주소와 동일합니다."
+				}
+				
 				if(address_sub != "" ){
 				if (address != "<%= addr %>" || address_sub != "<%= addr_sub %>"){
 					changedData.address = address;
@@ -198,9 +202,9 @@
 					Swal.fire({
 	         			 title: "변경 사항을 저장하시겠습니까?",
 	        			 icon: "info",
-	        			 button: "확인",
 	        			 confirmButtonColor: 'green	',
 	        			 showCancelButton: true,
+	        			 confirmButtonText: "확인",
 	        			 cancelButtonText: '취소'
 	     				 }).then((result) => {
 	     					if (result.isConfirmed) {
@@ -219,6 +223,7 @@
 	     					 		
 	     			   		  });		
 	     				 }else{
+	     					
 	     				} },error: function() {
 	     				 alert('서버 오류가 발생했습니다. 다시 시도해 주세요.');
 	     					}

@@ -27,6 +27,11 @@ public class MyPageController extends HttpServlet {
 		{
 			UpdateTry(req,resp);
 		}
+		
+		if(command.equals("/DeleteTry"))
+		{
+			DeleteTry(req,resp);
+		}
 	}
 
 	private void UpdateTry(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -56,4 +61,25 @@ public class MyPageController extends HttpServlet {
 			out.close();
 		}
 	}
+	
+	private void DeleteTry(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		resp.setContentType("application/json");
+		resp.setCharacterEncoding("UTF-8");
+		PrintWriter out = resp.getWriter();
+		try {
+			 MyPageDAO dao = new MyPageDAO();
+			 String id = req.getParameter("id");
+			 int result = 0;
+			 result = dao.DeleteData(id);
+			 if(result != 0) {
+				 HttpSession session = req.getSession();
+				 session.invalidate();
+				 out.write("{\"status\": \"success\"}");}
+		}catch(Exception e) {
+		e.printStackTrace();
+		out.write("{\"status\": \"error\"}");
+		}finally {
+		out.close();
+	}
+}
 }

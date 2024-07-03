@@ -99,7 +99,7 @@ text-decoration: none;
 				<a class="detail_Astyle" onclick="changeInclude('ChangeAddr.jsp')">배송지 정보 변경</a>
 				</div>
 				<div class="detail_Menu">
-				회원 탈퇴
+				<a class="detail_Astyle" onclick="changeInclude('DeleteAccount.jsp')">회원 탈퇴</a>
 				</div>
 			</div>
 			</div>

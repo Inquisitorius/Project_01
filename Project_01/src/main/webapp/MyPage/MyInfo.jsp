@@ -152,7 +152,7 @@
 						</div>
 				</div>
 				<div class="col-md-6">
-					<input class="form-control" id ="input_id" type="text" placeholder=<%= userId %>  aria-label=<%= userId %>  disabled>
+					<input class="form-control" id="input_id" type="text" placeholder="<%= userId %>" aria-label="<%= userId %>" disabled>
 				</div>
 		</div>
 		</div>
@@ -248,7 +248,7 @@
 						</div>
 				</div>
 				<div class="col-md-6">
-				<input class="form-control" id ="input_name" type="text" placeholder= <%= userName %>  aria-label= <%= userName %>  disabled>
+				<input class="form-control" id="input_name" type="text" placeholder="<%= userName %>" aria-label="<%= userName %>" disabled>
 				</div>
 		</div>
 		</div>
@@ -537,9 +537,9 @@
 				Swal.fire({
          			 title: "변경 사항을 저장하시겠습니까?",
         			 icon: "info",
-        			 button: "확인",
-        			 confirmButtonColor: 'green	',
+	        		 confirmButtonColor: 'green',
         			 showCancelButton: true,
+        			 confirmButtonText: "확인",
         			 cancelButtonText: '취소'
      				 }).then((result) => {
      					if (result.isConfirmed) {
