@@ -111,7 +111,7 @@
    String userPhone = (String)session.getAttribute("phone");
    String userGender = (String)session.getAttribute("gender");
    String userDate = (String)session.getAttribute("birthdate");
-   System.out.println("MyInfo 안의 userDate = "+userDate);
+   userDate = userDate.replaceAll("(\\d{4})(\\d{2})(\\d{2})", "$1-$2-$3");
    
    String year = null;
    String month = null;
@@ -129,7 +129,6 @@
    if(month != null && day.length() < 2){
 	   day = "0"+day;
    }
-   
 %>
 
 	
