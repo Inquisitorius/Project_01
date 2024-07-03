@@ -50,6 +50,7 @@ public class MyPageController extends HttpServlet {
 		        result = dao.updateData(column,inputData,id);
 		        HttpSession session = req.getSession();
 		        session.setAttribute(column, inputData);
+		      System.out.println("Update Try 안의 값 column = "+column +" inputData = "+inputData);  
 			 }
 			 if(result != 0) {
 				 out.write("{\"status\": \"success\"}");

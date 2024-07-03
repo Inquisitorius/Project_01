@@ -111,16 +111,22 @@
    String userPhone = (String)session.getAttribute("phone");
    String userGender = (String)session.getAttribute("gender");
    String userDate = (String)session.getAttribute("birthdate");
-
-   String year = userDate.substring(0,4);
-   String month = userDate.substring(5,7);
-   String day = userDate.substring(8,10);
+   System.out.println("MyInfo 안의 userDate = "+userDate);
    
+   String year = null;
+   String month = null;
+   String day = null;
    
-   if(month != "" && month.length() < 2){
+   if(userDate != null){
+   year = userDate.substring(0,4);
+   month = userDate.substring(5,7);
+   day = userDate.substring(8,10);
+   }
+   
+   if(month != null && month.length() < 2){
 	   month = "0"+month;
    }
-   if(month != "" && day.length() < 2){
+   if(month != null && day.length() < 2){
 	   day = "0"+day;
    }
    
