@@ -23,13 +23,15 @@
     <link rel="stylesheet" href="/resources/css/Common.css">
     <link rel="stylesheet" href="/resources/css/ProductsInsertPage.css">
     <link rel="stylesheet" href="/resources/css/MainPage.css">
+    <link rel="stylesheet" href="/resources/editor/summernote-lite.css">
+   
 
     <!-- jQuery 사용을 위한 JS 로드 -->
     <script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>
     <script src="/resources/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.css" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.js"></script>
-	<script src="https://github.com/summernote/summernote/tree/master/lang/summernote-ko-KR.js"></script>
+    <script src="/resources/editor/summernote-lite.js"></script>
+    <script src="/resources/editor/summernote-ko-KR.js"></script>
+
 </head>
 <body>
     <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -191,20 +193,51 @@
 
  <script type="text/javascript">
         $(document).ready(function() {
-        	 $('#editorTxt').summernote({
-        	        placeholder: '내용을 입력하세요.',
-        	        tabsize: 3,
-        	        height: 300,
-        	        toolbar: [
-        	          ['style', ['style']],
-        	          ['font', ['bold', 'underline', 'clear']],
-        	          ['color', ['color']],
-        	          ['para', ['ul', 'ol', 'paragraph']],
-        	          ['table', ['table']],
-        	          ['insert', ['link', 'picture', 'video']],
-        	          ['view', ['fullscreen', 'codeview', 'help']]
-        	        ]
-        	      });
+ 			
+        	$('#editorTxt').summernote({
+				height: 300,                 // 에디터 높이
+				minHeight: null,             // 최소 높이
+				maxHeight: null,             // 최대 높이
+				focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+				lang: "ko-KR",					// 한글 설정
+				placeholder: '최대 2048자까지 쓸 수 있습니다',	//placeholder 설정
+				callbacks: {	//여기 부분이 이미지를 첨부하는 부분
+					onImageUpload : function(files) {
+						console.log(files[0])
+						uploadSummernoteImageFile(files[0],this);
+					},
+					onPaste: function (e) {
+						var clipboardData = e.originalEvent.clipboardData;
+						if (clipboardData && clipboardData.items && clipboardData.items.length) {
+							var item = clipboardData.items[0];
+							if (item.kind === 'file' && item.type.indexOf('image/') !== -1) {
+								e.preventDefault();
+							}
+						}
+					}
+				}
+	});
+        	
+        	/**
+        	* 이미지 파일 업로드
+        	*/
+        	function uploadSummernoteImageFile(file, editor) {
+        		data = new FormData();
+        		data.append("file", file);
+        		$.ajax({
+        			data : data,
+        			type : "POST",
+        			url : "/SellerPage/fileUpload.do",
+        			contentType : false,
+        			processData : false,
+        			success : function(data) {
+                    	
+                    	console.log(data.url);
+        				$(editor).summernote('insertImage', data.url);
+        			}
+        		});
+        	}
+
 
             $("#submitbtn").click(function() {
                 
@@ -225,14 +258,14 @@
                     subcategory: $("#subcategory").val(),
                     editorTxt: $("#editorTxt").val() 
                 };
-
+				
                 
                 $.ajax({
                     type: "POST",
                     url: "/SellerPage/ProductsInsert.do",
                     data: formData, 
                     success: function(response) {
-
+						
                         alert("상품이 등록되었습니다.");
                         window.location.href = "/ProductsList/ProductList.do";
                     },

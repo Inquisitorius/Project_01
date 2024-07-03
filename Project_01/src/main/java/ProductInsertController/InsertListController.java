@@ -16,7 +16,8 @@ import ProductsListController.ListDAO;
 @WebServlet("/SellerPage/ProductsInsert.do")
 public class InsertListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
+	
 	public InsertListController() {
 		super();
 	}
