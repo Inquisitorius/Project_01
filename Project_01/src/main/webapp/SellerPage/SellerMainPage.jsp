@@ -197,7 +197,7 @@ function get_SellerCountData()
 	{
 		seller_id : id
 	};
-	var url = "http://localhost:8080/SellerController/mainCnt.func";
+	var url = url_server + "/SellerController/mainCnt.func";
 	
 	$.ajax({
 		type:"post",
@@ -229,7 +229,7 @@ function get_SellerListData()
 	
 	var result;
 	
-	var url = "http://localhost:8080/SellerController/main.func";
+	var url = url_server + "/SellerController/main.func";
 	$.ajax({
 		type:"post",
         url:url,

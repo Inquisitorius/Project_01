@@ -153,6 +153,9 @@
 	</div>
 </header>
 <script>
+	//var url_server = '14.42.124.35:8080';
+	var url_server = 'http://localhost:8080';
+	
 	$(document).ready(function()
 	{
 		HeaderInit();	

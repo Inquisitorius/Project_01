@@ -68,10 +68,13 @@ $(document).ready(function()
 function get_SellerCountData()
 {
 	var id = 2;
+	var datevalue = $('#dayInfoValue').val();
+	console.log(Number(datevalue) + 1);
+	
 	var data = 
 	{
 		seller_id : id,
-		intData_00 : $('#dayInfoValue').val()
+		intData_00 : Number(datevalue) + 1
 	};
 	var url = "http://localhost:8080/SellerController/Get_SellerChartData";
 	

@@ -293,7 +293,7 @@ body {
                 };
 			
 			console.log("element_id :" + id);
-			var url = "http://localhost:8080/MainController";
+			var url = url_server + "/MainController";
 			//target URL INSERT
 			url += "/getSaleProductList";
 			
@@ -339,8 +339,8 @@ body {
 			var data = 
 			{
 				product_id : productId
-            };
-			var url = "http://localhost:8080/MainController";
+            };			
+			var url = url_server + "/MainController";
 			url += "/getTimeLimitSale";
 			
 			 $.ajax
@@ -382,7 +382,7 @@ body {
 			
 			$('#test').text("text changer!!!!!!!!!!!");
 			
-			var url = "http://localhost:8080/MainController/test.do";
+			var url = url_server + "/MainController/test.do";
 		    $.ajax({
 		        type:"post",
 		        url:url,
@@ -479,7 +479,7 @@ body {
 			
 			$('#test').text("text changer!!!!!!!!!!!");
 			
-			var url = "http://localhost:8080/MainController/test.do";
+			var url = url_server + "/MainController/test.do";
 		    $.ajax({
 		        type:"post",
 		        url:url,
