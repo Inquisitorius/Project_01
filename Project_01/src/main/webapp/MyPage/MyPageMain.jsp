@@ -79,7 +79,7 @@ text-decoration: none;
 				<a class="detail_Astyle" onclick="changeInclude('MyOrderList.jsp')">주문 목록 확인</a>
 				</div>
 				<div class="detail_Menu">
-				세부 메뉴 2
+				<a class="detail_Astyle" id = "orderMenuBtn" >구매 상품 확인</a>				
 				</div>
 				<div class="detail_Menu">
 				세부 메뉴 3
@@ -123,6 +123,15 @@ text-decoration: none;
 				</div>
 			
 			<script>
+			//code writer: Giseon
+			$(document).ready(function()
+			{
+				$('#orderMenuBtn').click(function()
+				{
+					location.replace("/MyPage/OrderMenu.jsp");
+				});
+			});
+			
 				function changeInclude(clickPage){
 				    var xhr = new XMLHttpRequest();
 				    xhr.onreadystatechange = function() {
