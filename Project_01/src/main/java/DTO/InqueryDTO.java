@@ -18,7 +18,19 @@ public class InqueryDTO
 	public int seller_id;
 	
 	public String inquery_date_format;
+	public int product_cnt;
 	
+	
+	public int getProduct_cnt() {
+		return product_cnt;
+	}
+
+
+	public void setProduct_cnt(int product_cnt) {
+		this.product_cnt = product_cnt;
+	}
+
+
 	public void Set_inquery_date_format(Date date)
 	{
 		SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");

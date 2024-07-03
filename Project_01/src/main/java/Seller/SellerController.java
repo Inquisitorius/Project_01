@@ -77,6 +77,71 @@ public class SellerController extends HttpServlet
 		{
 			this.Get_SellerChartData(req,resp);
 		}
+		else if(command.equals("/Get_OrderList.func"))
+		{	
+			this.Get_OrderList(req, resp);			
+		}
+		else if(command.equals("/Get_OrderDetail.func"))
+		{
+			this.Get_OrderDetail(req, resp);
+		}
+	}
+	
+	public void Get_OrderDetail(HttpServletRequest req, HttpServletResponse resp)
+	{
+		resp.setContentType("application/json");
+		resp.setCharacterEncoding("UTF-8");	
+		
+		try 
+		{
+			BufferedReader reader = req.getReader();
+			Gson gson_in = new Gson();
+			AjaxDataTrans data = gson_in.fromJson(reader, AjaxDataTrans.class);			
+			int order_id = data.getIntData_00();
+			
+			//RefundDTO
+			//여기에 dao 코드
+			SellerDAO dao = new SellerDAO();
+			
+			RefundDTO dto = dao.get_RefundData(order_id);
+				
+			Gson gson = new Gson();
+			String jsonResponse = gson.toJson(dto);
+			resp.getWriter().write(jsonResponse);
+			
+			
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return;
+	}
+	public void Get_OrderList(HttpServletRequest req, HttpServletResponse resp)
+	{
+		resp.setContentType("application/json");
+		resp.setCharacterEncoding("UTF-8");	
+		
+		try 
+		{
+			String user = req.getParameter("user_id");
+			int user_id = Integer.parseInt(user);
+			
+			//여기에 dao 코드
+			SellerDAO dao = new SellerDAO();
+			
+			List<SellerMainDTO> list = dao.Get_OrderList(user_id);
+				
+			Gson gson = new Gson();
+			String jsonResponse = gson.toJson(list);
+			resp.getWriter().write(jsonResponse);
+			
+			
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void Get_SellerChartData(HttpServletRequest req, HttpServletResponse resp)
@@ -177,9 +242,7 @@ public class SellerController extends HttpServlet
 		catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
-		
+		}		
 	}
 	
 	public void RefundUpdate(HttpServletRequest req, HttpServletResponse resp)

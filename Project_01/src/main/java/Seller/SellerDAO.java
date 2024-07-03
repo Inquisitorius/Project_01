@@ -280,7 +280,8 @@ public class SellerDAO extends JDBConnect
 			dto.setOrder_id(rs.getInt("ORDER_ID"));
 			dto.setRefund_reason(rs.getString("REFUND_REASON"));
 			dto.setRefund_date(rs.getDate("REFUND_DATE"));
-			dto.setRefund_state(rs.getString("REFUND_STATE"));			
+			dto.setRefund_state(rs.getString("REFUND_STATE"));
+			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -377,5 +378,48 @@ public class SellerDAO extends JDBConnect
 		AjaxDataTrans dto = new AjaxDataTrans();
 		dto.setIntData_00(result);
 		return dto;		
+	}
+
+	public List<SellerMainDTO> Get_OrderList(int user_id) 
+	{
+		String sql = "SELECT o.ORDER_ID , o.PRODUCT_ID, o.PRODUCT_CNT, o.USER_ID , o.ORDER_STATE, p.NAME, o.ORDER_DATE ";
+		sql += " FROM ORDER_INFO o JOIN PRODUCT p ON p.PRODUCT_ID = o.PRODUCT_ID ";
+		sql += "WHERE o.USER_ID = " + user_id;		
+		
+		List<SellerMainDTO> list =  new ArrayList<SellerMainDTO>();
+		
+		try 
+		{
+			psmt = con.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			
+			while (rs.next()) 
+			{
+				SellerMainDTO dto = new SellerMainDTO();
+				dto.setOrder_id(rs.getInt("ORDER_ID"));
+				dto.setProduct_id(rs.getInt("PRODUCT_ID"));
+				dto.setName(rs.getString("NAME"));
+				dto.setProduct_cnt(rs.getInt("PRODUCT_CNT"));
+				dto.Set_order_date_detail(rs.getDate("ORDER_DATE"));				
+				dto.setUser_id(rs.getInt("USER_ID"));				
+				dto.setOrder_state(rs.getString("ORDER_STATE"));				
+				
+				list.add(dto);		
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
+		return list;
+	}
+
+	public RefundDTO Get_OrderDetail(int order_id) 
+	{
+		String sql = "SELECT * FROM REFUND r  WHERE ORDER_ID =  " + order_id;
+		
+		
+		return null;
 	}
 }

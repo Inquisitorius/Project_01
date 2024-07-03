@@ -166,13 +166,13 @@ $(document).ready(function()
 	document.getElementById("filter-value").addEventListener("keyup", updateFilter);
 	
 	document.getElementById("filter-clear").addEventListener("click", function(){
-		document.getElementById("filter-field").value = "";
-		document.getElementById("filter-type").value = "=";
-		document.getElementById("filter-value").value = "";
+	document.getElementById("filter-field").value = "";
+	document.getElementById("filter-type").value = "=";
+	document.getElementById("filter-value").value = "";
 		
-		Array.from(document.getElementById("filter-type").options).forEach((option, index) => {
+	Array.from(document.getElementById("filter-type").options).forEach((option, index) => {
 			option.disabled = false;
-	});
+});
 
 		 table.clearFilter();
 	});
