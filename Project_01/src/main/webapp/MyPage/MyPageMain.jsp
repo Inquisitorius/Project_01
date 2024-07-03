@@ -62,15 +62,17 @@ text-decoration: none;
 		<div class="row" style="display:block; min-height:50px; "></div>
 		<div class="row" style="justify-content: center;">
 				<div class="col-md-5" style="padding-left:0px;">
-				<div style="width: 100%; height:200px; padding:40px; box-shadow: 1px 1px 5px grey;">
+				<div style="display:flex; justify-content: center;">
+				<div style="width: 90%; height:200px; padding:40px; box-shadow: 1px 1px 5px grey; user-select:none;">
 					<span style="font-size:25px; font-weight:600"><%= userName %> 님</span>
-			</div>
+				</div>
+				</div>
 			
 			<div style="display:flex; justify-content: center">
 			<hr style="width:90%;">
 			</div>
 		
-			<div class="row" style="padding:0px; margin:0px; box-shadow: 1px 1px 5px grey;">
+			<div class="row" style="padding:0px; margin:0px;">
 			<div class="row" style= "justify-content: center">
 			<div class="col-md-12" style="display:flex; flex-direction: column; align-items: center;">
 				<div class="menu_Title">	
@@ -108,7 +110,6 @@ text-decoration: none;
 				<a class="detail_Astyle" onclick="changeInclude('QnAPage.jsp')">자주 묻는 질문</a>
 				</div>
 				<div class="detail_Menu">
-				1:1 문의
 				</div>
 			</div>
 			</div>

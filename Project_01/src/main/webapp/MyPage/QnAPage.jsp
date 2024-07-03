@@ -67,6 +67,7 @@
 text-align:center;
 font-weight:600;
 text-align:center;
+user-select:none;
 }
 
 .qna_Item{
@@ -219,7 +220,7 @@ user-select:none;
 		</div>
 		
 		<div class="row" style="justify-content: center;">
-		<div class="col-md-10" style="display:flex; margin-bottom:10px;">
+		<div class="col-md-10" style="display:flex;">
 			<div class="line_Style" onclick="showAnswer(5)">
 				<div class="col-md-3">
 					<div class="qna_Item">
@@ -242,6 +243,34 @@ user-select:none;
 		</div>
 		</div>
 		</div>
+		
+		<div class="row" style="justify-content: center;">
+		<div class="col-md-10" style="display:flex;">
+			<div class="line_Style" onclick="showAnswer(6)">
+				<div class="col-md-3">
+					<div class="qna_Item">
+					회원
+					</div>
+				</div>
+				<div class="col-md-9">
+					<div class="qna_Item">
+					아이디,비밀번호를 잊어버렸습니다.
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-10" style="display:flex; margin-bottom:10px;">
+		<div class="qna-answer" id="content6">
+				<p class="qna-contentA">
+				■ 아이디, 비밀번호 찾기 안내<br/><br/>
+				로그인 화면 밑에서 아이디 및 비밀번호 찾기가 가능합니다. <br/>
+				가입시 기재한 메일 주소가 기억나지 않으시거나 오류가 발생하는 경우 <br/>
+				고객센터로 문의 바랍니다.</p>
+		</div>
+		</div>
+		</div>
+		
+		
 		
 		
 		

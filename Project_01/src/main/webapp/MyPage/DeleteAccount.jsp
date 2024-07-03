@@ -68,9 +68,9 @@
 					</div>		
 		
 				<div class="line_Style">
-							<p>사용하고 계신 아이디(<p>
-							<p style="color:green;"><%= userId %></p>
-							<p>)는 탈퇴할 경우 복구가 불가능합니다.</p>
+							<p style="font-weight:600">사용하고 계신 아이디(<p>
+							<p style="color:green; font-weight:600"><%= userId %></p>
+							<p style="font-weight:600;">)는 탈퇴할 경우</p> &nbsp; <p style="font-weight:600; color:red">복구가 불가능합니다.</p>
 				</div>
 		
 				<div class="line_Style">
@@ -112,7 +112,7 @@
 			</div>
 		</div>	
 		
-		<Script>
+		<script>
 			function DeleteTry(){
 				var id = "<%= (String)session.getAttribute("id") %>";
 				var Data = {id:id};
@@ -150,8 +150,7 @@
                        }
 			   		 });
 			}
-		</Script>
-		
+		</script>
 </main>
 </body>
 </html>

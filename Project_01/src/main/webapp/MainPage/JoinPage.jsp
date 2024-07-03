@@ -793,7 +793,8 @@ a:hover {
 		                birthWarning.textContent = "";
 		                return;
 		            }
-		            if(id == "input_birthyear" || id == "input_birthmonth" || id == "input_birthday" || year == "") {
+		           		
+		           	if(id == "input_birthyear" || id == "input_birthmonth" || id == "input_birthday" || year == "") {
 		                if (year < (currentDate.getFullYear() - 100) || year > currentDate.getFullYear()) {
 		                    birthWarning.textContent = "태어난 년도를 4자리로 정확히 입력해주세요.";
 		                } else if (month < 1 || month > 12) {
@@ -801,7 +802,11 @@ a:hover {
 		                } else if (day < 1 || day > 31) {
 		                    birthWarning.textContent = "태어난 일을 다시 확인해주세요.";
 		                } else {
-		                    birthWarning.textContent = "";
+		                	if(year > (currentDate.getFullYear()-14)){
+			           			birthWarning.textContent = "14세 이상만 가입 가능합니다.";
+			           			}
+		                	else{
+		                    birthWarning.textContent = "";}
 		                }
 		            }
 		            inputBirthmonth.addEventListener('blur', function() {
