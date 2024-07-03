@@ -16,7 +16,7 @@
 <style type="text/css">
 .Main_Title {
 	margin-top: 100px;
-	margin-bottom:100px;
+	margin-bottom:40px;
 	font-size: 30px;
 	font-weight: 600;
 	text-align: center;
@@ -100,7 +100,7 @@
   			<option value="4">개인 정보 보호</option>
 		</select>		
 			<p>앞으로의 사이트 운영을 위해 개선사항이 있으시면 알려주시기 바랍니다.(선택)</p>
-  			<textarea class="form-control" placeholder="이곳에 남겨주세요." id="suggestions_Field" style="height: 150px; resize: none;"></textarea>
+  			<textarea class="form-control" placeholder="이곳에 남겨주세요." id="suggestions_Field" style="height: 100px; resize: none;"></textarea>
 			</div>		
 		</div>		
 		
