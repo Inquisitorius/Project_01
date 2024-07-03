@@ -18,6 +18,10 @@ body
 	background-color: black;
 }
 
+html, body {   
+    overflow-x: hidden; /* 수평 스크롤바 제거 */
+}
+
 .video_MainTitle
 {
 	font-family: "Noto Sans KR", sans-serif;
@@ -116,6 +120,14 @@ body
     animation: fade-in-in 2s ease-out forwards; /* 다른 애니메이션 적용 */
 }
 
+.fontCommon_Option_conect
+{
+	font-family: "Noto Sans KR", sans-serif;
+	font-optical-sizing: auto;
+	font-style: normal;
+	color: #eaeaea;	
+}
+
 @keyframes fade-in-in
 {
 	0% {
@@ -140,7 +152,7 @@ body
 <body>
 <header class="container-fluid">
 <div class = "row">
-	<div class = "col-12">
+	<div class = "col-12" style = "margin-left: 100px;">
 		<a href = "/MainPage/MainPage.jsp" style = "text-decoration: none;">
 			<img src="/resources/img/Green_bw.svg" style = "width: 82px; height: 42px; padding-bottom: 5px;">
 		</a>		
@@ -148,6 +160,8 @@ body
 </div>
 </header>
 <main>
+<!-- https://drive.google.com/file/d/1r8LaQaKdP8pjiPJ85pEKvqEOomGEIpY8/view?usp=drive_link  video/webm-->
+<!-- /resources/img/video/ContectUs.mp4 -->
 <div class="container-fluid">
     <div class="row">
         <div class="col-12" style = "padding: 0px;">
@@ -170,7 +184,7 @@ body
         </div>        
     </div>
 </div>
-<div class="container" style = "color: #fff; padding-top: 50px;">
+<div class="container" style = "color: #fff; padding-top: 50px; padding-bottom: 50px;">
 	<div class = "row" style = "border-bottom: 1px solid #a0a0a0; padding-top: 10px;">
 		<div class = "col-2"><img src="/resources/img/contect/giseon.svg" style = "width: 100%; height: auto; "></div>
 		<div class = "col-10" style = "margin-top: 40px;">
@@ -186,13 +200,30 @@ body
 			<div class = "row"><label class = "video_subTitle" style  = "padding-bottom: 10px;">박현옥 조원</label></div>
 			<div class = "row"><label>메뉴 마음에 안들면 탈주 준비중</label></div>
 			<div class = "row"><label>ㅁㅁㅁㅁㅁㅁㅁ</label></div>
-			<div class = "row"><label>메인화면, 판매자 메인, 판매자 기능전반</label></div>
+			<div class = "row"><label>상품 리스트, 판매 물품 등록</label></div>
 		</div>
 	</div>
-	
+	<div class = "row" style = "border-bottom: 1px solid #a0a0a0; padding-top: 10px;">
+		<div class = "col-2"><img src="/resources/img/contect/Jinsung.svg" style = "width: 100%; height: auto; "></div>
+		<div class = "col-10" style = "margin-top: 40px;">
+			<div class = "row"><label class = "video_subTitle" style  = "padding-bottom: 10px;">김진성 조원</label></div>
+			<div class = "row"><label>제육, 돈까스, 국밥 로테이션</label></div>
+			<div class = "row"><label>ㅁㅁㅁㅁㅁㅁㅁ</label></div>
+			<div class = "row"><label>상품 상세 페이지</label></div>
+		</div>
+	</div>
+	<div class = "row" style = "padding-top: 10px;">
+		<div class = "col-2"><img src="/resources/img/contect/Ousung.svg" style = "width: 100%; height: auto; "></div>
+		<div class = "col-10" style = "margin-top: 40px;">
+			<div class = "row"><label class = "video_subTitle" style  = "padding-bottom: 10px;">권오성 조원</label></div>
+			<div class = "row"><label>ㅇㅇㅇㅇㅇㅇㅇㅇㅇ</label></div>
+			<div class = "row"><label>ㅁㅁㅁㅁㅁㅁㅁ</label></div>
+			<div class = "row"><label>회원가입, 로그인, 마이페이지</label></div>
+		</div>
+	</div>	
 </div>
-
 </main>
+<jsp:include page="/Common/Footer2.jsp"/>
 <script src="/resources/bootstrap/js/bootstrap.bundle.js"></script>
 </body>
 </html>
