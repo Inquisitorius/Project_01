@@ -20,6 +20,37 @@ public class SellerMainDTO
 	
 	public long rating;
 	
+	public String order_date_format;
+	public Date order_date_detail;
+	
+	public void setOrder_date(String order_date) {		
+		this.order_date = order_date;
+		ratingInsert();
+	}
+	
+	public void Set_inquery_date_format(Date date)
+	{
+		SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+		
+		String formattedDate1 = formatter.format(date);
+		
+		this.order_date_format = formattedDate1;
+	}
+	
+	public void Set_order_date_detail(Date order_date)
+	{
+		this.order_date_detail = order_date;
+		Set_inquery_date_format(order_date);
+	}
+	
+	public Date Get_order_date_detail()
+	{
+		return this.order_date_detail;
+	}
+	
+	public String getInquery_date_format() {
+		return order_date_format;
+	}	
 	 
 	public SellerMainDTO() {}
 	public SellerMainDTO(int order_id, int product_id, int product_cnt, int user_id, String order_state,
@@ -91,10 +122,7 @@ public class SellerMainDTO
 	public String getOrder_date() {		
 		return order_date;
 	}
-	public void setOrder_date(String order_date) {		
-		this.order_date = order_date;
-		ratingInsert();
-	}
+	
 	public int getCategory_id() {
 		return category_id;
 	}
