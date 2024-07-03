@@ -7,6 +7,7 @@ import java.util.List;
 import Board.BoardDAO;
 import DTO.InqueryDTO;
 import DTO.ProductDTO;
+import Login.LoginDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -31,21 +32,17 @@ import jakarta.servlet.http.HttpSession;
 		
 		protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 				String productIdStr = req.getParameter("product_id");
-				/*
-				 * String idxStr = req.getParameter("idx"); System.out.println("test get idx :"+
-				 * req.getParameter("idx")); if (idxStr != null && !idxStr.isEmpty()) { try {
-				 * int idx = Integer.parseInt(idxStr); HttpSession session = req.getSession();
-				 * session.setAttribute("idx", idx); // 세션에 idx 값을 저장 } catch
-				 * (NumberFormatException e) { System.out.println("Invalid idx format: " +
-				 * idxStr); resp.getWriter().println("Invalid idx format."); return; } }
-				 */
+				HttpSession session = req.getSession();
+				
+				
+			    Integer userId = (Integer) session.getAttribute("idx");
 				int product_id = -1;
 				
 				
 				if(productIdStr !=null & !productIdStr.isEmpty()) {
 					try {
 						product_id = Integer.parseInt(productIdStr);
-						HttpSession session = req.getSession();
+						
 						session.setAttribute("currentProductId", product_id);
 						
 						Integer product_id2 = (Integer) session.getAttribute("currentProductId");
@@ -65,16 +62,19 @@ import jakarta.servlet.http.HttpSession;
 				BoardDAO dao = new BoardDAO();
 				List<ProductDTO> product2 = dao.View2(product_id);
 			 	List<InqueryDTO> board = dao.Inquerylist(product_id);
+			 //	List<LoginDTO> User = dao.UserInfoList();
 				dao.close();
 				req.setAttribute("product_id", product_id);
 			 	req.setAttribute("product2", product2);
 				req.setAttribute("board", board);
+			//	req.setAttribute("User", User);
+				
 				req.getRequestDispatcher("/test/ProductInfo.jsp").forward(req, resp);
 				
 				}
 		protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-			req.setCharacterEncoding("UTF-8");
-			String idx = req.getParameter("idx");
+				req.setCharacterEncoding("UTF-8");
+			
 			String inquery_title = req.getParameter("inquery_title");
 	        String inquery_content = req.getParameter("inquery_content");
 	        
@@ -83,10 +83,11 @@ import jakarta.servlet.http.HttpSession;
 	        
 					int product_id = Integer.parseInt(productIdStr);
 					HttpSession session = req.getSession();
-
 					Integer product_id2 = (Integer) session.getAttribute("currentProductId");
-				//	Integer UserIDX = req.getParameter("idx");;
-					System.out.println("test USER IDX: "+ req.getParameter("idx"));
+					Integer user_id = (Integer) session.getAttribute("idx");
+					 
+					System.out.println("test USER IDX: "+(Integer) session.getAttribute("idx"));
+					
 					if (product_id2 == null) {
 					    System.out.println("currentProductId 세션에 저장된 값이 없습니다.");
 					}
@@ -94,8 +95,14 @@ import jakarta.servlet.http.HttpSession;
 					    else { System.out.println((Integer) session.getAttribute("currentProductId"));
 					    }
 					
+					if (user_id < 0) { 
+						resp.sendRedirect("../MainPage/LoginPage.jsp");
+					} else {
+						System.out.println("로그인 정보가 있습니다.");
+					}
+					
 					BoardDAO dao = new BoardDAO();
-					int result = dao.ModalWrite(inquery_title, inquery_content, product_id2);
+					int result = dao.ModalWrite(inquery_title, inquery_content, product_id2, user_id);
 
 					if (result > 0) {
 						 resp.sendRedirect("ProductInfo.do?product_id=" + product_id); 

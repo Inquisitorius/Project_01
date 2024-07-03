@@ -260,7 +260,6 @@ hr {
 </head>
 <body>
 <jsp:include page="/Common/Header.jsp"/>
-
 <main>
 <div class="container"style = "max-width: 1050px; min-width:1050px; padding-left: 0px;padding-top: 20px;" >
 
@@ -304,11 +303,6 @@ hr {
 					원산지 ${ ProductDTO.origin }
 				</div>
 			</div>	
-			<div class= "row">
-				<div class = "col-md-12 fontCommon_nomal">
-					<button type="button" class="btn btn-success">쿠폰</button>
-				</div>
-			</div>
 			<hr style="height:1px;border:none;background-color:gray;">
 			<div class= "row">
 				<div class = "col-md-3 fontgray">
@@ -369,10 +363,7 @@ hr {
 					안내사항
 				</div>
 				<div class = "col-md-8 fontgray">
-					${ ProductDTO.notifi } <br />
-					
-					상품특성상 3%내외의 중량차이가 있을 수 있습니다.<br/>
-					신선식품 특성상 원물마다 크기 및 형태가 일정하지 않을 수 있습니다.
+					${ ProductDTO.notifi }
 				</div>
 			</div>
 			<hr style="height:1px;border:none;background-color:gray;">
@@ -546,7 +537,11 @@ hr {
    	 </div> 
     </section>
 </main>
-
+<c:forEach var="LoginDTO" items="${User}">
+                     		<p>${ LoginDTO.idx }</p>
+                    	</th>	
+                    	<td>${ LoginDTO.name }</td>
+                    	</c:forEach>
 
 <jsp:include page="/Common/Footer.jsp"/>
 
