@@ -1,0 +1,21 @@
+.ProductsInsertTitle{
+	font-family: "Noto Sans KR", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 25px;
+    font-weight: 600;
+    color: rgb(51, 51, 51);
+}
+
+.col-form-label {
+    /* 원하는 스타일 속성들을 추가합니다 */
+    font-size: 14px;
+    margin-bottom: 8px;
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: bold;
+    width: 106px;
+}
+.form-group{
+	margin-top: 10px;
+}
+
