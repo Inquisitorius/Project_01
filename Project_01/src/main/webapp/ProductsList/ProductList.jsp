@@ -61,7 +61,7 @@
 
 <!-- Head, Footer CSS 링크 필수 -->
 <link rel="stylesheet" href="/resources/css/Common.css">
-<link rel="stylesheet" href="/resources/css/ProductList.css?after">
+<link rel="stylesheet" href="/resources/css/ProductList.css">
 
 <!-- jQuery 사용을 위한 JS 로드 -->
 <script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>
@@ -241,13 +241,13 @@
         <ul class="pagination justify-content-center">
         	<li class="page-item">
         		
-                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= 1 %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
+                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= 1 %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style="font-weight: bold" aria-label="Previous">
+                    <span aria-hidden="true"><img src=/resources/img/firstbtn.png></span>
                 </a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= Math.max(1, currentPage - 1) %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>" aria-label="Previous">
-                    <span aria-hidden="true"><</span>
+                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= Math.max(1, currentPage - 1) %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style="font-weight: bold" aria-label="Previous">
+                    <span aria-hidden="true"><img src=/resources/img/prevbtn.png></span>
                 </a>
             </li>
             <%  
@@ -260,17 +260,17 @@
                 String activeClass = (currentPage == i) ? "active" : "";
             %>
             <li class="page-item <%= activeClass %>">
-                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= i %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"><%= i %></a>
+                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= i %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style=""><%= i %></a>
             </li>
             <% } %>
             <li class="page-item">
-                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= Math.min(totalPages, currentPage + 1) %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>" aria-label="Next">
-                    <span aria-hidden="true">></span>
+                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= Math.min(totalPages, currentPage + 1) %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style="font-weight: bold" aria-label="Next">
+                    <span aria-hidden="true"><img src=/resources/img/nextbtn.png></span>
                 </a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= totalPages %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
+                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= totalPages %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style="font-weight: bold" aria-label="Next">
+                    <span aria-hidden="true"><img src=/resources/img/lastbtn.png></span>
                 </a>
             </li>
         </ul>
@@ -281,12 +281,7 @@
 	</div>
 	<jsp:include page="/Common/Footer.jsp" />
 	
-	<div id="myModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <p>내용을 입력하세요.</p>
-    </div>
-</div>
+
 <script>
     $(document).ready(function() {
         let currentPage = '<%= currentPage %>';
@@ -455,6 +450,7 @@
             
         });
         
+        // 페이지네비게이션 갱신
      	function updatePagination(){
      		$('.pagination').load(window.location.href + ' .pagination')
      	}
@@ -484,10 +480,9 @@
                     let itemhtml = $(data).find('#item').html();
                     let categoryFiltersHtml = $(data).find('#categoryFilters').html();
                     let delivery_type = $(data).find('delivery_Type').html();
-                    console.log(productcntHtml);
                     
                     if (!productListHtml || productListHtml.trim() === '') {
-                        console.log('productListHtml 값이 null 또는 빈 문자열입니다.');
+                        console.log('productListHtml null');
                         swal({
                             title: "상품이 없습니다.",
                             icon: "error",

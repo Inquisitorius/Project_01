@@ -325,7 +325,34 @@ public class ListDAO extends TestDBPool {
 		}
 		return Childcate;
 	}
+	
+	public List<CategoryDTO> selectinsertChildcate(String cate) {
+		List<CategoryDTO> Childcate = new Vector<CategoryDTO>();
+		
 
+		
+		String sql = " SELECT CATEGORY_NAME " + "FROM CATEGORY "
+				+ "WHERE category_parent = (SELECT IDX FROM CATEGORY WHERE category_name =?)"
+				+ "  AND category_layer = 1";
+		try {
+			
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, cate);
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				CategoryDTO dto = new CategoryDTO();
+				dto.setCategory_Name(rs.getString(1));
+				Childcate.add(dto);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			System.out.println("자식카테 조회중 예외발생");
+		}
+		return Childcate;
+	}
+
+	
 	public List<ProductDTO> ViewChildList(int start, int end, String[] Arrayfilters, String[] Arraydeliverys, String filters, String delivery, String category, String price, String[] Arrayprice, String type) {
 		List<ProductDTO> list = new Vector<ProductDTO>();
 		Map<String, String> map = ChildCategoryMap.getKoreanChildMap();
@@ -550,4 +577,87 @@ public class ListDAO extends TestDBPool {
 	    return list;
 	}
 
+	
+	public int insertProduct(ProductDTO dto, int price, int saleper, String childcategory) {
+		int result = 0;
+		int price_discount = price - (price * saleper / 100);
+		String sql = "INSERT INTO PRODUCT VALUES (PRODUCT_BNO.NEXTVAL, (SELECT IDX FROM CATEGORY WHERE CATEGORY_NAME = ?), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?, 0, 2)";
+
+	
+		System.out.println(sql);
+		try {
+			psmt = con.prepareStatement(sql);
+//			psmt.setString(1,childcategory);
+//			psmt.setString(2, dto.getName());
+//			psmt.setString(3, dto.getSub_text());
+//			psmt.setString(4, dto.getOrigin());
+//			psmt.setString(5, dto.getWeight());
+//			psmt.setString(6, dto.getDateInfo());
+//			psmt.setString(7, dto.getNotifi());
+//			psmt.setInt(8, price);
+//			psmt.setInt(9, saleper);
+//			psmt.setInt(10, price_discount);
+//			psmt.setString(11, dto.getUnit());
+//			psmt.setString(12, dto.getPackaging_type());
+//			psmt.setString(13, dto.getDelivery_type());
+//			psmt.setString(14, "ddd");
+//			psmt.setString(15, dto.getProduct_noti_img());
+//			psmt.setString(16, "dd");
+	        psmt.setString(1, childcategory);
+	        System.out.println("Parameter 1 (childcategory): " + childcategory);
+	        
+	        psmt.setString(2, dto.getName());
+	        System.out.println("Parameter 2 (Name): " + dto.getName());
+	        
+	        psmt.setString(3, dto.getSub_text());
+	        System.out.println("Parameter 3 (Sub_text): " + dto.getSub_text());
+	        
+	        psmt.setString(4, dto.getOrigin());
+	        System.out.println("Parameter 4 (Origin): " + dto.getOrigin());
+	        
+	        psmt.setString(5, dto.getWeight());
+	        System.out.println("Parameter 5 (Weight): " + dto.getWeight());
+	        
+	        psmt.setString(6, dto.getDateInfo());
+	        System.out.println("Parameter 6 (DateInfo): " + dto.getDateInfo());
+	        
+	        psmt.setString(7, dto.getNotifi());
+	        System.out.println("Parameter 7 (Notifi): " + dto.getNotifi());
+	        
+	        psmt.setInt(8, price);
+	        System.out.println("Parameter 8 (Price): " + price);
+	        
+	        psmt.setInt(9, saleper);
+	        System.out.println("Parameter 9 (Saleper): " + saleper);
+	        
+	        psmt.setInt(10, price_discount);
+	        System.out.println("Parameter 10 (Price Discount): " + price_discount);
+	        
+	        psmt.setString(11, dto.getUnit());
+	        System.out.println("Parameter 11 (Unit): " + dto.getUnit());
+	        
+	        psmt.setString(12, dto.getPackaging_type());
+	        System.out.println("Parameter 12 (Packaging_type): " + dto.getPackaging_type());
+	        
+	        psmt.setString(13, dto.getDelivery_type());
+	        System.out.println("Parameter 13 (Sub_text again): " + dto.getDelivery_type());
+	        
+	        psmt.setString(14, dto.getProduct_noti_img());
+	        System.out.println("Parameter 15 (Product_noti_img): " + dto.getProduct_noti_img());
+	        
+	        psmt.setString(15, "ddd");
+	        System.out.println("Parameter 15 (Fixed value 'ddd'): ddd");
+	        
+	        psmt.setString(16, "dd");
+	        System.out.println("Parameter 16 (Fixed value 'dd'): dd");
+
+			
+			
+			result = psmt.executeUpdate();
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return result;
+	}
 }
