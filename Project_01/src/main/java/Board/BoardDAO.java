@@ -7,6 +7,7 @@ import java.util.Vector;
 
 import DTO.InqueryDTO;
 import DTO.ProductDTO;
+import DTO.SellerMainDTO;
 import Info.TestDTO;
 import Login.LoginDTO;
 import Main.TestDBPool;
@@ -46,13 +47,11 @@ public class BoardDAO extends TestDBPool {
 		return totalCount;
 	}
 	 public List<InqueryDTO> Inquerylist(int product_id) {
-		 String query = " SELECT * FROM inquery i JOIN product p ON i.product_id "
-		 			  + "= p.product_id WHERE p.product_id =" + product_id;
-		 				
+		 String query = " SELECT * FROM INQUERY i JOIN USER_INFO ui ON ui.IDX = i.USER_ID WHERE PRODUCT_ID =" + product_id;
 		 			  
 		 List<InqueryDTO> Inquery = new Vector<InqueryDTO>();
 			  	try {
-			  		Class.forName("oracle.jdbc.OracleDriver");
+			  		Class.forName("oracle.jdbc.OracleDriver");	
 
 					String url = "jdbc:oracle:thin:@14.42.124.35:1521:xe";
 					String id = "C##PROJECT_01DB";
@@ -63,7 +62,7 @@ public class BoardDAO extends TestDBPool {
 			  		
 			  		while(rs.next()) {
 		  			InqueryDTO dto3 = new InqueryDTO();
-			  			
+		  			
 			  			dto3.setInquery_id(rs.getInt("inquery_id"));
 			  			dto3.setProduct_id(rs.getInt("product_id"));
 			  			dto3.setUser_id(rs.getInt("user_id"));
@@ -71,10 +70,8 @@ public class BoardDAO extends TestDBPool {
 			  			dto3.setInquery_content(rs.getString("inquery_content"));
 			  			dto3.setSeller_content(rs.getString("seller_content"));
 			  			dto3.setInquery_date(rs.getDate("inquery_date"));
-						
-
-			  			Inquery.add(dto3);
 			  			
+			  			Inquery.add(dto3);
 			  		}
 		  	}
 			  	catch(Exception e) {
@@ -108,7 +105,7 @@ public class BoardDAO extends TestDBPool {
 				dtol.setAddress(rs.getString("address"));
 				dtol.setAddress_sub(rs.getString("address_sub"));
 				dtol.setGender(rs.getString("gender"));
-				dtol.setBirthdate(rs.getDate("birthdate"));
+				dtol.setBirthdate(rs.getString("birthdate"));
 				dtol.setAuth_type(rs.getInt("auth_type"));
 				
 				System.out.println(rs.getInt("idx"));
@@ -156,6 +153,37 @@ public class BoardDAO extends TestDBPool {
 		  return result;
 	}
 	
+	public int buy(int product_id,int product_cnt, int user_id) {
+		int result = 0 ;
+		SellerMainDTO dto5 = new SellerMainDTO(); 
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
+
+			String url = "jdbc:oracle:thin:@14.42.124.35:1521:xe";
+			String id = "C##PROJECT_01DB";
+			String pwd = "1234";
+			con = DriverManager.getConnection(url, id, pwd);
+			
+			String query = "INSERT INTO order_info"
+					+ "(ORDER_ID, PRODUCT_ID, PRODUCT_CNT,USER_ID,ORDER_STATE,ORDER_DATE) values"
+					+ "(ORDER_NO.nextval,(SELECT p.PRODUCT_ID FROM PRODUCT p WHERE p.PRODUCT_ID =?"
+					+ "),?,(SELECT UI.IDX  FROM USER_INFO ui WHERE UI.IDX =?"
+					+ "),'구매완료',sysdate)";
+			
+			psmt = con.prepareStatement(query);
+			
+			psmt.setInt(1, product_id);
+			psmt.setInt(2, product_cnt);
+			psmt.setInt(3, user_id);
+			result = psmt.executeUpdate();
+		}
+		catch (Exception e) {
+			System.out.println("게시물 입력 중 예외 발생");
+			  e.printStackTrace();
+	}	
+		  return result;
+		
+	}
 	
 	public List<ProductDTO> View2(int product_id) 
 	{
