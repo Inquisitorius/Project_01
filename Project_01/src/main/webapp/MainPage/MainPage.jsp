@@ -212,7 +212,7 @@ body {
 						</div>
 						<div class = "row" style = "margin-top: 5px;">
 							<div class = "col-12" style = "display: inline-flex;">
-								<button class="btn btn-navy rounded-1 fontCommon_Option" type = "button" style = "width: 100%; height: 36px;">구매</button>
+								<button class="btn btn-navy rounded-1 fontCommon_Option" type = "button" id = "TimeEventBtn" style = "width: 100%; height: 36px;">구매</button>
 							</div>
 						</div>	
 						<div class = "row" style = "margin-top: 5px;">
@@ -257,9 +257,16 @@ body {
 		
 		$(document).ready(function()
 		{
-			<!-- time function -->
-			//timeUpdate();
+			<!-- time function -->			
 			circle_clockFunction();		
+			
+			$('#TimeEventBtn').click(function()
+			{
+				var product_id = $(this).siblings('#mainpage_productid').val();
+				$('#product_id_trans').val(121);
+				
+				$('#form_for_productInfo').submit();
+			});
 			
 			//사진변경
 			//$('#maincard_00').find('.maincard_img').attr('src','/resources/img/product/WildTurkeyMasters.jpg');

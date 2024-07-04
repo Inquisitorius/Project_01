@@ -136,7 +136,7 @@ a:hover {
 			var input_id = $('#input_id').val();
 			var input_pw = $('#input_pw').val();
 			
-			var url = "http://localhost:8080/login/loginTry";
+			var url = url_server + "/login/loginTry";
 			
 			var data = 
 			{

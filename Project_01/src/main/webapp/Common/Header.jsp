@@ -31,7 +31,7 @@
 					<a href = "/MainPage/MainPage.jsp" style = "text-decoration: none;">
 					<img src="/resources/img/Green.svg"/ style = "width: 82px; height: 42px; padding-bottom: 5px;">
 					</a>
-					<button class = "fontCommon_Option" style="background: none; border: none; padding-left: 15px; padding-top: 5px; font-size: 15px; color: gray;">마켓그린</button>
+					<button id = "marketBtn_inHeader" class = "fontCommon_Option" style="background: none; border: none; padding-left: 15px; padding-top: 5px; font-size: 15px; color: gray;">마켓그린</button>
 					<button id = "contactBtn" class = "fontCommon_Option" style="background: none; border: none; padding-left: 15px; padding-top: 5px; font-size: 15px; color: gray;">회사소개</button>
 				</div>	
 				<div style = "width: auto; padding-left: 90px;">
@@ -75,13 +75,13 @@
 			            			<label class = "category_ItemText categoryLabel" style = "height: 20px; padding-left: 10px;">주류</label>
 			            		</a>
 			            		<ul class="dropdown-menu" aria-labelledby="submenuDropdown" style = "padding-top: 2px; padding-bottom: 2px;">
-			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >와인</a></li>
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="/ProductList?page=1&category=alcohol&filters=wine&delivery=&type=" >와인</a></li>
 			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
-			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >위스키</a></li>
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="/ProductList?page=1&category=alcohol&filters=whisky&delivery=&type=" >위스키</a></li>
 			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
-			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >맥주</a></li>
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="/ProductList?page=1&category=alcohol&filters=beer&delivery=&type=" >맥주</a></li>
 			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
-			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >증류주</a></li>
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="/ProductList?page=1&category=alcohol&filters=distilledalcohol&delivery=&type=" >증류주</a></li>
 			              		</ul>
 			            	</li>
 			            	
@@ -91,11 +91,11 @@
 			            			<label class = "category_ItemText categoryLabel" style = "height: 20px; padding-left: 10px;">식품</label>
 			            		</a>
 			            		<ul class="dropdown-menu" aria-labelledby="submenuDropdown" style = "padding-top: 2px; padding-bottom: 2px;">
-			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >과일</a></li>
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="/ProductList?page=1&category=food&filters=fruit&delivery=&type=" >과일</a></li>
 			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
-			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >수산</a></li>
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="/ProductList?page=1&category=food&filters=seafood&delivery=&type=" >수산</a></li>
 			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
-			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >정육</a></li>			                		
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="/ProductList?page=1&category=food&filters=meat&delivery=&type=" >정육</a></li>			                		
 			              		</ul>
 			            	</li>				            	
 			            	
@@ -105,11 +105,11 @@
 			            			<label class = "category_ItemText categoryLabel" style = "height: 20px; padding-left: 10px;">가전</label>
 			            		</a>
 			            		<ul class="dropdown-menu" aria-labelledby="submenuDropdown" style = "padding-top: 2px; padding-bottom: 2px;">
-			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >PC</a></li>
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="/ProductList?page=1&category=electronics&filters=PC&delivery=&type=" >PC</a></li>
 			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
-			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >주방가전</a></li>
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="/ProductList?page=1&category=electronics&filters=kitchen_appliances&delivery=&type=" >주방가전</a></li>
 			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
-			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >생활가전</a></li>			                		
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="/ProductList?page=1&category=electronics&filters=living_appliances&delivery=&type=" >생활가전</a></li>			                		
 			              		</ul>
 			            	</li>	            	
 			            
@@ -119,13 +119,13 @@
 			            			<label class = "category_ItemText categoryLabel" style = "height: 20px; padding-left: 10px;">베이커리</label>
 			            		</a>
 			            		<ul class="dropdown-menu" aria-labelledby="submenuDropdown" style = "padding-top: 2px; padding-bottom: 2px;">
-			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >식빵·모닝빵</a></li>
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="/ProductList?page=1&category=bakery&filters=bread_morning&delivery=&type=" >식빵·모닝빵</a></li>
 			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
-			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >잼·스프레드</a></li>
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="ProductList?page=1&category=bakery&filters=jam_spread&delivery=&type=" >잼·스프레드</a></li>
 			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
-			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >디저트</a></li>
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="/ProductList?page=1&category=bakery&filters=dessert&delivery=&type=" >디저트</a></li>
 			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
-			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >케이크</a></li>			                		
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="/ProductList?page=1&category=bakery&filters=cake&delivery=&type=" >케이크</a></li>			                		
 			              		</ul>
 			            	</li>
 			            	
@@ -135,13 +135,13 @@
 			            			<label class = "category_ItemText categoryLabel" style = "height: 20px; padding-left: 10px;">가구</label>
 			            		</a>
 			            		<ul class="dropdown-menu" aria-labelledby="submenuDropdown" style = "padding-top: 2px; padding-bottom: 2px;">
-			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >소파·체어</a></li>
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="/ProductList?page=1&category=living&filters=sofa_chair&delivery=&type=" >소파·체어</a></li>
 			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
-			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >침실가구</a></li>
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="/ProductList?page=1&category=living&filters=organizer&delivery=&type=" >수납정리용품</a></li>
 			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
-			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >메트리스·토퍼</a></li>
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="/ProductList?page=1&category=living&filters=mattress_topper&delivery=&type=" >메트리스·토퍼</a></li>
 			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
-			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="#" >주방가구</a></li>			                		
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="/ProductList?page=1&category=living&filters=kitchen_furniture&delivery=&type=" >주방가구</a></li>			                		
 			              		</ul>
 			            	</li>
 			          	</ul>	
@@ -153,13 +153,20 @@
 	</div>
 </header>
 <script>
-	//var url_server = '14.42.124.35:8080';
+	//var url_server = 'http://14.42.124.35:8080';
 	var url_server = 'http://localhost:8080';
 	//var url_server = window.location.protocol + window.location.host;
 	
 	$(document).ready(function()
 	{	
 		HeaderInit();	
+		
+		//marketBtn_inHeader
+		$('#marketBtn_inHeader').click(function()
+		{
+			location.href = "/ProductList";
+		});
+		
 		
 		$('#contactBtn').click(function()
 		{
