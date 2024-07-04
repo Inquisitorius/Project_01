@@ -2,6 +2,10 @@ package MyPage;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -19,7 +23,6 @@ public class MyPageController extends HttpServlet {
 		int lastSlash = uri.lastIndexOf('/');
 		String command = uri.substring(lastSlash);
 		String uri2 = req.getHeader("Referer");
-		
 		if (uri2 != null && !uri2.contains("/MyPageContent")) {
 			req.getSession().setAttribute("prevPage", uri2);
 		}
@@ -32,6 +35,9 @@ public class MyPageController extends HttpServlet {
 		}
 		if (command.equals("/QuestionUpload")) {
 			QuestionUpload(req, resp);
+		}
+		if (command.equals("/QuestionShow")) {
+			QuestionShow(req, resp);
 		}
 	}
 
@@ -59,8 +65,6 @@ public class MyPageController extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 			out.write("{\"status\": \"error\"}");
-		} finally {
-			out.close();
 		}
 	}
 
@@ -81,8 +85,6 @@ public class MyPageController extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 			out.write("{\"status\": \"error\"}");
-		} finally {
-			out.close();
 		}
 	}
 
@@ -92,18 +94,50 @@ public class MyPageController extends HttpServlet {
 		PrintWriter out = resp.getWriter();
 		try {
 			MyPageDAO dao = new MyPageDAO();
-			String category = req.getParameter("que_category");
-			String title = req.getParameter("que_title");
-			String contents = req.getParameter("que_contents");
-			System.out.print("cate : "+category+" title : "+title+" contents : "+contents);
-			dao.uploadQuestion(category,title,contents);
-			out.write("{\"status\": \"success\"}");
+			QuestionDTO dto = new QuestionDTO();
+			dto.setQue_category(req.getParameter("que_category"));
+			dto.setQue_title(req.getParameter("que_title"));
+			dto.setQue_contents(req.getParameter("que_contents"));
+
+			// System.out.print("cate : "+dto.getQue_category()+" title :
+			// "+dto.getQue_title()+" contents : "+dto.getQue_contents());
+			dao.uploadQuestion(dto);
+
+			JsonObject jsonResponse = new JsonObject();
+			jsonResponse.addProperty("status", "success");
+			Gson gson = new Gson();
+			jsonResponse.add("dto", gson.toJsonTree(dto));
+
+			out.print(jsonResponse.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
-			out.write("{\"status\": \"error\"}");
-		} finally {
-			out.close();
+			JsonObject errorResponse = new JsonObject();
+			errorResponse.addProperty("status", "error");
+			errorResponse.addProperty("message", "Failed to upload question: " + e.getMessage());
+
+			out.print(errorResponse.toString());
 		}
 	}
 
+	private void QuestionShow(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		resp.setContentType("application/json");
+		resp.setCharacterEncoding("UTF-8");
+		PrintWriter out = resp.getWriter();
+		try {
+			MyPageDAO dao = new MyPageDAO();
+			List<QuestionDTO> qlist = dao.showAllQuestion();
+			JsonObject jsonResponse = new JsonObject();
+			jsonResponse.addProperty("status", "success");
+			Gson gson = new Gson();
+			jsonResponse.add("qlist", gson.toJsonTree(qlist));
+			out.print(jsonResponse.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+			JsonObject errorResponse = new JsonObject();
+			errorResponse.addProperty("status", "error");
+			errorResponse.addProperty("message", "Failed to upload question: " + e.getMessage());
+
+			out.print(errorResponse.toString());
+		}
+	}
 }
