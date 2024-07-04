@@ -507,7 +507,7 @@
                     updateFilterState(selectedFilters, selectedPrice, selectedDelivery);
 
                     // 브라우저 URL 업데이트하여 현재 상태 반영
-                    let newUrl = window.location.origin + '/ProductsList/ProductList.do?page='+page
+                    let newUrl = window.location.origin + '/ProductList?page='+page
                                  + '&category=' + clickedCategory
                                  + '&filters=' + encodeURIComponent(selectedFilters.join(','))
                                  + priceParam
