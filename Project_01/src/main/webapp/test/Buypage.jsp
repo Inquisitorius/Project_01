@@ -30,7 +30,14 @@
 <script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>
 <script src="/resources/bootstrap/js/jQueryRotate.js"></script>
 <style type="text/css">
+h2 {
+text-align:center;
+font-family: "Noto Sans KR";
+font-optical-sizing: auto;
+font-style: normal;
+color: gray;
 
+}
 </style>
 </head>
 <body>
@@ -49,9 +56,9 @@
   				<input type="hidden" name="product_id" id="hiddenProductId" value="<%= session.getAttribute("currentProductId") %>">
   				<input type="hidden" name="idx" id="hiddenUserId" value="<%= session.getAttribute("idx") %>">
   				<input type="hidden" name="quantity" id="hiddenQuantity" value="<%= session.getAttribute("quantity") %>">
+				<input type="hidden" name="price" id= "hiddenprice" value ="<%= session.getAttribute("price") %>">
 				</form>
 
-<p>메인 페이지로 이동</p>
 
 </div>
 </main>

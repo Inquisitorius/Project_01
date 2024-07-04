@@ -201,7 +201,7 @@
 							for (ProductDTO dto : list) {
 						%>
 						<div class="row">
-							<a href="#" style="text-decoration-line: none;"> <img
+							<a href="/test/ProductInfo.do?product_id=<%=dto.getProduct_id() %>" style="text-decoration-line: none;"> <img
 								src="<%=dto.getProduct_img() %>"
 								style="padding: 0px; width: 249px; height: 320px; border-radius: 2%; overflow: hidden;">
 								<button class="btn btn-navy rounded-1 fontCommon_Option"

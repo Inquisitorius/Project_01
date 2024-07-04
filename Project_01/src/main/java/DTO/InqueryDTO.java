@@ -15,6 +15,8 @@ public class InqueryDTO
 	
 	public String product_name;
 	public String user_name;
+	public String name;
+
 	public int seller_id;
 	
 	public String inquery_date_format;
@@ -127,6 +129,11 @@ public class InqueryDTO
 		this.inquery_date = inquery_date;
 		Set_inquery_date_format(inquery_date);
 	}
-	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 }

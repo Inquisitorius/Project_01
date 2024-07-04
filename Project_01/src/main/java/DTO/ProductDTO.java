@@ -54,9 +54,9 @@ public class ProductDTO
 	
 	public int event_id; //이벤트 식별자.
 	public int seller; //판매자 식별자
+	public String seller_name;
 	
 	public String endDate;
-	
 	
 	public String getEndDate() {
 		return endDate;
@@ -68,7 +68,7 @@ public class ProductDTO
 	public ProductDTO(int product_id, int category_id, String name, String sub_text, String origin, String weight,
 			String dateInfo, String notifi, int price_ori, int price_percent, int price_discount, String unit,
 			String packaging_type, String delivery_type, String product_img, String product_noti_img,
-			String product_noti_img2, int event_id, int seller) {
+			String product_noti_img2, int event_id, int seller, String seller_name) {
 		super();
 		this.product_id = product_id;
 		this.category_id = category_id;
@@ -89,6 +89,7 @@ public class ProductDTO
 		this.product_noti_img2 = product_noti_img2;
 		this.event_id = event_id;
 		this.seller = seller;
+		this.seller_name = seller_name;
 	}
 	public int getProduct_id() {
 		return product_id;
@@ -203,6 +204,12 @@ public class ProductDTO
 	}
 	public void setSeller(int seller) {
 		this.seller = seller;
+	}
+	public String getSeller_name() {
+		return seller_name;
+	}
+	public void setSeller_name(String seller_name) {
+		this.seller_name = seller_name;
 	}
 	
 }

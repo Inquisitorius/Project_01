@@ -51,7 +51,7 @@ public class BoardDAO extends TestDBPool {
 		 			  
 		 List<InqueryDTO> Inquery = new Vector<InqueryDTO>();
 			  	try {
-			  		Class.forName("oracle.jdbc.OracleDriver");	
+			  		Class.forName("oracle.jdbc.OracleDriver");		
 
 					String url = "jdbc:oracle:thin:@14.42.124.35:1521:xe";
 					String id = "C##PROJECT_01DB";
@@ -70,6 +70,7 @@ public class BoardDAO extends TestDBPool {
 			  			dto3.setInquery_content(rs.getString("inquery_content"));
 			  			dto3.setSeller_content(rs.getString("seller_content"));
 			  			dto3.setInquery_date(rs.getDate("inquery_date"));
+			  			dto3.setName(rs.getString("name"));
 			  			
 			  			Inquery.add(dto3);
 			  		}
@@ -188,8 +189,8 @@ public class BoardDAO extends TestDBPool {
 	public List<ProductDTO> View2(int product_id) 
 	{
 		
-		String query = "SELECT * FROM PRODUCT WHERE product_id=" + product_id;
-		System.out.println("GetSaleProductList = " + product_id);
+		String query = "SELECT p.*, ui.IDX AS user_id, ui.NAME AS seller_name FROM PRODUCT p JOIN USER_INFO ui ON p.SELLER = ui.IDX "
+				+ " WHERE PRODUCT_ID = " + product_id;
 		
 			List<ProductDTO> pro2 = new Vector<ProductDTO>();
 			
@@ -230,6 +231,9 @@ public class BoardDAO extends TestDBPool {
 				
 				dto2.setEvent_id(rs.getInt("event_id"));
 				dto2.setSeller(rs.getInt("seller"));
+				dto2.setSeller_name(rs.getString("seller_name"));
+				System.out.println(rs.getInt("Seller"));
+				System.out.println(rs.getString("seller_name"));
 				
 				pro2.add(dto2);
 			}

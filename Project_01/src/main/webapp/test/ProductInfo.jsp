@@ -320,7 +320,7 @@ hr {
 					판매자
 				</div>
 				<div class = "col-md-4 fontgray">
-					${ ProductDTO.seller }
+					${ ProductDTO.seller_name }
 				</div>
 			</div>	
 			<hr style="height:1px;border:none;background-color:gray;">
@@ -529,9 +529,9 @@ hr {
                     <td>${ InqueryDTO.inquery_id }</td>
                     	<th>
                       		<a href="#!">${ InqueryDTO.inquery_title }</a>
-                     		<p>${ InqueryDTO.user_id }</p>
+                     		<p>${ InqueryDTO.name }</p>
                     	</th>	
-                    	<td>${ InqueryDTO.user_id }</td>
+                    	<td>${ InqueryDTO.name }</td>
                     	<td>${ InqueryDTO.inquery_date }</td>
                      <tr id="content${ InqueryDTO.inquery_id }" class="hidden-content-row"style="width:150px;hegiht:300px;"> 
                         <td colspan="4"style="padding : 0px;border:none;">
@@ -551,6 +551,7 @@ hr {
                      </td>
                	 </tr>
                 </tbody>  
+                
                 </c:forEach>
             </table>   
       	  </div>	

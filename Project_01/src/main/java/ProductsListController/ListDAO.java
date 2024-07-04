@@ -203,7 +203,7 @@ public class ListDAO extends TestDBPool {
 		
 		String[] prices = splitPrice.toString().split(",");
 		System.out.println(prices[0]);
-		String sql = "SELECT * FROM ( SELECT Tb.*, ROWNUM rNum FROM (SELECT NAME, SUB_TEXT, PRICE_ORI, PRICE_PERCENT, PRICE_DISCOUNT, DELIVERY_TYPE, PRODUCT_IMG FROM PRODUCT ";
+		String sql = "SELECT * FROM ( SELECT Tb.*, ROWNUM rNum FROM (SELECT NAME, SUB_TEXT, PRICE_ORI, PRICE_PERCENT, PRICE_DISCOUNT, DELIVERY_TYPE, PRODUCT_IMG, PRODUCT_ID FROM PRODUCT ";
 		boolean hasCondition = false;
 		
 		if (delivery != null && !delivery.isEmpty()) {
@@ -394,7 +394,7 @@ public class ListDAO extends TestDBPool {
 		String sql = "SELECT * FROM ( " +
 	             "    SELECT Tb.*, ROWNUM rNum " +
 	             "    FROM ( " +
-	             "        SELECT P.NAME, P.SUB_TEXT, P.PRICE_ORI, P.PRICE_PERCENT, P.PRICE_DISCOUNT, P.DELIVERY_TYPE, P.PRODUCT_IMG " +
+	             "        SELECT P.NAME, P.SUB_TEXT, P.PRICE_ORI, P.PRICE_PERCENT, P.PRICE_DISCOUNT, P.DELIVERY_TYPE, P.PRODUCT_IMG, P.PRODUCT_ID " +
 	             "        FROM PRODUCT P " +
 	             "        JOIN CATEGORY C ON P.CATEGORY_ID = C.IDX ";
 		boolean hasCondition = false;
@@ -479,7 +479,7 @@ public class ListDAO extends TestDBPool {
 		Map<String, String> map = ChildCategoryMap.getselectCate();
 		String NumMap = map.getOrDefault(category, category);
 		String sql = "SELECT * FROM ( " + "    SELECT Tb.*, ROWNUM rNum " + "    FROM ( "
-				+ "        SELECT P.NAME, P.SUB_TEXT, P.PRICE_ORI, P.PRICE_PERCENT, P.PRICE_DISCOUNT, P.DELIVERY_TYPE, P.PRODUCT_IMG "
+				+ "        SELECT P.NAME, P.SUB_TEXT, P.PRICE_ORI, P.PRICE_PERCENT, P.PRICE_DISCOUNT, P.DELIVERY_TYPE, P.PRODUCT_IMG, P.PRODUCT_ID "
 				+ "        FROM PRODUCT P " + "        JOIN CATEGORY C ON P.CATEGORY_ID = C.IDX "
 				+ "        WHERE C.CATEGORY_PARENT = ?" ;
 		if(type == null || type.equals("new")) {
@@ -508,6 +508,7 @@ public class ListDAO extends TestDBPool {
 				dto.setPrice_discount(rs.getInt(5));
 				dto.setDelivery_type(rs.getString(6));
 				dto.setProduct_img(rs.getString(7));
+				dto.setProduct_id(rs.getInt(8));
 
 				list.add(dto);
 			}

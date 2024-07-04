@@ -29,7 +29,6 @@ public class BuyController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
 			String quantitystr = req.getParameter("quantity");
-			System.out.println("val : " + req.getParameter("quantity"));
 			HttpSession session = req.getSession();
 	        Integer product_id = (Integer) session.getAttribute("currentProductId");
 	        Integer user_id = (Integer) session.getAttribute("idx");
@@ -41,9 +40,9 @@ public class BuyController extends HttpServlet {
 	       	session.setAttribute("quantity", quantity);
 	       	Integer quantity2 = (Integer) session.getAttribute("quantity");
 	       	
-	        System.out.println("get :" +session.getAttribute("currentProductId"));
-	        System.out.println("get :" +session.getAttribute("idx"));
-	        System.out.println("get :" +session.getAttribute("quantity"));
+	        System.out.println("get product_id :" +session.getAttribute("currentProductId"));
+	        System.out.println("get user_id :" +session.getAttribute("idx"));
+	        System.out.println("get quantity:" +session.getAttribute("quantity"));
 	        
 
 	       	}catch(NumberFormatException e) {
