@@ -94,10 +94,12 @@
 	</div>
 </div>
 </main>
-<input id = "refund_date" type = "hidden" value = ""/>
+<label id = "refund_date" style = "display: none;"></label>
 <jsp:include page="/Common/Footer.jsp"/>
 <script src="/resources/bootstrap/js/bootstrap.bundle.js"></script>
 <script>
+var url_save;
+
 $(document).ready(function()
 {	
 	$('#product_name').html($('#form_product_name').html());	
@@ -105,19 +107,7 @@ $(document).ready(function()
 	$('#order_state').html($('#form_order_state').html());
 	
 	
-	
-	
-	
-	//order id 를 통해서 refund 데이터를 가져온다.
-	//refund 데이터가 만약에 없다 = 정상 구매 상태이다.
-	//refund 데이터가 있다 = 환불요청 및 환불거절, 환불완료 상태이다.
-	
-	//만약 환불요청 일때는 환불 취소가 활성화
-	//만약 환불완료 상태일때는 활성화 없음
-	//만약 환불거절 상태일때는? update 문으로 다시 환불 신청
-	//만약 정상구매상태일때는 inset 문으로 환불 신청 활성화
-	
-	//데이터를 가져와야하는 경우 = 구매완료 제외 전부 -> 구매 완료는 refund 가 없다.
+	$('#refund_content').val('');
 	
 	Get_OrderInfoData();	
 });
@@ -132,13 +122,21 @@ function Get_OrderInfoData()
 	var result;
 	
 	var url = url_server + "/SellerController/Get_OrderDetail.func";
+	
+	//구매완료시 예외처리
+	if($('#form_order_state').html() == '구매완료')
+	{
+		Set_PageEelement_simple();
+		return;
+	}
+	
 	$.ajax({
 		type:"post",
         url:url,
         contentType: 'application/json',
         data: JSON.stringify(data),		       
         success: function(response) 
-        {   
+        {  
         	Set_PageEelement(response);
         },
         error : function(request,status,error){
@@ -147,11 +145,32 @@ function Get_OrderInfoData()
         }
 	});
 }
-
+function Set_PageEelement_simple()
+{
+	if($('#form_order_state').html() == '환불승인' || 	$('#form_order_state').html() == '환불신청' )
+	{
+		$('#refund_content').prop('readonly', true);
+		$('#refund_content').prop('disabled', true);
+		$('#updateBtn').css('display','none');
+	}
+		//만약 환불거절 상태일때는? update 문으로 다시 환불 신청 버튼 활성화
+	else if($('#form_order_state').html() == '환불거절')
+	{
+		console.log('환불거절');
+		var url = url_server + "/MyPageOrderController/UpdateRefund";
+		Set_RefundClickEvent(url);
+	}
+	else if($('#form_order_state').html() == '구매완료')
+	{
+		console.log('구매완료');
+		var url = url_server + "/MyPageOrderController/CreateRefund";
+		Set_RefundClickEvent(url);
+	}
+}
 function Set_PageEelement(data)
 {
 	$('#refund_content').val(data.refund_reason);
-	$('#refund_date').val(data.refund_date);
+	$('#refund_date').html(data.refund_date_format);
 	
 	console.log('Set_PageEelement');
 	//만약 환불완료 상태일때는 활성화 없음
@@ -165,42 +184,65 @@ function Set_PageEelement(data)
 	//만약 환불거절 상태일때는? update 문으로 다시 환불 신청 버튼 활성화
 	else if($('#form_order_state').html() == '환불거절')
 	{
-		Set_RefundClickEvent('');
+		console.log('환불거절');
+		var url = url_server + "/MyPageOrderController/UpdateRefund";
+		Set_RefundClickEvent(url);
 	}
 	else if($('#form_order_state').html() == '구매완료')
 	{
-		Set_RefundClickEvent('');
+		console.log('구매완료');
+		var url = url_server + "/MyPageOrderController/CreateRefund";
+		Set_RefundClickEvent(url);
 	}
 }
 
 function Set_RefundClickEvent(url)
-{
-	var data = 
-	{
-			
-		//여기 작업중
-		order_id : $('#form_order_id').val(),
-		refund_reason : $('#refund_content').val(),
-		refund_date : $('#refund_date').val(),
-		refund_state : $('#order_state').html()
-	};	
+{		
 	
-	//해야할 일
-	//데이터 설정 되었으니 ajax 로 보내서 처리
-	//stat 에 따라서 분기 만들기
-	
-	
-	
+	url_save = url;
 	$('#updateBtn').click(function()
 	{
+		var data = 
+		{
+			order_id : $('#form_order_id').val(),
+			refund_reason : $('#refund_content').val(),
+			refund_date_format : $('#refund_date').html(),
+			refund_state : $('#order_state').html()
+		};		
+		
+		console.log(data);
+		console.log("VAL :" + $('#refund_content').val());
+		console.log("HTML : " + $('#refund_content').html());
+		
 		$.ajax({
 			type:"post",
-	        url:url,
+	        url:url_save,
 	        contentType: 'application/json',
 	        data: JSON.stringify(data),		       
 	        success: function(response) 
 	        {        	
-	        	Set_PageEelement(response);
+	        	if(response.intData_00 != -1)
+	        	{
+	        		swal({
+	    				  title: "요청이 완료되었습니다.",		
+	    				  //text : "asdsad",
+	    				  icon: "success", //"success"
+	    				  button: "확인",
+	    					}).then((value) => {
+	    						location.replace("/MyPage/OrderMenu.jsp");
+	    				});	
+	        	}
+	        	else
+	        	{
+	        		swal({
+	    				  title: "처리에 실패하였습니다.",		
+	    				  //text : "asdsad",
+	    				  icon: "error", //"success"
+	    				  button: "확인",
+	    					}).then((value) => {
+	    						location.replace("/MyPage/OrderMenu.jsp");
+	    				});	
+	        	}
 	        },
 	        error : function(request,status,error){
 	            alert('code:'+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); //에러 상태에 대한 세부사항 출력
@@ -209,8 +251,6 @@ function Set_RefundClickEvent(url)
 		});
 	});
 }
-
-
 </script>
 </body>
 </html>

@@ -24,6 +24,65 @@ public class SellerDAO extends JDBConnect
 		super(application);
 	}
 	
+	public int Update_Refund(RefundDTO dto)
+	{
+		String sql = "UPDATE REFUND SET REFUND_STATE = '환불신청', REFUND_REASON = '" + dto.getRefund_reason() 
+				+ "', REFUND_DATE = SYSDATE  WHERE ORDER_ID = "; 
+		sql += dto.getOrder_id();
+		
+		String sql2 = "UPDATE ORDER_INFO SET ORDER_STATE = '환불신청' WHERE ORDER_ID = ";
+		sql2 += dto.getOrder_id();
+		
+		int result = 0;
+		int result2 = 0;
+		
+		try 
+		{
+			psmt = con.prepareStatement(sql);
+			result = psmt.executeUpdate(sql);
+			result2 = psmt.executeUpdate(sql2);			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(result != 1 || result2 != 1)
+			return -1;		
+		else
+			return result;
+	}
+	
+	public int Create_Refund(RefundDTO dto) {
+		
+		String sql = "INSERT INTO REFUND VALUES";
+		sql += "( REFUND_BNO.NEXTVAL, (SELECT ORDER_ID FROM ORDER_INFO WHERE ORDER_ID = ";
+		sql +=  dto.getOrder_id() + " ), '" + dto.getRefund_reason() + "', SYSDATE, '환불신청' )";
+		
+		
+		String sql2 = "UPDATE ORDER_INFO SET ORDER_STATE = '환불신청' WHERE ORDER_ID = ";
+		sql2 += dto.getOrder_id();
+		
+		int result = 0;
+		int result2 = 0;
+		
+		try 
+		{
+			psmt = con.prepareStatement(sql);
+			result = psmt.executeUpdate(sql);
+			result2 = psmt.executeUpdate(sql2);			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(result != 1 || result2 != 1)
+			return -1;		
+		else
+			return result;
+	}
+	
 	public List<AjaxDataTrans> Get_Seller_SellCount_Detail(int seller_id, int dayInfo) 
 	{
 		String sql = "WITH date_range AS ( "
@@ -422,4 +481,5 @@ public class SellerDAO extends JDBConnect
 		
 		return null;
 	}
+	
 }

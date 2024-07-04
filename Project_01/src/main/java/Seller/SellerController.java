@@ -103,7 +103,7 @@ public class SellerController extends HttpServlet
 			//여기에 dao 코드
 			SellerDAO dao = new SellerDAO();
 			
-			RefundDTO dto = dao.get_RefundData(order_id);
+			RefundDTO dto = dao.get_RefundData(order_id);			
 				
 			Gson gson = new Gson();
 			String jsonResponse = gson.toJson(dto);

@@ -1,5 +1,6 @@
 package Seller;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class RefundDTO {
@@ -9,6 +10,22 @@ public class RefundDTO {
 	public String refund_reason;
 	public Date refund_date;
 	public String refund_state;
+	
+	public String refund_date_format;
+	
+	
+	
+	public String getRefund_date_format() {
+		return refund_date_format;
+	}
+	
+	public void Set_refund_date_format(Date date)
+	{
+		SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+		
+		String formattedDate1 = formatter.format(date);		
+		this.refund_date_format = formattedDate1;
+	}
 	
 	
 	public RefundDTO() {}
@@ -43,6 +60,7 @@ public class RefundDTO {
 	}
 	public void setRefund_date(Date refund_date) {
 		this.refund_date = refund_date;
+		Set_refund_date_format(this.refund_date);
 	}
 	public String getRefund_state() {
 		return refund_state;

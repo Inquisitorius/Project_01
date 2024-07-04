@@ -290,10 +290,10 @@ body {
 		{
 			var data = {
 					event_id : id
-                };
+                };			
 			
-			console.log("element_id :" + id);
-			var url = url_server + "/MainController";
+			console.log(url_server);
+			var url = url_server + "/MainController";			
 			//target URL INSERT
 			url += "/getSaleProductList";
 			
