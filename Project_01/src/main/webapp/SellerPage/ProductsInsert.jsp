@@ -315,7 +315,7 @@
     	        data: formData, 
     	        success: function(response) {
     	            alert("상품이 등록되었습니다.");
-    	            window.location.href = "/ProductsList/ProductList.do";
+    	            window.location.href = "/ProductList";
     	        },
     	        error: function(xhr, status, error) {
     	            // 오류 발생 시 실행할 코드

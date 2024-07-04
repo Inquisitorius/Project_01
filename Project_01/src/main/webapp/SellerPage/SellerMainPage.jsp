@@ -40,7 +40,7 @@
 		<div class = "col-4" style="padding-top : 80px; padding-bottom: 40px;">
 			<div class = "row" style="padding-bottom: 4px;">
 				<div class = "col-12">
-					<button class = "btn btn-navy rounded-1 fontCommon_Option" type = "button" style="width: 100%; height: 55px;">
+					<button class = "btn btn-navy rounded-1 fontCommon_Option" id = "insertProductsBtn" type = "button" style="width: 100%; height: 55px;">
 					판매자 물품 등록
 					</button>
 				</div>				
@@ -102,6 +102,10 @@ $(document).ready(function()
 	
 	//Grid used
 	get_SellerListData();
+	
+	$('#insertProductsBtn').click(function name() {
+		location.replace("/SellerPage/ProductsInsert.do");
+	});
 	
 	$('#orderListBtn').click(function()
 	{		
