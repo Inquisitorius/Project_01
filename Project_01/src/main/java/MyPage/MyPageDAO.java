@@ -46,4 +46,23 @@ public class MyPageDAO extends DBConnTest {
 		}
 		return result;
 	}
+
+	public void uploadQuestion(String category, String title, String contents) {
+		try {
+			String query = "INSERT INTO Que_Board Values(Que_bno.NEXTVAL,?,?,?)";
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, category);
+			psmt.setString(2, title);
+			psmt.setString(3, contents);
+			rs = psmt.executeQuery();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				psmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

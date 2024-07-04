@@ -143,7 +143,7 @@
 		
 		function inputid(id){
 				var id = document.getElementById(id).value;
-				const re = /^(?=.*[a-zA-Z])[a-z0-9]{6,16}$/;
+				const re = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]{6,16}$/;
 				if(re.test(id)){
 				Warning.textContent = "";
 				inputSecond("input_second");	

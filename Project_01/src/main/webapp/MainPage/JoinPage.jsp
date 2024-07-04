@@ -277,7 +277,7 @@ a:hover {
 		<script> 
 				function inputId(id) {
 				var id = document.getElementById(id).value;
-				const re = /^(?=.*[a-zA-Z])[a-z0-9]{6,16}$/;
+				const re = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]{6,16}$/;
 				if (!id) {
 	                idWarning.textContent = "";
 	                return;
@@ -983,7 +983,7 @@ a:hover {
 						var repetitionBtn = document.getElementById("repetitionBtn");
 						var agreebtn = document.getElementById("check_btn");
 						
-						const re = /^(?=.*[a-zA-Z])[a-z0-9]{6,16}$/;
+						const re = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]{6,16}$/;
 						
 						if(!re.test(id) && id != ""){
 						idWarning.style.color="red";

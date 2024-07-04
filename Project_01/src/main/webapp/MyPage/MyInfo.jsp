@@ -111,26 +111,24 @@
    String userPhone = (String)session.getAttribute("phone");
    String userGender = (String)session.getAttribute("gender");
    String userDate = (String)session.getAttribute("birthdate");
-   userDate = userDate.replaceAll("(\\d{4})(\\d{2})(\\d{2})", "$1-$2-$3");
    
-   String year = null;
-   String month = null;
-   String day = null;
+   String year = "";
+   String month = "";
+   String day = "";
    
    if(userDate != null){
+   userDate = userDate.replaceAll("(\\d{4})(\\d{2})(\\d{2})", "$1-$2-$3"); 
    year = userDate.substring(0,4);
    month = userDate.substring(5,7);
    day = userDate.substring(8,10);
-   }
-   
    if(month != null && month.length() < 2){
 	   month = "0"+month;
    }
    if(month != null && day.length() < 2){
 	   day = "0"+day;
    }
+   }
 %>
-
 	
 <main class="container">
 		<div class="row">
@@ -560,7 +558,7 @@
      						icon: "info",
      						button: "확인",
      					 	}).then((changedData) => {
-     					 		
+     					 			location.reload();
      			   		  });		
      				 }else{
      				} },error: function() {

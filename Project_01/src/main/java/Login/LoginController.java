@@ -51,6 +51,8 @@ public class LoginController extends HttpServlet {
 	    PrintWriter out = resp.getWriter();
 	    try {
 			LoginDAO dao = new LoginDAO();
+			LoginDTO dto = new LoginDTO();
+			
 			String id = req.getParameter("id");
 			String second = req.getParameter("second");
 			pwd = dao.PwdSearch(id, second);
