@@ -143,6 +143,13 @@
 			<div id="example-table" style = "border-bottom: 4px solid #163020;"></div>
 		</div>
 	</div>
+	<div class = "row" style = "padding-top: 0px;">
+		<div class = "col-12" style="display: inline-flex;justify-content: center; justify-content: flex-end;">
+			<div style = "margin-right : 10px; ">				
+				<button class = "btn btn-success rounded-1 " id = "returnBtn" type = "button">돌아가기</button>
+			</div>
+		</div>
+	</div>
 </div>
 </main>
 	<div style = "display: none;">
@@ -160,6 +167,11 @@ var table;
 $(document).ready(function()
 {
 	table = tabulatorInit();	
+	
+	$('#returnBtn').click(function()
+	{
+		location.replace("/SellerPage/SellerMainPage.jsp");
+	});
 	
 	document.getElementById("filter-field").addEventListener("change", updateFilter);
 	document.getElementById("filter-type").addEventListener("change", updateFilter);

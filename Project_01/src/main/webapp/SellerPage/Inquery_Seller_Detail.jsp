@@ -102,6 +102,14 @@
 var table;
 $(document).ready(function()
 {	
+	//returnBtn
+	$('#returnBtn').click(function()
+	{
+		location.replace("/SellerPage/Inquery_Seller.jsp");
+	});
+	
+	
+	
 	//1. data 가져오기
 	$('#product_name').html($('#form_product_name').html());
 	Get_InqueryData();
@@ -125,7 +133,7 @@ function Set_SellerContent()
 		inquery_id : id,
 		seller_content : conent
 	};
-	var url = "http://localhost:8080/SellerController/Set_SellerContent"; 
+	var url = url_server + "/SellerController/Set_SellerContent"; 
 	
 	$.ajax({
 		type:"post",
@@ -174,7 +182,7 @@ function Get_InqueryData()
 	{
 		inquery_id : id
 	};
-	var url = "http://localhost:8080/SellerController/Get_InqueryData"; 
+	var url = url_server + "/SellerController/Get_InqueryData"; 
 	
 	$.ajax({
 		type:"post",

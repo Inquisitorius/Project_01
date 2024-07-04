@@ -106,6 +106,10 @@ $(document).ready(function()
 	$('#product_cnt').html($('#form_product_cnt').val());
 	$('#order_state').html($('#form_order_state').html());
 	
+	$('#returnBtn').click(function()
+	{
+		location.replace("/MyPage/OrderMenu.jsp");
+	});
 	
 	$('#refund_content').val('');
 	

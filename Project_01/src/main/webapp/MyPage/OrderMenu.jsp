@@ -139,9 +139,16 @@
 	</div>			
 </div>
 <div class = "container" style = "max-width: 1050px; min-width: 1050px; padding-left: 0px; padding-right: 0px; padding-top: 0px;">
-	<div class= "row d-flex flex-nowrap" style = "justify-content: space-between; padding-bottom: 40px; min-height: 200px;">
+	<div class= "row d-flex flex-nowrap" style = "justify-content: space-between; padding-bottom: 10px; min-height: 200px;">
 		<div class = "col-12">
 			<div id="example-table" style = "border-bottom: 4px solid #163020;"></div>
+		</div>
+	</div>
+	<div class = "row" style = "padding-top: 0px;">
+		<div class = "col-12" style="display: inline-flex;justify-content: center; justify-content: flex-end;">
+			<div style = "margin-right : 10px; ">				
+				<button class = "btn btn-success rounded-1 " id = "returnBtn" type = "button">돌아가기</button>
+			</div>
 		</div>
 	</div>
 </div>
@@ -162,6 +169,11 @@
 var table;
 $(document).ready(function()
 {
+	$('#returnBtn').click(function()
+	{
+		location.replace("/MyPage/MyPageMain.jsp");
+	});
+	
 	if($('#loginSave').val() == null || $('#loginSave').val() == 'null')
 		return;
 	

@@ -137,7 +137,7 @@ function DetailDataLoasd()
 	
 	var result;
 	
-	var url = "http://localhost:8080/SellerController/RefundDetail.func";
+	var url = url_server + "/SellerController/RefundDetail.func";
 	$.ajax({
 		type:"post",
         url:url,
@@ -167,7 +167,7 @@ function Refund_Progress(flag)
 	console.log(data);
 	var result;
 	
-	var url = "http://localhost:8080/SellerController/RefundUpdate.func";
+	var url = url_server + "/SellerController/RefundUpdate.func";
 	$.ajax({
 		type:"post",
         url:url,
@@ -195,7 +195,7 @@ function PageDataInsert(data)
 {      
 	$('#order_id').html(data.order_id);
 	$('#refund_id').html(data.refund_id);
-	$('#refund_date').html(data.refund_date);
+	$('#refund_date').html(data.refund_date_format);
 	$('#refund_state').html(data.refund_state);
 	$('#refund_reason').html(data.refund_reason);
 	console.log(data);

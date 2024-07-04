@@ -30,7 +30,7 @@ public class SellerDAO extends JDBConnect
 				+ "', REFUND_DATE = SYSDATE  WHERE ORDER_ID = "; 
 		sql += dto.getOrder_id();
 		
-		String sql2 = "UPDATE ORDER_INFO SET ORDER_STATE = '환불신청' WHERE ORDER_ID = ";
+		String sql2 = "UPDATE ORDER_INFO SET ORDER_STATE = '환불신청',ORDER_DATE = SYSDATE WHERE ORDER_ID = ";
 		sql2 += dto.getOrder_id();
 		
 		int result = 0;

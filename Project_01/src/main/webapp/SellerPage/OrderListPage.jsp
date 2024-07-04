@@ -39,9 +39,16 @@
 	</div>
 </div>
 <div class = "container" style = "max-width: 1050px; min-width: 1050px; padding-left: 0px; padding-right: 0px; padding-top: 40px;">
-	<div class= "row d-flex flex-nowrap" style = "justify-content: space-between; padding-bottom: 40px; min-height: 200px;">
+	<div class= "row d-flex flex-nowrap" style = "justify-content: space-between; padding-bottom: 10px; min-height: 200px;">
 		<div class = "col-12">
 			<div id="example-table" style = "border-bottom: 4px solid #163020;"></div>
+		</div>
+	</div>
+	<div class = "row" style = "padding-top: 0px;">
+		<div class = "col-12" style="display: inline-flex;justify-content: center; justify-content: flex-end;">
+			<div style = "margin-right : 10px; ">				
+				<button class = "btn btn-success rounded-1 " id = "returnBtn" type = "button">돌아가기</button>
+			</div>
 		</div>
 	</div>
 </div>
@@ -57,6 +64,12 @@
 <script type="text/javascript">
 $(document).ready(function()
 {
+	$('#returnBtn').click(function()
+	{
+		location.replace("/SellerPage/SellerMainPage.jsp");
+	});
+	
+	
 	var table = tabulatorInit();		
 });
 
@@ -73,7 +86,7 @@ function get_SellerListData()
 	
 	var result;
 	
-	var url = "http://localhost:8080/SellerController/sellerRefundList.func";
+	var url = url_server + "/SellerController/sellerRefundList.func";
 	$.ajax({
 		type:"post",
         url:url,
@@ -199,7 +212,7 @@ function PageMove_forList(data_struct)
 	
 	var result;
 	
-	var url = "http://localhost:8080/SellerController/ListDetail_move.func";
+	var url = url_server + "/SellerController/ListDetail_move.func";
 	$.ajax({
 		type:"post",
         url:url,

@@ -190,8 +190,8 @@ html, body {
 		<div class = "col-10" style = "margin-top: 40px;">
 			<div class = "row"><label class = "video_subTitle" style  = "padding-bottom: 10px;">정기선 팀장</label></div>
 			<div class = "row"><label>매일 순두부 찌개 미는편</label></div>
-			<div class = "row"><label>카페인 중독자</label></div>
-			<div class = "row"><label>메인화면, 판매자 메인, 판매자 기능전반</label></div>
+			<div class = "row"><label>- 카페인 중독자</label></div>
+			<div class = "row"><label>- 메인화면, 판매자 메인, 판매자 기능전반, 형상 및 DB 관리자</label></div>
 		</div>
 	</div>
 	<div class = "row" style = "border-bottom: 1px solid #a0a0a0; padding-top: 10px;">
@@ -199,8 +199,8 @@ html, body {
 		<div class = "col-10" style = "margin-top: 40px;">
 			<div class = "row"><label class = "video_subTitle" style  = "padding-bottom: 10px;">박현옥 조원</label></div>
 			<div class = "row"><label>메뉴 마음에 안들면 탈주 준비중</label></div>
-			<div class = "row"><label>ㅁㅁㅁㅁㅁㅁㅁ</label></div>
-			<div class = "row"><label>상품 리스트, 판매 물품 등록</label></div>
+			<div class = "row"><label>- 커피 이런거 몸에 안좋다. 물마셔라</label></div>
+			<div class = "row"><label>- 상품 리스트, 판매 물품 등록</label></div>
 		</div>
 	</div>
 	<div class = "row" style = "border-bottom: 1px solid #a0a0a0; padding-top: 10px;">
@@ -208,17 +208,17 @@ html, body {
 		<div class = "col-10" style = "margin-top: 40px;">
 			<div class = "row"><label class = "video_subTitle" style  = "padding-bottom: 10px;">김진성 조원</label></div>
 			<div class = "row"><label>제육, 돈까스, 국밥 로테이션</label></div>
-			<div class = "row"><label>ㅁㅁㅁㅁㅁㅁㅁ</label></div>
-			<div class = "row"><label>상품 상세 페이지</label></div>
+			<div class = "row"><label>- 컴포즈커피 명예 회원</label></div>
+			<div class = "row"><label>- 상품 상세 페이지</label></div>
 		</div>
 	</div>
 	<div class = "row" style = "padding-top: 10px;">
 		<div class = "col-2"><img src="/resources/img/contect/Ousung.svg" style = "width: 100%; height: auto; "></div>
 		<div class = "col-10" style = "margin-top: 40px;">
 			<div class = "row"><label class = "video_subTitle" style  = "padding-bottom: 10px;">권오성 조원</label></div>
-			<div class = "row"><label>ㅇㅇㅇㅇㅇㅇㅇㅇㅇ</label></div>
-			<div class = "row"><label>ㅁㅁㅁㅁㅁㅁㅁ</label></div>
-			<div class = "row"><label>회원가입, 로그인, 마이페이지</label></div>
+			<div class = "row"><label>내가 가고 싶은데로 간다.</label></div>
+			<div class = "row"><label>- 고독한 개발자</label></div>
+			<div class = "row"><label>- 회원가입, 로그인, 마이페이지</label></div>
 		</div>
 	</div>	
 </div>

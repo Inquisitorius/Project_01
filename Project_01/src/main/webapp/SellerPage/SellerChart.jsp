@@ -39,7 +39,12 @@
 			  <input id = "dayInfoValue" 
 			  type="text" class="form-control" placeholder="" style = "text-align: center;"
 			  aria-label="Recipient's username" aria-describedby="basic-addon2" value = "30">
-			  <span class="input-group-text" id="chartUpdateBtn">일 전까지의 현황</span>
+			  <span class="input-group-text" id="chartUpdateBtn">일 전까지의 현황</span>				  
+			</div>
+		</div>
+		<div class = "col-2">
+			<div class="input-group" style = "margin-top: 40px; padding-left: ">
+				<button class = "btn btn-success rounded-1 " id = "returnBtn" type = "button">돌아가기</button>
 			</div>
 		</div>
 	</div>
@@ -55,6 +60,12 @@ var chart_save = null;
 
 $(document).ready(function()
 {
+	$('#returnBtn').click(function()
+	{
+		location.replace("/SellerPage/SellerMainPage.jsp");
+	});
+			
+	
 	$('#chartUpdateBtn').css("cursor", "pointer");
 	$('#chartUpdateBtn').click(function()
 	{
@@ -76,7 +87,7 @@ function get_SellerCountData()
 		seller_id : id,
 		intData_00 : Number(datevalue) + 1
 	};
-	var url = "http://localhost:8080/SellerController/Get_SellerChartData";
+	var url = url_server + "/SellerController/Get_SellerChartData";
 	
 	$.ajax({
 		type:"post",
