@@ -46,7 +46,7 @@
 </div>
 
     <div class="container" style="max-width: 1050px; padding-top: 50px;">
-        <form name="insertProducts" action="/SellerPage/ProductsInsert.do" method="post">
+        <form name="insertProducts" action="/SellerPage/ProductsInsert.do" method="post" >
             <div class="form-group row">
                 <label for="productname" class="col-sm-2 col-form-label" >상품명</label>
                 <div class="col-sm-10">
@@ -98,6 +98,7 @@
 			<div class="input-group mb-3">
   				<input type="file" class="form-control" id="productImg" name="productImg">
   				<label class="input-group-text" for="mainimg">Upload</label>
+  				<input type="text" id="imageUrlInput" name="imageUrlInput" readonly>
 			</div>
 		</div>
 		</div>
@@ -201,42 +202,63 @@
 				focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
 				lang: "ko-KR",					// 한글 설정
 				placeholder: '최대 2048자까지 쓸 수 있습니다',	//placeholder 설정
-				callbacks: {	//여기 부분이 이미지를 첨부하는 부분
-					onImageUpload : function(files) {
-						console.log(files[0])
-						uploadSummernoteImageFile(files[0],this);
-					},
-					onPaste: function (e) {
-						var clipboardData = e.originalEvent.clipboardData;
-						if (clipboardData && clipboardData.items && clipboardData.items.length) {
-							var item = clipboardData.items[0];
-							if (item.kind === 'file' && item.type.indexOf('image/') !== -1) {
-								e.preventDefault();
+					callbacks: {
+						 onImageUpload: function(files, editor, welEditable) {
+							    sendFile(files[0], this);
 							}
-						}
-					}
-				}
+			        
+					}	
 	});
         	
-        	/**
-        	* 이미지 파일 업로드
-        	*/
-        	function uploadSummernoteImageFile(file, editor) {
-        		data = new FormData();
-        		data.append("file", file);
-        		$.ajax({
-        			data : data,
-        			type : "POST",
-        			url : "/SellerPage/fileUpload.do",
-        			contentType : false,
-        			processData : false,
-        			success : function(data) {
-                    	
-                    	console.log(data.url);
-        				$(editor).summernote('insertImage', data.url);
-        			}
-        		});
-        	}
+
+    	function sendFile(files, editor) {
+    		// 파일 전송을 위한 폼생성
+    			data = new FormData();
+    			data.append("uploadFile", files);
+    			$.ajax({
+    				data: data,
+    		        type: "post",
+    		        url: "/SellerPage/fileUpload.do",
+    		     	cache : false,
+    		        contentType : false,	
+    		        processData : false,
+    		        success : function(data){
+    		        	$(editor).summernote('editor.insertImage', data.url);
+    		        }
+    			});
+    		}
+        	
+    	$('#productImg').on('change', function() {
+    	    var fileInput = document.getElementById('productImg');
+    	    var file = fileInput.files[0]; // 선택된 파일
+
+    	    var formData = new FormData();
+    	    formData.append('productImg', file);
+
+    	    // Ajax로 서버에 파일 전송
+    	    $.ajax({
+    	        type: 'POST',
+    	        url: '/SellerPage/ImageUpload.do',
+    	        data: formData,
+    	        contentType: false,
+    	        processData: false,
+    	        success: function(formData) {
+    	        	 var imageUrl = formData.url; // 서버에서 반환된 이미지 URL
+    	             alert('이미지가 업로드되었습니다.');
+    	           
+    	             $('#imageUrlInput').val(imageUrl);
+    	             // 서버에서 반환된 URL을 콘솔에 출력
+    	             console.log('업로드된 이미지 URL:', imageUrl);
+     
+    	        },
+    	        error: function(xhr, status, error) {
+    	            console.error('Error:', error);
+    	            alert('이미지 업로드 중 오류 발생.');
+    	        }
+    	    });
+    	});
+
+
 
 
             $("#submitbtn").click(function() {
@@ -254,9 +276,10 @@
                     unit: $("#unit").val(),
                     packagingType: $("#packagingType").val(),
                     deliveryType: $("#deliveryType").val(),
-                    productImg: $("#mainimg").val(),
+                    productImg: $("#imageUrlInput").val(),
                     subcategory: $("#subcategory").val(),
-                    editorTxt: $("#editorTxt").val() 
+                    editorTxt: $("#editorTxt").val(),
+                    
                 };
 				
                 
@@ -310,6 +333,8 @@
 
                
             });
+            
+            
         });
     </script>
 

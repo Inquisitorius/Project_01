@@ -35,7 +35,7 @@ public class InsertListController extends HttpServlet {
 	    String unit = request.getParameter("unit");
 	    String packagingType = request.getParameter("packageType");
 	    String deliveryType = request.getParameter("deliveryType");
-	    String productImg = request.getParameter("productImg");
+	    String productImg = request.getParameter("imageUrlInput");
 	    String subcategory = request.getParameter("subcategory");
 	    String notiimg = request.getParameter("editorTxt");
 	    
@@ -58,21 +58,7 @@ public class InsertListController extends HttpServlet {
 	        }
 	    }
 	    
-	    // 파라미터 값 콘솔에 출력
-	    System.out.println("productName : " + productName);
-	    System.out.println("subText : " + subText);
-	    System.out.println("origin : " + origin);
-	    System.out.println("weight : " + weight);
-	    System.out.println("dateInfo : " + dateInfo);
-	    System.out.println("notifi : " + notifi);
-	    System.out.println("price : " + price);
-	    System.out.println("saleper : " + saleper);
-	    System.out.println("unit : " + unit);
-	    System.out.println("packagingType : " + packagingType);
-	    System.out.println("deliveryType : " + deliveryType);
-	    System.out.println("productImg : " + productImg);
-	    System.out.println("subcategory : " + subcategory);
-	    System.out.println("notiimg : " + notiimg);
+
 
 	    // DTO 객체 생성 및 값 설정
 	    ProductDTO dto = new ProductDTO();
@@ -105,22 +91,22 @@ public class InsertListController extends HttpServlet {
 
 	    // 파라미터가 null이 아닌 경우에만 DAO에 접근하여 데이터 삽입 작업 수행
 	    if (productName != null && subText != null && origin != null && weight != null && dateInfo != null
-	            && notifi != null && unit != null && packagingType != null && deliveryType != null
+	            && notifi != null && unit != null && packagingType != null && deliveryType != null 
 	             && subcategory != null && notiimg != null) {
 	        try {
 	            result = dao.insertProduct(dto, price, saleper, subcategory);
 
 	            if (result > 0) {
-	                // 성공적으로 삽입된 경우
+	                
 	                response.sendRedirect("/ProductsList/ProductList.do");
 	            } else {
-	                // 삽입 실패 처리
+	                
 	                System.out.println("삽입 실패");
-	                // 실패 시 어떻게 처리할지 추가적으로 구현 가능
+	               
 	            }
 	        } catch (Exception e) {
 	            e.printStackTrace();
-	            // 예외 처리
+	            
 	        }
 	    } else {
 	        System.out.println("파라미터 중 하나 이상이 null입니다.");

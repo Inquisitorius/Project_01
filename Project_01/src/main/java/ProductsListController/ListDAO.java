@@ -642,8 +642,8 @@ public class ListDAO extends TestDBPool {
 	        psmt.setString(13, dto.getDelivery_type());
 	        System.out.println("Parameter 13 (Sub_text again): " + dto.getDelivery_type());
 	        
-	        psmt.setString(14, "ddd");
-	        System.out.println("Parameter 15 (Fixed value 'ddd'): ddd");
+	        psmt.setString(14, dto.getProduct_img());
+	        System.out.println("Parameter 14 : " + dto.getProduct_img());
 	        
 	        psmt.setString(15, dto.getProduct_noti_img());
 	        System.out.println("Parameter 15 (Product_noti_img): " + dto.getProduct_noti_img());

@@ -1,13 +1,5 @@
 package ProductInsertController;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,21 +9,29 @@ import java.util.UUID;
 
 import com.google.gson.JsonObject;
 
-@WebServlet("/SellerPage/fileUpload.do")
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+
+@WebServlet("/SellerPage/ImageUpload.do")
 @MultipartConfig(
     fileSizeThreshold = 1024 * 1024 * 2,  // 2MB
     maxFileSize = 1024 * 1024 * 10,       // 10MB
     maxRequestSize = 1024 * 1024 * 50     // 50MB
 )
-public class FileUploadController extends HttpServlet {
+public class ImageUploadController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    private static final String UPLOAD_DIRECTORY = "C:\\img"; // 실제 파일 저장 경로
+    private static final String UPLOAD_DIRECTORY = "C:\\img"; // 적절한 경로로 수정
     private static final String IMAGE_URL_PREFIX = "/img/"; // 이미지 URL 경로 prefix
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // 파일을 전송하는 파트(part)를 가져옵니다.
-        Part filePart = request.getPart("uploadFile");
+        Part filePart = request.getPart("productImg");
 
         // 파트가 null인지 확인
         if (filePart != null) {
@@ -44,14 +44,17 @@ public class FileUploadController extends HttpServlet {
             // 저장할 고유한 파일명 생성
             String savedFileName = UUID.randomUUID().toString() + "_" + fileName;
 
-            // 파일 저장 경로 설정
-            String filePath = UPLOAD_DIRECTORY + File.separator + savedFileName;
+            // 파일이 저장될 디렉토리 경로 설정
+            String uploadPath = UPLOAD_DIRECTORY;
 
             // 디렉토리가 존재하지 않으면 생성
-            File uploadDir = new File(UPLOAD_DIRECTORY);
+            File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
                 uploadDir.mkdirs();
             }
+
+            // 파일 저장 경로 설정
+            String filePath = uploadPath + File.separator + savedFileName;
 
             // 파일 스트림 열고 복사
             try (InputStream input = filePart.getInputStream();
