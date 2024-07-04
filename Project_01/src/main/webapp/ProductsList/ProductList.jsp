@@ -488,7 +488,7 @@
                             icon: "error",
                             button: "확인",
                         }).then((value) => {
-                            let newUrl = '/ProductsList/ProductList.do?page=' + currentPage
+                            let newUrl = '/ProductList?page=' + currentPage
                                        + '&category=' + category
                                        + '&filters=' + filters
                                        + '&price=' 
