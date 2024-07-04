@@ -98,7 +98,7 @@
 			<div class="input-group mb-3">
   				<input type="file" class="form-control" id="productImg" name="productImg">
   				<label class="input-group-text" for="mainimg">Upload</label>
-  				<input type="text" id="imageUrlInput" name="imageUrlInput" readonly>
+  				<input type="text" id="imageUrlInput" name="imageUrlInput" readonly style="display: none;">
 			</div>
 		</div>
 		</div>
@@ -182,7 +182,7 @@
 		</div>
 		<div class = "row" style = "margin-top: 10px;">
 			<div class = "col-12" style = "display: inline-flex;">
-				<button class="btn btn-navy rounded-1 fontCommon_Option" id = "submitbtn" name="submitbtn" type = "submit" style = "width: 100%; height: 36px;">등록</button>
+				<button class="btn btn-navy rounded-1 fontCommon_Option" id = "submitbtn" name="submitbtn" type = "submit" style="margin-left: auto;width: 100px;height: 40px;">등록</button>
 			</div>
 		</div>	
         </form>
@@ -201,7 +201,21 @@
 				maxHeight: null,             // 최대 높이
 				focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
 				lang: "ko-KR",					// 한글 설정
-				placeholder: '최대 2048자까지 쓸 수 있습니다',	//placeholder 설정
+				placeholder: '최대 2048자까지 쓸 수 있습니다',
+				  toolbar: [
+					    // [groupName, [list of button]]
+					    ['fontname', ['fontname']],
+					    ['fontsize', ['fontsize']],
+					    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+					    ['color', ['forecolor','color']],
+					    ['table', ['table']],
+					    ['para', ['ul', 'ol', 'paragraph']],
+					    ['height', ['height']],
+					    ['insert',['picture','link','video']],
+					    ['view', ['fullscreen', 'help']]
+					  ],
+					fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체','Noto Sans KR'],
+					fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
 					callbacks: {
 						 onImageUpload: function(files, editor, welEditable) {
 							    sendFile(files[0], this);
@@ -261,44 +275,55 @@
 
 
 
-            $("#submitbtn").click(function() {
-                
-                // 폼 데이터를 직접 객체로 생성합니다.
-                var formData = {
-                    ProductName: $("#productName").val(),
-                    subText: $("#subtext").val(),
-                    origin: $("#origin").val(),
-                    weight: $("#weight").val(),
-                    dateInfo: $("#dateinfo").val(),
-                    notifi: $("#notifi").val(),
-                    price: $("#price").val(),
-                    saleper: $("#saleper").val(),
-                    unit: $("#unit").val(),
-                    packagingType: $("#packagingType").val(),
-                    deliveryType: $("#deliveryType").val(),
-                    productImg: $("#imageUrlInput").val(),
-                    subcategory: $("#subcategory").val(),
-                    editorTxt: $("#editorTxt").val(),
-                    
-                };
-				
-                
-                $.ajax({
-                    type: "POST",
-                    url: "/SellerPage/ProductsInsert.do",
-                    data: formData, 
-                    success: function(response) {
-						
-                        alert("상품이 등록되었습니다.");
-                        window.location.href = "/ProductsList/ProductList.do";
-                    },
-                    error: function(xhr, status, error) {
-                        // 오류 발생 시 실행할 코드
-                        console.error("Error:", error);
-                        alert("상품 등록 중 오류.");
-                    }
-                });
-            });
+    	$("#submitbtn").click(function() {
+    	    // 폼 데이터 객체 생성
+    	    var formData = {
+    	        ProductName: $("#productName").val(),
+    	        subText: $("#subtext").val(),
+    	        origin: $("#origin").val(),
+    	        weight: $("#weight").val(),
+    	        dateInfo: $("#dateinfo").val(),
+    	        notifi: $("#notifi").val(),
+    	        price: $("#price").val(),
+    	        saleper: $("#saleper").val(),
+    	        unit: $("#unit").val(),
+    	        packagingType: $("#packagingType").val(),
+    	        deliveryType: $("#deliveryType").val(),
+    	        productImg: $("#imageUrlInput").val(),
+    	        subcategory: $("#subcategory").val(),
+    	        editorTxt: $("#editorTxt").val(),
+    	    };
+
+    	    // 널 값이 있는지 검사
+    	    for (var key in formData) {
+    	        if (formData[key] === null || formData[key] === "") {
+    	            // 널 값이 있는 경우 모달을 띄움
+    	            swal({
+    	                title: "모든 필드를 채워 주세요.",
+    	                icon: "error",
+    	                button: "확인",
+    	            });
+    	            event.preventDefault(); // 폼 제출 중단
+    	           return;
+    	        }
+    	    }
+
+    	    // 널 값이 없는 경우 AJAX 요청 실행
+    	    $.ajax({
+    	        type: "POST",
+    	        url: "/SellerPage/ProductsInsert.do",
+    	        data: formData, 
+    	        success: function(response) {
+    	            alert("상품이 등록되었습니다.");
+    	            window.location.href = "/ProductsList/ProductList.do";
+    	        },
+    	        error: function(xhr, status, error) {
+    	            // 오류 발생 시 실행할 코드
+    	            console.error("Error:", error);
+    	            alert("상품 등록 중 오류.");
+    	        }
+    	    });
+    	});
 
             $("#category").change(function() {
                 var selectedCategory = $(this).val();

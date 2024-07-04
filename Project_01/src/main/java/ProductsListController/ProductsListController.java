@@ -11,7 +11,7 @@ import java.util.List;
 import Category.CategoryDTO;
 import DTO.ProductDTO;
 
-@WebServlet("/ProductsList/ProductList.do")
+@WebServlet("/ProductList")
 public class ProductsListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

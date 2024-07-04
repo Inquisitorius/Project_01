@@ -261,6 +261,7 @@ public class ListDAO extends TestDBPool {
 				dto.setPrice_discount(rs.getInt(5));
 				dto.setDelivery_type(rs.getString(6));
 				dto.setProduct_img(rs.getString(7));
+				dto.setProduct_id(rs.getInt(8));
 
 				list.add(dto);
 			}
@@ -458,6 +459,7 @@ public class ListDAO extends TestDBPool {
 				dto.setPrice_discount(rs.getInt(5));
 				dto.setDelivery_type(rs.getString(6));
 				dto.setProduct_img(rs.getString(7));
+				dto.setProduct_id(rs.getInt(8));
 
 				list.add(dto);
 			}

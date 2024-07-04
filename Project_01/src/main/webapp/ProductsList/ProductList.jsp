@@ -35,12 +35,12 @@
 	 // 필터와 딜리버리 값을 문자열로 합치는 로직
     String filtersStr = "";
     if (filters != null && filters.length > 0) {
-        filtersStr = String.join(",", filters); // 배열을 "%"로 구분하여 문자열로 합침
+        filtersStr = String.join(",", filters); 
     }
 
     String deliveryStr = "";
     if (delivery != null && delivery.length > 0) {
-        deliveryStr = String.join(",", delivery); // 배열을 "%"로 구분하여 문자열로 합침
+        deliveryStr = String.join(",", delivery); 
     }
 	
 
@@ -74,7 +74,7 @@
 			<h3 class="text-center listheader">상품 목록</h3>
 			
 			<ul class="justify-content-center itemnav">
-			<li class="item" id="item"><a class="link" href="<%=request.getContextPath()%>/ProductsList/ProductList.do?page=1&category=all&filters=&price=&delivery=&type=" data-category="all">전체 상품</a></li>
+			<li class="item" id="item"><a class="link" href="<%=request.getContextPath()%>/ProductList?page=1&category=all&filters=&price=&delivery=&type=" data-category="all">전체 상품</a></li>
 			<% 
 				Map<String, String> cateMap = CategoryMap.getCateMap();
 				
@@ -84,7 +84,7 @@
 					String CateName = dto.getCategory_Name();
 					String englishCateName = cateMap.getOrDefault(CateName, CateName);
 			%>
-				<li class="item"><a class="link" href="<%=request.getContextPath()%>/ProductsList/ProductList.do?page=1&category=<%= englishCateName %>&filters=&price=&delivery=&type" data-category="<%= englishCateName %>"><%= dto.getCategory_Name() %></a></li>
+				<li class="item"><a class="link" href="<%=request.getContextPath()%>/ProductList?page=1&category=<%= englishCateName %>&filters=&price=&delivery=&type" data-category="<%= englishCateName %>"><%= dto.getCategory_Name() %></a></li>
 				<%}
 					} %>
 			</ul>
@@ -96,7 +96,7 @@
 						<span class="titlespan">필터</span>
 					</div>
 					<div class="sticky-menu">
-						<form id="filterForm" method="GET" action="<%= request.getContextPath() %>/ProductsList/ProductList.do" accept-charset="utf-8">
+						<form id="filterForm" method="GET" action="<%= request.getContextPath() %>/ProductList" accept-charset="utf-8">
 							<div class="filter-group">
 								<div class="toggle-btn">
 									<h5 class="title">카테고리</h5>
@@ -188,10 +188,10 @@
 							총 <%=request.getAttribute("cnt")%>건
 						</div>
 						<ul class="productsort">
-							<li class="sort-li"><a class="sort-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= 1 %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=new" data-type="new" class="sort-a">신상품순</a></li>
-							<li class="sort-li"><a class="sort-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= 1 %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=saleprice" data-type="saleprice" class="sort-a">혜택순</a></li>
-							<li class="sort-li"><a class="sort-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= 1 %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=lowprice" data-type="lowprice" class="sort-a">낮은 가격순</a></li>
-							<li class="sort-li"><a class="sort-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= 1 %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=highprice" data-type="highprice" class="sort-a">높은 가격순</a></li>
+							<li class="sort-li"><a class="sort-link" href="<%= request.getContextPath() %>/ProductList?page=<%= 1 %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=new" data-type="new" class="sort-a">신상품순</a></li>
+							<li class="sort-li"><a class="sort-link" href="<%= request.getContextPath() %>/ProductList?page=<%= 1 %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=saleprice" data-type="saleprice" class="sort-a">혜택순</a></li>
+							<li class="sort-li"><a class="sort-link" href="<%= request.getContextPath() %>/ProductList?page=<%= 1 %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=lowprice" data-type="lowprice" class="sort-a">낮은 가격순</a></li>
+							<li class="sort-li"><a class="sort-link" href="<%= request.getContextPath() %>/ProductList?page=<%= 1 %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=highprice" data-type="highprice" class="sort-a">높은 가격순</a></li>
 						</ul>
 					</div>
 					<div class="container list" id="productList" style="text-decoration-line: none;">
@@ -241,12 +241,12 @@
         <ul class="pagination justify-content-center">
         	<li class="page-item">
         		
-                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= 1 %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style="font-weight: bold" aria-label="Previous">
+                <a class="page-link" href="<%= request.getContextPath() %>/ProductList?page=<%= 1 %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style="font-weight: bold" aria-label="Previous">
                     <span aria-hidden="true"><img src=/resources/img/firstbtn.png></span>
                 </a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= Math.max(1, currentPage - 1) %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style="font-weight: bold" aria-label="Previous">
+                <a class="page-link" href="<%= request.getContextPath() %>/ProductList?page=<%= Math.max(1, currentPage - 1) %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style="font-weight: bold" aria-label="Previous">
                     <span aria-hidden="true"><img src=/resources/img/prevbtn.png></span>
                 </a>
             </li>
@@ -260,16 +260,16 @@
                 String activeClass = (currentPage == i) ? "active" : "";
             %>
             <li class="page-item <%= activeClass %>">
-                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= i %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style=""><%= i %></a>
+                <a class="page-link" href="<%= request.getContextPath() %>/ProductList?page=<%= i %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style=""><%= i %></a>
             </li>
             <% } %>
             <li class="page-item">
-                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= Math.min(totalPages, currentPage + 1) %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style="font-weight: bold" aria-label="Next">
+                <a class="page-link" href="<%= request.getContextPath() %>//ProductList?page=<%= Math.min(totalPages, currentPage + 1) %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style="font-weight: bold" aria-label="Next">
                     <span aria-hidden="true"><img src=/resources/img/nextbtn.png></span>
                 </a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="<%= request.getContextPath() %>/ProductsList/ProductList.do?page=<%= totalPages %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style="font-weight: bold" aria-label="Next">
+                <a class="page-link" href="<%= request.getContextPath() %>/ProductList?page=<%= totalPages %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style="font-weight: bold" aria-label="Next">
                     <span aria-hidden="true"><img src=/resources/img/lastbtn.png></span>
                 </a>
             </li>
@@ -408,7 +408,7 @@
 
         // 초기 URL 설정 및 스타일 적용
        
-        let initialUrl = window.location.origin + '/ProductsList/ProductList.do?page=' + currentPage + '&category=' + category + '&filters=' + filters + '&price=' + price + '&delivery=' + delivery + '&type=' + type;
+        let initialUrl = window.location.origin + '/ProductList?page=' + currentPage + '&category=' + category + '&filters=' + filters + '&price=' + price + '&delivery=' + delivery + '&type=' + type;
         history.replaceState({ page: currentPage, category: category, filters: filters, price: price, delivery: delivery }, null, initialUrl);
         updateNavigationStyle(category);
         updateProductSortNavigationStyle(type);
@@ -462,7 +462,7 @@
 			
             $.ajax({
                 type: 'GET',
-                url: window.location.origin + '/ProductsList/ProductList.do',
+                url: window.location.origin + '/ProductList',
                 data: {
                     page: 1,
                     category: clickedCategory,
