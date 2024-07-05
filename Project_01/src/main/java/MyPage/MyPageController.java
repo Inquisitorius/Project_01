@@ -95,14 +95,13 @@ public class MyPageController extends HttpServlet {
 		try {
 			MyPageDAO dao = new MyPageDAO();
 			QuestionDTO dto = new QuestionDTO();
+			
+			dto.setQdx(dao.lastQdx());
 			dto.setQue_category(req.getParameter("que_category"));
 			dto.setQue_title(req.getParameter("que_title"));
 			dto.setQue_contents(req.getParameter("que_contents"));
-
-			// System.out.print("cate : "+dto.getQue_category()+" title :
-			// "+dto.getQue_title()+" contents : "+dto.getQue_contents());
 			dao.uploadQuestion(dto);
-
+			System.out.println(dto.getQdx());
 			JsonObject jsonResponse = new JsonObject();
 			jsonResponse.addProperty("status", "success");
 			Gson gson = new Gson();
@@ -118,7 +117,7 @@ public class MyPageController extends HttpServlet {
 			out.print(errorResponse.toString());
 		}
 	}
-
+	
 	private void QuestionShow(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		resp.setContentType("application/json");
 		resp.setCharacterEncoding("UTF-8");
@@ -126,10 +125,12 @@ public class MyPageController extends HttpServlet {
 		try {
 			MyPageDAO dao = new MyPageDAO();
 			List<QuestionDTO> qlist = dao.showAllQuestion();
+			int count = dao.countQuestion();
 			JsonObject jsonResponse = new JsonObject();
 			jsonResponse.addProperty("status", "success");
 			Gson gson = new Gson();
 			jsonResponse.add("qlist", gson.toJsonTree(qlist));
+			jsonResponse.add("count", gson.toJsonTree(count));
 			out.print(jsonResponse.toString());
 		} catch (Exception e) {
 			e.printStackTrace();

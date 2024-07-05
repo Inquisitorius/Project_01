@@ -36,28 +36,21 @@
     border:none;
 }
 
-.qna-content {
-    cursor: pointer;
-    background-color: #f0f0f0;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size:12px;
+.qna_Item{
+	cursor: pointer;
+	font-size:15px;
+	text-align:center;
+	user-select:none;
+	width:100%;
 }
-
 .column_Style{
 	text-align:center;
 	font-weight:600;
 	text-align:center;
 	user-select:none;
+	
 }
 
-.qna_Item{
-	font-size:12px;
-	text-align:center;
-	user-select:none;
-	width:100%;
-}
 
 .modal {
   display: none;
@@ -110,6 +103,22 @@
     border: 1px solid #ced4da;
 }
 
+.page-link{
+	color: green;
+	cursor : pointer;
+	user-select: none;
+}
+
+.page-link:hover{
+	background-color: white;
+	color:green;
+}
+
+.pagination {
+    --bs-pagination-focus-box-shadow: none;
+    --bs-pagination-focus-color: black
+}
+
 </style>
 <head>
 <meta charset="UTF-8">
@@ -137,12 +146,12 @@ int userAuth = 0;;
 			</div>
 		</div>
 		<!-- 상단 내용 부분  -->	
-			<div class="row" style="justify-content: center; height:600px;">
+			<div class="row" style="justify-content: center; min-height:550px;">
 			<div class="col-md-10">
 			<table class="table">
 					<thead>
 						<tr>
-							<th class="col-md-2 column_Style">번호</th>
+							<!-- <th class="col-md-2 column_Style">번호</th> -->
 							<th class="col-md-3 column_Style">카테고리</th>
 							<th class="col-md-7 column_Style">제목</th>
 						</tr>
@@ -150,31 +159,27 @@ int userAuth = 0;;
 				
 		<!-- 게시 질문 부분  -->	
 				<tbody id="tablebody">
-					<tr class="qna_Item" data-target="#content1">
-							<td class="col-md-2">1</td>
-							<td class="col-md-3">회원</td>
-							<td class="col-md-7">회원 정보를 바꾸고 싶습니다.</td>
-					</tr>
-					<tr>
-						<td colspan="3" style="border:none;">
-						<div class="col-md-12" style="display:flex;">
-						<div class="qna-answer" id="content1">
-							■ 회원정보 변경 안내<br/>
- 							- 아래 경로를 통해 회원정보를 직접 변경하실 수 있습니다.<br/>
- 							홈페이지 우측 상단 마이페이지 선택 후 내 정보 수정 <br/>
-							- 수정가능 항목 : 비밀번호/이메일주소/휴대폰번호/생년월일/성별<br/>
- 							▣ 아이디, 이름은 수정 불가합니다.<br/>
- 							▣ 구매 이후, 주문건에 대한 배송지 변경은 고객센터로 문의 바랍니다.
-						</div>
-						</div>
-						</td>
-					</tr>
 				</tbody>
 			</table>	
 			</div>
 			</div>
+			<div class="row" style="justify-content: center;">
+			<div class="col-md-7" style="display:flex; justify-content: center;">
+				<nav aria-label="Page navigation example">
+  					<ul class="pagination" id="pagingbody">
+    				<li class="page-item"><a class="page-link" onclick="prevPage()" id="prevBtn">Previous</a></li>
+  				</ul>
+				</nav>
+			</div>	
+			</div>
 			<script>
-			var qlist;
+			var qlist = [];
+			var postsPerPage = 10;
+			var totalPosts ;
+			var currentPage = 1 ;
+			var totalPages;
+			var pagingBody = document.getElementById("pagingbody");
+			
 			$.ajax({
 			    type: "get",
 			    url: "/MyPageContent/QuestionShow",
@@ -182,35 +187,103 @@ int userAuth = 0;;
 			    success: function(response) {
 			        if (response.status === "success") {
 			        	qlist = response.qlist;
+			        	totalPosts = response.count;
+			        	totalPages = Math.ceil(totalPosts/postsPerPage);
+			        	var lastIndex = qlist.length - 1;
+			        	if(lastIndex >= 0){
 			            showQuestion();
-			           
-			        } else {
+			        	addPageBtn();
+			        } }else {
 			            // 실패 시 처리
-			        }
-			    },
-			    error: function() {
+			        }}, error: function() {
 			        alert('서버 오류가 발생했습니다. 다시 시도해 주세요.');
 			    }
 			});
+				if(currentPage === 1){
+					prevBtn = document.getElementById("prevBtn");
+					prevBtn.onclick = null;
+					prevBtn.style.cursor = "auto";
+			}
+				
+			function changePage(page){
+				 var target = page.target; 
+				 var page = target.textContent; 
+				 currentPage = page;
+				showQuestion(currentPage);
+			}
+			
+			function addPageBtn(){
+				for (var i = 1; i <= totalPages; i++) {
+			        var pagingPage = document.createElement("li");
+			        pagingPage.className = "page-item";
 
-			function showQuestion() {
+			        var link = document.createElement("a");
+			        link.className = "page-link";
+			        link.id ="pagebtn"+i ;
+			        link.addEventListener('click', changePage);
+			        link.textContent = i;
+
+			        pagingPage.appendChild(link); // 링크를 리스트 아이템에 추가
+			        pagingBody.appendChild(pagingPage); // 리스트 아이템을 페이지네이션 컨테이너에 추가
+			     }		
+			 
+			    var pagingPage = document.createElement("li");
+	            pagingPage.className = "page-item";
+
+	            var link = document.createElement("a");
+	            link.className = "page-link";
+	            link.textContent = "NEXT";
+	           	link.addEventListener('click', changePage);
+	            pagingPage.appendChild(link);
+	            pagingBody.appendChild(pagingPage);
+			}
+			
+			function showQuestion(currentPage) {
+				var currentPagePosts = (currentPage == totalPages) ? (totalPosts % postsPerPage) : postsPerPage;
+				
 			    var tableBody = document.getElementById("tablebody");
 			    // 기존 테이블 내용 초기화
 			    tableBody.innerHTML = "";
 			    // 데이터 반복문 처리
-			    for (var i = 0; i < qlist.length; i++) {
+			    for (var i = 1; i <= currentPagePosts; i++) {
 			        var row = document.createElement("tr");
+			        row.classList.add("qna_Item");
+			        row.setAttribute("data-target", "#qdx"+i);
 			        // 각 행에 데이터 추가
 			        row.innerHTML = `
-			            <td>${qlist[i].qdx}</td>
-			            <td>${qlist[i].que_category}</td>
-			            <td>${qlist[i].que_title}</td>
-			            <td>${qlist[i].que_contents}</td>
+			            <td>${'${qlist[i-1].que_category'}}</td>
+			            <td>${'${qlist[i-1].que_title'}}</td>`;
+			            tableBody.appendChild(row);
+			        var answer = document.createElement("tr");
+			        var tdContent = `<td colspan="2" style="border:none;" class="table-secondary qna-answer"
+			        id="qdx${'${i}'}">
+			        ${'${qlist[i-1].que_contents'}}
+			        </td>
 			        `;
+	   			
+			        answer.innerHTML = tdContent;	
+			        tableBody.appendChild(answer);
+			        
 			        // 테이블에 행 추가
-			        tableBody.appendChild(row);
+			        
 			    }
+			   
+			    $('.qna_Item').on('click', function() {
+			         var target = $(this).data('target'); // Get the target content ID
+			         var $content = $(target); // Find the content to slide
+
+			         if ($content.is(':visible')) {
+			            $content.slideUp(); // Hide the content if it is visible
+			         } else {
+			            // Optionally: Close other open items if single open item behavior is needed
+			            $('.qna-answer').slideUp(); // Hide all other open contents
+
+			            // Show the clicked content
+			            $content.slideDown();
+			         }
+			      });   
 			}
+			
 			</script>
 			
 			<!-- 모달 부분  -->
@@ -231,15 +304,15 @@ int userAuth = 0;;
         				<form>
         					<div class="form-group">
         						<label for="recipient-name" class="col-form-label">카테고리</label>
-          					 	<input type="text" class="form-inputText" id="input_category" placeholder='카테고리를 입력해주세요.'>
+          					 	<input type="text" class="form-inputText" id="input_category" placeholder='카테고리를 입력해주세요.(100자 이내)' maxlength="100">
     				    		</div>
           					<div class="form-group">
             					<label for="recipient-name" class="col-form-label">제목</label>
-          					 	<input type="text" class="form-inputText" id="input_title" placeholder='제목을 입력해주세요.'>
+          					 	<input type="text" class="form-inputText" id="input_title" placeholder='제목을 입력해주세요.(100자 이내)'  maxlength="100">
     				    		</div>
          				 <div class="form-group">
            				 <label for="message-text" class="col-form-label">내용</label>
-           				 <textarea class="form-inputText" id="input_contents" style="height:150px;" placeholder='내용을 입력해주세요.'></textarea>
+           				 <textarea class="form-inputText" id="input_contents" style="height:150px;" placeholder='내용을 입력해주세요.(400자 이내)'  maxlength="400"></textarea>
          			 </div>
        					 </form>
       				</div>
@@ -252,12 +325,11 @@ int userAuth = 0;;
 			</div>
 			
 		<script>
+		var modal = document.getElementById('myModal');
 		if("<%= userAuth %>" == 3){			//관리자용 질문 등록
 			document.getElementById("addQnaBtn").style.display = "block";
+		}
 			$('#addQnaBtn').on('click', function() {
-				var modal = document.getElementById('myModal');
-
-				
 				modal.style.display = 'block';
 				$('.close').on('click', function() {
 				    var modal = document.getElementById('myModal');
@@ -270,6 +342,8 @@ int userAuth = 0;;
 				        modal.style.display = 'none';
 				    }
 				} */
+			});
+		
 				$('#cancelBtn').on('click',function(){
 					 modal.style.display = 'none';
 				});
@@ -296,8 +370,8 @@ int userAuth = 0;;
 					button: "확인",
 				 	}).then((value) => {
 				 		var dto = response.dto;
-				 		
 				 		modal.style.display = "none";
+				 		showaddQuestion(dto);
 		   		  });		
 			 }else{
 				
@@ -308,25 +382,43 @@ int userAuth = 0;;
 					
 					}
 				});
-			});
-		}
-		
-		
-		
-		$('.qna_Item').on('click', function() {
-         var target = $(this).data('target'); // Get the target content ID
-         var $content = $(target); // Find the content to slide
-         
-         if ($content.is(':visible')) {
-            $content.slideUp(); // Hide the content if it is visible
-         } else {
-            // Optionally: Close other open items if single open item behavior is needed
-            $('.qna-answer').slideUp(); // Hide all other open contents
+			 
+			function showaddQuestion(dto){
+			 var lastIndex = qlist.length;
+			 var tableBody = document.getElementById("tablebody");
+			        var row = document.createElement("tr");
+			        row.classList.add("qna_Item");
+			        row.setAttribute("data-target", "#qdx"+(dto.qdx+1));
+			        console.log("date target = " + row.getAttribute("data-target"));
+			        row.innerHTML = `
+			            <td>${'${dto.que_category}'}</td>
+			            <td>${'${dto.que_title}'}</td>`;
+			            tableBody.appendChild(row);
+			        var answer = document.createElement("tr");
+			        var tdContent = `<td colspan="2" style="border:none;" class="table-secondary qna-answer"
+						        id="qdx${'${dto.qdx+1}'}">
+						        ${'${dto.que_contents'}}
+						        </td>
+						        `;
+	   				answer.innerHTML = tdContent;
+			        tableBody.appendChild(answer);
+					
+			        $('.qna_Item').on('click', function() {
+				         var target = $(this).data('target'); // Get the target content ID
+				         var $content = $(target); // Find the content to slide
 
-            // Show the clicked content
-            $content.slideDown();
-         }
-      });   
+				         if ($content.is(':visible')) {
+				            $content.slideUp(); // Hide the content if it is visible
+				         } else {
+				            // Optionally: Close other open items if single open item behavior is needed
+				            $('.qna-answer').slideUp(); // Hide all other open contents
+
+				            // Show the clicked content
+				            $content.slideDown();
+				         }
+				      });   
+			        // 테이블에 행 추가
+			    } 
 		</script>	
 </main>
 </body>

@@ -52,7 +52,7 @@ public class MyPageDAO extends DBConnTest {
 	public List<QuestionDTO> showAllQuestion() {
 		List<QuestionDTO> qlist = new Vector<QuestionDTO>();
 		try {
-			String query = "SELECT * FROM Que_Board";
+			String query = "SELECT * FROM Que_Board ORDER BY qdx DESC";
 			psmt = con.prepareStatement(query);
 			rs = psmt.executeQuery();
 			while (rs.next()) {
@@ -63,7 +63,6 @@ public class MyPageDAO extends DBConnTest {
 				dto.setQue_contents(rs.getString(4));
 				qlist.add(dto);
 			}
-			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -77,6 +76,52 @@ public class MyPageDAO extends DBConnTest {
 		return qlist;
 	}
 
+	public int lastQdx() {
+		int result = 0;
+		try {
+			String query = "SELECT MAX(qdx) FROM Que_Board";
+			psmt = con.prepareStatement(query);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (
+
+		Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				psmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	public int countQuestion() {
+		int result = 0;
+		try {
+			String query = "SELECT count(*) FROM Que_Board";
+			psmt = con.prepareStatement(query);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (
+
+		Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				psmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
 	public void uploadQuestion(QuestionDTO dto) {
 		try {
 			String query = "INSERT INTO Que_Board Values(que_seq.NEXTVAL,?,?,?)";
@@ -85,6 +130,7 @@ public class MyPageDAO extends DBConnTest {
 			psmt.setString(2, dto.getQue_title());
 			psmt.setString(3, dto.getQue_contents());
 			rs = psmt.executeQuery();
+			System.out.println("질문 등록 DAO");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

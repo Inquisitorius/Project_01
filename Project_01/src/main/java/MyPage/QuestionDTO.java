@@ -5,7 +5,8 @@ public class QuestionDTO {
 	private String que_category;
 	private String que_title;
 	private String que_contents;
-
+	private int count_questions;
+	
 	public int getQdx() {
 		return qdx;
 	}
@@ -36,5 +37,13 @@ public class QuestionDTO {
 
 	public void setQue_contents(String que_contents) {
 		this.que_contents = que_contents;
+	}
+
+	public int getCount_questions() {
+		return count_questions;
+	}
+
+	public void setCount_questions(int count_questions) {
+		this.count_questions = count_questions;
 	}
 }
