@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix ="fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="Board.BoardDAO"%>
 <%@ page import="Board.BoardDTO"%>
 <%@ page import="Main.JDBConnect"%>
@@ -256,7 +257,7 @@ color: black;
 
 hr {
 	border: 1px solid gray;
-}
+}	
 
 </style>
 </head>
@@ -292,12 +293,16 @@ hr {
 			</div>	
 			<div class= "row">
 				<div class = "col-md-12 fontCommon_price" style = "font-size: 26px;font-weight: 750; color: #333;">
-					<sapn style="color:red;">${ ProductDTO.price_percent }% </sapn>${ ProductDTO.price_discount} <sapn style="font-weight:500";>원</sapn>
+					<sapn style="color:red;">
+					<fmt:formatNumber type="Number" maxFractionDigits="3" value="${ ProductDTO.price_percent }" />
+					%</sapn>
+					<fmt:formatNumber type="Number" maxFractionDigits="3" value="${ ProductDTO.price_discount}" />
+					<sapn style="font-weight:500";>원</sapn>
 				</div>
 			</div>	
 			<div class= "row">
 				<div class = "col-md-12 font_line" style="padding-bottom:10px;">
-					${ ProductDTO.price_ori }
+					<fmt:formatNumber type="Number" maxFractionDigits="3" value="${ProductDTO.price_ori}" />
 				</div>
 			</div>	
 			<div class= "row">
@@ -384,7 +389,9 @@ hr {
 			<hr style="height:1px;border:none;background-color:gray;">
 			<div class= "row">
 				<div class = "col-md-12 fontgray right" style="display:inline-flex;align-items: center;">
-				총 상품 금액:<label id="totalPrice" style="font-weight:bold;font-size:25px;">${ ProductDTO.price_discount }</label>원</div>
+				총 상품 금액:<label id="totalPrice" style="font-weight:bold;font-size:25px;">
+				<fmt:formatNumber type="Number" maxFractionDigits="3" value="${ ProductDTO.price_discount }" />
+				</label>원</div>
 					</div>
 				<script>
  				 const basePrice = ${ ProductDTO.price_discount };
@@ -392,13 +399,14 @@ hr {
 			</c:forEach>
 			<div class="row">
 				<div class= "col -4"style= "padding-bottom: 50px;display: flex;justify-content: flex-end;">
-				<button type="button" class="btn btn-outline-success" id="buyButton" style="width:350px; height:50px";>구매하기</button>
+				<button type="button" class="btn btn-success" id="buyButton" style="width:350px; height:50px;font-size:20px;font-weight: bold";>구매하기</button>
 
 			<!-- 폼 Hidden  -->
 				<form id="buyForm" action="/test/Buypage.do" method="GET">
   				<input type="hidden" name="product_id" id="hiddenProductId" value="<%= currentProductId %>">
   				<input type="hidden" name="idx" id="hiddenUserId" value="<%= UserIDX %>">
   				<input type="hidden" name="quantity" id="hiddenQuantity" value="1">
+				<input type="hidden" name="price" id= "hiddenPrice" value =<%= session.getAttribute("price") %>">
 				</form>
 			
 			</div>
@@ -434,14 +442,10 @@ hr {
 		 <h3>${ ProductDTO.sub_text }</h3>
 		 <h3 style= "padding-bottom:30px;">${ ProductDTO.name }</h3><br />
 		 <section class='section' id='section2'>
-        <h2>2 이동위치</h2>
-    </section>
+         <h2>2 이동위치</h2>
+  		 </section>
 		 <hr>
-		 <p style="padiing-top:30px;">멜론은 촉촉한 식감과 입안에 감도는 단맛으로 그만의 매력을 톡톡히 발산하는 과일이죠. 
-		 그중에서도 달콤한 맛과 향을 품은 머스캣멜론을 마켓그린에서 합리적인 가격으로 만나보세요. 
-		 국내 농가에서 정성스레 재배해 묵직하게 잘 익은 머스크 멜론이랍니다. 
-		 맛도 맛이지만 비타민c칼륨도 풍부하게 함유하고있어 꾸준히 즐겨찾는분들도 계시죠. 
-		 과일 디저트는 물론이고 근사한 안주로 즐겨도 좋을 거예요. </p>
+		
 		 </div>
 		 </div>
 		 </c:forEach>
@@ -533,19 +537,25 @@ hr {
                     	</th>	
                     	<td>${ InqueryDTO.name }</td>
                     	<td>${ InqueryDTO.inquery_date }</td>
-                     <tr id="content${ InqueryDTO.inquery_id }" class="hidden-content-row"style="width:150px;hegiht:300px;"> 
+                     <tr id="content${ InqueryDTO.inquery_id }" class="hidden-content-row"style="width:150px;hegiht:200px;"> 
+                     <!-- 문의글  -->
                         <td colspan="4"style="padding : 0px;border:none;">
                           <div class="hidden-content">
                             <div class="row" style="display:flex;font-size:15px;"> 
-                             문의내용 :
-                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;문의내용 :
+                             &nbsp;&nbsp;
                              	${ InqueryDTO.inquery_content }
                               	
-                             <div class="hideen-content2-row" data-target2="#content2%${ InqueryDTO.seller_content }"
-                             style="display:flex;justify-content: flex-start;">
-                             <br />
-                             ${ InqueryDTO.seller_content }
-                             </div> 
+                              <c:if test="${not empty InqueryDTO.seller_content}">
+                   		 <div class="hidden-content2" data-target2="#content2${InqueryDTO.seller_content}"
+                  		  style="display:flex;justify-content: flex-start;">
+                    	<br />
+                       &nbsp;&nbsp;&nbsp;답변내용 :
+                       &nbsp;&nbsp;  
+                       ${InqueryDTO.seller_content}
+                    </div>
+                </c:if>
+                             </div>
                            </div>
                            </div>
                      </td>
@@ -610,12 +620,11 @@ hr {
         }
         return true;
     };
-    
     function count(type) {
         const resultElement = document.getElementById('result');
         let number = parseInt(resultElement.innerText);
         
-        // 더하기/빼기 로직
+        // 더하기/빼기 로직	
         if (type === 'plus') {
             number += 1;
         } else if (type === 'minus' && number > 1) {  // 최소 수량 1 제한
@@ -637,7 +646,9 @@ hr {
 
         // 결과 출력 (총 금액 업데이트)
         totalPriceElement.innerText = totalPrice.toLocaleString(); // 천 단위 콤마 추가
-    };
+       
+        document.getElementById('hiddenPrice').value = totalPrice;
+    }
     
     	document.getElementById('buyButton').addEventListener('click', function() {
     	    // 상품 ID와 사용자 ID, 수량 값을 설정
@@ -645,11 +656,12 @@ hr {
     	    var productId = document.getElementById('hiddenProductId').value;
     	    var userId = document.getElementById('hiddenUserId').value;
     	    var quantity = document.getElementById('result').innerText; // 현재 수량을 가져옴
-
+    	    var totalPrice = document.getElementById('totalPrice').innerText.replace(/,/g, '');
     	    // 폼에 값을 설정
     	    document.getElementById('hiddenProductId').value = productId;
     	    document.getElementById('hiddenUserId').value = userId;
     	    document.getElementById('hiddenQuantity').value = quantity;
+    	    document.getElementById('hiddenPrice').value = totalPrice;
 			
     	    if(productId == 'null') {
     			console.log("상품체크");
@@ -670,6 +682,14 @@ hr {
     		else
     		{ 
     			console.log("수량 있음");
+    		}
+    		if(totalPrice == 'null') {
+    			console.log("가격체크");
+    		}			
+    		else
+    		{ 
+    			console.log("가격 있음");
+    			console.log("총 금액: " + document.getElementById('hiddenPrice').value);
     		}
     	    
     	    // 폼을 제출
@@ -705,7 +725,6 @@ hr {
 		button3.addEventListener('click', () => {
 	        window.scrollBy({top: section3.getBoundingClientRect().top, behavior: 'smooth'});
 	    });
-		
 		
 </script>
 	
