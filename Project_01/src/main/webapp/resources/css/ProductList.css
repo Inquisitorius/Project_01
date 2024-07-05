@@ -363,3 +363,6 @@ input[type="checkbox"]:checked+label:after, input[type="radio"]:checked+label:af
     margin-top: 36px;
 }
 
+.page-link.active{
+	background-color: rgb(221, 221, 221);
+}

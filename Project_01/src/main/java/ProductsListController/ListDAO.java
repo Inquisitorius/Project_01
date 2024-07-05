@@ -63,6 +63,7 @@ public class ListDAO extends TestDBPool {
 		        sql += " PRICE_DISCOUNT >= " + prices[0] + " AND PRICE_DISCOUNT < " + prices[1];
 		    }
 		}
+		
 
 		try {
 			psmt = con.prepareStatement(sql);
@@ -202,17 +203,26 @@ public class ListDAO extends TestDBPool {
 		}
 		
 		String[] prices = splitPrice.toString().split(",");
-		System.out.println(prices[0]);
-		String sql = "SELECT * FROM ( SELECT Tb.*, ROWNUM rNum FROM (SELECT NAME, SUB_TEXT, PRICE_ORI, PRICE_PERCENT, PRICE_DISCOUNT, DELIVERY_TYPE, PRODUCT_IMG, PRODUCT_ID FROM PRODUCT ";
+		
+		String sql = "SELECT * FROM ( SELECT Tb.*, ROWNUM rNum FROM (SELECT NAME, SUB_TEXT, PRICE_ORI, PRICE_PERCENT, PRICE_DISCOUNT, DELIVERY_TYPE, PRODUCT_IMG, PRODUCT_ID FROM PRODUCT";
+
 		boolean hasCondition = false;
+
 		
+
+		// 배달타입 조건 추가
 		if (delivery != null && !delivery.isEmpty()) {
-		    sql += " WHERE DELIVERY_TYPE IN (" + splitDelivery.toString() + ")";
-		    hasCondition = true;
+		    if (hasCondition) {
+		        sql += " AND DELIVERY_TYPE IN (" + splitDelivery.toString() + ")";
+		    } else {
+		        sql += " WHERE DELIVERY_TYPE IN (" + splitDelivery.toString() + ")";
+		        hasCondition = true;
+		    }
 		}
-		
+
+		// 가격 조건 추가
 		if (price != null && !price.isEmpty()) {
-			if (prices.length == 1) {
+		    if (prices.length == 1) {
 		        if (hasCondition) {
 		            sql += " AND";
 		        } else {
@@ -229,22 +239,24 @@ public class ListDAO extends TestDBPool {
 		            sql += " AND";
 		        } else {
 		            sql += " WHERE";
+		            hasCondition = true;
 		        }
 		        sql += " PRICE_DISCOUNT >= " + prices[0] + " AND PRICE_DISCOUNT < " + prices[1];
 		    }
 		}
-		if(type == null || type.equals("new")) {
-		sql += " ORDER BY PRODUCT_ID DESC) Tb WHERE ROWNUM <= ?) WHERE rNum >= ?";
-		}else if(type.equals("lowprice")) {
-			sql += " ORDER BY PRICE_DISCOUNT ASC) Tb WHERE ROWNUM <= ?) WHERE rNum >= ?";
-		}else if(type.equals("highprice")) {
-			sql += " ORDER BY PRICE_DISCOUNT DESC) Tb WHERE ROWNUM <= ?) WHERE rNum >= ?";
-		}else {
-			sql += " ORDER BY PRICE_PERCENT DESC) Tb WHERE ROWNUM <= ?) WHERE rNum >= ?";
-		}
-		
 
-		System.out.println("Generated SQL: " + sql); 
+		// 정렬 조건 추가
+		if (type == null || type.equals("new")) {
+		    sql += " ORDER BY PRODUCT_ID DESC) Tb WHERE ROWNUM <= ?) WHERE rNum >= ?";
+		} else if (type.equals("lowprice")) {
+		    sql += " ORDER BY PRICE_DISCOUNT ASC) Tb WHERE ROWNUM <= ?) WHERE rNum >= ?";
+		} else if (type.equals("highprice")) {
+		    sql += " ORDER BY PRICE_DISCOUNT DESC) Tb WHERE ROWNUM <= ?) WHERE rNum >= ?";
+		} else {
+		    sql += " ORDER BY PRICE_PERCENT DESC) Tb WHERE ROWNUM <= ?) WHERE rNum >= ?";
+		}
+
+		System.out.println("Generated SQL: " + sql);
 		try {
 			psmt = con.prepareStatement(sql);
 			psmt.setInt(1, end);
@@ -664,4 +676,175 @@ public class ListDAO extends TestDBPool {
 		}
 		return result;
 	}
+	
+	public List<ProductDTO> ViewSearchList(int start, int end, String search, String delivery, String[] Arraydeliverys, String price, String[] Arrayprice, String type) {
+		List<ProductDTO> list = new Vector<ProductDTO>();
+		
+		Map<String, String> deliveryMap = CategoryMap.getKoreandeliveryMap();
+		StringBuilder splitDelivery = new StringBuilder();
+		for (String deliverystr : Arraydeliverys) {
+			splitDelivery.append("'").append(deliveryMap.getOrDefault(deliverystr, deliverystr)).append("',");
+		}
+
+		if (splitDelivery.length() > 0) {
+			splitDelivery.setLength(splitDelivery.length() - 1);
+		}
+		StringBuilder splitPrice = new StringBuilder();
+		for(String pricestr : Arrayprice) {
+			splitPrice.append("'").append(pricestr).append("',");
+		}
+		if(splitPrice.length() > 0) {
+			splitPrice.setLength(splitPrice.length() - 1);
+		}
+		
+		String[] prices = splitPrice.toString().split(",");
+		
+		
+	    String sql = "SELECT * FROM ( "
+	                 + "SELECT Tb.*, ROWNUM rNum FROM ( "
+	                 + "SELECT NAME, SUB_TEXT, PRICE_ORI, PRICE_PERCENT, PRICE_DISCOUNT, DELIVERY_TYPE, PRODUCT_IMG, PRODUCT_ID "
+	                 + "FROM PRODUCT WHERE NAME LIKE '%" + search + "%'";
+	    
+	    // 배달타입 조건 추가
+	    if (delivery != null && !delivery.isEmpty()) {
+	        sql += " AND DELIVERY_TYPE IN (" + splitDelivery.toString() + ")";
+	    }
+
+	    // 가격 조건 추가
+	    if (price != null && !price.isEmpty()) {
+	        if (prices.length == 1) {
+	            if ("35000".equals(price)) {
+	                sql += " AND PRICE_DISCOUNT >= " + prices[0];
+	            } else {
+	                sql += " AND PRICE_DISCOUNT < " + prices[0];
+	            }
+	        } else if (prices.length == 2) {
+	            sql += " AND PRICE_DISCOUNT >= " + prices[0] + " AND PRICE_DISCOUNT < " + prices[1];
+	        }
+	    }
+
+	    if (type == null || type.equals("new")) {
+	        sql += "ORDER BY PRODUCT_ID DESC) Tb WHERE ROWNUM <= ?) WHERE rNum >= ?";
+	    } else if (type.equals("lowprice")) {
+	        sql += "ORDER BY PRICE_DISCOUNT ASC) Tb WHERE ROWNUM <= ?) WHERE rNum >= ?";
+	    } else if (type.equals("highprice")) {
+	        sql += "ORDER BY PRICE_DISCOUNT DESC) Tb WHERE ROWNUM <= ?) WHERE rNum >= ?";
+	    } else {
+	        sql += "ORDER BY PRICE_PERCENT DESC) Tb WHERE ROWNUM <= ?) WHERE rNum >= ?";
+	    }
+	    
+	    System.out.println(prices[0]);
+	    System.out.println(splitDelivery);
+	    try {
+	        psmt = con.prepareStatement(sql);
+	        psmt.setInt(1, end);
+	        psmt.setInt(2, start);
+	        rs = psmt.executeQuery();
+	        
+	        while (rs.next()) {
+	            ProductDTO dto = new ProductDTO();
+	            dto.setName(rs.getString(1));
+	            dto.setSub_text(rs.getString(2));
+	            dto.setPrice_ori(rs.getInt(3));
+	            dto.setPrice_percent(rs.getInt(4));
+	            dto.setPrice_discount(rs.getInt(5));
+	            dto.setDelivery_type(rs.getString(6));
+	            dto.setProduct_img(rs.getString(7));
+	            dto.setProduct_id(rs.getInt(8));
+	            list.add(dto);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return list;
+	}
+	
+	public List<ProductDTO> GetSearchdeliveryType(String search) {
+	    List<ProductDTO> list = new Vector<ProductDTO>();
+
+	    
+	    String sql = "SELECT DISTINCT delivery_type FROM PRODUCT p WHERE name like '%"+search+"%'";
+
+
+	    try {
+	        psmt = con.prepareStatement(sql);
+
+	      
+
+	        rs = psmt.executeQuery();
+
+	        while (rs.next()) {
+	            ProductDTO dto = new ProductDTO();
+	            dto.setDelivery_type(rs.getString(1));
+	            list.add(dto);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        System.out.println("배송타입 조회 중 예외발생");
+	    }
+
+	    return list;
+	}
+	
+	
+	public int ListSearchCount(String search, String delivery, String[] Arraydeliverys, String price, String[] Arrayprice) {
+		int totalcnt = 0;
+		
+		Map<String, String> deliveryMap = CategoryMap.getKoreandeliveryMap();
+		StringBuilder splitDelivery = new StringBuilder();
+		for (String deliverystr : Arraydeliverys) {
+			splitDelivery.append("'").append(deliveryMap.getOrDefault(deliverystr, deliverystr)).append("',");
+		}
+
+		if (splitDelivery.length() > 0) {
+			splitDelivery.setLength(splitDelivery.length() - 1);
+		}
+		StringBuilder splitPrice = new StringBuilder();
+		for(String pricestr : Arrayprice) {
+			splitPrice.append("'").append(pricestr).append("',");
+		}
+		if(splitPrice.length() > 0) {
+			splitPrice.setLength(splitPrice.length() - 1);
+		}
+		
+		String[] prices = splitPrice.toString().split(",");
+		
+		String sql = "SELECT COUNT(*) FROM PRODUCT WHERE NAME LIKE '%" + search + "%'";
+
+	    // 배달타입 조건 추가
+	    if (delivery != null && !delivery.isEmpty()) {
+	        sql += " AND DELIVERY_TYPE IN (" + splitDelivery.toString() + ")";
+	    }
+
+	    // 가격 조건 추가
+	    if (price != null && !price.isEmpty()) {
+	        if (prices.length == 1) {
+	            if ("35000".equals(price)) {
+	                sql += " AND PRICE_DISCOUNT >= " + prices[0];
+	            } else {
+	                sql += " AND PRICE_DISCOUNT < " + prices[0];
+	            }
+	        } else if (prices.length == 2) {
+	            sql += " AND PRICE_DISCOUNT >= " + prices[0] + " AND PRICE_DISCOUNT < " + prices[1];
+	        }
+	    }
+
+
+		System.out.println("Generated SQL: " + sql); // 생성된 SQL 쿼리 확인
+		
+
+		try {
+			psmt = con.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				totalcnt = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			System.out.println("카운트 예외발생");
+		}
+		return totalcnt;
+	}
+
 }

@@ -32,6 +32,7 @@ public class ProductsListController extends HttpServlet {
 		String[] Arraydeliverys = delivery != null ? delivery.split(",") : new String[0];
 		String[] Arrayprice;
 		String type = request.getParameter("type");
+		
 		if (price != null && price.contains("-")) {
 		    Arrayprice = price.split("-");
 		} else if (price != null) {
@@ -62,14 +63,14 @@ public class ProductsListController extends HttpServlet {
 	        category = "all";
 	    }
 		
+				
 		
-		
-		if ("all".equals(category) || (category != null && category.isEmpty() && (delivery == null || delivery.isEmpty()) && (price == null || price.isEmpty() && (type == null || type.isEmpty())))) {
+		if ("all".equals(category) || (category != null && category.isEmpty() && (delivery == null || delivery.isEmpty()) && (price == null || price.isEmpty() ))) {
 		    deliverytList = dao.GetdeliveryType(category, Arrayfilters, filters);
 		    list = dao.selectListPage(start, end, category, delivery, Arraydeliverys, price, Arrayprice, type);
 		    Childcate = dao.selectChildcate(category);
 		    cnt = dao.ListCount(delivery, Arraydeliverys, price, Arrayprice);
-		    if (delivery != null && !delivery.isEmpty() && price != null && !price.isEmpty()) {
+		    if ((delivery != null && !delivery.isEmpty()) && (price != null && !price.isEmpty())) {
 		        list = dao.selectListPage(start, end, category, delivery, Arraydeliverys, price, Arrayprice, type);
 		        cnt = dao.ListCount(delivery, Arraydeliverys, price, Arrayprice);
 		    } else if (delivery == null || delivery.isEmpty() && price != null && !price.isEmpty()) {
