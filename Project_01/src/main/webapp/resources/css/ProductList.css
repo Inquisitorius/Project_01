@@ -363,3 +363,17 @@ input[type="checkbox"]:checked+label:after, input[type="radio"]:checked+label:af
     margin-top: 36px;
 }
 
+.page-link{
+	color: black;
+	font-family: "Noto Sans KR";
+}
+
+
+.page-item.active .page-link {
+ background-color: rgb(247,247,247);
+ border-color: rgb(221,221,221);
+ color: black;
+ font-family: "Noto Sans KR";
+}
+
+

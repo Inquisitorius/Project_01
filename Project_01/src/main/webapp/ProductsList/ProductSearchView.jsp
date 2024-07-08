@@ -10,34 +10,21 @@
 	pageEncoding="UTF-8"%>
 <% 
     int currentPage = (Integer) request.getAttribute("currentPage");
-    String category = request.getParameter("category");
     int totalPages = (Integer) request.getAttribute("totalPages");
-    String[] filters = request.getParameterValues("filters");
     String price = request.getParameter("price");
     String[] delivery = request.getParameterValues("delivery");
     String type = request.getParameter("type");
-
+	String search = request.getParameter("search");
 
     // 현재 페이지가 0 이하이면 1페이지로 설정
     if (currentPage <= 0) {
         currentPage = 1;
     }
-
-    // 카테고리가 null일 경우 기본값 "all"로 설정
-    if (category == null) {
-        category = "all";
-    }
-    
-	
 	
 	if (price == null) {
 		price = "";
 	}
-	 // 필터와 딜리버리 값을 문자열로 합치는 로직
-    String filtersStr = "";
-    if (filters != null && filters.length > 0) {
-        filtersStr = String.join(",", filters); 
-    }
+
 
     String deliveryStr = "";
     if (delivery != null && delivery.length > 0) {
@@ -53,9 +40,7 @@
 <head>
 <meta charset="UTF-8">
 <title>마켓 신상품 - 그린</title>
-
-
-<link rel="stylesheet" href="/resources/css/ProductList.css">
+<link rel="stylesheet" href="/resources/css/ProductList.css?after">
 <!-- Bootstrap CSS 로드 -->
 <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.css">
 
@@ -75,22 +60,10 @@
 	<div class="listbody">
 		<div class="container mt-5">
 			<h3 class="text-center listheader">상품 목록</h3>
+			<div class = "container mt-5" style="margin-top: 50px; text-align: center;">
+			<h1 style="font-size: 28px;line-height: 35px; letter-spacing: -0.5px;font-family: Noto Sans KR;">'<span style="color: green;"><%= search %></span>'에 대한 검색결과</h1>
+			</div>
 			
-			<ul class="justify-content-center itemnav">
-			<li class="item" id="item"><a class="link" href="<%=request.getContextPath()%>/ProductList?page=1&category=all&filters=&price=&delivery=&type=" data-category="all">전체 상품</a></li>
-			<% 
-				Map<String, String> cateMap = CategoryMap.getCateMap();
-				
-				List<CategoryDTO> cate = (List<CategoryDTO>) request.getAttribute("cate"); 
-				if(cate != null){
-					for(CategoryDTO dto : cate){
-					String CateName = dto.getCategory_Name();
-					String englishCateName = cateMap.getOrDefault(CateName, CateName);
-			%>
-				<li class="item"><a class="link" href="<%=request.getContextPath()%>/ProductList?page=1&category=<%= englishCateName %>&filters=&price=&delivery=&type" data-category="<%= englishCateName %>"><%= dto.getCategory_Name() %></a></li>
-				<%}
-					} %>
-			</ul>
 		</div>
 		<div class="listcontainer">
 			<div class="maincontent">
@@ -99,32 +72,13 @@
 						<span class="titlespan">필터</span>
 					</div>
 					<div class="sticky-menu">
-						<form id="filterForm" method="GET" action="<%= request.getContextPath() %>/ProductList" accept-charset="utf-8">
+						<form id="filterForm" method="GET" action="<%= request.getContextPath() %>/search" accept-charset="utf-8">
 							<div class="filter-group">
 								<div class="toggle-btn">
 									<h5 class="title">카테고리</h5>
 									<span class="arrow">▲</span>
 								</div>
-								<div class="filter-content" id="categoryFilters">
-									
-									<% 
-										Map<String, String> childmap = ChildCategoryMap.getChildMap();
-										List<CategoryDTO> Childcate = (List<CategoryDTO>) request.getAttribute("Childcate");
-										if(Childcate != null){
-											int i = 2;
-											for(CategoryDTO cdto : Childcate){
-											String ChildcategoryName = cdto.getCategory_Name();
-											String engName = childmap.getOrDefault(ChildcategoryName, ChildcategoryName);
-											%>
-									<div>
-										<input type="checkbox" id="category<%=i%>" name="filters"
-											value="<%=engName %>" > <label for="category<%=i%>"><%=cdto.getCategory_Name() %></label>
-									</div>
-									<%
-										i++;
-										}
-											}%>	
-								</div>
+
 							</div>
 							<div class="filter-group">
 								<div class="toggle-btn">
@@ -191,54 +145,48 @@
 							총 <%=request.getAttribute("cnt")%>건
 						</div>
 						<ul class="productsort">
-							<li class="sort-li"><a class="sort-link" href="<%= request.getContextPath() %>/ProductList?page=<%= 1 %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=new" data-type="new" class="sort-a">신상품순</a></li>
-							<li class="sort-li"><a class="sort-link" href="<%= request.getContextPath() %>/ProductList?page=<%= 1 %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=saleprice" data-type="saleprice" class="sort-a">혜택순</a></li>
-							<li class="sort-li"><a class="sort-link" href="<%= request.getContextPath() %>/ProductList?page=<%= 1 %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=lowprice" data-type="lowprice" class="sort-a">낮은 가격순</a></li>
-							<li class="sort-li"><a class="sort-link" href="<%= request.getContextPath() %>/ProductList?page=<%= 1 %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=highprice" data-type="highprice" class="sort-a">높은 가격순</a></li>
+							<li class="sort-li"><a class="sort-link" href="<%= request.getContextPath() %>/search?search=<%=search %>&page=<%= 1 %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=new" data-type="new" class="sort-a">신상품순</a></li>
+							<li class="sort-li"><a class="sort-link" href="<%= request.getContextPath() %>/search?search=<%=search %>&page=<%= 1 %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=saleprice" data-type="saleprice" class="sort-a">혜택순</a></li>
+							<li class="sort-li"><a class="sort-link" href="<%= request.getContextPath() %>/search?search=<%=search %>&page=<%= 1 %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=lowprice" data-type="lowprice" class="sort-a">낮은 가격순</a></li>
+							<li class="sort-li"><a class="sort-link" href="<%= request.getContextPath() %>/search?search=<%=search %>&page=<%= 1 %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=highprice" data-type="highprice" class="sort-a">높은 가격순</a></li>
 						</ul>
 					</div>
 					<div class="container list" id="productList" style="text-decoration-line: none;">
 						<%
-						
-						List<ProductDTO> list = (List<ProductDTO>) request.getAttribute("list");
-						
-						if (list != null) {
-							for (ProductDTO dto : list) {
-						%>
-						<div class="row">
-							<a href="/test/ProductInfo.do?product_id=<%=dto.getProduct_id() %>" style="text-decoration-line: none;"> <img
-								src="<%=dto.getProduct_img() %>"
-								style="padding: 0px; width: 249px; height: 320px; border-radius: 2%; overflow: hidden;">
-								<button class="btn btn-navy rounded-1 fontCommon_Option"
-									type="button"
-									style="width: 249px; height: 36px; margin-top: 5px;">구매</button>
-								<div class="delivery" style="text-align: left; margin-top: 5px;"><%=dto.getDelivery_type()%></div>
-								<div class="list_Itemtitle"
-									style="width: 249px; text-align: left;"><%=dto.getName()%></div>
-								<div class="row" style="margin-top: 5px;">
-									<div class="explation" style="text-align: left;"><%=dto.getSub_text()%></div>
-									<div class="col-12">
-										<span class="OripriceText" style="width: 249px;"><%= String.format("%,d", dto.getPrice_ori()) %>원</span>
-									</div>
-								</div>
-								<div class="row" style="margin-top: 5px;">
-									<div class="col-2" style="display: inline-flex;">
-										<span class="SalePercentText" style="text-align: left"><%=dto.getPrice_percent()%>%</span>
-									</div>
-									<div class="col" style="display: inline-flex;">
-										<span class="SalePriceText" style="text-align: left"><%= String.format("%,d", dto.getPrice_discount()) %>원</span>
-									</div>
-								</div>
-							</a>
-						</div>
-						<%
-						}
-						}
-						%>
-					</div>
-
-
-
+    List<ProductDTO> list = (List<ProductDTO>) request.getAttribute("list");
+    
+    if (list != null && !list.isEmpty()) {
+        for (ProductDTO dto : list) {
+%>
+<div class="row">
+    <a href="/test/ProductInfo.do?product_id=<%=dto.getProduct_id() %>" style="text-decoration-line: none;">
+        <img src="<%=dto.getProduct_img() %>"
+            style="padding: 0px; width: 249px; height: 320px; border-radius: 2%; overflow: hidden;">
+        <button class="btn btn-navy rounded-1 fontCommon_Option" type="button"
+            style="width: 249px; height: 36px; margin-top: 5px;">구매</button>
+        <div class="delivery" style="text-align: left; margin-top: 5px;"><%=dto.getDelivery_type()%></div>
+        <div class="list_Itemtitle" style="width: 249px; text-align: left;"><%=dto.getName()%></div>
+        <div class="row" style="margin-top: 5px;">
+            <div class="explation" style="text-align: left;"><%=dto.getSub_text()%></div>
+            <div class="col-12">
+                <span class="OripriceText" style="width: 249px;"><%= String.format("%,d", dto.getPrice_ori()) %>원</span>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 5px;">
+            <div class="col-2" style="display: inline-flex;">
+                <span class="SalePercentText" style="text-align: left"><%=dto.getPrice_percent()%>%</span>
+            </div>
+            <div class="col" style="display: inline-flex;">
+                <span class="SalePriceText" style="text-align: left"><%= String.format("%,d", dto.getPrice_discount()) %>원</span>
+            </div>
+        </div>
+    </a>
+</div>
+<%
+        }
+    } 
+%>
+					</div>	
 				</div>
 			</div>
 			<div class="pagebtn">
@@ -246,12 +194,12 @@
         <ul class="pagination justify-content-center">
         	<li class="page-item">
         		
-                <a class="page-link" href="<%= request.getContextPath() %>/ProductList?page=<%= 1 %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style="font-weight: bold" aria-label="Previous">
+                <a class="page-link" href="<%= request.getContextPath() %>/ProductList?search=<%=search %>&page=<%= 1 %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style="font-weight: bold" aria-label="Previous">
                     <span aria-hidden="true"><img src=/resources/img/firstbtn.png></span>
                 </a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="<%= request.getContextPath() %>/ProductList?page=<%= Math.max(1, currentPage - 1) %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style="font-weight: bold" aria-label="Previous">
+                <a class="page-link" href="<%= request.getContextPath() %>/search?search=<%=search %>&page=<%= Math.max(1, currentPage - 1) %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style="font-weight: bold" aria-label="Previous">
                     <span aria-hidden="true"><img src=/resources/img/prevbtn.png></span>
                 </a>
             </li>
@@ -265,16 +213,16 @@
                 String activeClass = (currentPage == i) ? "active" : "";
             %>
             <li class="page-item <%= activeClass %>">
-                <a class="page-link" style="color:black" href="<%= request.getContextPath() %>/ProductList?page=<%= i %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style=""><%= i %></a>
+                <a class="page-link" href="<%= request.getContextPath() %>/search?search=<%=search %>&page=<%= i %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style=""><%= i %></a>
             </li>
             <% } %>
             <li class="page-item">
-                <a class="page-link" href="<%= request.getContextPath() %>/ProductList?page=<%= Math.min(totalPages, currentPage + 1) %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style="font-weight: bold" aria-label="Next">
+                <a class="page-link" href="<%= request.getContextPath() %>/search?search=<%=search %>&page=<%= Math.min(totalPages, currentPage + 1) %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style="font-weight: bold" aria-label="Next">
                     <span aria-hidden="true"><img src=/resources/img/nextbtn.png></span>
                 </a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="<%= request.getContextPath() %>/ProductList?page=<%= totalPages %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style="font-weight: bold" aria-label="Next">
+                <a class="page-link" href="<%= request.getContextPath() %>/search?search=<%=search %>&page=<%= totalPages %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style="font-weight: bold" aria-label="Next">
                     <span aria-hidden="true"><img src=/resources/img/lastbtn.png></span>
                 </a>
             </li>
@@ -290,17 +238,14 @@
 <script>
     $(document).ready(function() {
         let currentPage = '<%= currentPage %>';
-        let category = '<%= category %>';
-        let filters = '<%= filtersStr %>';
         let price = '<%= price %>';
         let delivery = '<%= deliveryStr %>';
         let type = '<%= type %>';
-        let selectedFilters = getParameterByName('filters') ? getParameterByName('filters').split(',') : [];
         let selectedPrice = getParameterByName('price');
         let selectedDelivery = getParameterByName('delivery') ? getParameterByName('delivery').split(',') : [];
+        let search = '<%= search %>'
         
-        
-        updateFilterState(selectedFilters, selectedPrice, selectedDelivery);
+        updateFilterState(selectedPrice, selectedDelivery);
         
         
         
@@ -365,25 +310,6 @@
  
        
 
-        // 네비게이션 링크 스타일링 함수
-        function updateNavigationStyle(currentCategory) {
-            console.log("스타일 적용");
-            $('.link').each(function() {
-                let clickedCategory = $(this).data('category') || "all"; // 클릭된 카테고리 가져오기
-
-                if (clickedCategory == currentCategory) {
-                    $(this).css({
-                        'color': 'green',
-                        'font-weight': 'bold'
-                    });
-                } else {
-                    $(this).css({
-                        'color': '',
-                        'font-weight': ''
-                    });
-                }
-            });
-        }
         
         function updateProductSortNavigationStyle(currentType){
         	 console.log("현재 타입:", currentType);
@@ -414,20 +340,17 @@
         // 초기 URL 설정 및 스타일 적용
        
         
-        updateNavigationStyle(category);
+        
         updateProductSortNavigationStyle(type);
         
      // 다음 버튼 클릭 이벤트 핸들러
         $('.itemnav .link .pagination').off('click').on('click', function(event) {
             event.preventDefault();
-            let clickedCategory = $(this).data('category');
+           
 			let clickedType = $(this).data('type');
-           	
-           	
-         
 
             // handleFilterFormSubmit 함수 호출
-            handleFilterFormSubmit(clickedCategory, selectedFilters, selectedPrice, selectedDelivery, clickedType);
+            handleFilterFormSubmit(selectedPrice, selectedDelivery, clickedType);
         });
 
         // 필터 폼 제출 이벤트 핸들러
@@ -448,7 +371,7 @@
             
             
             // handleFilterFormSubmit 함수 호출
-            handleFilterFormSubmit(category, selectedFilters, selectedPrice, selectedDelivery, type);
+            handleFilterFormSubmit(selectedPrice, selectedDelivery, type);
             // 필터링된 결과를 반영한 콘텐츠에 이벤트 핸들러 재설정
             initializeEventHandlers();
             
@@ -460,26 +383,26 @@
      	}
         
 		
-        function handleFilterFormSubmit(clickedCategory, selectedFilters, selectedPrice, selectedDelivery, clickedType) {
+        function handleFilterFormSubmit( selectedPrice, selectedDelivery, clickedType) {
             // 가격이 undefined인 경우 빈 문자열로 처리
             let priceParam = selectedPrice !== undefined ? '&price=' + selectedPrice : '';
 			
             $.ajax({
                 type: 'GET',
-                url: window.location.origin + '/ProductList',
+                url: window.location.origin + '/search',
                 data: {
                     page: 1,
-                    category: clickedCategory,
-                    filters: selectedFilters.join(','),
+                    search: search,
                     price: selectedPrice,
                     delivery: selectedDelivery.join(','),
                     type: clickedType
                 },
                 success: function(data) {
                 	
-                	let productListHtml = $(data).find('#productList').html();
+                    console.log("AJAX 요청 성공");
+                    
+                    let productListHtml = $(data).find('#productList').html();
                     let productcntHtml = $(data).find('#productcnt').html();
-                    let itemhtml = $(data).find('#item').html();
                     let categoryFiltersHtml = $(data).find('#categoryFilters').html();
                     let delivery_type = $(data).find('delivery_Type').html();
                     
@@ -490,9 +413,8 @@
                             icon: "error",
                             button: "확인",
                         }).then((value) => {
-                            let newUrl = '/ProductList?page=' + currentPage
-                                       + '&category=' + category
-                                       + '&filters=' + filters
+                            let newUrl = '/search?search=' + search
+                            		   + '&page=' + currentPage
                                        + '&price=' 
                                        + '&delivery=' + delivery
                                        + '&type=' + type;
@@ -503,27 +425,24 @@
                     // 제품 목록과 개수 업데이트
                     $('#productList').html(productListHtml);
                     $('#productcnt').html(productcntHtml);
-                    $('#item').html(itemhtml);
-                    $('#categoryFilters').html(categoryFiltersHtml);
                     $('#delivery_Type').html(delivery_type);
-                    updateFilterState(selectedFilters, selectedPrice, selectedDelivery);
+                    updateFilterState( selectedPrice, selectedDelivery);
 
                     // 브라우저 URL 업데이트하여 현재 상태 반영
-                    let newUrl = window.location.origin + '/ProductList?page='+page
-                                 + '&category=' + clickedCategory
-                                 + '&filters=' + encodeURIComponent(selectedFilters.join(','))
+                    let newUrl = window.location.origin + '/search?search='+search
+                    			 + '&page='+page
                                  + priceParam
                                  + '&delivery=' + encodeURIComponent(selectedDelivery.join(','))
                     			 + '&type=' + clickedType;
-                    history.pushState({ page: 1, category: clickedCategory, filters: selectedFilters, price: selectedPrice, delivery: selectedDelivery, type: clickedType }, null, newUrl);
+                    history.pushState({search:search, page: 1,  price: selectedPrice, delivery: selectedDelivery, type: clickedType }, null, newUrl);
 					console.log(clickedType);
                   
                     
                     // 필터링된 결과를 반영한 콘텐츠에 이벤트 핸들러 재설정
                     
-                    updateNavigationStyle(clickedCategory);
+                    
                     updateProductSortNavigationStyle(clickedType);
-                    retainFilterState(selectedFilters, selectedPrice, selectedDelivery);
+                    retainFilterState(selectedPrice, selectedDelivery);
                     updatePagination();
                     
                    
@@ -536,15 +455,9 @@
         }
        
         // 필터 상태 유지 함수
-        function retainFilterState(selectedFilters, selectedPrice, selectedDelivery) {
-            // 필터 체크박스 상태 유지
-            $('input[name="filters"]').each(function() {
-                if (selectedFilters.includes($(this).val())) {
-                    $(this).prop('checked', true);
-                } else {
-                    $(this).prop('checked', false);
-                }
-            });
+        function retainFilterState( selectedPrice, selectedDelivery) {
+            
+          
 
             // 가격 라디오 버튼 상태 유지
             $('input[name="price"]').each(function() {
@@ -565,14 +478,8 @@
             });
         }
        
-        function updateFilterState(selectedFilters, selectedPrice, selectedDelivery) {
-            // 모든 필터 체크박스 초기화
-            $('input[name="filters"]').prop('checked', false);
-
-            // 선택된 필터에 해당하는 체크박스 체크
-            selectedFilters.forEach(function(filter) {
-                $('input[name="filters"][value="' + filter + '"]').prop('checked', true);
-            });
+        function updateFilterState(selectedPrice, selectedDelivery) {
+          
 
             // 가격 라디오 버튼 선택
             if (selectedPrice) {

@@ -29,15 +29,15 @@
 				<div style = "width: auto; display: inline-flex; align-items: center;">
 					<!--  <img src="/resources/img/kurly_logo.svg"/> -->
 					<a href = "/MainPage/MainPage.jsp" style = "text-decoration: none;">
-					<img src="/resources/img/Green.svg"/ style = "width: 82px; height: 42px; padding-bottom: 5px;">
+					<img src="/resources/img/Green.svg" style = "width: 82px; height: 42px; padding-bottom: 5px;">
 					</a>
 					<button id = "marketBtn_inHeader" class = "fontCommon_Option" style="background: none; border: none; padding-left: 15px; padding-top: 5px; font-size: 15px; color: gray;">마켓그린</button>
 					<button id = "contactBtn" class = "fontCommon_Option" style="background: none; border: none; padding-left: 15px; padding-top: 5px; font-size: 15px; color: gray;">회사소개</button>
 				</div>	
 				<div style = "width: auto; padding-left: 90px;">
-					<form class="d-flex" role="search">
-                    	<input class="form-control me-2 fontCommon_Option" type="search" placeholder="Search" aria-label="Search" style = "width: 300px;">
-                    	<button class="btn btn-outline-success fontCommon_Option" type="submit" style = "color: rgb(71, 112, 46);">Search</button>
+					<form class="d-flex" role="search" id="searchForm">
+                    	<input class="form-control me-2 fontCommon_Option" type="search" name="search" id="searchInput" placeholder="Search" aria-label="Search" style = "width: 300px;">
+                    	<button class="btn btn-outline-success fontCommon_Option" type="submit" id="searchBtn" style = "color: rgb(71, 112, 46);">Search</button>
                 	</form>
 				</div>
 				<div style = "position: relative;">
@@ -291,5 +291,26 @@
 		{
 			location.href = "/SellerPage/SellerMainPage.jsp";
 		});
+		
+		   $('#searchForm').submit(function(event) {
+		        // 폼의 기본 동작 방지 (페이지 리로딩 방지)
+		        event.preventDefault();
+
+		        // 검색어 가져오기
+		        var searchword = $('#searchInput').val().trim();
+
+		        // 검색어가 비어 있는지 확인
+		        if (searchword.length === 0) {
+		            alert('검색어를 입력해주세요.');
+		            return;
+		        }
+
+		        // 새로운 URL 생성
+		        var newUrl = '/search?search=' + encodeURIComponent(searchword);
+
+		        // 페이지 이동
+		        window.location.href = newUrl;
+		    });
+		
 	}
 </script>

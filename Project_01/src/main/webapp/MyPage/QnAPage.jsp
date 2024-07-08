@@ -17,35 +17,13 @@
 	font-size: 30px;
 	font-weight: 600;
 	text-align: center;
-	color: rgb(51, 51, 51);
 	user-select: none;
 }
 
 .black_Line {
 	padding-bottom: 10px;
 	border-bottom: 2px solid rgb(51, 51, 51);
-	margin-bottom: 20px;
-	font-size: 12px;
-	color: rgb(102, 102, 102);
-	line-height: 17px;
-	text-align: right;
-	display: flex;
-	justify-content: right;
-}
-
-.line_Style{
-	width:100%;
-	display:flex; 
-	justify-content: center; 
-	font-size:15px;
-	height:50px;
-	border-bottom:1px solid rgb(200, 200, 200);
-	align-items: center;
-	cursor: pointer;
-}
-
-.qna-contentA{
-	font-size:12px;
+	margin-bottom: 10px;
 }
 
 .qna-answer {
@@ -53,27 +31,92 @@
   	padding: 10px;
     background-color: #f0f0f0;
     width:100%;
-}
-
-.qna-content {
-    cursor: pointer;
-    background-color: #f0f0f0;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.column_Style{
-text-align:center;
-font-weight:600;
-text-align:center;
-user-select:none;
+    font-size:12px;
+    user-select:none;
+    border:none;
 }
 
 .qna_Item{
-font-size:12px;
-text-align:center;
-user-select:none;
+	cursor: pointer;
+	font-size:15px;
+	text-align:center;
+	user-select:none;
+	width:100%;
+}
+.column_Style{
+	text-align:center;
+	font-weight:600;
+	text-align:center;
+	user-select:none;
+	
+}
+
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 700px;
+  height: 600px;
+  position: relative;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.form-inputText {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ced4da;
+    border-radius: 3;
+    box-shadow: none;
+    resize: none; 
+    
+  }
+ .form-inputText:focus {
+    box-shadow: none;
+    outline: none;
+    border: 1px solid #ced4da;
+}
+
+.page-link{
+	color: green;
+	cursor : pointer;
+	user-select: none;
+}
+
+.page-link:hover{
+	background-color: white;
+	color:green;
+}
+
+.pagination {
+    --bs-pagination-focus-box-shadow: none;
+    --bs-pagination-focus-color: black
 }
 
 </style>
@@ -82,209 +125,301 @@ user-select:none;
 <title>자주 묻는 질문</title>
 </head>
 <body>
+<% 
+int userAuth = 0;;
+	if(session.getAttribute("auth_type") != null){
+  	userAuth = (int)session.getAttribute("auth_type"); }
+%>
 <main class="container">
 		<div class="row" style="justify-content: center;">
+			<div class="col-md-12">
+			<div class="row" style="justify-content: center;">
 			<div class="col-md-10">
 				<div class="Main_Title">자주 묻는 질문</div>
 			</div>
 		</div>
-		<div class="row" style="justify-content: center;">
+		</div>
 			<div class="col-md-10" style="justify-content: center;">
 				<div class="black_Line">
-					<div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-10" style="display:flex; margin-bottom:10px;">
-				<div class="col-md-3">
-					<div class="column_Style">
-					카테고리
-					</div>
-				</div>
-				<div class="col-md-9">
-					<div class="column_Style">
-					제목
-					</div>
-				</div>
-			</div>
-			<div class="col-md-10" style="justify-content: center;">
-				<div style="border-bottom:1px solid grey; height:10px;">
-					<div>
-					</div>
+					<div></div>
 				</div>
 			</div>
 		</div>
-		
-		<div class="row" style="justify-content: center;">
-		<div class="col-md-10" style="display:flex; margin-bottom:10px;">
-			<div class="line_Style" onclick="showAnswer(1)">
-				<div class="col-md-3">
-					<div class="qna_Item">
-					회원
-					</div>
-				</div>
-				<div class="col-md-9">
-					<div class="qna_Item">
-					회원 정보를 바꾸고 싶습니다.
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-10" style="display:flex;">
-		<div class="qna-answer" id="content1">
-				<p class="qna-contentA">■ 회원정보 변경 안내<br/>
- 				- 아래 경로를 통해 회원정보를 직접 변경하실 수 있습니다.<br/>
- 				홈페이지 우측 상단 마이페이지 선택 후 내 정보 수정 <br/>
-				- 수정가능 항목 : 비밀번호/이메일주소/휴대폰번호/생년월일/성별<br/>
- 				▣ 아이디, 이름은 수정 불가합니다.<br/>
- 				▣ 구매 이후, 주문건에 대한 배송지 변경은 고객센터로 문의 바랍니다.</p>
-		</div>
-		</div>
-		</div>
-		
-		<div class="row" style="justify-content: center;">
-		<div class="col-md-10" style="display:flex;">
-			<div class="line_Style" onclick="showAnswer(2)">
-				<div class="col-md-3">
-					<div class="qna_Item">
-					취소/교환/환불
-					</div>
-				</div>
-				<div class="col-md-9">
-					<div class="qna_Item">
-					교환/반품이 안되는 경우가 있나요?
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-10" style="display:flex;">
-		<div class="qna-answer" id="content2">
-				<p class="qna-contentA">- (공통) 배송완료 후 7일 경과건에 대한 단순변심건<br/>
-				- (가전/설치 상품) 실링 포장 된 상품의 개봉, 정품 스티커 훼손 건<br/>
-				- (CD/DVD/GAME/서적) 복제가 가능한 상품의 포장 훼손<br/>
-				- (식품) 냉장/냉동 식품의 단순변심건</p>
-		</div>
-		</div>
-		</div>
-		
-		<div class="row" style="justify-content: center;">
-		<div class="col-md-10" style="display:flex;">
-			<div class="line_Style" onclick="showAnswer(3)">
-				<div class="col-md-3">
-					<div class="qna_Item">
-					회원
-					</div>
-				</div>
-				<div class="col-md-9">
-					<div class="qna_Item">
-					회원 가입에 제한이 있나요?
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-10" style="display:flex;">
-		<div class="qna-answer" id="content3">
-				<p class="qna-contentA">
-				■ 회원가입 조건<br/><br/>
-				14세 이상이라면 누구나 가입하실 수 있습니다. 가입 시 <br/>
-				마켓그린만의 특별한 혜택도 받으실 수 있습니다.</p>
+		<!-- 상단 내용 부분  -->	
+			<div class="row" style="justify-content: center; min-height:550px;">
+			<div class="col-md-10">
+			<table class="table">
+					<thead>
+						<tr>
+							<!-- <th class="col-md-2 column_Style">번호</th> -->
+							<th class="col-md-3 column_Style">카테고리</th>
+							<th class="col-md-7 column_Style">제목</th>
+						</tr>
+					</thead>
 				
-		</div>
-		</div>
-		</div>
-		
-		<div class="row" style="justify-content: center;">
-		<div class="col-md-10" style="display:flex;">
-			<div class="line_Style" onclick="showAnswer(4)">
-				<div class="col-md-3">
-					<div class="qna_Item">
-					회원
-					</div>
-				</div>
-				<div class="col-md-9">
-					<div class="qna_Item">
-					회원 탈퇴 후 재가입이 가능한가요?
-					</div>
-				</div>
+		<!-- 게시 질문 부분  -->	
+				<tbody id="tablebody">
+				</tbody>
+			</table>	
 			</div>
-		</div>
-		<div class="col-md-10" style="display:flex;">
-		<div class="qna-answer" id="content4">
-				<p class="qna-contentA">
-				■ 회원 재가입 안내<br/><br/>
-				재가입은 가능하나 탈퇴 시 기존 정보는 전부 삭제되고 <br/>
-				다시 가입 시 새로 초기화 됩니다.</p>
-				
-		</div>
-		</div>
-		</div>
-		
-		<div class="row" style="justify-content: center;">
-		<div class="col-md-10" style="display:flex;">
-			<div class="line_Style" onclick="showAnswer(5)">
-				<div class="col-md-3">
-					<div class="qna_Item">
-					상품
-					</div>
-				</div>
-				<div class="col-md-9">
-					<div class="qna_Item">
-					(주류) 막걸리가 약간 새어나옵니다
-					</div>
-				</div>
 			</div>
-		</div>
-		<div class="col-md-10" style="display:flex; margin-bottom:10px;">
-		<div class="qna-answer" id="content5">
-				<p class="qna-contentA">
-				■ 상품 특성 안내<br/><br/>
-				막걸리는 발효 상품으로서 숨구멍이 필요하여 100% 밀봉되지 않습니다. <br/>
-				이에 따라 약간의 새는 현상이 발생하며 정상적인 부분임을 참고 바랍니다.</p>
-		</div>
-		</div>
-		</div>
-		
-		<div class="row" style="justify-content: center;">
-		<div class="col-md-10" style="display:flex;">
-			<div class="line_Style" onclick="showAnswer(6)">
-				<div class="col-md-3">
-					<div class="qna_Item">
-					회원
-					</div>
-				</div>
-				<div class="col-md-9">
-					<div class="qna_Item">
-					아이디,비밀번호를 잊어버렸습니다.
-					</div>
-				</div>
+			<div class="row" style="justify-content: center;">
+			<div class="col-md-7" style="display:flex; justify-content: center;">
+				<nav aria-label="Page navigation example">
+  					<ul class="pagination" id="pagingbody">
+    				<li class="page-item"><a class="page-link" onclick="prevPage()" id="prevBtn">Previous</a></li>
+  				</ul>
+				</nav>
+			</div>	
 			</div>
-		</div>
-		<div class="col-md-10" style="display:flex; margin-bottom:10px;">
-		<div class="qna-answer" id="content6">
-				<p class="qna-contentA">
-				■ 아이디, 비밀번호 찾기 안내<br/><br/>
-				로그인 화면 밑에서 아이디 및 비밀번호 찾기가 가능합니다. <br/>
-				가입시 기재한 메일 주소가 기억나지 않으시거나 오류가 발생하는 경우 <br/>
-				고객센터로 문의 바랍니다.</p>
-		</div>
-		</div>
-		</div>
-		
-		
-		
-		
-		
-		
-		<Script>
-			function showAnswer(id){
-				var content = document.getElementById("content"+id);
-				if (content.style.display === "none" || content.style.display === "") {
-				        content.style.display = "block";
-				   } else {
-				        content.style.display = "none";
-				  }
+			<script>
+			var qlist = [];
+			var postsPerPage = 10;
+			var totalPosts ;
+			var currentPage = 1 ;
+			var totalPages;
+			var pagingBody = document.getElementById("pagingbody");
+			
+			$.ajax({
+			    type: "get",
+			    url: "/MyPageContent/QuestionShow",
+			    dataType: "json",
+			    success: function(response) {
+			        if (response.status === "success") {
+			        	qlist = response.qlist;
+			        	totalPosts = response.count;
+			        	totalPages = Math.ceil(totalPosts/postsPerPage);
+			        	var lastIndex = qlist.length - 1;
+			        	if(lastIndex >= 0){
+			            showQuestion();
+			        	addPageBtn();
+			        } }else {
+			            // 실패 시 처리
+			        }}, error: function() {
+			        alert('서버 오류가 발생했습니다. 다시 시도해 주세요.');
+			    }
+			});
+				if(currentPage === 1){
+					prevBtn = document.getElementById("prevBtn");
+					prevBtn.onclick = null;
+					prevBtn.style.cursor = "auto";
 			}
-		</Script>
+				
+			function changePage(page){
+				 var target = page.target; 
+				 var page = target.textContent; 
+				 currentPage = page;
+				showQuestion(currentPage);
+			}
+			
+			function addPageBtn(){
+				for (var i = 1; i <= totalPages; i++) {
+			        var pagingPage = document.createElement("li");
+			        pagingPage.className = "page-item";
+
+			        var link = document.createElement("a");
+			        link.className = "page-link";
+			        link.id ="pagebtn"+i ;
+			        link.addEventListener('click', changePage);
+			        link.textContent = i;
+
+			        pagingPage.appendChild(link); // 링크를 리스트 아이템에 추가
+			        pagingBody.appendChild(pagingPage); // 리스트 아이템을 페이지네이션 컨테이너에 추가
+			     }		
+			 
+			    var pagingPage = document.createElement("li");
+	            pagingPage.className = "page-item";
+
+	            var link = document.createElement("a");
+	            link.className = "page-link";
+	            link.textContent = "NEXT";
+	           	link.addEventListener('click', changePage);
+	            pagingPage.appendChild(link);
+	            pagingBody.appendChild(pagingPage);
+			}
+			
+			function showQuestion(currentPage) {
+				var currentPagePosts = (currentPage == totalPages) ? (totalPosts % postsPerPage) : postsPerPage;
+				
+			    var tableBody = document.getElementById("tablebody");
+			    // 기존 테이블 내용 초기화
+			    tableBody.innerHTML = "";
+			    // 데이터 반복문 처리
+			    for (var i = 1; i <= currentPagePosts; i++) {
+			        var row = document.createElement("tr");
+			        row.classList.add("qna_Item");
+			        row.setAttribute("data-target", "#qdx"+i);
+			        // 각 행에 데이터 추가
+			        row.innerHTML = `
+			            <td>${'${qlist[i-1].que_category'}}</td>
+			            <td>${'${qlist[i-1].que_title'}}</td>`;
+			            tableBody.appendChild(row);
+			        var answer = document.createElement("tr");
+			        var tdContent = `<td colspan="2" style="border:none;" class="table-secondary qna-answer"
+			        id="qdx${'${i}'}">
+			        ${'${qlist[i-1].que_contents'}}
+			        </td>
+			        `;
+	   			
+			        answer.innerHTML = tdContent;	
+			        tableBody.appendChild(answer);
+			        
+			        // 테이블에 행 추가
+			        
+			    }
+			   
+			    $('.qna_Item').on('click', function() {
+			         var target = $(this).data('target'); // Get the target content ID
+			         var $content = $(target); // Find the content to slide
+
+			         if ($content.is(':visible')) {
+			            $content.slideUp(); // Hide the content if it is visible
+			         } else {
+			            // Optionally: Close other open items if single open item behavior is needed
+			            $('.qna-answer').slideUp(); // Hide all other open contents
+
+			            // Show the clicked content
+			            $content.slideDown();
+			         }
+			      });   
+			}
+			
+			</script>
+			
+			<!-- 모달 부분  -->
+			<div class="row" style="justify-content: center;">
+				<div class="col-md-6" style="justify-content: center;">
+					<button type="button" class="btn btn-success" id="addQnaBtn" style="width:100%; display:none;"> 질문 등록 </button>
+				</div>
+			</div>
+			
+  			<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true" style="user-select:none">
+  				<div class="modal-dialog modal-dialog-centered" role="document" style="min-width:700px;">
+    				<div class="modal-content">
+      					<div class="modal-header">
+        					<h5 class="modal-title" id="ModalLabel" style="font-size:25px; font-weight:600;">질문 등록</h5>
+         					 	<span class="close">&times;</span>
+      					</div>
+      					<div class="modal-body">
+        				<form>
+        					<div class="form-group">
+        						<label for="recipient-name" class="col-form-label">카테고리</label>
+          					 	<input type="text" class="form-inputText" id="input_category" placeholder='카테고리를 입력해주세요.(100자 이내)' maxlength="100">
+    				    		</div>
+          					<div class="form-group">
+            					<label for="recipient-name" class="col-form-label">제목</label>
+          					 	<input type="text" class="form-inputText" id="input_title" placeholder='제목을 입력해주세요.(100자 이내)'  maxlength="100">
+    				    		</div>
+         				 <div class="form-group">
+           				 <label for="message-text" class="col-form-label">내용</label>
+           				 <textarea class="form-inputText" id="input_contents" style="height:150px;" placeholder='내용을 입력해주세요.(400자 이내)'  maxlength="400"></textarea>
+         			 </div>
+       					 </form>
+      				</div>
+      					<div class="modal-footer">
+       						 <button type="button" class="btn btn-success" data-dismiss="modal" id="uploadBtn">등록</button>
+        					<button type="button" class="btn btn-secondary" id="cancelBtn">취소</button>
+     					</div>
+    				</div>
+  				</div>
+			</div>
+			
+		<script>
+		var modal = document.getElementById('myModal');
+		if("<%= userAuth %>" == 3){			//관리자용 질문 등록
+			document.getElementById("addQnaBtn").style.display = "block";
+		}
+			$('#addQnaBtn').on('click', function() {
+				modal.style.display = 'block';
+				$('.close').on('click', function() {
+				    var modal = document.getElementById('myModal');
+				    modal.style.display = 'none';
+				});
+				
+			/* 모달 밖 부분 클릭시 닫기, 오클릭 가능성때문에 주석 	window.onclick = function(event) {
+				    var modal = document.getElementById('myModal');
+				    if (event.target == modal) {
+				        modal.style.display = 'none';
+				    }
+				} */
+			});
+		
+				$('#cancelBtn').on('click',function(){
+					 modal.style.display = 'none';
+				});
+				
+				$('#uploadBtn').on('click',function(){
+					var que_category = document.getElementById("input_category").value;
+					var que_title = document.getElementById("input_title").value;
+					var que_contents= document.getElementById("input_contents").value;
+					
+					if(que_category != "" && que_title != "" && que_contents != ""){
+					$.ajax({
+		             	type: "POST",
+		                url: "/MyPageContent/QuestionUpload",
+						data: {que_category:que_category , 
+							   que_title : que_title,
+							   que_contents : que_contents
+						},
+					 	dataType: "json",
+				 		success: function(response) {
+	      	 		if (response.status === "success") { 
+					swal({
+					title: "질문등록에 성공했습니다.",
+					icon: "info",
+					button: "확인",
+				 	}).then((value) => {
+				 		var dto = response.dto;
+				 		modal.style.display = "none";
+				 		showaddQuestion(dto);
+		   		  });		
+			 }else{
+				
+			} },error: function() {
+			 alert('서버 오류가 발생했습니다. 다시 시도해 주세요.');
+				}
+				});
+					
+					}
+				});
+			 
+			function showaddQuestion(dto){
+			 var lastIndex = qlist.length;
+			 var tableBody = document.getElementById("tablebody");
+			        var row = document.createElement("tr");
+			        row.classList.add("qna_Item");
+			        row.setAttribute("data-target", "#qdx"+(dto.qdx+1));
+			        console.log("date target = " + row.getAttribute("data-target"));
+			        row.innerHTML = `
+			            <td>${'${dto.que_category}'}</td>
+			            <td>${'${dto.que_title}'}</td>`;
+			            tableBody.appendChild(row);
+			        var answer = document.createElement("tr");
+			        var tdContent = `<td colspan="2" style="border:none;" class="table-secondary qna-answer"
+						        id="qdx${'${dto.qdx+1}'}">
+						        ${'${dto.que_contents'}}
+						        </td>
+						        `;
+	   				answer.innerHTML = tdContent;
+			        tableBody.appendChild(answer);
+					
+			        $('.qna_Item').on('click', function() {
+				         var target = $(this).data('target'); // Get the target content ID
+				         var $content = $(target); // Find the content to slide
+
+				         if ($content.is(':visible')) {
+				            $content.slideUp(); // Hide the content if it is visible
+				         } else {
+				            // Optionally: Close other open items if single open item behavior is needed
+				            $('.qna-answer').slideUp(); // Hide all other open contents
+
+				            // Show the clicked content
+				            $content.slideDown();
+				         }
+				      });   
+			        // 테이블에 행 추가
+			    } 
+		</script>	
 </main>
 </body>
 </html>

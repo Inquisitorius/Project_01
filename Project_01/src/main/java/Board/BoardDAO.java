@@ -46,6 +46,19 @@ public class BoardDAO extends TestDBPool {
 		}
 		return totalCount;
 	}
+
+	/*
+	 * public int getTotalRecords(int product_id) { int totalRecords = 0; try
+	 * (Connection connection = getConnection()) {
+	 * 
+	 * String query = "SELECT COUNT(*) FROM INQUERY WHERE PRODUCT_ID = ?";
+	 * 
+	 * PreparedStatement statement = connection.prepareStatement(query);
+	 * 
+	 * statement.setInt(1, product_id); ResultSet rs = statement.executeQuery(); if
+	 * (rs.next()) { totalRecords = rs.getInt(1); } } catch (SQLException e) {
+	 * e.printStackTrace(); } return totalRecords; }
+	 */
 	 public List<InqueryDTO> Inquerylist(int product_id) {
 		 String query = " SELECT * FROM INQUERY i JOIN USER_INFO ui ON ui.IDX = i.USER_ID WHERE PRODUCT_ID =" + product_id;
 		 			  
@@ -232,9 +245,6 @@ public class BoardDAO extends TestDBPool {
 				dto2.setEvent_id(rs.getInt("event_id"));
 				dto2.setSeller(rs.getInt("seller"));
 				dto2.setSeller_name(rs.getString("seller_name"));
-				System.out.println(rs.getInt("Seller"));
-				System.out.println(rs.getString("seller_name"));
-				
 				pro2.add(dto2);
 			}
 		}

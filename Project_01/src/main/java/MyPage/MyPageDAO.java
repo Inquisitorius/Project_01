@@ -1,5 +1,7 @@
 package MyPage;
 
+import java.util.List;
+import java.util.Vector;
 import Login.DBConnTest;
 
 public class MyPageDAO extends DBConnTest {
@@ -31,7 +33,7 @@ public class MyPageDAO extends DBConnTest {
 	public int DeleteData(String id) {
 		int result = 0;
 		try {
-			String query = "DELETE FROM USER_INFO WHERE id = '" + id +"'";
+			String query = "DELETE FROM USER_INFO WHERE id = '" + id + "'";
 			psmt = con.prepareStatement(query);
 			rs = psmt.executeQuery();
 			result = 1;
@@ -47,14 +49,88 @@ public class MyPageDAO extends DBConnTest {
 		return result;
 	}
 
-	public void uploadQuestion(String category, String title, String contents) {
+	public List<QuestionDTO> showAllQuestion() {
+		List<QuestionDTO> qlist = new Vector<QuestionDTO>();
 		try {
-			String query = "INSERT INTO Que_Board Values(Que_bno.NEXTVAL,?,?,?)";
+			String query = "SELECT * FROM Que_Board ORDER BY qdx DESC";
 			psmt = con.prepareStatement(query);
-			psmt.setString(1, category);
-			psmt.setString(2, title);
-			psmt.setString(3, contents);
 			rs = psmt.executeQuery();
+			while (rs.next()) {
+				QuestionDTO dto = new QuestionDTO();
+				dto.setQdx(rs.getInt(1));
+				dto.setQue_category(rs.getString(2));
+				dto.setQue_title(rs.getString(3));
+				dto.setQue_contents(rs.getString(4));
+				qlist.add(dto);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				psmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return qlist;
+	}
+
+	public int lastQdx() {
+		int result = 0;
+		try {
+			String query = "SELECT MAX(qdx) FROM Que_Board";
+			psmt = con.prepareStatement(query);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (
+
+		Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				psmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	public int countQuestion() {
+		int result = 0;
+		try {
+			String query = "SELECT count(*) FROM Que_Board";
+			psmt = con.prepareStatement(query);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (
+
+		Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				psmt.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
+	public void uploadQuestion(QuestionDTO dto) {
+		try {
+			String query = "INSERT INTO Que_Board Values(que_seq.NEXTVAL,?,?,?)";
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, dto.getQue_category());
+			psmt.setString(2, dto.getQue_title());
+			psmt.setString(3, dto.getQue_contents());
+			rs = psmt.executeQuery();
+			System.out.println("질문 등록 DAO");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

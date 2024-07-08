@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix ="fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="Board.BoardDAO"%>
+<%@ page import="Board.BoardDTO"%>
+<%@ page import="Main.JDBConnect"%>
+<%@ page import="Main.TestDBPool"%>
+<%@ page import="DTO.InqueryDTO"%>
     
 <% 
     HttpSession session2 = request.getSession(false);
@@ -29,27 +36,116 @@
 <script src="https://kit.fontawesome.com/a0b08e370a.js" crossorigin="anonymous"></script>
 <script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>
 <script src="/resources/bootstrap/js/jQueryRotate.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <style type="text/css">
 h2 {
 text-align:center;
 font-family: "Noto Sans KR";
 font-optical-sizing: auto;
-font-style: normal;
-color: gray;
+font-style: bold;
+color: black;
 
 }
+.button_style2
+{
+background-color: green;
+color: white;
+}
+
+.fontCommon_Option
+{
+font-family: "Noto Sans KR", sans-serif;
+font-optical-sizing: auto;
+font-style: normal;
+color: #333333;
+margin-bottom:10px;
+font-size: 18px;
+}
+.fontCommon_bold
+{
+font-family: "Noto Sans KR", sans-serif;
+font-optical-sizing: auto;
+font-style: bold;
+color: #333333;
+margin-bottom:10px;
+font-size: 24px;
+}
+.fontCommon_price
+{
+font-family: "Noto Sans KR", sans-serif;
+font-optical-sizing: auto;
+font-style: normal;
+color: #333333;
+font-size: 18px;
+margin-bottom:10px;
+}
+
 </style>
 </head>
 <body>
 <jsp:include page="/Common/Header.jsp"/>
 <main>
-<div class="container"style = "max-width: 1050px; min-width:1050px; padding-left: 0px;padding-top: 20px;" >
+<div class="container"style = "max-width: 1050px; min-width:1050px; padding-left: 0px;padding-top: 15px;" >
 <h2>구매 페이지</h2>
-
- <p>Product ID: <%= session.getAttribute("currentProductId") %></p>
-    <p>User ID: <%= session.getAttribute("idx") %></p>
-    <p>Quantity: <%= session.getAttribute("quantity") %></p>
-    
+    <hr>
+    <div class ="row d-flex flex-nowrap" style="padding-bottom: 10px">
+    <div class ="col-4" style="display: flex; justify-content: center;"> 
+    <c:forEach var="ProductDTO" items="${product2}">
+    <img src = "${ ProductDTO.product_img }" style = "width: 220px; height: auto; border-radius: 2%;overflow: hidden;"/>
+    </div>
+     <div class="col-4">
+     <div class="row" style="padding-bottom: 10px">
+    <div class = "col-md-12 fontCommon_bold">
+     상품 상세 정보
+	</div>
+	</div>
+     <div class="row" style="padding-bottom: 10px">
+    <div class = "col-md-12 fontCommon_Option">
+     상품이름 : ${ ProductDTO.name } 
+	</div>
+	</div>
+	 <div class="row" style="padding-bottom: 10px">
+    <div class = "col-md-12 fontCommon_Option">
+     수량 : <%= session.getAttribute("quantity") %> <span>개</span>
+	</div>
+	</div>
+	 <div class="row" style="padding-bottom: 10px">
+    <div class = "col-md-12 fontCommon_Option">
+     배송 : ${ ProductDTO.delivery_type } 
+	</div>
+	</div>
+	<div class="row">
+	<div class = "col-md-12 fontCommon_price">
+	
+	</div>
+    </div>
+    </div>
+    <div class="col-4">
+    <div class="row">
+    <div class = "col-md-12 fontCommon_bold">
+     최종 주문 금액
+	</div>
+    </div>
+    <div class="row">
+    <div class = "col-md-12 fontCommon_Option">
+     할인율 : <sapn style=color:red;> ${ ProductDTO.price_percent }% </sapn> 		
+	</div>
+    </div>
+    <div class="row">
+    <div class = "col-md-12 fontCommon_Option">
+     최종 구매 가격 : 
+	 <fmt:formatNumber type="Number" maxFractionDigits="3" value="${price}" />
+	 <span>원</span>
+    </div>
+    </div>
+    </div>
+</div> </c:forEach>
+<hr>
+    <div class = "row" style="display:flex;justify-content: center;">
+   <div class="col">
+   <button type="button" class="btn btn-outline-secondary" id="backButton"style="float: right;">뒤로 가기</button>
+</div>
+    	<div class="col">
 <button type="button" class="btn btn-outline-success" id="buyButton">구매완료</button>
 
 <form id="buyForm" action="/test/Buypage.do" method="post">
@@ -58,8 +154,8 @@ color: gray;
   				<input type="hidden" name="quantity" id="hiddenQuantity" value="<%= session.getAttribute("quantity") %>">
 				<input type="hidden" name="price" id= "hiddenprice" value ="<%= session.getAttribute("price") %>">
 				</form>
-
-
+				</div>
+</div>
 </div>
 </main>
 <jsp:include page="/Common/Footer.jsp"/>
@@ -83,9 +179,12 @@ color: gray;
 			console.log("있음 체크");
 		}
 	});
-	
+    document.getElementById('backButton').addEventListener('click', function() {
+        window.history.back(); // 이전 페이지로 이동
+    });
+    
 	 document.getElementById('buyButton').addEventListener('click', function() {
-		    // 이미 폼에 값이 설정되어 있으므로 여기서 따로 설정할 필요 없음
+	 
 
 		    // 값 확인
 		    var productId = document.getElementById('hiddenProductId').value;
@@ -109,10 +208,21 @@ color: gray;
 		    } else {
 		      console.log("수량: " + quantity);
 		    }
-
-		    // 폼을 제출
+		    
+		    Swal.fire({
+                icon: 'success',
+                title: '구매가 완료되었습니다.',
+                text: '메인 페이지로 이동합니다.',
+                confirmButtonText: '확인'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('buyForm').submit();
+                }
+		    
 		    document.getElementById('buyForm').submit();
-		  });
+		  });	
+	 });
+	 
 	</script>	
 	
 	<script src="/resources/bootstrap/js/bootstrap.bundle.js"></script>
