@@ -154,7 +154,7 @@
 </header>
 <script>
 	//var url_server = 'http://14.42.124.35:8080';
-	var url_server = 'http://localhost:8080';
+	var url_server = window.location.origin;
 	//var url_server = window.location.protocol + window.location.host;
 	
 	$(document).ready(function()
