@@ -281,6 +281,7 @@
 
     	$("#submitbtn").click(function() {
     	    // 폼 데이터 객체 생성
+    	    
     	    var formData = {
     	        ProductName: $("#productName").val(),
     	        subText: $("#subtext").val(),
@@ -300,7 +301,7 @@
 
     	    // 널 값이 있는지 검사
     	    for (var key in formData) {
-    	        if (formData[key] === null || formData[key] === "") {
+    	        if ((formData[key] === null || formData[key] === "")||(formData.deliveryType === "배송타입")) {
     	            // 널 값이 있는 경우 모달을 띄움
     	            swal({
     	                title: "모든 필드를 채워 주세요.",
