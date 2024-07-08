@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -37,6 +39,13 @@ public class InsertListController extends HttpServlet {
         String productImg = request.getParameter("imageUrlInput");
         String subcategory = request.getParameter("subcategory");
         String notiimg = request.getParameter("editorTxt");
+        HttpSession session = request.getSession();
+        Integer userId = (Integer) session.getAttribute("idx");
+        
+        if(session == null || userId == null) {
+        	response.sendRedirect("/MainPage/LoginPage.jsp");
+        	return;
+        }
         
         // price 파라미터 체크 후 값 설정
         String priceParam = request.getParameter("price");
@@ -56,9 +65,10 @@ public class InsertListController extends HttpServlet {
                 e.printStackTrace();
             }
         }
-
+        session.setAttribute("userId", userId);
         // DTO 객체 생성 및 값 설정
         ProductDTO dto = new ProductDTO();
+        dto.setSeller(userId);
         dto.setName(productName);
         dto.setSub_text(subText);
         dto.setOrigin(origin);
@@ -75,7 +85,7 @@ public class InsertListController extends HttpServlet {
         // 카테고리, 배송 정보 가져오기
         getCategory(request, response);
         getDelivery(request, response);
-        
+        System.out.println("아이디 : " + userId);
         // AJAX 요청에 대한 처리: 서브카테고리 업데이트
         if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
             getChildCate(request, response);

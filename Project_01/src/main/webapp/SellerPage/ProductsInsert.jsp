@@ -7,7 +7,10 @@
 <%@page import="java.io.*"%>
 <%@page import="java.util.UUID"%>
 <%@page import="java.text.SimpleDateFormat"%>
-
+<%
+HttpSession loginsession = request.getSession();
+Integer UserIDX = (Integer) session.getAttribute("idx");
+%>
 
 <head>
     <meta charset="UTF-8">

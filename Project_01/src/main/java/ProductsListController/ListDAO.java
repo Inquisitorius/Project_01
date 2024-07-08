@@ -596,28 +596,13 @@ public class ListDAO extends TestDBPool {
 	public int insertProduct(ProductDTO dto, int price, int saleper, String childcategory) {
 		int result = 0;
 		int price_discount = price - (price * saleper / 100);
-		String sql = "INSERT INTO PRODUCT VALUES (PRODUCT_BNO.NEXTVAL, (SELECT IDX FROM CATEGORY WHERE CATEGORY_NAME = ?), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?, 0, 2)";
+		String sql = "INSERT INTO PRODUCT VALUES (PRODUCT_BNO.NEXTVAL, (SELECT IDX FROM CATEGORY WHERE CATEGORY_NAME = ?), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?, 0, ?)";
 
 	
 		System.out.println(sql);
 		try {
 			psmt = con.prepareStatement(sql);
-//			psmt.setString(1,childcategory);
-//			psmt.setString(2, dto.getName());
-//			psmt.setString(3, dto.getSub_text());
-//			psmt.setString(4, dto.getOrigin());
-//			psmt.setString(5, dto.getWeight());
-//			psmt.setString(6, dto.getDateInfo());
-//			psmt.setString(7, dto.getNotifi());
-//			psmt.setInt(8, price);
-//			psmt.setInt(9, saleper);
-//			psmt.setInt(10, price_discount);
-//			psmt.setString(11, dto.getUnit());
-//			psmt.setString(12, dto.getPackaging_type());
-//			psmt.setString(13, dto.getDelivery_type());
-//			psmt.setString(14, "ddd");
-//			psmt.setString(15, dto.getProduct_noti_img());
-//			psmt.setString(16, "dd");
+
 	        psmt.setString(1, childcategory);
 	        System.out.println("Parameter 1 (childcategory): " + childcategory);
 	        
@@ -667,7 +652,8 @@ public class ListDAO extends TestDBPool {
 	        psmt.setString(16, "dd");
 	        System.out.println("Parameter 16 (Fixed value 'dd'): dd");
 
-			
+			psmt.setInt(17, dto.getSeller());
+			  System.out.println("Parameter 17 (판매자): " + dto.getSeller());
 			
 			result = psmt.executeUpdate();
 		}catch (Exception e) {

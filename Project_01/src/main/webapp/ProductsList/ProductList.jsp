@@ -16,7 +16,7 @@
     String price = request.getParameter("price");
     String[] delivery = request.getParameterValues("delivery");
     String type = request.getParameter("type");
-
+	
 
     // 현재 페이지가 0 이하이면 1페이지로 설정
     if (currentPage <= 0) {
