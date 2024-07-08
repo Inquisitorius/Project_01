@@ -65,8 +65,13 @@
 			</div>
 			
 		</div>
-		<div class="listcontainer">
+		<%
+List<ProductDTO> list1 = (List<ProductDTO>) request.getAttribute("list");
+boolean isEmptyList = (list1 == null || list1.isEmpty());
+%>
+		<div class="listcontainer" style="<%= isEmptyList ? "display: none;" : "" %>">
 			<div class="maincontent">
+			
 				<div class="sticky-sidebar">
 					<div class="sidebar-title">
 						<span class="titlespan">필터</span>
@@ -129,7 +134,6 @@
 												}
 										%>
 										
-										
 									</div>
 								</div>
 							</div>
@@ -185,7 +189,7 @@
 <%
         }
     } 
-%>
+%>	
 					</div>	
 				</div>
 			</div>
@@ -230,8 +234,20 @@
     </nav>
 </div>
 		</div>
-
-	</div>
+		<% if (isEmptyList) { %>
+		<div class="serarchresult" style="width:100%;">
+			<div class="spanclass">
+				<img src="/resources/img/search.svg" style=" width: 48px; height: 48px;">
+				<span class="searchspan">
+				검색된 상품이없습니다.
+				<br>
+				다른 검색어를 입력해주세요.
+				</span>
+			</div>
+		</div>		
+</div>
+		<% } %>
+	
 	<jsp:include page="/Common/Footer.jsp" />
 	
 
@@ -243,7 +259,7 @@
         let type = '<%= type %>';
         let selectedPrice = getParameterByName('price');
         let selectedDelivery = getParameterByName('delivery') ? getParameterByName('delivery').split(',') : [];
-        let search = '<%= search %>'
+        let search = '<%= search %>';
         
         updateFilterState(selectedPrice, selectedDelivery);
         

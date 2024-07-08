@@ -258,7 +258,11 @@
     	        processData: false,
     	        success: function(formData) {
     	        	 var imageUrl = formData.url; // 서버에서 반환된 이미지 URL
-    	             alert('이미지가 업로드되었습니다.');
+     	            swal({
+    	                title: "이미지가 업로드 되었습니다.",
+    	                icon: "success",
+    	                button: "확인",
+    	            });
     	           
     	             $('#imageUrlInput').val(imageUrl);
     	             // 서버에서 반환된 URL을 콘솔에 출력
@@ -314,7 +318,11 @@
     	        url: "/SellerPage/ProductsInsert.do",
     	        data: formData, 
     	        success: function(response) {
-    	            alert("상품이 등록되었습니다.");
+    	            swal({
+    	                title: "상품이 등록 되었습니다.",
+    	                icon: "success",
+    	                button: "확인",
+    	            });
     	            window.location.href = "/ProductList";
     	        },
     	        error: function(xhr, status, error) {
