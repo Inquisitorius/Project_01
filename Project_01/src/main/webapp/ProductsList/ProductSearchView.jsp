@@ -40,7 +40,7 @@
 <head>
 <meta charset="UTF-8">
 <title>마켓 신상품 - 그린</title>
-
+<link rel="stylesheet" href="/resources/css/ProductList.css?after">
 <!-- Bootstrap CSS 로드 -->
 <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.css">
 
@@ -49,7 +49,7 @@
 
 <!-- Head, Footer CSS 링크 필수 -->
 <link rel="stylesheet" href="/resources/css/Common.css">
-<link rel="stylesheet" href="/resources/css/ProductList.css">
+
 
 <!-- jQuery 사용을 위한 JS 로드 -->
 <script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>

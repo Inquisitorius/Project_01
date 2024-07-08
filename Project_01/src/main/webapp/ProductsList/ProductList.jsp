@@ -54,6 +54,8 @@
 <meta charset="UTF-8">
 <title>마켓 신상품 - 그린</title>
 
+
+<link rel="stylesheet" href="/resources/css/ProductList.css">
 <!-- Bootstrap CSS 로드 -->
 <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.css">
 
@@ -62,7 +64,7 @@
 
 <!-- Head, Footer CSS 링크 필수 -->
 <link rel="stylesheet" href="/resources/css/Common.css">
-<link rel="stylesheet" href="/resources/css/ProductList.css">
+
 
 <!-- jQuery 사용을 위한 JS 로드 -->
 <script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>
@@ -263,11 +265,11 @@
                 String activeClass = (currentPage == i) ? "active" : "";
             %>
             <li class="page-item <%= activeClass %>">
-                <a class="page-link" href="<%= request.getContextPath() %>/ProductList?page=<%= i %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style=""><%= i %></a>
+                <a class="page-link" style="color:black" href="<%= request.getContextPath() %>/ProductList?page=<%= i %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style=""><%= i %></a>
             </li>
             <% } %>
             <li class="page-item">
-                <a class="page-link" href="<%= request.getContextPath() %>//ProductList?page=<%= Math.min(totalPages, currentPage + 1) %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style="font-weight: bold" aria-label="Next">
+                <a class="page-link" href="<%= request.getContextPath() %>/ProductList?page=<%= Math.min(totalPages, currentPage + 1) %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style="font-weight: bold" aria-label="Next">
                     <span aria-hidden="true"><img src=/resources/img/nextbtn.png></span>
                 </a>
             </li>
@@ -475,9 +477,7 @@
                 },
                 success: function(data) {
                 	
-                    console.log("AJAX 요청 성공");
-                    
-                    let productListHtml = $(data).find('#productList').html();
+                	let productListHtml = $(data).find('#productList').html();
                     let productcntHtml = $(data).find('#productcnt').html();
                     let itemhtml = $(data).find('#item').html();
                     let categoryFiltersHtml = $(data).find('#categoryFilters').html();

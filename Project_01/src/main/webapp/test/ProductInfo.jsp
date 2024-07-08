@@ -436,7 +436,7 @@ hr {
 		 <div class="row" style="overflow: hidden;">
 		 <div class="col-12">
 		 <c:forEach var="ProductDTO" items="${product2}">
-		 	"${ ProductDTO.product_noti_img }"
+		 	${ ProductDTO.product_noti_img }
 		 </div>
 		 <div class="row">
 		 <h3>${ ProductDTO.sub_text }</h3>
