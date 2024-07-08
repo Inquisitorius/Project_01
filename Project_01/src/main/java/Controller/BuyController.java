@@ -38,6 +38,12 @@ public class BuyController extends HttpServlet {
 			System.out.println("제품"+ req.getParameter("product_id"));
 			int product_id = -1;
 			HttpSession session = req.getSession();
+			if (session == null || session.getAttribute("idx") == null) {
+		        resp.sendRedirect("/MainPage/LoginPage.jsp");
+		        return;
+		    } else {
+		        System.out.println("로그인 정보가 있습니다.");
+		    }
 			
 			product_id = Integer.parseInt(productIdStr);
 			session.setAttribute("currentProductId", product_id);

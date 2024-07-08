@@ -253,12 +253,36 @@ color: black;
 
 .board-table tr {
 	cursor: pointer; 
+	border-top: 1px solid black;
 }
 
 hr {
 	border: 1px solid gray;
 }	
-
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    
+}
+.pagination a {
+    margin: 0 5px;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #108c0d;
+    border: 1px solid #108c0d;
+    border-radius: 4px;
+    font-size: 15px;
+}
+.pagination a.active {
+    background-color: #108c0d;
+    color: white;
+    border-color: #108c0d;
+}
+.pagination a:hover {
+    background-color: #108c0d;
+    color: white;
+}
 </style>
 </head>
 <body>
@@ -294,9 +318,9 @@ hr {
 			<div class= "row">
 				<div class = "col-md-12 fontCommon_price" style = "font-size: 26px;font-weight: 750; color: #333;">
 					<sapn style="color:red;">
-					<fmt:formatNumber type="Number" maxFractionDigits="3" value="${ ProductDTO.price_percent }" />
+					<fmt:formatNumber type="Number" maxFractionDigits="3" value="${ ProductDTO.price_percent }"/>
 					%</sapn>
-					<fmt:formatNumber type="Number" maxFractionDigits="3" value="${ ProductDTO.price_discount}" />
+					<fmt:formatNumber type="Number" maxFractionDigits="3" value="${ ProductDTO.price_discount}"/>
 					<sapn style="font-weight:500";>원</sapn>
 				</div>
 			</div>	
@@ -420,7 +444,7 @@ hr {
 				<button type="button" id='button1' class="btn btn-outline-success button_style">상품설명</button>
 				</div>
 				<div class= "col-4">
-				<button type="button" id='button2'class="btn btn-outline-success button_style">후기</button>
+				<button type="button" id='button2'class="btn btn-outline-success button_style">상세정보</button>
 				</div>
 				<div class= "col-4">
 				<button type="button" id='button3'class="btn btn-outline-success button_style">문의</button>
@@ -430,7 +454,7 @@ hr {
 		 <!-- 버튼이후 -->
 		 <div class="container" style = "max-width: 1050px; min-width:1050px; padding-left: 0px;padding-top: 20px;">
 		  <section class='section' id='section1'>
-        <h2>1 이동위치</h2>
+        <h2></h2>
    		 </section>
 		 <!-- 상품설명 -->
 		 <div class="row" style="overflow: hidden;">
@@ -442,7 +466,7 @@ hr {
 		 <h3>${ ProductDTO.sub_text }</h3>
 		 <h3 style= "padding-bottom:30px;">${ ProductDTO.name }</h3><br />
 		 <section class='section' id='section2'>
-         <h2>2 이동위치</h2>
+         <h2></h2>
   		 </section>
 		 <hr>
 		
@@ -451,18 +475,97 @@ hr {
 		 </c:forEach>
 		 
 		 <!-- 후기  -->
+		<div class="row d-flex flex-nowrap">
 		 <div class="row">
 		 <div class="col fontCommon_nomal" style="width:500px; height:300; display:flex; justify-content: space-around;">
-		 <h3>후기</h3>
+		 <h2>상세정보</h2>
+		 </div>
+		 <div class="row">
+		 <div class="col" style="font-size:26px;color: black;font-weight:400;justify-content:flex-start;padding-bottom:30px;">
+		 고객행복센터
+		 </div>
+		 </div>
+		 
+		 <div class="row" style="padding-bottom:15px";>
+		 <div class="col">
+		 <strong>궁금하신 점이나 서비스 이용에 불편한 점이 있으신가요?</strong>
+		 </div>
+		 </div>
+		 
+		 <div class="row"style="padding-bottom:15px";>
+		 <div class="col-3">
+		 <span style="color:#108c0d";><strong>환불 및 취소안내</strong></span> 
+		 </div> 
+		 <div class="col-9">
+		 환불 및 취소가 필요하신 경우 마이페이지에서 구매 상품 확인 페이지를 통해서 문의해주세요.
+		 </div>
+		 <hr style="margin-bottom:10px;margin-top:10px;">
+		 </div>
+		 
+		 
+		 <div class="row" style="padding-bottom:10px;">
+		 <div class="col-4">
+		 <strong>01. 상품에 문제가 있는 경우</strong> 
+		 </div>
+		 <div class="col-6">
+		 받으신 상품에 표시 내용이 다른경우에 상품을 받은날 3개월 이내에, 사실을 알게 된 날부터 30일 이내에 교환 및 환불을 요청하실수 있습니다.
+		 </div>
+		 <hr style="margin-bottom:10px;margin-top:10px;">
+		 </div>
+		 
+		 <div class="row" style="padding-bottom:10px;">
+		 <div class="col-4">
+		 <strong>02. 단순 변심, 주문 착오의 경우</strong>
+		 </div>
+		 <div class="col-6">
+		 식품 베이커리 등은 상품의 특성상 재판매가 
+		 불가하여 단순 변심, 주문 착오, 주소 오입력 등 고객의 책임 사유로 인한 교환 및 환불가 어려운 점 양해 부탁드립니다.
+		 상품에 따라 조금씩 맛이 다를 수 있으며, 개인의 기호에 따라 같은 상품도 다르게 느낄 수 있습니다.<br>
+		 <span>유통 기한 30일 이상 식품  상품을 받은 날부터 7일이내에 환불 및 취소가 가능합니다. 아래 문의사항을 통해 판매자와 소통할수있습니다.
+		 </span>
+		 </div>
+		 <hr style="margin-bottom:10px;margin-top:10px;">
+		 </div>
+		 
+		 <div class="row">
+		 <div class="col-4">
+		 <strong>03. 환불, 취소가 불가한 경우</strong>
+		 </div>
+		 <div class="col-6">
+		 다음에 해당하는 환불및 취소 신청은 처리가 어려울 수 있으니 양해 부탁드립니다.<br />
+		 ● 고객님의 책임 있는 사유로 상품이 훼손된경우<br />
+		 ● 고객님의 사용 또는 일부 소비로 상품의 가치가 감소한 경우<br />
+		 ● 시간이 지나 다시 판매하기 곤란할 정도로 상품의 가치가 감소한 경우
+		 </div>
+		 <hr style="margin-bottom:10px;margin-top:10px;">
+		 </div>
+		 
+		 <div class="row">
+		 <div class="col-4">
+		 <span style="color:#108c0d";><strong>배송관련 안내</strong></span>
+		 </div>
+		 
+		 <div class="col-6">
+		  배송 과정 중 기상 악화 및 교통 상황에 따라 부득이하게 지연 배송이 발생될 수 있습니다.
+		 </div>
+		 </div>
+		 <hr style="margin-bottom:10px;margin-top:10px;">
+		 </div>
+		 </div>
+		 <div class="row" style="padding-bottom:15px";>
+		 <div class="col">
+		 <strong>* 문제가 되는 부분이나 궁금하신점을 아래 상품 문의하기를 통해서 글을 작성해주시면 빠르게 도와드리겠습니다.</strong>
+		 </div>
 		 </div>
 		 <br />
 		 <!-- 문의 -->
 		<section class='section' id='section3'>
-        <h2>3 이동위치</h2>
+        <h2></h2>
     </section>
+    <hr>
     <section class="notice"style="min-width:1050px; height:1000px; display:flex; justify-content: space-around;">
-  <div class="page-title">
-  <h3>상품 문의</h3>
+  <div class="page-title fontCommon_nomal">
+  <h2 style="font-size: 28px;color: #333333;font-weight: 400;text-align: center;">상품 문의</h3>
         <div class="container"style="min-width:1050px; height:auto; display:flex; justify-content: flex-end;">
 
 	<div class="row">
@@ -527,7 +630,7 @@ hr {
                     <th scope="col" class="th-date">날짜</th>
                 </tr>
                 </thead>
-                <c:forEach var="InqueryDTO" items="${board}">
+                <c:forEach var="InqueryDTO" items="${newlist}">
                 <tbody style="border:none;">
                  <tr class="board-row" data-target="#content${ InqueryDTO.inquery_id }"style="border:none;">
                     <td>${ InqueryDTO.inquery_id }</td>
@@ -566,9 +669,18 @@ hr {
             </table>   
       	  </div>	
      	 </table>
-   	 </div> 
+   	 </div>
+   	 <div class="pagination"style="display:flex;justify-content: center;">
+        <c:forEach var="i" begin="1" end="${totalPages}">
+            <a href="ProductInfo.do?page=${i}&product_id=${product_id}#content"
+            onclick="saveScrollPosition();" 
+            class="${i == currentPage ? 'active' : ''}">${i}</a>
+        </c:forEach>
+    </div>
+</main> 
     </section>
 </main>
+
     
 <jsp:include page="/Common/Footer.jsp"/>
 
@@ -725,7 +837,24 @@ hr {
 		button3.addEventListener('click', () => {
 	        window.scrollBy({top: section3.getBoundingClientRect().top, behavior: 'smooth'});
 	    });
-		
+		// 스크롤 lock
+		 function saveScrollPosition() {
+	            localStorage.setItem('scrollPosition', window.scrollY);
+	        }
+
+	        // 페이지 로드 시 스크롤 위치를 복원하는 함수
+	        function restoreScrollPosition() {
+	            const scrollPosition = localStorage.getItem('scrollPosition');
+	            if (scrollPosition) {
+	                window.scrollTo(0, scrollPosition);
+	                localStorage.removeItem('scrollPosition'); // 한 번 사용 후 제거하여, 다음 로드 때 영향을 주지 않음
+	            }
+	        }
+
+	        // 페이지 로드 시 스크롤 위치 복원
+	        window.onload = function() {
+	            restoreScrollPosition();
+	        };
 </script>
 	
 	<script src="/resources/bootstrap/js/bootstrap.bundle.js"></script>

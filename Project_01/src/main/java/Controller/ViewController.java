@@ -25,6 +25,7 @@ import jakarta.servlet.http.HttpSession;
 
 	public class ViewController extends HttpServlet {
 		private static final long serialVersionUID = 1L;
+		 private static final int RECORDS_PER_PAGE = 10;
 		
 		public ViewController() {
 			super();
@@ -36,6 +37,10 @@ import jakarta.servlet.http.HttpSession;
 				
 			    Integer userId = (Integer) session.getAttribute("idx");
 				int product_id = -1;
+		
+				// list 변경
+				String pageStr = req.getParameter("page");
+				int page = (pageStr != null) ? Integer.parseInt(pageStr) :1;
 				
 				if(productIdStr !=null & !productIdStr.isEmpty()) {
 					try {
@@ -59,14 +64,18 @@ import jakarta.servlet.http.HttpSession;
 				
 				BoardDAO dao = new BoardDAO();
 				List<ProductDTO> product2 = dao.View2(product_id);
-			 	List<InqueryDTO> board = dao.Inquerylist(product_id);
-			 //	List<LoginDTO> User = dao.UserInfoList();
+			 	List<InqueryDTO> newlist = dao.newlist(product_id, page, RECORDS_PER_PAGE);
+			 	
+			 	 int totalRecords = dao.getTotalRecords(product_id);
+			     int totalPages = (int) Math.ceil(totalRecords / (double) RECORDS_PER_PAGE);
+			     
 				dao.close();
 				req.setAttribute("product_id", product_id);
 			 	req.setAttribute("product2", product2);
-				req.setAttribute("board", board);
 				req.setAttribute("user_id", userId);
-			//	req.setAttribute("User", User);
+				req.setAttribute("newlist", newlist);
+				req.setAttribute("totalPages", totalPages);
+				req.setAttribute("currentPage", page);
 				
 				req.getRequestDispatcher("/test/ProductInfo.jsp").forward(req, resp);
 				

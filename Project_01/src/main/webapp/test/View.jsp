@@ -6,7 +6,6 @@
 <% 
 String num = request.getParameter("idx");
 BoardDAO dao = new BoardDAO();
-BoardDTO dto = dao.View("idx");
 dao.close();
 %>
 <!DOCTYPE html>
