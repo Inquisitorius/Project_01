@@ -78,7 +78,7 @@ $(document).ready(function()
 
 function get_SellerCountData()
 {
-	var id = 2;
+	var id = $('#loginSave').val();
 	var datevalue = $('#dayInfoValue').val();
 	console.log(Number(datevalue) + 1);
 	
