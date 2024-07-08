@@ -331,28 +331,30 @@
 
             $("#category").change(function() {
                 var selectedCategory = $(this).val();
-
+				
+                // 카테고리가 선택되지 않았을 때 숨기기
+                if (selectedCategory === "카테고리") {
+                    $("#subcategoryContainer").hide();
+                    $("#subcategoryLabel").hide();
+                    return;
+                }
+                
                 // Ajax 요청
                 $.ajax({
                     type: "GET",
                     url: "/SellerPage/ProductsInsert.do",
                     data: { category: selectedCategory },
-                    dataType: "html",
-                    success: function(htmlResponse) {
+                    
+                    success: function(data) {
                         // 서브카테고리 셀렉트 박스 업데이트
                         var subcategorySelect = $("#subcategory");
                         subcategorySelect.empty();
-                        subcategorySelect.append(htmlResponse);
-
+                        subcategorySelect.append(data);
+						
                         // 보이기
                         $("#subcategoryContainer").show();
                         $("#subcategoryLabel").show();
                         
-                        // 카테고리가 선택되지 않았을 때 숨기기
-                        if (selectedCategory === "카테고리") {
-                            $("#subcategoryContainer").hide();
-                            $("#subcategoryLabel").hide();
-                        }
                     },
                     error: function(xhr, status, error) {
                         console.error("Failed to load subcategories", error);
