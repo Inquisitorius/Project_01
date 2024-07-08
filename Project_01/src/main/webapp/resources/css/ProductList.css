@@ -267,15 +267,15 @@ input[type="checkbox"]:checked+label:after, input[type="radio"]:checked+label:af
 
 
 .btn-navy {
-	color: #a0a0a0;
-	background-color: #ffffff;
-	border-color: #e0e0e0;
+	color: #a0a0a0 !important;
+	background-color: #ffffff !important;
+	border-color: #e0e0e0 !important;
 }
 
 .btn-navy:hover {
-	color: white;
-	background-color: #47702e;
-	border-color: #163020;
+	color: white !important;
+	background-color: #47702e !important;
+	border-color: #163020 !important;
 }
 
 .delivery {
