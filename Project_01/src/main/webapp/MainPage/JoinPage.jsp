@@ -175,6 +175,27 @@ a:hover {
 	background-image: url('../resources/img/checkIcon.png');
 	background-size: 30px;
 }
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 700px;
+  height: 600px;
+  position: relative;
+}
+	
 </style>
 </head>
 <body>
@@ -899,7 +920,7 @@ a:hover {
 							for="check_btn2"></label> <span class="ban_Select"
 							style="font-weight: 500; font-size: 15px;">이용약관 동의 <span
 							class="mini_Font" style="font-size: 15px;">(필수)</span><br></span> <a
-							class="terms_Style">약관보기 ></a>
+							class="terms_Style" id="terms_firstBtn">약관보기 ></a>
 					</div>
 				</div>
 			</div>
@@ -917,7 +938,7 @@ a:hover {
 							for="check_btn3"></label> <span class="ban_Select"
 							style="font-weight: 500; font-size: 15px;">개인정보 수집 이용 동의 <span
 							class="mini_Font" style="font-size: 15px;">(선택)</span><br></span> <a
-							class="terms_Style">약관보기 ></a>
+							class="terms_Style" id="terms_secondBtn">약관보기 ></a>
 					</div>
 				</div>
 			</div>
@@ -935,13 +956,107 @@ a:hover {
 							for="check_btn4"></label> <span class="ban_Select"
 							style="font-weight: 500; font-size: 15px;">본인은 만 14세
 							이상입니다. <span class="mini_Font" style="font-size: 15px;">(필수)</span><br>
-						</span> <a class="terms_Style">약관보기 ></a>
+						</span>
 					</div>
 				</div>
 			</div>
 		</div>
+		<!-- 모달 부분  -->
+	<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true" style="user-select:none">
+  				<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document" style="min-width:500px;">
+    				<div class="modal-content">
+      					<div class="modal-header">
+        					<h5 class="modal-title" id="ModalLabel" style="font-size:25px; font-weight:600;">약관 보기</h5>
+         					 	<span class="close">&times;</span>
+      					</div>
+      					<div class="modal-body">
+      						<div id="terms_first" style="display:none;">
+      							<strong style="font-size:20px; font-weight:600;">제1조 [목적]</strong><br/><br/>
+		<span style="font-size:12px; font-weight:500;">
+		이 약관은 주식회사 마켓그린(이하 주식회사 마켓그린 또는 주식회사 마켓그린이 운영하는 인터넷사이트를 “마켓그린”이라 함)가 
+		운영하는 온라인쇼핑몰에서 제공하는 전자상거래 관련 서비스(이하 “서비스”라 함)를 
+		이용함에 있어 마켓그린과 이용자의 권리, 의무 및 책임사항을 규정함을 목적으로 합니다.
+      	</span>	<br/><br/>
+      <strong style="font-size:20px; font-weight:600;">	제2조 [정의]</strong><br/><br/>	
+      	<span style="font-size:12px; font-weight:500;">
+		1. “사이버몰”이란 마켓그린의 상품 또는 용역(이하 “상품 등” 이라 함)을 이용자에게 제공하기 위하여 컴퓨터 등 정보통신설비를 이용하여 
+		상품 등을 거래할 수 있도록 설정한 가상의 영업장(http://www.kurly.com 등 마켓그린가 운영하는 웹사이트 및 모바일 웹, 앱 등을 모두 포함)을 말합니다.<br/>
+		2. "이용자"란 마켓그린에 접속하여 이 약관에 따라 마켓그린이 제공하는 서비스를 이용하는 고객을 말합니다.<br/>
+		3. “회원”이란 마켓그린에 회원등록을 한 자로서, 계속적으로 마켓그린이 제공하는 서비스를 이용할 수 있는 자를 말합니다.<br/>
+		4. “마켓플레이스 서비스”란 마켓그린이 제공하는 통신판매중개 서비스 및 관련 부가서비스 일체를 말합니다.<br/>
+		5. “판매자”란 마켓그린에 판매회원으로 회원등록을 하고 마켓그린이 제공하는 통신판매중개서비스를 통하여 상품 등을 판매하는 자로서 판매자용 이용약관(마켓플레이스 판매자용 이용약관)에 
+		동의하고 마켓그린과 마켓플레이스 서비스 이용계약을 체결한 자를 말합니다.</span><br/><br/>
+		<strong style="font-size:20px; font-weight:600;">제3조 [약관 등의 명시와 설명 및 개정]</strong><br/><br/>					
+		<span style="font-size:12px; font-weight:500;">
+
+		① 마켓그린은 이 약관의 내용과 상호 및 대표자 성명, 영업소 소재지 주소(소비자의 불만을 처리할 수 있는 곳의 주소를 포함), 전화번호/모사전송번호/전자우편주소, 
+		사업자등록번호, 통신판매업 신고번호, 개인정보 보호책임자 등을 이용자가 쉽게 알 수 있도록 사이버몰의 초기 서비스화면(전면)에 게시합니다. 
+		다만, 약관의 내용은 이용자가 연결화면을 통하여 볼 수 있도록 할 수 있습니다.<br/>
+		② 마켓그린은 필요한 경우 관련 법령을 위배하지 않는 범위에서 이 약관을 개정할 수 있습니다.<br/>
+		③ 마켓그린이 이 약관을 개정할 경우에는 적용일자 및 개정 내용을 명시하여 사이버몰에 적용일자 7일 이전부터 적용일자 전일까지 공지합니다. 
+		다만, 이용자에게 불리하게 약관내용을 변경하는 경우에는 최소한 30일 이상의 사전 유예 기간을 두고 공지합니다.<br/>
+		④ 전항에 따라 공지된 적용일자까지 이용자가 명시적으로 거부의사를 표명하지 않을 경우에는 개정된 약관에 동의하는 것으로 간주하며, 변경된 약관에 동의하지 않는 회원은 회원 탈퇴를 요청할 수 있습니다.<br/>
+		</span>  						
+      						</div>
+      						<div  id="terms_second" style="display:none;">
+      						<br/><br/>
+      						<strong style="font-size:20px; font-weight:600;">개인정보 수집·이용 동의(선택)</strong><br/><br/><br/>
+      						<table class="table table-bordered">
+							<colgroup>
+								<col width="50%">
+								<col width="25%">
+								<col width="25%">
+							</colgroup>
+							<thead>
+<tr>
+<th class="tit1" scope="row">수집 목적</th>
+<th class="tit2" scope="row">수집 항목</th>
+<th class="tit3" scope="row">보유 기간</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>맞춤형 서비스 제공</td>
+<td><strong>성별*, 생년월일*</strong></td>
+<td class="emph">회원 탈퇴<br> 즉시 파기</td>
+</tr>
+</tbody>
+							</table>
+      						</div>
+      					</div>
+    				</div>
+  				</div>
+			</div>
 		
 		<script>
+		var modal = document.getElementById('myModal');
+		var firstTerm = document.getElementById("terms_first");
+		var secondTerm = document.getElementById("terms_second");
+		
+		$('.terms_Style').on('click', function() {
+			modal.style.display = 'block';
+			var clickedId = $(this).attr('id');
+			if (clickedId == "terms_firstBtn"){
+			firstTerm.style.display = 'block';
+			secondTerm.style.display = 'none';
+			}else{
+				firstTerm.style.display = "none";
+				secondTerm.style.display = "block";
+			}
+		});
+		
+		$('.close').on('click', function() {
+		    var modal = document.getElementById('myModal');
+		    modal.style.display = 'none';
+		});
+		
+		window.onclick = function(event) {
+		    var modal = document.getElementById('myModal');
+		    if (event.target == modal) {
+		        modal.style.display = 'none';
+		    }
+		}
+		
 		function agreeProcess(id){	//전부 동의 체크 후 필수 체크 해제 시 전부 해제
 		if(document.getElementById("check_btn").checked){
 			if(!document.getElementById(id).checked){

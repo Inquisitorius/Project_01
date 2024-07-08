@@ -82,9 +82,6 @@
 							<p style="font-weight:600">탈퇴 후 회원정보 모두 삭제됩니다.</p>
 				</div>
 		
-				<div class="line_Style">
-							<p style="font-weight:600">탈퇴 후에도 작성한 후기들은 남아있습니다.</p>
-				</div>
 			</div>
 		</div>
 		

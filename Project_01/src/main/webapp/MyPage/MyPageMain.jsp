@@ -56,6 +56,7 @@ text-decoration: none;
 <% 
 	HttpSession session2 = request.getSession(); 
 	String userName= (String)session.getAttribute("name");
+	int userAuth = (int)session.getAttribute("auth_type"); 
 %>
 <jsp:include page="/Common/Header.jsp" />
 <main class="container" style="width:1050px;" >
@@ -64,7 +65,8 @@ text-decoration: none;
 				<div class="col-md-5" style="padding-left:0px;">
 				<div style="display:flex; justify-content: center;">
 				<div style="width: 90%; height:200px; padding:40px; box-shadow: 1px 1px 5px grey; user-select:none;">
-					<span style="font-size:25px; font-weight:600"><%= userName %> 님</span>
+					<span style="font-size:25px; font-weight:600"><%= userName %> 님</span><br/><br/>
+					<span style="font-size:25px; font-weight:500">환영합니다.</span>
 				</div>
 				</div>
 			
@@ -117,7 +119,7 @@ text-decoration: none;
 		</div>		
 				<div class="col-md-7" style="box-shadow: 1px 1px 5px grey;">
 					<div class="includedContent">
-				아아아아아아아앙아ㅏ
+					 	<jsp:include page="/MyPage/MyInfo.jsp" /> 
 					</div>
 				</div>
 			

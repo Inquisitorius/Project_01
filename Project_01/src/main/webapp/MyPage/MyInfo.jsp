@@ -146,7 +146,7 @@
 				</div>
 			</div>
 		</div>
-		
+		<form>
 		<div class="row" style="justify-content: center;">
 		<div class="line_Style">
 				<div class="col-md-3">
@@ -411,7 +411,7 @@
 				</div>
 		</div>
 		</div>
-		
+		</form>
 		<script>
 		var inputyear = document.getElementById("input_birthyear");
 		var inputmonth = document.getElementById("input_birthmonth");

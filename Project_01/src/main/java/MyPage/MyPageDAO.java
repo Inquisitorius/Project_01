@@ -122,7 +122,8 @@ public class MyPageDAO extends DBConnTest {
 		return result;
 	}
 
-	public void uploadQuestion(QuestionDTO dto) {
+	public int uploadQuestion(QuestionDTO dto) {
+		int result = 0;
 		try {
 			String query = "INSERT INTO Que_Board Values(que_seq.NEXTVAL,?,?,?)";
 			psmt = con.prepareStatement(query);
@@ -131,6 +132,7 @@ public class MyPageDAO extends DBConnTest {
 			psmt.setString(3, dto.getQue_contents());
 			rs = psmt.executeQuery();
 			System.out.println("질문 등록 DAO");
+			result = 1;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -140,5 +142,6 @@ public class MyPageDAO extends DBConnTest {
 				e.printStackTrace();
 			}
 		}
+		return result;
 	}
 }

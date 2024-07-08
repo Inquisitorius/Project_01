@@ -100,13 +100,16 @@ public class MyPageController extends HttpServlet {
 			dto.setQue_category(req.getParameter("que_category"));
 			dto.setQue_title(req.getParameter("que_title"));
 			dto.setQue_contents(req.getParameter("que_contents"));
-			dao.uploadQuestion(dto);
-			System.out.println(dto.getQdx());
+			int result = dao.uploadQuestion(dto);
 			JsonObject jsonResponse = new JsonObject();
+			if(result == 1) {
 			jsonResponse.addProperty("status", "success");
 			Gson gson = new Gson();
 			jsonResponse.add("dto", gson.toJsonTree(dto));
-
+			
+			}else {
+				jsonResponse.addProperty("status", "fail");
+			}
 			out.print(jsonResponse.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
