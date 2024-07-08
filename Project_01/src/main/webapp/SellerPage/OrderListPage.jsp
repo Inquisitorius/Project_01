@@ -77,7 +77,7 @@ $(document).ready(function()
 function get_SellerListData()
 {
 	//seller id 필요
-	var id = 2;
+	var id = $('#loginSave').val();
 	
 	var data = 
 	{
@@ -116,7 +116,7 @@ function tabulatorInit()
 	    paginationSizeSelector: [5, 10, 20, 50], // 선택 가능한 페이지당 행 수
 	    ajaxURL: "/SellerController/orderListTableData.func", // 데이터 로드할 URL
 	    ajaxParams: { 
-	        seller: 2
+	        seller: $('#loginSave').val()
 	    },
 	    ajaxConfig: {
 	        method: "GET"

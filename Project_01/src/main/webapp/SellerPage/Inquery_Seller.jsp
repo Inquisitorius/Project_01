@@ -225,7 +225,7 @@ function updateFilter()
 
 function tabulatorInit()
 {
-	var seller_id = 2;
+	var seller_id = $('#loginSave').val();
 	
 	var table = new Tabulator("#example-table", {
 	    height:"430px",
