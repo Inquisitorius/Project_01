@@ -16,7 +16,6 @@
     String price = request.getParameter("price");
     String[] delivery = request.getParameterValues("delivery");
     String type = request.getParameter("type");
-	
 
     // 현재 페이지가 0 이하이면 1페이지로 설정
     if (currentPage <= 0) {
@@ -44,7 +43,9 @@
         deliveryStr = String.join(",", delivery); 
     }
 	
+	
 
+    
     int startPage = Math.max(1, currentPage - 2);
     int endPage = Math.min(totalPages, startPage + 4);
 %>
@@ -54,8 +55,6 @@
 <meta charset="UTF-8">
 <title>마켓 신상품 - 그린</title>
 
-
-<link rel="stylesheet" href="/resources/css/ProductList.css">
 <!-- Bootstrap CSS 로드 -->
 <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.css">
 
@@ -64,7 +63,7 @@
 
 <!-- Head, Footer CSS 링크 필수 -->
 <link rel="stylesheet" href="/resources/css/Common.css">
-
+<link rel="stylesheet" href="/resources/css/ProductList.css">
 
 <!-- jQuery 사용을 위한 JS 로드 -->
 <script src="/resources/bootstrap/js/jquery-3.7.1.js"></script>
@@ -191,22 +190,20 @@
 							총 <%=request.getAttribute("cnt")%>건
 						</div>
 						<ul class="productsort">
-							<li class="sort-li"><a class="sort-link" href="<%= request.getContextPath() %>/ProductList?page=<%= 1 %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=new" data-type="new" class="sort-a">신상품순</a></li>
-							<li class="sort-li"><a class="sort-link" href="<%= request.getContextPath() %>/ProductList?page=<%= 1 %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=saleprice" data-type="saleprice" class="sort-a">혜택순</a></li>
-							<li class="sort-li"><a class="sort-link" href="<%= request.getContextPath() %>/ProductList?page=<%= 1 %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=lowprice" data-type="lowprice" class="sort-a">낮은 가격순</a></li>
-							<li class="sort-li"><a class="sort-link" href="<%= request.getContextPath() %>/ProductList?page=<%= 1 %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=highprice" data-type="highprice" class="sort-a">높은 가격순</a></li>
+							<li class="sort-li"><a class="sort-link" href="#" data-type="new" class="sort-a">신상품순</a></li>
+							<li class="sort-li"><a class="sort-link" href="#" data-type="saleprice" class="sort-a">혜택순</a></li>
+							<li class="sort-li"><a class="sort-link" href="#" data-type="lowprice" class="sort-a">낮은 가격순</a></li>
+							<li class="sort-li"><a class="sort-link" href="#" data-type="highprice" class="sort-a">높은 가격순</a></li>
 						</ul>
 					</div>
 					<div class="container list" id="productList" style="text-decoration-line: none;">
 						<%
-						
 						List<ProductDTO> list = (List<ProductDTO>) request.getAttribute("list");
-						
 						if (list != null) {
 							for (ProductDTO dto : list) {
 						%>
 						<div class="row">
-							<a href="/test/ProductInfo.do?product_id=<%=dto.getProduct_id() %>" style="text-decoration-line: none;"> <img
+							<a href="#" style="text-decoration-line: none;"> <img
 								src="<%=dto.getProduct_img() %>"
 								style="padding: 0px; width: 249px; height: 320px; border-radius: 2%; overflow: hidden;">
 								<button class="btn btn-navy rounded-1 fontCommon_Option"
@@ -265,7 +262,7 @@
                 String activeClass = (currentPage == i) ? "active" : "";
             %>
             <li class="page-item <%= activeClass %>">
-                <a class="page-link" style="color:black" href="<%= request.getContextPath() %>/ProductList?page=<%= i %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style=""><%= i %></a>
+                <a class="page-link" href="<%= request.getContextPath() %>/ProductList?page=<%= i %>&category=<%=category %>&filters=<%=filtersStr %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=<%=type %>"style=""><%= i %></a>
             </li>
             <% } %>
             <li class="page-item">
@@ -288,7 +285,11 @@
 	
 
 <script>
+
+	
+	
     $(document).ready(function() {
+    	
         let currentPage = '<%= currentPage %>';
         let category = '<%= category %>';
         let filters = '<%= filtersStr %>';
@@ -299,11 +300,27 @@
         let selectedPrice = getParameterByName('price');
         let selectedDelivery = getParameterByName('delivery') ? getParameterByName('delivery').split(',') : [];
         
-        
         updateFilterState(selectedFilters, selectedPrice, selectedDelivery);
         
-        
-        
+     // 링크 클릭 시
+        $('.sort-link').on('click', function(event) {
+            event.preventDefault(); // 기본 클릭 동작 방지
+            
+            let clickedType = $(this).data('type');
+
+            // 필터 값 업데이트
+            selectedPrice = getParameterByName('price');
+            
+            selectedFilters = getParameterByName('filters') ? getParameterByName('filters').split(',') : [];
+            selectedDelivery = getParameterByName('delivery') ? getParameterByName('delivery').split(',') : [];
+			currentPage = 1;
+         
+            
+            handleFilterFormSubmit(category, selectedFilters, selectedPrice, selectedDelivery, clickedType);
+            updateProductSortNavigationStyle(clickedType);
+            
+        });
+
         
         function getParameterByName(name, url = window.location.href) {
             name = name.replace(/[\[\]]/g, '\\$&');
@@ -413,7 +430,8 @@
 
         // 초기 URL 설정 및 스타일 적용
        
-        
+        let initialUrl = window.location.origin + '/ProductList?page=' + currentPage + '&category=' + category + '&filters=' + filters + '&price=' + price + '&delivery=' + delivery + '&type=' + type;
+        history.replaceState({ page: currentPage, category: category, filters: filters, price: price, delivery: delivery }, null, initialUrl);
         updateNavigationStyle(category);
         updateProductSortNavigationStyle(type);
         
@@ -423,9 +441,6 @@
             let clickedCategory = $(this).data('category');
 			let clickedType = $(this).data('type');
            	
-           	
-         
-
             // handleFilterFormSubmit 함수 호출
             handleFilterFormSubmit(clickedCategory, selectedFilters, selectedPrice, selectedDelivery, clickedType);
         });
@@ -450,6 +465,7 @@
             // handleFilterFormSubmit 함수 호출
             handleFilterFormSubmit(category, selectedFilters, selectedPrice, selectedDelivery, type);
             // 필터링된 결과를 반영한 콘텐츠에 이벤트 핸들러 재설정
+            
             initializeEventHandlers();
             
         });
@@ -463,7 +479,7 @@
         function handleFilterFormSubmit(clickedCategory, selectedFilters, selectedPrice, selectedDelivery, clickedType) {
             // 가격이 undefined인 경우 빈 문자열로 처리
             let priceParam = selectedPrice !== undefined ? '&price=' + selectedPrice : '';
-			
+            
             $.ajax({
                 type: 'GET',
                 url: window.location.origin + '/ProductList',
@@ -477,11 +493,13 @@
                 },
                 success: function(data) {
                 	
-                	let productListHtml = $(data).find('#productList').html();
+                    console.log("AJAX 요청 성공");
+                    
+                    let productListHtml = $(data).find('#productList').html();
                     let productcntHtml = $(data).find('#productcnt').html();
                     let itemhtml = $(data).find('#item').html();
                     let categoryFiltersHtml = $(data).find('#categoryFilters').html();
-                    let delivery_type = $(data).find('delivery_Type').html();
+                    let delivery_type = $(data).find('#delivery_Type').html();
                     
                     if (!productListHtml || productListHtml.trim() === '') {
                         console.log('productListHtml null');
@@ -493,31 +511,31 @@
                             let newUrl = '/ProductList?page=' + currentPage
                                        + '&category=' + category
                                        + '&filters=' + filters
-                                       + '&price=' 
-                                       + '&delivery=' + delivery
-                                       + '&type=' + type;
+                                       +  '&price='
+                                       + '&delivery=' 
+                                       + '&type=' 
                             location.replace(newUrl);
                         });
                     }else{
                     
-                    // 제품 목록과 개수 업데이트
-                    $('#productList').html(productListHtml);
-                    $('#productcnt').html(productcntHtml);
-                    $('#item').html(itemhtml);
-                    $('#categoryFilters').html(categoryFiltersHtml);
-                    $('#delivery_Type').html(delivery_type);
-                    updateFilterState(selectedFilters, selectedPrice, selectedDelivery);
+                    	   // 제품 목록과 개수 업데이트
+                        $('#productList').html(productListHtml);
+                        $('#productcnt').html(productcntHtml);
+                        $('#item').html(itemhtml);
+                        $('#categoryFilters').html(categoryFiltersHtml);
+                        $('#delivery_Type').html(delivery_type);
+                        updateFilterState(selectedFilters, selectedPrice, selectedDelivery);
 
-                    // 브라우저 URL 업데이트하여 현재 상태 반영
-                    let newUrl = window.location.origin + '/ProductList?page='+page
-                                 + '&category=' + clickedCategory
-                                 + '&filters=' + encodeURIComponent(selectedFilters.join(','))
-                                 + priceParam
-                                 + '&delivery=' + encodeURIComponent(selectedDelivery.join(','))
-                    			 + '&type=' + clickedType;
-                    history.pushState({ page: 1, category: clickedCategory, filters: selectedFilters, price: selectedPrice, delivery: selectedDelivery, type: clickedType }, null, newUrl);
-					console.log(clickedType);
-                  
+                        // 브라우저 URL 업데이트하여 현재 상태 반영
+                        let newUrl = window.location.origin + '/ProductList?page='+currentPage
+                                     + '&category=' + clickedCategory
+                                     + '&filters=' + selectedFilters
+                                     + '&price=' 
+                                     + '&delivery=' + selectedDelivery
+                        			 + '&type=' + clickedType;
+                        history.pushState({ page: currentPage, category: clickedCategory, filters: selectedFilters, price: selectedPrice, delivery: selectedDelivery, type: clickedType }, null, newUrl);
+    					console.log(clickedType);
+    					
                     
                     // 필터링된 결과를 반영한 콘텐츠에 이벤트 핸들러 재설정
                     
@@ -585,11 +603,15 @@
             selectedDelivery.forEach(function(deliveryOption) {
                 $('input[name="delivery"][value="' + deliveryOption + '"]').prop('checked', true);
             });
+            
         }
 
        
      // 초기 이벤트 핸들러 설정 호출
         initializeEventHandlers();
+     
+     
+     
     });
 
     
