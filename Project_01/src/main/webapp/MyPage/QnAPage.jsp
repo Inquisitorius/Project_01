@@ -28,12 +28,11 @@
 
 .qna-answer {
     display: none;
-  	padding: 30px;
     background-color: #f0f0f0;
-    width:100%;
     font-size:12px;
     user-select:none;
     border:none;
+    padding:10px;
 }
 
 .qna_Item{
@@ -51,7 +50,6 @@
 	user-select:none;
 	
 }
-
 
 .modal {
   display: none;
@@ -266,9 +264,11 @@ int userAuth = 0;;
 							            <td>${'${qlist[(currentPage * postsPerPage)-11+i].que_title}'}</td>`;
 							            tableBody.appendChild(row);
 							        var answer = document.createElement("tr");
-							        var tdContent = `<td colspan="2" style="border:none;" class="table-secondary qna-answer"
-							        id="qdx${'${i}'}">
+							        var tdContent = `<td colspan="2" style="padding:0px; border:none; justify-content: center;"
+							        >
+							        <div class="qna-answer" id="qdx${'${i}'}">
 							        ${'${qlist[(currentPage * postsPerPage)-11+i].que_contents}'}
+							        </div>
 							        </td>
 							        `;
 							        answer.innerHTML = tdContent;	
@@ -285,7 +285,7 @@ int userAuth = 0;;
 							         } else {
 							            // Optionally: Close other open items if single open item behavior is needed
 							            $('.qna-answer').slideUp(); // Hide all other open contents
-
+							           
 							            // Show the clicked content
 							            $content.slideDown();
 							         }

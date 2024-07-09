@@ -484,7 +484,7 @@
 		            });
 		            
 		         	if(year == "<%= year %>" && month == "<%= month %>" && day == "<%= day %>" ){
-		           		birthWarning.textContent = "기존에 입혁한 생년월일과 일치합니다.";
+		           		birthWarning.textContent = "기존에 입력한 생년월일과 일치합니다.";
 		           	}
 		        }
 			</script>
@@ -531,7 +531,7 @@
 		
 		if(pass != "" || email != "" || phone != "" || gender != "<%= userGender %>" || birthdate != ""){
 			if(pwdWarning.textContent != ""){}
-			else if(pwdCheckWarning.textContent != ""){}
+			else if(pwdCheckWarning.textContent != "비밀번호가 일치합니다."){}
 			else if(emailWarning.textContent != ""){}
 			else if(phoneWarning.textContent != ""){}
 			else if(birthWarning.textContent != ""){}

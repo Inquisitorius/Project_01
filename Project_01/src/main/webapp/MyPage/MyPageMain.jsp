@@ -56,7 +56,6 @@ text-decoration: none;
 <% 
 	HttpSession session2 = request.getSession(); 
 	String userName= (String)session.getAttribute("name");
-	int userAuth = (int)session.getAttribute("auth_type"); 
 %>
 <jsp:include page="/Common/Header.jsp" />
 <main class="container" style="width:1050px;" >
