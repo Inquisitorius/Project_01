@@ -18,8 +18,14 @@ body
 	background-color: black;
 }
 
+
+
 html, body {   
     overflow-x: hidden; /* 수평 스크롤바 제거 */
+    -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+  display: none;
 }
 
 .video_MainTitle
