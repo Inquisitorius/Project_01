@@ -507,7 +507,7 @@ hr {
 		 <div class="col-4">
 		 <strong>01. 상품에 문제가 있는 경우</strong> 
 		 </div>
-		 <div class="col-6">
+		 <div class="col-7">
 		 받으신 상품에 표시 내용이 다른경우에 상품을 받은날 3개월 이내에, 사실을 알게 된 날부터 30일 이내에 교환 및 환불을 요청하실수 있습니다.
 		 </div>
 		 <hr style="margin-bottom:10px;margin-top:10px;">
@@ -517,8 +517,8 @@ hr {
 		 <div class="col-4">
 		 <strong>02. 단순 변심, 주문 착오의 경우</strong>
 		 </div>
-		 <div class="col-6">
-		 식품 베이커리 등은 상품의 특성상 재판매가 
+		 <div class="col-7">
+		 <span style="color:#108c0d";>식품 베이커리</span> 등은 상품의 특성상 재판매가 
 		 불가하여 단순 변심, 주문 착오, 주소 오입력 등 고객의 책임 사유로 인한 교환 및 환불가 어려운 점 양해 부탁드립니다.
 		 상품에 따라 조금씩 맛이 다를 수 있으며, 개인의 기호에 따라 같은 상품도 다르게 느낄 수 있습니다.<br>
 		 <span>유통 기한 30일 이상 식품  상품을 받은 날부터 7일이내에 환불 및 취소가 가능합니다. 아래 문의사항을 통해 판매자와 소통할수있습니다.
@@ -531,7 +531,7 @@ hr {
 		 <div class="col-4">
 		 <strong>03. 환불, 취소가 불가한 경우</strong>
 		 </div>
-		 <div class="col-6">
+		 <div class="col-7">
 		 다음에 해당하는 환불및 취소 신청은 처리가 어려울 수 있으니 양해 부탁드립니다.<br />
 		 ● 고객님의 책임 있는 사유로 상품이 훼손된경우<br />
 		 ● 고객님의 사용 또는 일부 소비로 상품의 가치가 감소한 경우<br />
@@ -545,7 +545,7 @@ hr {
 		 <span style="color:#108c0d";><strong>배송관련 안내</strong></span>
 		 </div>
 		 
-		 <div class="col-6">
+		 <div class="col-7">
 		  배송 과정 중 기상 악화 및 교통 상황에 따라 부득이하게 지연 배송이 발생될 수 있습니다.
 		 </div>
 		 </div>
@@ -565,9 +565,16 @@ hr {
     <hr>
     <section class="notice"style="min-width:1050px; height:1000px; display:flex; justify-content: space-around;">
   <div class="page-title fontCommon_nomal">
-  <h2 style="font-size: 28px;color: #333333;font-weight: 400;text-align: center;">상품 문의</h3>
+  <h2 style="text-align: center;">상품 문의</h2>
+    <div class="row">
+    <div class="col"style="color:gray;"> 
+    <img src="/resources/img/product/productsubimg/13964.png" style="width:50px; weight:auto;">
+    <br>
+	상품에 대한 문의를 남기는 공간입니다.<br> 
+	환불 및 취소 요청은 마이페이지 - 구매상품확인 페이지에서 취소신청을 해주시면 감사하겠습니다.
+	</div>
+	</div>
         <div class="container"style="min-width:1050px; height:auto; display:flex; justify-content: flex-end;">
-
 	<div class="row">
 	<div class="col" style="display:flex;justify-content:flex-end;padding-bottom:10px;">
 	<button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal" >문의하기</button>
@@ -645,7 +652,7 @@ hr {
                         <td colspan="4"style="padding : 0px;border:none;">
                           <div class="hidden-content">
                             <div class="row" style="display:flex;font-size:15px;"> 
-                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;문의내용 :
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;❔
                              &nbsp;&nbsp;
                              	${ InqueryDTO.inquery_content }
                               	
@@ -653,8 +660,8 @@ hr {
                    		 <div class="hidden-content2" data-target2="#content2${InqueryDTO.seller_content}"
                   		  style="display:flex;justify-content: flex-start;">
                     	<br />
-                       &nbsp;&nbsp;&nbsp;답변내용 :
-                       &nbsp;&nbsp;  
+                       &nbsp;&nbsp;✔️
+                       &nbsp;  
                        ${InqueryDTO.seller_content}
                     </div>
                 </c:if>
