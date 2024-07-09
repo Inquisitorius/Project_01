@@ -196,7 +196,7 @@ function get_DateFormat_MD(minus)
 
 function get_SellerCountData()
 {
-	var id = 2;
+	var id = $('#loginSave').val();
 	var data = 
 	{
 		seller_id : id
@@ -224,7 +224,7 @@ function get_SellerCountData()
 function get_SellerListData()
 {
 	//seller id 필요
-	var id = 2;
+	var id = $('#loginSave').val();
 	
 	var data = 
 	{
