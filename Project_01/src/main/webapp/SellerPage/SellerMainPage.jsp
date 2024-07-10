@@ -73,7 +73,7 @@
 	</div>
 	<div class= "row d-flex flex-nowrap" style = "justify-content: space-between;">
 		<div class = "col-12" style = "padding-bottom : 20px;">
-			<label class = "sellerMainTitle_sub">최근 환불 요청</label>
+			<label class = "sellerMainTitle_sub">대기중인 환불요청</label>
 		</div>
 	</div>
 	<div class= "row d-flex flex-nowrap" style = "justify-content: space-between; padding-bottom: 40px; min-height: 400px;">
