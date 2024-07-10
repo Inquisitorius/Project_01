@@ -244,10 +244,11 @@ function tabulatorInit()
 	    [
 	    	{title:"질의번호", field:"inquery_id", visible: false},
 	    	{title:"판매자번호", field:"seller_id", visible: false},
-		    {title:"제품번호", field:"product_id", sorter:"number"},
+		    {title:"제품번호", field:"product_id"},
 		    {title:"상품명", field:"product_name"},		   		
 		    {title:"질의제목", field:"inquery_title", hozAlign:"center"},
-		    {title:"신청일자", field:"inquery_date_format", hozAlign:"center", 
+		    {title:"신청일자", field:"inquery_date_format", hozAlign:"center",
+		    	sorter:"date", sorterParams:{format:"yyyy-MM-dd HH:mm:ss"},
 		    	formatter: "datetime", 
 		    	formatterParams: {
 		    	outputFormat: "yyyy-MM-dd HH:mm:ss",

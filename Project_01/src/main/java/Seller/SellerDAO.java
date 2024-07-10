@@ -246,7 +246,7 @@ public class SellerDAO extends JDBConnect
 		sql += " (SELECT ui.NAME AS user_name  ,i.*  ";
 		sql += " FROM INQUERY i JOIN USER_INFO ui ON UI.IDX = i.user_id) a ";
 		sql += " JOIN PRODUCT p ON p.PRODUCT_ID = a.PRODUCT_ID ";
-		sql += " WHERE seller = " + seller_id +" AND a.seller_content IS NULL";
+		sql += " WHERE seller = " + seller_id +" AND a.seller_content IS NULL ORDER BY INQUERY_DATE";
 		
 		List<InqueryDTO> list = new ArrayList<InqueryDTO>();
 		

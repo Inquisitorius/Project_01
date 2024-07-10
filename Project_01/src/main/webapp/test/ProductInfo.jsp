@@ -400,7 +400,7 @@ hr {
 			<hr style="height:1px;border:none;background-color:gray;">
 			<div class= "row">
 				<div class = "col-md-3 fontgray">
-					상품선택
+					상품수량
 				</div>
 				<div class = "col-md-9 fontgray">
 					<div class = "col-md-9 fontgray">
@@ -413,7 +413,7 @@ hr {
 			<hr style="height:1px;border:none;background-color:gray;">
 			<div class= "row">
 				<div class = "col-md-12 fontgray right" style="display:inline-flex;align-items: center;">
-				총 상품 금액:<label id="totalPrice" style="font-weight:bold;font-size:25px;">
+				총 상품 금액 : &nbsp;<label id="totalPrice" style="font-weight:bold;font-size:25px;">
 				<fmt:formatNumber type="Number" maxFractionDigits="3" value="${ ProductDTO.price_discount }" />
 				</label>원</div>
 					</div>
