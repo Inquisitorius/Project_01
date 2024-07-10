@@ -60,14 +60,14 @@ body {
 			 <div class="swiper mySwiper" style = "height: 370px;">
 			    <div class="swiper-wrapper">
 			      <div class="swiper-slide">
-			      	<img src="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/60026f84-40b2-4eb7-84d5-b90b464feb41.jpg">
+			      	<img id = "bearBanner" src="/resources/img/bearbanner.jpg">
 			      </div>
 			      <div class="swiper-slide">
 			      	<!--  <img src="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/0d1e09d2-5301-4e91-abcd-5549384d625d.jpg">-->
-			      	<img src = "/resources/img/melonHeadLine.jpg"/>
+			      	<img  id = "melonBanner" src = "/resources/img/melonHeadLine.jpg"/>
 			      </div>
 			      <div class="swiper-slide">
-			      	<img src="https://product-image.kurly.com/cdn-cgi/image/width=1900,height=370,quality=85/banner/main/pc/img/09193c01-e241-4666-9d41-ec55deeff5e7.jpg">
+			      	<img id = "saleBanner" src="/resources/img/salebanner.jpg">
 				</div>			
 				</div>
 				<div class="swiper-button-next"></div>
@@ -168,8 +168,8 @@ body {
 		<div class = "container" style = "max-width: 1050px; min-width: 1050px; padding-left: 0px; padding-right: 0px; padding-top: 40px; margin-bottom: 40px;">
 			<div class= "row d-flex flex-nowrap" style = "justify-content: space-between;">
 				<div class = "col">
-					<a href = "#">
-						<img src = "https://product-image.kurly.com/cdn-cgi/image/width=1050,height=140,quality=85/banner/random-band/pc/img/7cbd0f6e-31bb-4d96-95ea-03931a1bc751.jpg">
+					<a href = "/ProductList?page=1&category=all&filters=&price=&delivery=morning&type=null">
+						<img src = "/resources/img/midbanner.jpg">
 					</a>
 				</div>
 			</div>
@@ -268,8 +268,9 @@ body {
 				$('#form_for_productInfo').submit();
 			});
 			
-			//사진변경
-			//$('#maincard_00').find('.maincard_img').attr('src','/resources/img/product/WildTurkeyMasters.jpg');
+			
+			//banner init;
+			Set_Bannerinit();			
 			
 			//time Limit
 			Get_timelimitSaleData(121);
@@ -292,6 +293,27 @@ body {
 			
 						
 		});
+		
+		function Set_Bannerinit()
+		{
+			$('#melonBanner').css('cursor','pointer');
+			$('#melonBanner').click(function()
+			{
+				location.href = "/ProductList?page=1&category=food&filters=fruit&price=&delivery=&type=";
+			});	
+			
+			$('#bearBanner').css('cursor','pointer');
+			$('#bearBanner').click(function()
+			{
+				location.href = "/ProductList?page=1&category=alcohol&filters=beer&price=&delivery=&type=";
+			});				
+			
+			$('#saleBanner').css('cursor','pointer');
+			$('#saleBanner').click(function()
+			{
+				location.href = "/ProductList?page=1&category=all&filters=&price=&delivery=&type=saleprice";
+			});	
+		}
 		
 		function Get_SaleProductList(id, element_id)
 		{

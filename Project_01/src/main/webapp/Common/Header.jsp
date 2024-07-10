@@ -121,7 +121,7 @@
 			            		<ul class="dropdown-menu" aria-labelledby="submenuDropdown" style = "padding-top: 2px; padding-bottom: 2px;">
 			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="/ProductList?page=1&category=bakery&filters=bread_morning&delivery=&type=" >식빵·모닝빵</a></li>
 			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
-			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="ProductList?page=1&category=bakery&filters=jam_spread&delivery=&type=" >잼·스프레드</a></li>
+			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="/ProductList?page=1&category=bakery&filters=jam_spread&delivery=&type=" >잼·스프레드</a></li>
 			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
 			                		<li><a class="dropdown-item category_ItemText_sub dropdown-item_sub" href="/ProductList?page=1&category=bakery&filters=dessert&delivery=&type=" >디저트</a></li>
 			                		<li><hr class="dropdown-divider" style = "margin-top: 2px; margin-bottom: 2px;"></li>
