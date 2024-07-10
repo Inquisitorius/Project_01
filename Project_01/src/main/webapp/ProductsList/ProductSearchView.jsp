@@ -427,7 +427,7 @@ boolean isEmptyList = (list1 == null || list1.isEmpty());
 		
         function handleFilterFormSubmit( selectedPrice, selectedDelivery, clickedType) {
             // 가격이 undefined인 경우 빈 문자열로 처리
-            let priceParam = selectedPrice !== undefined ? '&price=' + selectedPrice : '&price=';
+            let priceParam = selectedPrice ? '&price=' + selectedPrice : '';
 			
             $.ajax({
                 type: 'GET',
