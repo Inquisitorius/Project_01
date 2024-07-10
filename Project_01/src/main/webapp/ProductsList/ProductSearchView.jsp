@@ -259,11 +259,7 @@ boolean isEmptyList = (list1 == null || list1.isEmpty());
         let selectedPrice = getParameterByName('price');
         let selectedDelivery = getParameterByName('delivery') ? getParameterByName('delivery').split(',') : [];
         let search = '<%= search %>';
-        let type = sessionStorage.getItem('type');
-        if (!type) {
-            type = '<%= type %>'; // 초기 설정 값 사용
-            sessionStorage.setItem('type', type); // 세션 스토리지에 저장
-        }
+        let type = '<%= type %>';
         
         updateFilterState(selectedPrice, selectedDelivery);
         

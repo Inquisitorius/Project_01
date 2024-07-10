@@ -299,13 +299,7 @@
         let selectedFilters = getParameterByName('filters') ? getParameterByName('filters').split(',') : [];
         let selectedPrice = getParameterByName('price');
         let selectedDelivery = getParameterByName('delivery') ? getParameterByName('delivery').split(',') : [];
-        // 세션 스토리지에서 type 값 가져오기
-        let type = sessionStorage.getItem('type');
-        if (!type) {
-            type = '<%= type %>'; // 초기 설정 값 사용
-            sessionStorage.setItem('type', type); // 세션 스토리지에 저장
-        }
-
+        let type = '<%= type %>';
         updateFilterState(selectedFilters, selectedPrice, selectedDelivery);
         
         
