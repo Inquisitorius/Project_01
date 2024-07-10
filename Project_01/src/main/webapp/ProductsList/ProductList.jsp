@@ -132,21 +132,21 @@
 								</div>
 								<div class="filter-content" id="price-filter">
 									<div>
-										<input type="radio" id="price1" name="price" value="8500">
+										<input type="checkbox" id="price1" name="price" value="8500">
 										<label for="price1">8,500원 미만</label>
 									</div>
 									<div>
-										<input type="radio" id="price2" name="price"
+										<input type="checkbox" id="price2" name="price"
 											value="8500-16900"> <label for="price2">8,500원
 											~ 16,900원</label>
 									</div>
 									<div>
-										<input type="radio" id="price3" name="price"
+										<input type="checkbox" id="price3" name="price"
 											value="16900-35000"> <label for="price3">16,900원
 											~ 35,000원</label>
 									</div>
 									<div>
-										<input type="radio" id="price4" name="price" value="35000">
+										<input type="checkbox" id="price4" name="price" value="35000">
 										<label for="price4">35,000원 이상</label>
 									</div>
 								</div>
@@ -203,7 +203,8 @@
 							for (ProductDTO dto : list) {
 						%>
 						<div class="row">
-							<a href="#" style="text-decoration-line: none;"> <img
+						
+							<a href="/test/ProductInfo.do?product_id=<%=dto.getProduct_id() %>" style="text-decoration-line: none;"> <img
 								src="<%=dto.getProduct_img() %>"
 								style="padding: 0px; width: 249px; height: 320px; border-radius: 2%; overflow: hidden;">
 								<button class="btn btn-navy rounded-1 fontCommon_Option"
@@ -307,7 +308,7 @@
             event.preventDefault(); // 기본 클릭 동작 방지
             
             let clickedType = $(this).data('type');
-
+            
             // 필터 값 업데이트
             selectedPrice = getParameterByName('price');
             
@@ -318,7 +319,7 @@
             
             handleFilterFormSubmit(category, selectedFilters, selectedPrice, selectedDelivery, clickedType);
             updateProductSortNavigationStyle(clickedType);
-            
+          
         });
 
         
@@ -348,39 +349,22 @@
                     }
                 });
             });
+			
+            // 체크박스 클릭 이벤트 핸들러
+            $("input[type='checkbox'][name='price']").on("click", function() {
+                // 현재 클릭된 체크박스의 값
+                let currentValue = $(this).val();
 
-            // 라디오 버튼 클릭 이벤트 핸들러
-            let beforeChecked = null;
-            $("input[type='radio'][name='price']").on("click", function() {
-                if (this === beforeChecked) {
-                    $(this).prop("checked", false);
-                    
-                    updateUrlParameter('price', '');
-                    document.location.reload();
-                } else {
-                    beforeChecked = this;
-                    updateUrlParameter('price', $(this).val());
-                }
+                // 다른 체크박스들의 체크 상태를 관리
+                $("input[type='checkbox'][name='price']").each(function() {
+                    if ($(this).val() !== currentValue) {
+                        $(this).prop("checked", false); // 다른 체크박스들의 체크 해제
+                    }
+                });
             });
+          
         }
        	
-     // URL에 특정 파라미터 추가 또는 업데이트 함수
-        function updateUrlParameter(parameter, value) {
-            var url = new URL(window.location.href);
-            // 값이 존재하는 경우 파라미터를 추가하거나 업데이트
-            if (value) {
-                url.searchParams.set(parameter, value);
-            } else {
-                // 값이 없는 경우 파라미터를 삭제
-                url.searchParams.delete(parameter);  
-            }
-            // URL 업데이트
-            history.pushState(null, '', url);
-           
-        }
-
- 
-       
 
         // 네비게이션 링크 스타일링 함수
         function updateNavigationStyle(currentCategory) {
@@ -448,8 +432,8 @@
         // 필터 폼 제출 이벤트 핸들러
         $('#filterForm').change(function(event) {
             event.preventDefault();
-			page = 1;
-			
+           let clickedType = $(this).data('type'); 
+			console.log("필터폼 : " + type);
             // 현재 선택된 필터, 가격, 배송 옵션 가져오기
             let selectedFilters = [];
             $('input[name="filters"]:checked').each(function() {
@@ -463,7 +447,7 @@
             
             
             // handleFilterFormSubmit 함수 호출
-            handleFilterFormSubmit(category, selectedFilters, selectedPrice, selectedDelivery, type);
+            handleFilterFormSubmit(category, selectedFilters, selectedPrice, selectedDelivery, clickedType);
             // 필터링된 결과를 반영한 콘텐츠에 이벤트 핸들러 재설정
             
             initializeEventHandlers();
@@ -478,8 +462,8 @@
 		
         function handleFilterFormSubmit(clickedCategory, selectedFilters, selectedPrice, selectedDelivery, clickedType) {
             // 가격이 undefined인 경우 빈 문자열로 처리
-            let priceParam = selectedPrice !== undefined ? '&price=' + selectedPrice : '';
-            
+             let priceParam = selectedPrice !== undefined ? '&price=' + selectedPrice : '&price=';
+             
             $.ajax({
                 type: 'GET',
                 url: window.location.origin + '/ProductList',
@@ -530,10 +514,10 @@
                         let newUrl = window.location.origin + '/ProductList?page='+currentPage
                                      + '&category=' + clickedCategory
                                      + '&filters=' + selectedFilters
-                                     + '&price=' 
+                                     +   priceParam 
                                      + '&delivery=' + selectedDelivery
                         			 + '&type=' + clickedType;
-                        history.pushState({ page: currentPage, category: clickedCategory, filters: selectedFilters, price: selectedPrice, delivery: selectedDelivery, type: clickedType }, null, newUrl);
+                        history.pushState({ page: currentPage, category: clickedCategory, filters: selectedFilters, price: selectedPrice, delivery: selectedDelivery, type: clickedType}, null, newUrl);
     					console.log(clickedType);
     					
                     

@@ -92,21 +92,21 @@ boolean isEmptyList = (list1 == null || list1.isEmpty());
 								</div>
 								<div class="filter-content" id="price-filter">
 									<div>
-										<input type="radio" id="price1" name="price" value="8500">
+										<input type="checkbox" id="price1" name="price" value="8500">
 										<label for="price1">8,500원 미만</label>
 									</div>
 									<div>
-										<input type="radio" id="price2" name="price"
+										<input type="checkbox" id="price2" name="price"
 											value="8500-16900"> <label for="price2">8,500원
 											~ 16,900원</label>
 									</div>
 									<div>
-										<input type="radio" id="price3" name="price"
+										<input type="checkbox" id="price3" name="price"
 											value="16900-35000"> <label for="price3">16,900원
 											~ 35,000원</label>
 									</div>
 									<div>
-										<input type="radio" id="price4" name="price" value="35000">
+										<input type="checkbox" id="price4" name="price" value="35000">
 										<label for="price4">35,000원 이상</label>
 									</div>
 								</div>
@@ -149,10 +149,10 @@ boolean isEmptyList = (list1 == null || list1.isEmpty());
 							총 <%=request.getAttribute("cnt")%>건
 						</div>
 						<ul class="productsort">
-							<li class="sort-li"><a class="sort-link" href="<%= request.getContextPath() %>/search?search=<%=search %>&page=<%= 1 %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=new" data-type="new" class="sort-a">신상품순</a></li>
-							<li class="sort-li"><a class="sort-link" href="<%= request.getContextPath() %>/search?search=<%=search %>&page=<%= 1 %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=saleprice" data-type="saleprice" class="sort-a">혜택순</a></li>
-							<li class="sort-li"><a class="sort-link" href="<%= request.getContextPath() %>/search?search=<%=search %>&page=<%= 1 %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=lowprice" data-type="lowprice" class="sort-a">낮은 가격순</a></li>
-							<li class="sort-li"><a class="sort-link" href="<%= request.getContextPath() %>/search?search=<%=search %>&page=<%= 1 %>&price=<%=price %>&delivery=<%=deliveryStr %>&type=highprice" data-type="highprice" class="sort-a">높은 가격순</a></li>
+							<li class="sort-li"><a class="sort-link" href="#" data-type="new" class="sort-a">신상품순</a></li>
+							<li class="sort-li"><a class="sort-link" href="#" data-type="saleprice" class="sort-a">혜택순</a></li>
+							<li class="sort-li"><a class="sort-link" href="#" data-type="lowprice" class="sort-a">낮은 가격순</a></li>
+							<li class="sort-li"><a class="sort-link" href="#" data-type="highprice" class="sort-a">높은 가격순</a></li>
 						</ul>
 					</div>
 					<div class="container list" id="productList" style="text-decoration-line: none;">
@@ -263,7 +263,24 @@ boolean isEmptyList = (list1 == null || list1.isEmpty());
         
         updateFilterState(selectedPrice, selectedDelivery);
         
-        
+     // 링크 클릭 시
+        $('.sort-link').on('click', function(event) {
+            event.preventDefault(); // 기본 클릭 동작 방지
+            
+            let clickedType = $(this).data('type');
+
+            // 필터 값 업데이트
+            selectedPrice = getParameterByName('price');
+            
+            
+            selectedDelivery = getParameterByName('delivery') ? getParameterByName('delivery').split(',') : [];
+			currentPage = 1;
+         
+            
+            handleFilterFormSubmit(selectedPrice, selectedDelivery, clickedType);
+            updateProductSortNavigationStyle(clickedType);
+            
+        });
         
         
         function getParameterByName(name, url = window.location.href) {
@@ -293,18 +310,17 @@ boolean isEmptyList = (list1 == null || list1.isEmpty());
                 });
             });
 
-            // 라디오 버튼 클릭 이벤트 핸들러
-            let beforeChecked = null;
-            $("input[type='radio'][name='price']").on("click", function() {
-                if (this === beforeChecked) {
-                    $(this).prop("checked", false);
-                    
-                    updateUrlParameter('price', '');
-                    document.location.reload();
-                } else {
-                    beforeChecked = this;
-                    updateUrlParameter('price', $(this).val());
-                }
+            // 체크박스 클릭 이벤트 핸들러
+            $("input[type='checkbox'][name='price']").on("click", function() {
+                // 현재 클릭된 체크박스의 값
+                let currentValue = $(this).val();
+
+                // 다른 체크박스들의 체크 상태를 관리
+                $("input[type='checkbox'][name='price']").each(function() {
+                    if ($(this).val() !== currentValue) {
+                        $(this).prop("checked", false); // 다른 체크박스들의 체크 해제
+                    }
+                });
             });
         }
        	
@@ -401,7 +417,7 @@ boolean isEmptyList = (list1 == null || list1.isEmpty());
 		
         function handleFilterFormSubmit( selectedPrice, selectedDelivery, clickedType) {
             // 가격이 undefined인 경우 빈 문자열로 처리
-            let priceParam = selectedPrice !== undefined ? '&price=' + selectedPrice : '';
+            let priceParam = selectedPrice !== undefined ? '&price=' + selectedPrice : '&price=';
 			
             $.ajax({
                 type: 'GET',
@@ -431,7 +447,7 @@ boolean isEmptyList = (list1 == null || list1.isEmpty());
                         }).then((value) => {
                             let newUrl = '/search?search=' + search
                             		   + '&page=' + currentPage
-                                       + '&price=' 
+                                       + '&price='
                                        + '&delivery=' + delivery
                                        + '&type=' + type;
                             location.replace(newUrl);
@@ -446,9 +462,9 @@ boolean isEmptyList = (list1 == null || list1.isEmpty());
 
                     // 브라우저 URL 업데이트하여 현재 상태 반영
                     let newUrl = window.location.origin + '/search?search='+search
-                    			 + '&page='+page
+                    			 + '&page='+1
                                  + priceParam
-                                 + '&delivery=' + encodeURIComponent(selectedDelivery.join(','))
+                                 + '&delivery=' + selectedDelivery
                     			 + '&type=' + clickedType;
                     history.pushState({search:search, page: 1,  price: selectedPrice, delivery: selectedDelivery, type: clickedType }, null, newUrl);
 					console.log(clickedType);
