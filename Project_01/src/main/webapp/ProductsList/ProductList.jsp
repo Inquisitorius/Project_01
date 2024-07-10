@@ -302,11 +302,10 @@
         let type = '<%= type %>';
         updateFilterState(selectedFilters, selectedPrice, selectedDelivery);
         
-        
-        $('.link').on('click', function () {
-        	sessionStorage.removeItem('type');
-		});
-        
+        window.onbeforeunload = function() {
+            sessionStorage.removeItem('type'); 
+        };
+
      // 링크 클릭 시
         $('.sort-link').on('click', function(event) {
             event.preventDefault(); // 기본 클릭 동작 방지
@@ -436,8 +435,7 @@
         // 필터 폼 제출 이벤트 핸들러
         $('#filterForm').change(function(event) {
             event.preventDefault();
-            let clickedType = sessionStorage.getItem('type');
-            console.log("필터폼 : " + clickedType);
+           
 
 
             // 현재 선택된 필터, 가격, 배송 옵션 가져오기
@@ -451,11 +449,11 @@
                 return $(this).val();
             }).get();
             
-            
+            let clickedType = sessionStorage.getItem('type');
+            console.log("필터폼 : " + clickedType);
             // handleFilterFormSubmit 함수 호출
             handleFilterFormSubmit(category, selectedFilters, selectedPrice, selectedDelivery, clickedType);
             // 필터링된 결과를 반영한 콘텐츠에 이벤트 핸들러 재설정
-            
             initializeEventHandlers();
             
         });
@@ -517,13 +515,14 @@
                         updateFilterState(selectedFilters, selectedPrice, selectedDelivery);
 
                         // 브라우저 URL 업데이트하여 현재 상태 반영
-                        let newUrl = window.location.origin + '/ProductList?page='+currentPage
+                        let newUrl = window.location.origin + '/ProductList?page='+1
                                      + '&category=' + clickedCategory
                                      + '&filters=' + selectedFilters
                                      +   priceParam 
                                      + '&delivery=' + selectedDelivery
                         			 + '&type=' + clickedType;
-                        history.pushState({ page: currentPage, category: clickedCategory, filters: selectedFilters, price: selectedPrice, delivery: selectedDelivery, type: clickedType}, null, newUrl);
+                        history.pushState({ page: 1, category: clickedCategory, filters: selectedFilters, price: selectedPrice, delivery: selectedDelivery, type: clickedType}, null, newUrl);
+                        
     					console.log(clickedType);
     					
                     

@@ -451,6 +451,7 @@ boolean isEmptyList = (list1 == null || list1.isEmpty());
                             icon: "error",
                             button: "확인",
                         }).then((value) => {
+                        	sessionStorage.removeItem('type');
                             let newUrl = '/search?search=' + search
                             		   + '&page=' + currentPage
                                        + '&price='
