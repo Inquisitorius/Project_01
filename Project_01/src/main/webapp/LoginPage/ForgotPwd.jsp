@@ -73,10 +73,10 @@
 	<div class="row" style="justify-content:center; height:40px; margin-top:20px; margin-bottom:20px">
 		<div class="col-md-3" style="display:flex; justify-content: space-around; padding:0px;">
 			<div class="col-md-6" style="padding-left:10px;">			
-			<button type="button" class="choose_Style" onclick="chooseMethod(this.id)" id="phoneCheck" style="color:green; width:100%; height:100%;"  disabled>휴대폰 인증</button>
+			<button type="button" class="choose_Style" onclick="chooseMethod(this.id)" id="phoneCheck" style="color:green; width:100%; height:100%;"  disabled>휴대폰</button>
 			</div>
 			<div class="col-md-6" style="padding-right:10px;">
-			<button type="button" class="choose_Style" onclick="chooseMethod(this.id)" id="emailCheck" style="width:100%; height:100%;">이메일 인증</button>
+			<button type="button" class="choose_Style" onclick="chooseMethod(this.id)" id="emailCheck" style="width:100%; height:100%;">이메일</button>
 			</div>
 		</div>
 		</div>	
@@ -89,6 +89,11 @@
 			</div>
 		</div>
 		
+		<div class="row" style="justify-content:center;">
+		<div class="col-md-3" style="display:flex; margin-bottom:15px;">
+				<span style="font-size:12px; font-weight:600; color:grey; user-select:none;">계정에 등록 된 정보로 찾습니다.</span>
+		</div>
+		</div>	
 				
 	<form name ="IdSearch">
 		<div class="row" style="justify-content: center;">
