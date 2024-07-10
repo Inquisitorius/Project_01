@@ -86,7 +86,7 @@
 					String CateName = dto.getCategory_Name();
 					String englishCateName = cateMap.getOrDefault(CateName, CateName);
 			%>
-				<li class="item"><a class="link" href="<%=request.getContextPath()%>/ProductList?page=1&category=<%= englishCateName %>&filters=&price=&delivery=&type" data-category="<%= englishCateName %>"><%= dto.getCategory_Name() %></a></li>
+				<li class="item"><a class="link" href="<%=request.getContextPath()%>/ProductList?page=1&category=<%= englishCateName %>&filters=&price=&delivery=&type=" data-category="<%= englishCateName %>"><%= dto.getCategory_Name() %></a></li>
 				<%}
 					} %>
 			</ul>
@@ -296,12 +296,22 @@
         let filters = '<%= filtersStr %>';
         let price = '<%= price %>';
         let delivery = '<%= deliveryStr %>';
-        let type = '<%= type %>';
         let selectedFilters = getParameterByName('filters') ? getParameterByName('filters').split(',') : [];
         let selectedPrice = getParameterByName('price');
         let selectedDelivery = getParameterByName('delivery') ? getParameterByName('delivery').split(',') : [];
-        
+        // 세션 스토리지에서 type 값 가져오기
+        let type = sessionStorage.getItem('type');
+        if (!type) {
+            type = '<%= type %>'; // 초기 설정 값 사용
+            sessionStorage.setItem('type', type); // 세션 스토리지에 저장
+        }
+
         updateFilterState(selectedFilters, selectedPrice, selectedDelivery);
+        
+        
+        $('.link').on('click', function () {
+        	sessionStorage.removeItem('type');
+		});
         
      // 링크 클릭 시
         $('.sort-link').on('click', function(event) {
@@ -316,7 +326,7 @@
             selectedDelivery = getParameterByName('delivery') ? getParameterByName('delivery').split(',') : [];
 			currentPage = 1;
          
-            
+			sessionStorage.setItem('type', clickedType);
             handleFilterFormSubmit(category, selectedFilters, selectedPrice, selectedDelivery, clickedType);
             updateProductSortNavigationStyle(clickedType);
           
@@ -387,7 +397,7 @@
         }
         
         function updateProductSortNavigationStyle(currentType){
-        	 console.log("현재 타입:", currentType);
+        	 
      	   $('.sort-link').each(function () {
 				let clickedType = $(this).data('type');
 				
@@ -404,7 +414,7 @@
 					    'font-weight' : ''
 						});
 				}
-				console.log("현재 타입:", clickedType);
+				
 			});
       }
         
@@ -432,8 +442,10 @@
         // 필터 폼 제출 이벤트 핸들러
         $('#filterForm').change(function(event) {
             event.preventDefault();
-           let clickedType = $(this).data('type'); 
-			console.log("필터폼 : " + type);
+            let clickedType = sessionStorage.getItem('type');
+            console.log("필터폼 : " + clickedType);
+
+
             // 현재 선택된 필터, 가격, 배송 옵션 가져오기
             let selectedFilters = [];
             $('input[name="filters"]:checked').each(function() {

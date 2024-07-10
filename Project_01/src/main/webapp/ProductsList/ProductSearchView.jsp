@@ -256,12 +256,21 @@ boolean isEmptyList = (list1 == null || list1.isEmpty());
         let currentPage = '<%= currentPage %>';
         let price = '<%= price %>';
         let delivery = '<%= deliveryStr %>';
-        let type = '<%= type %>';
         let selectedPrice = getParameterByName('price');
         let selectedDelivery = getParameterByName('delivery') ? getParameterByName('delivery').split(',') : [];
         let search = '<%= search %>';
+        let type = sessionStorage.getItem('type');
+        if (!type) {
+            type = '<%= type %>'; // 초기 설정 값 사용
+            sessionStorage.setItem('type', type); // 세션 스토리지에 저장
+        }
         
         updateFilterState(selectedPrice, selectedDelivery);
+        
+        $('.link').on('click', function () {
+        	sessionStorage.removeItem('type');
+		});
+        
         
      // 링크 클릭 시
         $('.sort-link').on('click', function(event) {
@@ -276,7 +285,7 @@ boolean isEmptyList = (list1 == null || list1.isEmpty());
             selectedDelivery = getParameterByName('delivery') ? getParameterByName('delivery').split(',') : [];
 			currentPage = 1;
          
-            
+			sessionStorage.setItem('type', clickedType);
             handleFilterFormSubmit(selectedPrice, selectedDelivery, clickedType);
             updateProductSortNavigationStyle(clickedType);
             
@@ -388,8 +397,9 @@ boolean isEmptyList = (list1 == null || list1.isEmpty());
         // 필터 폼 제출 이벤트 핸들러
         $('#filterForm').change(function(event) {
             event.preventDefault();
-			page = 1;
 			
+            let clickedType = sessionStorage.getItem('type');
+            console.log("필터폼 : " + clickedType);
             // 현재 선택된 필터, 가격, 배송 옵션 가져오기
             let selectedFilters = [];
             $('input[name="filters"]:checked').each(function() {
@@ -403,7 +413,7 @@ boolean isEmptyList = (list1 == null || list1.isEmpty());
             
             
             // handleFilterFormSubmit 함수 호출
-            handleFilterFormSubmit(selectedPrice, selectedDelivery, type);
+            handleFilterFormSubmit(selectedPrice, selectedDelivery, clickedType);
             // 필터링된 결과를 반영한 콘텐츠에 이벤트 핸들러 재설정
             initializeEventHandlers();
             

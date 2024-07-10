@@ -165,12 +165,14 @@
 		$('#marketBtn_inHeader').click(function()
 		{
 			location.href = "/ProductList";
+			sessionStorage.removeItem('type');
 		});
 		
 		
 		$('#contactBtn').click(function()
 		{
 			location.href = "/MainPage/Contactus.jsp";
+			sessionStorage.removeItem('type');
 		});
 		
 		$('.dropdown-item_main').mouseover(function()
@@ -210,6 +212,11 @@
 		var loginCheck = $('#loginSave').val();
 		var authCheck = $('#authSave').val();
 		
+		$('.category_ItemText_sub').click(function()
+		{
+			sessionStorage.removeItem('type');
+		});
+		
 		if(loginCheck == 'null')
 		{
 			$('#logoutBtn_Header').css('display','none');	
@@ -248,6 +255,7 @@
 		$('#adminBtn_Header').click(function()
 		{
 			location.href = "/Admin/AdminMainPage.jsp";
+			sessionStorage.removeItem('type');
 		});	
 			
 		
@@ -257,11 +265,13 @@
 		$('#useraddBtn_Header').click(function()
 		{
 			location.href = "/MainPage/JoinPage.jsp";
+			sessionStorage.removeItem('type');
 		});	
 		
 		$('#userpageBtn_Header').click(function()
 		{
 			location.href = "/MyPage/MyPageMain.jsp";
+			sessionStorage.removeItem('type');
 		});	
 		
 		
@@ -270,6 +280,7 @@
 		$('#loginBtn_Header').click(function()
 		{
 			location.href = "/MainPage/LoginPage.jsp";
+			sessionStorage.removeItem('type');
 		});		
 		
 		//logoutTry
@@ -283,6 +294,7 @@
 				  button: "확인",
 				}).then((value) => {
 				location.href = "/login/logoutTry";
+				sessionStorage.removeItem('type');
 			});			
 		});
 		
@@ -290,15 +302,16 @@
 		$("#sellerIconImg").click(function()
 		{
 			location.href = "/SellerPage/SellerMainPage.jsp";
+			sessionStorage.removeItem('type');
 		});
 		
 		   $('#searchForm').submit(function(event) {
 		        // 폼의 기본 동작 방지 (페이지 리로딩 방지)
 		        event.preventDefault();
-
+			
 		        // 검색어 가져오기
 		        var searchword = $('#searchInput').val().trim();
-
+		        sessionStorage.removeItem('type');
 		        // 검색어가 비어 있는지 확인
 		        if (searchword.length === 0) {
 		            alert('검색어를 입력해주세요.');
