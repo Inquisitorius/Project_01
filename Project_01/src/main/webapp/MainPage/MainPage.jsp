@@ -78,7 +78,7 @@ body {
 		<div class = "container" style = "max-width: 1050px; min-width: 1050px; padding-left: 0px; padding-right: 0px; padding-top: 40px;">
 			<div class= "row d-flex flex-nowrap" style = "justify-content: space-between;">
 				<div class = "col" href = "/MainPage/MainPage.jsp" style="display: inline-flex; justify-content: center;">
-					<a href = "/MainPage/MainPage.jsp" style ="text-decoration-line: none;">
+					<a href = "/ProductList?page=1&category=alcohol&filters=whisky&delivery=&type=" style ="text-decoration-line: none;">
 						<span class = "mainpage_SubTitle" style = "vertical-align : bottom;">🛒지금 바로 위스키 특가</span>
 						<span><img src = "/resources/img/dash.svg" style = "width: 32px; height: 32px;"/></span>
 					</a>
@@ -123,7 +123,7 @@ body {
 		<div class = "container" style = "max-width: 1050px; min-width: 1050px; padding-left: 0px; padding-right: 0px; padding-top: 40px;">
 			<div class= "row d-flex flex-nowrap" style = "justify-content: space-between;">
 				<div class = "col" href = "/MainPage/MainPage.jsp" style="display: inline-flex; justify-content: center;">
-					<a href = "/MainPage/MainPage.jsp" style ="text-decoration-line: none;">
+					<a href = "/ProductList?page=1&category=food&filters=fruit&delivery=&type=" style ="text-decoration-line: none;">
 						<span class = "mainpage_SubTitle" style = "vertical-align : bottom;">🍈 신선한 과일 특가</span>
 						<span><img src = "/resources/img/dash.svg" style = "width: 32px; height: 32px;"/></span>
 					</a>
